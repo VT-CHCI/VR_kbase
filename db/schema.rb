@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826200434) do
+ActiveRecord::Schema.define(:version => 20120826201127) do
+
+  create_table "author_papers", :force => true do |t|
+    t.integer  "author_id"
+    t.integer  "paper_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "author_papers", ["author_id"], :name => "index_author_papers_on_author_id"
+  add_index "author_papers", ["paper_id"], :name => "index_author_papers_on_paper_id"
 
   create_table "authors", :force => true do |t|
     t.string   "first_name"

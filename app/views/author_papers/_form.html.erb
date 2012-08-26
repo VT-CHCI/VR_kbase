@@ -1,0 +1,25 @@
+<%= form_for(@author_paper) do |f| %>
+  <% if @author_paper.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@author_paper.errors.count, "error") %> prohibited this author_paper from being saved:</h2>
+
+      <ul>
+      <% @author_paper.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :author %><br />
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :paper %><br />
+    <%= f.text_field :paper %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

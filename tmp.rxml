@@ -6,7 +6,10 @@ rails g scaffold Task experiment:belongs_to title:string task_desc:text interfac
 
 
 
-rails g scaffold Authors first_name:string middle_initial:string last_name:string
+rails g scaffold Author first_name:string middle_initial:string last_name:string
+
+
+rails g scaffold AuthorPaper author:belongs_to paper:belongs_to
 
 
 -----------------------------------------------
