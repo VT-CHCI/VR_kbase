@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Paper:</b>
+  <%= @experiment.paper %>
+</p>
+
+<p>
+  <b>Tasks:</b>
+  <%= @experiment.tasks %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @experiment.title %>
+</p>
+
+<p>
+  <b>Exp desc:</b>
+  <%= @experiment.exp_desc %>
+</p>
+
+<p>
+  <b>Part num:</b>
+  <%= @experiment.part_num %>
+</p>
+
+<p>
+  <b>Part age min:</b>
+  <%= @experiment.part_age_min %>
+</p>
+
+<p>
+  <b>Part age max:</b>
+  <%= @experiment.part_age_max %>
+</p>
+
+<p>
+  <b>Part background:</b>
+  <%= @experiment.part_background %>
+</p>
+
+<p>
+  <b>System desc:</b>
+  <%= @experiment.system_desc %>
+</p>
+
+<p>
+  <b>Other vars:</b>
+  <%= @experiment.other_vars %>
+</p>
+
+<p>
+  <b>Constants:</b>
+  <%= @experiment.constants %>
+</p>
+
+<p>
+  <b>Comp desc:</b>
+  <%= @experiment.comp_desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_path(@experiment) %> |
+<%= link_to 'Back', experiments_path %>

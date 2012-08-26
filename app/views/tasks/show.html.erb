@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @task.experiment %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @task.title %>
+</p>
+
+<p>
+  <b>Task desc:</b>
+  <%= @task.task_desc %>
+</p>
+
+<p>
+  <b>Interface desc:</b>
+  <%= @task.interface_desc %>
+</p>
+
+<p>
+  <b>Env desc:</b>
+  <%= @task.env_desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

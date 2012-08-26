@@ -1,0 +1,62 @@
+// Place all the styles related to the Papers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#entry_progress {
+	width: 200px;
+	height: 538px;
+	padding: 5px 15px;
+	float: left;
+	background: #B2D6FF;
+}
+
+#entry_progress h2 {
+	text-align: center;
+	font-size: 1em;
+}
+
+.subtitle {
+	font-size: .8em;
+	line-height: 1.45em;
+}
+
+#paper_entry_form {
+	width: 750px;
+	padding: 5px 25px;
+	margin-left: 255px;
+	border: 2px dashed grey;
+}
+
+#paper_entry_form h3 {
+  background: #FFCB83;
+  padding: 5px 10px;
+  margin: 0 -25px;
+}
+
+.format {
+	font-size: .8em;
+	color: red;
+}
+
+.loading_content {
+  width: 225px;
+  height: 275px;
+  top: 100px;
+  right: 270px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  background: white;
+  position: absolute;
+  padding: 10px 50px;
+  opacity: 0; 
+}
+
+.loading_content p {
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 1.8em;
+}
+
+.loading_content #circular3dG {
+  margin: auto;
+}

@@ -1,0 +1,150 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+#circular3dG{
+position:relative;
+width:128px;
+height:128px;
+}
+
+.circular3dG{
+position:absolute;
+background-color:#FFCB83;
+width:36px;
+height:36px;
+-webkit-border-radius:38px;
+-moz-border-radius:38px;
+border-radius:38px;
+-webkit-animation-name:bounce_circular3dG;
+-webkit-animation-duration:1.04s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-moz-animation-name:bounce_circular3dG;
+-moz-animation-duration:1.04s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear;
+-o-animation-name:bounce_circular3dG;
+-o-animation-duration:1.04s;
+-o-animation-iteration-count:infinite;
+-o-animation-direction:linear;
+-ms-animation-name:bounce_circular3dG;
+-ms-animation-duration:1.04s;
+-ms-animation-iteration-count:infinite;
+-ms-animation-direction:linear;
+}
+
+#circular3d_1G{
+left:52px;
+top:8px;
+-webkit-animation-delay:0.39s;
+-moz-animation-delay:0.39s;
+-o-animation-delay:0.39s;
+-ms-animation-delay:0.39s}
+
+#circular3d_2G{
+left:78px;
+top:30px;
+-webkit-animation-delay:0.52s;
+-moz-animation-delay:0.52s;
+-o-animation-delay:0.52s;
+-ms-animation-delay:0.52s;
+}
+
+#circular3d_3G{
+left:94px;
+top:58px;
+-webkit-animation-delay:0.65s;
+-moz-animation-delay:0.65s;
+-o-animation-delay:0.65s;
+-ms-animation-delay:0.65s;
+}
+
+#circular3d_4G{
+left:88px;
+top:86px;
+-webkit-animation-delay:0.78s;
+-moz-animation-delay:0.78s;
+-o-animation-delay:0.78s;
+-ms-animation-delay:0.78s}
+
+#circular3d_5G{
+left:54px;
+top:94px;
+-webkit-animation-delay:0.9099999999999999s;
+-moz-animation-delay:0.9099999999999999s;
+-o-animation-delay:0.9099999999999999s;
+-ms-animation-delay:0.9099999999999999s}
+
+#circular3d_6G{
+left:10px;
+top:62px;
+-webkit-animation-delay:1.04s;
+-moz-animation-delay:1.04s;
+-o-animation-delay:1.04s;
+-ms-animation-delay:1.04s;
+}
+
+#circular3d_7G{
+left:0px;
+top:18px;
+-webkit-animation-delay:1.1700000000000002s;
+-moz-animation-delay:1.1700000000000002s;
+-o-animation-delay:1.1700000000000002s;
+-ms-animation-delay:1.1700000000000002s;
+}
+
+#circular3d_8G{
+left:22px;
+top:0px;
+-webkit-animation-delay:1.3s;
+-moz-animation-delay:1.3s;
+-o-animation-delay:1.3s;
+-ms-animation-delay:1.3s;
+}
+
+@-webkit-keyframes bounce_circular3dG{
+0%{
+-webkit-transform:scale(1)}
+
+100%{
+-webkit-transform:scale(.3)}
+
+}
+
+@-moz-keyframes bounce_circular3dG{
+0%{
+-moz-transform:scale(1)}
+
+100%{
+-moz-transform:scale(.3)}
+
+}
+
+@-o-keyframes bounce_circular3dG{
+0%{
+-o-transform:scale(1)}
+
+100%{
+-o-transform:scale(.3)}
+
+}
+
+@-ms-keyframes bounce_circular3dG{
+0%{
+-ms-transform:scale(1)}
+
+100%{
+-ms-transform:scale(.3)}
+
+}

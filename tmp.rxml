@@ -1,0 +1,15 @@
+rails g scaffold Paper experiments:has_many title:string year:date volume:integer num_pages:integer start_page:integer doi:string paper_url:string num_views:integer
+
+rails g scaffold Experiment paper:belongs_to tasks:has_many title:string exp_desc:text part_num:integer part_age_min:integer part_age_max:integer part_background:text system_desc:text other_vars:text constants:text comp_desc:text
+
+rails g scaffold Task experiment:belongs_to title:string task_desc:text interface_desc:text env_desc:text 
+
+
+
+rails g scaffold Authors first_name:string middle_initial:string last_name:string
+
+
+-----------------------------------------------
+ 
+
+-----------------------------------------------

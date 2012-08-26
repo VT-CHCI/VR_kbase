@@ -1,0 +1,67 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiments:</b>
+  <%= @paper.experiments %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @paper.title %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @paper.year %>
+</p>
+
+<p>
+  <b>Volume:</b>
+  <%= @paper.volume %>
+</p>
+
+<p>
+  <b>Num pages:</b>
+  <%= @paper.num_pages %>
+</p>
+
+<p>
+  <b>Start page:</b>
+  <%= @paper.start_page %>
+</p>
+
+<p>
+  <b>Doi:</b>
+  <%= @paper.doi %>
+</p>
+
+<p>
+  <b>Paper url:</b>
+  <%= @paper.paper_url %>
+</p>
+
+<p>
+  <b>Num views:</b>
+  <%= @paper.num_views %>
+</p>
+
+<ol>
+  <%= for experiment in @paper.experiments %>
+  <li><%= experiment.exp_desc %></li>
+  <% end %>
+</ol>
+
+<ol>
+  <%= for experiment in @paper.experiments %>
+  <li><%= experiment.exp_desc %></li>
+  <ul>
+    <% for task in experiment.tasks %>
+      <li><%= task.title %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</ol>
+
+
+<%= link_to 'Edit', edit_paper_path(@paper) %> |
+<%= link_to 'Back', papers_path %>

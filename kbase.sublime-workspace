@@ -1,0 +1,791 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"experim",
+				"experiment"
+			],
+			[
+				"exerimen",
+				"experiments"
+			],
+			[
+				"reload",
+				"reloadStylesheets"
+			],
+			[
+				"enter",
+				"enterTopRight"
+			],
+			[
+				"enterB",
+				"enterBottomLeft"
+			],
+			[
+				"enterBo",
+				"enterBottomRight"
+			],
+			[
+				"enterTop",
+				"enterTopLeft"
+			],
+			[
+				"enterto",
+				"enterTopRight"
+			],
+			[
+				"enterBtom",
+				"enterBottomRight"
+			],
+			[
+				"bottom",
+				"bottomRight"
+			],
+			[
+				"Bot",
+				"bottomRight"
+			],
+			[
+				"botto",
+				"bottomRight"
+			],
+			[
+				"j",
+				"j"
+			],
+			[
+				"R",
+				"R"
+			],
+			[
+				"G",
+				"GregorianToJD"
+			],
+			[
+				"viz",
+				"vizatt"
+			],
+			[
+				"depart",
+				"department_id"
+			],
+			[
+				"convert",
+				"convertUTF8"
+			],
+			[
+				"attri",
+				"attributes"
+			],
+			[
+				"person",
+				"personClone"
+			],
+			[
+				"data",
+				"data"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"xlink",
+				"xlinkdata"
+			],
+			[
+				"fil",
+				"filePath"
+			],
+			[
+				"fold",
+				"folderOut"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"vertical",
+				"vertical-align"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"active",
+				"active-trail"
+			],
+			[
+				"font",
+				"font	font-weight: weight"
+			],
+			[
+				"fon",
+				"font	font-style: normal/italic/oblique"
+			],
+			[
+				"border",
+				"border	border: size style color"
+			],
+			[
+				"before",
+				"before"
+			],
+			[
+				"the",
+				"theFile"
+			],
+			[
+				"drop",
+				"dropEffect"
+			],
+			[
+				"hand",
+				"handleFileSelect"
+			],
+			[
+				"dr",
+				"dropZone"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/views/papers/_form.html.erb",
+			"settings":
+			{
+				"buffer_size": 1311,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/paper.rb",
+			"settings":
+			{
+				"buffer_size": 239,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/experiment.rb",
+			"settings":
+			{
+				"buffer_size": 297,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/papers_controller.rb",
+			"settings":
+			{
+				"buffer_size": 2049,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/papers/show.html.erb",
+			"settings":
+			{
+				"buffer_size": 910,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/papers/_experiment_fields.html.erb",
+			"settings":
+			{
+				"buffer_size": 268,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/papers/_task_fields.html.erb",
+			"settings":
+			{
+				"buffer_size": 137,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/javascripts/application.js",
+			"settings":
+			{
+				"buffer_size": 775,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/helpers/application_helper.rb",
+			"settings":
+			{
+				"buffer_size": 149,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 107.0,
+		"selected_items":
+		[
+			[
+				"partial",
+				"Rails Partial: Create Partial and Open"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 118.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/scerbos/Code/kbase/app/views/layouts/application.html.erb",
+		"/Users/scerbos/Code/kbase/app/models/task.rb",
+		"/Users/scerbos/Code/kbase/app/views/papers/edit.html.erb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120825021655_create_papers.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120825021702_create_experiments.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120825021708_create_tasks.rb",
+		"/Users/scerbos/Code/knowledgebase/db/migrate/20120825011258_create_experiments.rb",
+		"/Users/scerbos/Code/knowledgebase/db/migrate/20120825011226_create_papers.rb",
+		"/Users/scerbos/Code/knowledgebase/app/models/task.rb",
+		"/Users/scerbos/Code/knowledgebase/app/models/experiment.rb",
+		"/Users/scerbos/Code/knowledgebase/db/migrate/20120824210857_create_experiments.rb",
+		"/Users/scerbos/Code/knowledgebase/db/migrate/20120824210846_create_papers.rb",
+		"/Users/scerbos/Code/knowledgebase/db/migrate/20120824210913_create_tasks.rb",
+		"/Users/scerbos/Desktop/knowledgebase-6-14-2012/app/views/papers/show.html.erb",
+		"/Applications/XAMPP/xamppfiles/htdocs/vizTest/_js/plugins.js",
+		"/Applications/XAMPP/xamppfiles/htdocs/vizTest/_css/style.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/vizTest/_css/fullcalendar.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/vizTest/_css/screen.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/sigmajs/sigmajs.sublime-project",
+		"/Applications/XAMPP/xamppfiles/htdocs/vizTest/css/screen.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/sigmajs/_data/test.gexf",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/sigmajs/_data/sample.gexf",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/sigmajs/_js/plugins.js",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/moowheel_v02/demo/getCollaborations.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/sigmajs/_css/screen.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/test/sigmajs/sample.gexf",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/generate.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/large.html",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/collaborations_output.txt",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/Partial List of Faculty",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/macr",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/tor",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/regenmed",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/gbcb",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/cte",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/rs",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/multisteps",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/water",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/tps",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/sun.txt",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/sun",
+		"/Users/scerbos/Code/ComiXML/ComiXML/_img/import_imgs.py",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/Department Key",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/people.csv",
+		"/Applications/XAMPP/xamppfiles/htdocs/moowheel_v02/demo/Insert Statement",
+		"/Users/scerbos/Code/ComiXML/ComiXML/_img/py-outfile.txt",
+		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/css/layout.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/css/node.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/templates/page.tpl.php",
+		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/css/menu-old.css",
+		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/css/layout-tab.css",
+		"/Users/scerbos/Code/ComiXML/ComiXML/_js/script.js",
+		"/Users/scerbos/Code/ComiXML/ComiXML/index.html",
+		"/Users/scerbos/Code/ComiXML/ComiXML/_css/screen.css",
+		"/Users/scerbos/Code/ComiXML/ComiXML/_js/plugins.js",
+		"/Users/scerbos/Code/ComiXML/ComiXML/_js/libs/jquery-1.7.1.js",
+		"/Users/scerbos/Code/ComiXML/ComiXML Project"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"paper_id",
+			"int",
+			"add",
+			"add entry",
+			"authors_paper",
+			"admin_path",
+			"background",
+			"'",
+			"calendar",
+			"\"",
+			"offsetWidth",
+			"width",
+			"offset",
+			"$data",
+			"print",
+			"apruden",
+			"srenne",
+			"maren",
+			")",
+			"'",
+			"),",
+			"\"",
+			"Wood Science and Forest Products",
+			"Civil and Environmental Engineering",
+			"Engineering Science and Mechanics",
+			"Biological Systems Engineering",
+			"Chemical Engineering",
+			"Mechanical Engineering",
+			"Chemistry",
+			"communication",
+			"Human Nutrition, Foods and Exercise",
+			"Engineering Science and Mechanics",
+			"Large Animal Clinical Sciences",
+			"Statistics",
+			"History",
+			"Geography",
+			"Electrical and Computer Engineering",
+			"Forest Resources and Environmental Conservation",
+			"Biomedical Sciences and Pathobiology",
+			"Biological Sciences",
+			"Biochemistry",
+			"Computer Science",
+			"Science and Technology in Society, NCR",
+			"Biomedical Engineering and Sciences",
+			"Chemical Engineering",
+			"Email: ",
+			"Entomology",
+			"Mathematics",
+			"Animal and Poultry Sciences",
+			"Crop, Soil, and Environmental Sciences",
+			"Plant Pathology, Physiology, and Weed Science",
+			"Horticulture",
+			"Biological Sciences",
+			"Computer Science",
+			"Biochemistry",
+			"if",
+			"panel",
+			";",
+			"div",
+			"resp",
+			"prompt",
+			"image",
+			"prompt",
+			"xsltProcess"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\"",
+			"map",
+			"scroller",
+			"calendar.mouseenter(function(){\n    if (!calendar.hasClass('focus')) {\n      output.text('Calendar');\n      if (calendar.hasClass('bottomRight')) {\n        moveTo.topLeft($('.topRight'));\n        moveTo.rightFocus(calendar);\n        moveTo.bottomLeft($('.focus'));\n      } else if (calendar.hasClass('bottomLeft')) {\n\n      } else if (calendar.hasClass('topRight')) {\n\n      } else if (calendar.hasClass('topLeft')) {\n\n      }\n    }\n  });",
+			"'",
+			"",
+			"'",
+			"84",
+			"40",
+			"44",
+			"37",
+			"39",
+			"47",
+			"86",
+			"13",
+			"44",
+			"95",
+			"92",
+			"63",
+			"83",
+			"42",
+			"82",
+			"93",
+			"85",
+			"6",
+			"41",
+			"75",
+			"38",
+			"39",
+			"",
+			"10",
+			"89",
+			"5",
+			"8",
+			"14",
+			"12",
+			"85",
+			"41",
+			"6",
+			"p"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/views/papers/_form.html.erb",
+					"settings":
+					{
+						"buffer_size": 1311,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1139,
+								1139
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 160.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/models/paper.rb",
+					"settings":
+					{
+						"buffer_size": 239,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								239,
+								239
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/models/experiment.rb",
+					"settings":
+					{
+						"buffer_size": 297,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								138,
+								138
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/controllers/papers_controller.rb",
+					"settings":
+					{
+						"buffer_size": 2049,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								624,
+								624
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/views/papers/show.html.erb",
+					"settings":
+					{
+						"buffer_size": 910,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								518,
+								518
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1449.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/views/papers/_experiment_fields.html.erb",
+					"settings":
+					{
+						"buffer_size": 268,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								165,
+								165
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/views/papers/_task_fields.html.erb",
+					"settings":
+					{
+						"buffer_size": 137,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								87,
+								87
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/assets/javascripts/application.js",
+					"settings":
+					{
+						"buffer_size": 775,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								773,
+								773
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/helpers/application_helper.rb",
+					"settings":
+					{
+						"buffer_size": 149,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								144,
+								144
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"application",
+				"app/assets/javascripts/application.js"
+			],
+			[
+				"form",
+				"app/views/papers/_form.html.erb"
+			],
+			[
+				"schem",
+				"db/schema.rb"
+			],
+			[
+				"rour",
+				"config/routes.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 238.0,
+	"status_bar_visible": true
+}

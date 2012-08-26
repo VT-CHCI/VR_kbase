@@ -1,0 +1,19 @@
+<div class="tasks">
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :task_desc %><br />
+    <%= f.text_area :task_desc %>
+  </div>
+  <div class="field">
+    <%= f.label :interface_desc %><br />
+    <%= f.text_area :interface_desc %>
+  </div>
+  <div class="field">
+    <%= f.label :env_desc %><br />
+    <%= f.text_area :env_desc %>
+  </div>
+  <%= link_to_remove_fields "Remove Task", f %>
+</div>

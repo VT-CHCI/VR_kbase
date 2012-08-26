@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  paper: 
+  tasks: 
+  title: MyString
+  exp_desc: MyText
+  part_num: 1
+  part_age_min: 1
+  part_age_max: 1
+  part_background: MyText
+  system_desc: MyText
+  other_vars: MyText
+  constants: MyText
+  comp_desc: MyText
+
+two:
+  paper: 
+  tasks: 
+  title: MyString
+  exp_desc: MyText
+  part_num: 1
+  part_age_min: 1
+  part_age_max: 1
+  part_background: MyText
+  system_desc: MyText
+  other_vars: MyText
+  constants: MyText
+  comp_desc: MyText

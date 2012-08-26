@@ -1,0 +1,83 @@
+<%= form_for(@paper) do |f| %>
+  <div id="entry_progress">
+    <h2>Entry Progress</h2>
+    <p class="subtitle">This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</p>
+    <div id="progress_headings"></div>
+  </div>
+
+  <div id="paper_entry_form">
+    <% if @paper.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
+
+        <ul>
+        <% @paper.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <h1>Publication Information</h1>
+    <p class="subtitle">The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</p>
+
+    <h3>Using a DOI (Digital Object Identifier)</h3>
+    <p class="subtitle">If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</p>
+    <div class="field">
+      DOI<br />
+      <%= f.text_field :doi %> <a id="submit_doi" class="button">Lookup DOI</a><br />
+      <span class="format">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
+    </div>
+    
+    <h3>Manual Entry</h3>
+    <p class="subtitle">This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the wizard to move onto adding an experiment.</p>
+
+    <div class="field">
+      <%= f.label :title %><br />
+      <%= f.text_field :title %>
+    </div>
+    <div class="field">
+      <%= f.label :year %><br />
+      <%= f.date_select :year %>
+    </div>
+    <div class="field">
+      <%= f.label :volume %><br />
+      <%= f.number_field :volume %>
+    </div>
+    <div class="field">
+      <%= f.label :num_pages %><br />
+      <%= f.number_field :num_pages %>
+    </div>
+    <div class="field">
+      <%= f.label :start_page %><br />
+      <%= f.number_field :start_page %>
+    </div>
+    <div class="field">
+      <%= f.label :paper_url %><br />
+      <%= f.text_field :paper_url %>
+    </div>
+
+    <%= f.fields_for :experiments do |builder| %>
+      <%= render 'experiment_fields', :f => builder %>
+    <% end %>
+
+    <p><%= link_to_add_fields "Add Experiment", f, :experiments %></p>
+  </div>
+
+  <div class="loading_content">
+    <p>We are fetching the DOI information. </p>
+    <div id="circular3dG">
+      <div id="circular3d_1G" class="circular3dG"></div>
+      <div id="circular3d_2G" class="circular3dG"></div>
+      <div id="circular3d_3G" class="circular3dG"></div>
+      <div id="circular3d_4G" class="circular3dG"></div>
+      <div id="circular3d_5G" class="circular3dG"></div>
+      <div id="circular3d_6G" class="circular3dG"></div>
+      <div id="circular3d_7G" class="circular3dG"></div>
+      <div id="circular3d_8G" class="circular3dG"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
