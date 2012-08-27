@@ -23,7 +23,7 @@
     <h3>Using a DOI (Digital Object Identifier)</h3>
     <p class="subtitle">If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</p>
     <div class="field">
-      DOI<br />
+      <%= f.label :doi, 'DOI' %><br />
       <%= f.text_field :doi %> <a id="submit_doi" class="button">Lookup DOI</a><br />
       <span class="format">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
     </div>
@@ -32,7 +32,7 @@
     <p class="subtitle">This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the wizard to move onto adding an experiment.</p>
 
     <div class="field">
-      <%= f.label :title %><br />
+      <%= f.label :title, 'Publication Title' %><br />
       <%= f.text_field :title %>
     </div>
 
@@ -49,6 +49,13 @@
       </div>
 
     </div>
+
+    <%= f.fields_for :venue do |builder| %>
+      <p>
+        <%= builder.label :name, "Publication Venue" %><br />
+        <%= builder.text_field :name %>
+      </p>
+    <% end %>
 
     <div class="field">
       <%= f.label :year %><br />
