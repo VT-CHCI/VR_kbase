@@ -12,6 +12,14 @@
  *= require_tree .
  */
 
+.attribute_block {
+  width: 720px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+  border: 1px solid grey;
+  padding: 15px;
+}
+
 #circular3dG{
 position:relative;
 width:128px;

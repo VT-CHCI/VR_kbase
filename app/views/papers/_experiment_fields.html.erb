@@ -41,6 +41,7 @@
   </div>
 
   <%= link_to_remove_fields "Remove Experiment", f %>
+  
   <%= f.fields_for :tasks do |builder| %>
     <%= render 'task_fields', :f => builder %>
   <% end %>

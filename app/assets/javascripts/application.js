@@ -31,6 +31,8 @@ function add_fields(link, association, content) {
 }
 
 $(document).ready(function(){
+  $('.authors a').trigger('click');
+
   $('#submit_doi').click(function() {
     if ($('#paper_doi').val()) {
       $('.loading_content').animate({opacity: '1'},500)

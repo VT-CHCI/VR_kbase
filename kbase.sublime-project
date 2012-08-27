@@ -4,5 +4,10 @@
 		{
 			"path": "/Users/scerbos/Code/kbase"
 		}
-	]
+	],
+	"settings":
+	{
+		"tabe_size": 2,
+		"translate_tabs_to_spaces": true
+	}
 }

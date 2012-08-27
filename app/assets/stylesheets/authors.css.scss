@@ -1,3 +1,20 @@
 // Place all the styles related to the Authors controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.author {
+  clear: both;
+}
+
+.author .field {
+  float: left;
+}
+
+.authors a {
+  clear: both;
+  display: block;
+}
+
+.author a {
+  margin-left: 10px;
+}

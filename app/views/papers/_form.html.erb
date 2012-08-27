@@ -35,6 +35,21 @@
       <%= f.label :title %><br />
       <%= f.text_field :title %>
     </div>
+
+    <div class="attribute_block">
+      <h3>Adding Authors</h3>
+      <p class="subtitle">Add authors in the proper order below. If you need to add more than one author use the add authors link.</p>
+      <div class="authors">
+        
+        <%= f.fields_for :authors do |builder| %>
+          <%= render 'author_fields', :f =>builder %>
+        <% end %>
+
+        <%= link_to_add_fields "Add Authors", f, :authors %>
+      </div>
+
+    </div>
+
     <div class="field">
       <%= f.label :year %><br />
       <%= f.date_select :year %>

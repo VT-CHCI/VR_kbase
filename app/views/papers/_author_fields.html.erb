@@ -1,0 +1,17 @@
+<div class="author">
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    M.I.<br />
+    <%= f.text_field :middle_initial %>
+  </div>
+  
+
+  <br /><%= link_to_remove_fields "Remove Author", f %>
+</div>

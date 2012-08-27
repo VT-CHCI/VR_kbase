@@ -24,7 +24,8 @@
 	width: 750px;
 	padding: 5px 25px;
 	margin-left: 255px;
-	border: 2px dashed grey;
+	/*border: 2px dashed grey;*/
+  overflow: auto;
 }
 
 #paper_entry_form h3 {
@@ -36,6 +37,10 @@
 .format {
 	font-size: .8em;
 	color: red;
+}
+
+#paper_title {
+  width: 746px;
 }
 
 .loading_content {
