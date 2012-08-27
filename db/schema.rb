@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826201127) do
+ActiveRecord::Schema.define(:version => 20120827013118) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -72,5 +72,12 @@ ActiveRecord::Schema.define(:version => 20120826201127) do
   end
 
   add_index "tasks", ["experiment_id"], :name => "index_tasks_on_experiment_id"
+
+  create_table "venues", :force => true do |t|
+    t.string   "name"
+    t.string   "accronym"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

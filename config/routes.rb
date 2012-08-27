@@ -1,4 +1,6 @@
 Kbase::Application.routes.draw do
+  resources :venues
+
   resources :author_papers
 
   resources :authors
