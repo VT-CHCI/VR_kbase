@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827014240) do
+ActiveRecord::Schema.define(:version => 20120827031556) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -52,13 +52,14 @@ ActiveRecord::Schema.define(:version => 20120827014240) do
     t.string   "title"
     t.date     "year"
     t.integer  "volume"
-    t.integer  "num_pages"
+    t.integer  "end_page"
     t.integer  "start_page"
     t.string   "doi"
     t.string   "paper_url"
     t.integer  "num_views"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "issue"
   end
 
   create_table "tasks", :force => true do |t|

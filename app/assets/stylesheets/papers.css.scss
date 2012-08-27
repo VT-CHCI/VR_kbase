@@ -70,12 +70,20 @@
   margin: auto;
 }
 
-#paper_year_2i {
+#end_page label {
   display: none;
 }
 
-#paper_year_3i {
-  display: none;
+#start_page input, #end_page input {
+  width: 30px;
+}
+
+#start_page, #end_page {
+  margin-right: 0;
+}
+
+.hyphen {
+  margin: 0 0 0 10px;
 }
 
 form input[type='number']::-webkit-outer-spin-button,

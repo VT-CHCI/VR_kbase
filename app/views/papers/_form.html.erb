@@ -59,19 +59,25 @@
 
     <div class="field inline">
       <%= f.label :year %><br />
-      <%= f.date_select :year %>
+      
+      <%= f.date_select :year, {:start_year => Time.now.year, :end_year => Time.now.year - 80, :discard_day => true, :discard_month => true} %>
     </div>
     <div class="field inline">
       <%= f.label :volume %><br />
       <%= f.number_field :volume %>
     </div>
     <div class="field inline">
-      <%= f.label :start_page %><br />
-      <%= f.number_field :start_page %>
+      <%= f.label :issue %><br />
+      <%= f.number_field :issue %>
     </div>
-    <div class="field inline">
-      <%= f.label :num_pages, "Number of pages" %><br />
-      <%= f.number_field :num_pages %>
+    <div class="field inline" id="start_page">
+      <%= f.label :start_page, "Pages" %><br />
+      <%= f.number_field :start_page %>
+      <span class="hyphen"> - </span>
+    </div>
+    <div class="field inline" id="end_page">
+      <%= f.label :end_page %><br />
+      <%= f.number_field :end_page %>
     </div>
     <div class="field clear">
       <%= f.label :paper_url %><br />
