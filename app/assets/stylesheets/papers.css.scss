@@ -51,13 +51,14 @@
   width: 225px;
   height: 275px;
   top: 100px;
-  right: 270px;
+  right: 400px;
   border-radius: 10px;
   border: 1px solid grey;
   background: white;
   position: absolute;
   padding: 10px 50px;
-  opacity: 0; 
+  opacity: 0;
+  z-index: -1;
 }
 
 .loading_content p {

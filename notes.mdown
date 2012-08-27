@@ -3,3 +3,9 @@ Table between hardware/software and experiment: add description
 Table between comp and experiment: description
 
 new tables: journal, displays, Hardware
+
+
+
+Error check to make sure that there aren't more than 1 (date for example)
+Remove contributors that are not authors
+Add different venue possiblities for Publication Venue

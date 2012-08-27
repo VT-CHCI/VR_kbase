@@ -24,8 +24,8 @@ function add_fields(link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-  console.log(new_id);
-  console.log(regexp);
+  // console.log(new_id);
+  // console.log(regexp);
 
   $(link).parent().before(content.replace(regexp, new_id));
 }
@@ -35,32 +35,82 @@ $(document).ready(function(){
 
   $('#submit_doi').click(function() {
     if ($('#paper_doi').val()) {
+      $('.loading_content').css('z-index','1')
       $('.loading_content').animate({opacity: '1'},500)
       // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
-      var surl = "http://people.cs.vt.edu/tgm/crossref-doi.php?doi=" + $('#paper_doi').val();
+      var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
   
       $.ajax({
         type: "GET",
         url: surl,
         dataType: "jsonp",
         success: function(data) {
-          // data = ({"doi_records":{"doi_record":{"@attributes":{"owner":"10.1016","timestamp":"2011-09-26 03:45:40"},"crossref":{"journal":{"journal_metadata":{"@attributes":{"language":"en"},"full_title":"International Journal of Human-Computer Studies","abbrev_title":"International Journal of Human-Computer Studies","issn":"10715819"},"journal_issue":{"publication_date":{"@attributes":{"media_type":"print"},"month":"3","year":"2009"},"journal_volume":{"volume":"67"},"issue":"3"},"journal_article":{"@attributes":{"publication_type":"full_text"},"titles":{"title":"Current trends in 3D user interface research"},"contributors":{"person_name":[{"@attributes":{"contributor_role":"author","sequence":"first"},"given_name":"Doug","surname":"Bowman"},{"@attributes":{"contributor_role":"author","sequence":"additional"},"given_name":"Bernd","surname":"Fr\u00f6hlich"},{"@attributes":{"contributor_role":"author","sequence":"additional"},"given_name":"Yoshifumi","surname":"Kitamura"},{"@attributes":{"contributor_role":"author","sequence":"additional"},"given_name":"Wolfgang","surname":"Stuerzlinger"}]},"publication_date":{"@attributes":{"media_type":"print"},"month":"3","year":"2009"},"pages":{"first_page":"223","last_page":"224"},"publisher_item":{"item_number":"S1071581908001444","identifier":"S1071581908001444"},"doi_data":{"doi":"10.1016\/j.ijhcs.2008.10.003","resource":"http:\/\/linkinghub.elsevier.com\/retrieve\/pii\/S1071581908001444"}}}}}}})
+          xmlDoc = $.parseXML( data );
+          $xml = $( xmlDoc );
 
-          console.log(data);
-          try {
-            var entry = $.parseJSON(data);
-            console.log(entry);
-            //must be valid JSON
-          } catch(e) {
-            console.log(e);
-            //must not be valid JSON    
+          function autofill(selector,xmlString) {
+            if (xmlString.length > 1) {
+              $(selector).val($xml.find(xmlString).first().text());
+            } else {
+              $(selector).val($xml.find(xmlString).text());
+            }
           }
-          // console.log(entry);
-          $('.loading_content').animate({opacity: '0'},500)
+
+          autofill('#paper_title',"title");
+
+          if ($xml.find("journal").length) {
+            autofill('#paper_venue_attributes_name',"full_title");
+          } else if ($xml.find("conference").length) {
+            autofill('#paper_venue_attributes_name',"proceedings_title");
+          }
+          
+          autofill('#paper_year_1i',"year");
+          autofill('#paper_volume',"volume");
+          autofill('#paper_issue',"issue");
+          autofill('#paper_start_page',"first_page");
+          autofill('#paper_end_page',"last_page");
+          autofill('#paper_paper_url',"resource");
+
+          // $('#paper_title').val($xml.find("title").text());
+          // $('#paper_venue_attributes_name').val($xml.find("full_title").text());
+          // $('#paper_year_1i').val($xml.find("year").first().text());
+          // $('#paper_volume').val($xml.find("volume").text());
+          // $('#paper_issue').val($xml.find("issue").text());
+          // $('#paper_start_page').val($xml.find("first_page").text());
+          // $('#paper_end_page').val($xml.find("last_page").text());
+          // $('#paper_paper_url').val($xml.find("resource").text());
+
+          var authors = new Array();
+
+          var len = $xml.find('person_name').length;
+          var a_index = 0;
+          $xml.find('person_name').each(function(index) {
+            if ($(this).attr('contributor_role') == "author") {
+              // console.log($(this).find('surname').text());
+              $('.author').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
+              $('.author').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
+              a_index++;
+              if (index != len - 1) {
+                $('.authors a').trigger('click');
+              }
+            }
+          });
+
+          // console.log($xml);
+          $('.loading_content').animate({
+            opacity: '0'
+          }, 500, function() {
+            $('.loading_content').css('z-index','-1')
+          });
         },
         error: function(tmp) {
           console.log(tmp);
           console.log("error");
+          $('.loading_content').animate({
+            opacity: '0'
+          }, 500, function() {
+            $('.loading_content').css('z-index','-1')
+          });
         }
       });
     }
