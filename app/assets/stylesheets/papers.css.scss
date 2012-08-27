@@ -20,6 +20,10 @@
 	line-height: 1.45em;
 }
 
+#submit_doi {
+  margin-left: 7px;
+}
+
 #paper_entry_form {
 	width: 750px;
 	padding: 5px 25px;
@@ -39,7 +43,7 @@
 	color: red;
 }
 
-#paper_title {
+#paper_title,  #paper_venue_attributes_name, #paper_paper_url {
   width: 746px;
 }
 
@@ -64,4 +68,32 @@
 
 .loading_content #circular3dG {
   margin: auto;
+}
+
+#paper_year_2i {
+  display: none;
+}
+
+#paper_year_3i {
+  display: none;
+}
+
+form input[type='number']::-webkit-outer-spin-button,
+form input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.inline {
+  float: left;
+  margin-right: 30px;
+  margin-left: 15px;
+}
+
+.inline input {
+  width: 75px;
+}
+
+.clear {
+  clear: both;
 }

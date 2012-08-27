@@ -24,7 +24,7 @@
     <p class="subtitle">If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</p>
     <div class="field">
       <%= f.label :doi, 'DOI' %><br />
-      <%= f.text_field :doi %> <a id="submit_doi" class="button">Lookup DOI</a><br />
+      <%= f.text_field :doi %> <a href="#" id="submit_doi" class="button">Lookup DOI</a><br />
       <span class="format">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
     </div>
     
@@ -51,29 +51,29 @@
     </div>
 
     <%= f.fields_for :venue do |builder| %>
-      <p>
+      <div class="field">
         <%= builder.label :name, "Publication Venue" %><br />
         <%= builder.text_field :name %>
-      </p>
+      </div>
     <% end %>
 
-    <div class="field">
+    <div class="field inline">
       <%= f.label :year %><br />
       <%= f.date_select :year %>
     </div>
-    <div class="field">
+    <div class="field inline">
       <%= f.label :volume %><br />
       <%= f.number_field :volume %>
     </div>
-    <div class="field">
-      <%= f.label :num_pages %><br />
-      <%= f.number_field :num_pages %>
-    </div>
-    <div class="field">
+    <div class="field inline">
       <%= f.label :start_page %><br />
       <%= f.number_field :start_page %>
     </div>
-    <div class="field">
+    <div class="field inline">
+      <%= f.label :num_pages, "Number of pages" %><br />
+      <%= f.number_field :num_pages %>
+    </div>
+    <div class="field clear">
       <%= f.label :paper_url %><br />
       <%= f.text_field :paper_url %>
     </div>
