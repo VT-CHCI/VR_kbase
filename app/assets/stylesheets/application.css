@@ -12,6 +12,10 @@
  *= require_tree .
  */
 
+ br {
+  line-height: 1.5em;
+ }
+
  #entry_progress {
     width: 200px;
     height: 538px;

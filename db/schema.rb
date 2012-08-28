@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120828154117) do
+ActiveRecord::Schema.define(:version => 20120828191828) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -62,16 +62,6 @@ ActiveRecord::Schema.define(:version => 20120828154117) do
   add_index "experiment_displays", ["display_id"], :name => "index_experiment_displays_on_display_id"
   add_index "experiment_displays", ["experiment_id"], :name => "index_experiment_displays_on_experiment_id"
 
-  create_table "experiment_genders", :force => true do |t|
-    t.integer  "gender_id"
-    t.integer  "experiment_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "experiment_genders", ["experiment_id"], :name => "index_experiment_genders_on_experiment_id"
-  add_index "experiment_genders", ["gender_id"], :name => "index_experiment_genders_on_gender_id"
-
   create_table "experiment_hardwares", :force => true do |t|
     t.integer  "hardware_id"
     t.integer  "experiment_id"
@@ -106,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20120828154117) do
     t.text     "comp_desc"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "gender_id"
   end
 
   add_index "experiments", ["paper_id"], :name => "index_experiments_on_paper_id"

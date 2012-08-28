@@ -2,8 +2,7 @@ class Experiment < ActiveRecord::Base
   belongs_to :paper
   has_many :tasks, :dependent => :destroy
 
-  has_many :experiment_genders
-  has_many :genders, :through => :experiment_genders
+  belongs_to :gender
 
   has_many :experiment_displays
   has_many :displays, :through => :experiment_displays
@@ -19,5 +18,5 @@ class Experiment < ActiveRecord::Base
 
   accepts_nested_attributes_for :tasks
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min, 
-    :part_background, :part_num, :system_desc, :tasks, :title, :gender_ids
+    :part_background, :part_num, :system_desc, :tasks, :title, :gender_id
 end
