@@ -2,93 +2,99 @@
   <div id="entry_progress">
     <h2>Entry Progress</h2>
     <p class="subtitle">This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</p>
-    <div id="progress_headings"></div>
+    <div id="progress_headings">
+      <h3 class="current paper">Paper Details</h3>
+    </div>
   </div>
 
   <div id="paper_entry_form">
-    <% if @paper.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
-
-        <ul>
-        <% @paper.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <h1>Publication Information</h1>
-    <p class="subtitle">The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</p>
-
-    <h3>Using a DOI (Digital Object Identifier)</h3>
-    <p class="subtitle">If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</p>
-    <div class="field">
-      <%= f.label :doi, 'DOI' %><br />
-      <%= f.text_field :doi %> <a href="#" id="submit_doi" class="button">Lookup DOI</a><br />
-      <span class="format">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
-    </div>
     
-    <h3>Manual Entry</h3>
-    <p class="subtitle">This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the wizard to move onto adding an experiment.</p>
+      <% if @paper.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
 
-    <div class="field">
-      <%= f.label :title, 'Publication Title' %><br />
-      <%= f.text_field :title %>
-    </div>
+          <ul>
+          <% @paper.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-    <div class="attribute_block">
-      <h3>Adding Authors</h3>
-      <p class="subtitle">Add authors in the proper order below. If you need to add more than one author use the add authors link.</p>
-      <div class="authors">
-        
-        <%= f.fields_for :authors do |builder| %>
-          <%= render 'author_fields', :f =>builder %>
-        <% end %>
+      <div class="paper">
+      <h1>Publication Information</h1>
+      <p class="subtitle">The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</p>
 
-        <%= link_to_add_fields "Add Authors", f, :authors %>
-      </div>
-
-    </div>
-
-    <%= f.fields_for :venue do |builder| %>
+      <h3>Using a DOI (Digital Object Identifier)</h3>
+      <p class="subtitle">If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</p>
       <div class="field">
-        <%= builder.label :name, "Publication Venue" %><br />
-        <%= builder.text_field :name %>
+        <%= f.label :doi, 'DOI' %><br />
+        <%= f.text_field :doi %> <a href="#" id="submit_doi" class="button">Lookup DOI</a><br />
+        <span class="format">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
       </div>
-    <% end %>
-
-    <div class="field inline">
-      <%= f.label :year %><br />
       
-      <%= f.date_select :year, {:start_year => Time.now.year, :end_year => Time.now.year - 80, :discard_day => true, :discard_month => true} %>
-    </div>
-    <div class="field inline">
-      <%= f.label :volume %><br />
-      <%= f.number_field :volume %>
-    </div>
-    <div class="field inline">
-      <%= f.label :issue %><br />
-      <%= f.number_field :issue %>
-    </div>
-    <div class="field inline" id="start_page">
-      <%= f.label :start_page, "Pages" %><br />
-      <%= f.number_field :start_page %>
-      <span class="hyphen"> - </span>
-    </div>
-    <div class="field inline" id="end_page">
-      <%= f.label :end_page %><br />
-      <%= f.number_field :end_page %>
-    </div>
-    <div class="field clear">
-      <%= f.label :paper_url %><br />
-      <%= f.text_field :paper_url %>
-    </div>
+      <h3>Manual Entry</h3>
+      <p class="subtitle">This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the wizard to move onto adding an experiment.</p>
 
-    <%= f.fields_for :experiments do |builder| %>
-      <%= render 'experiment_fields', :f => builder %>
-    <% end %>
+      <div class="field">
+        <%= f.label :title, 'Publication Title' %><br />
+        <%= f.text_field :title %>
+      </div>
 
-    <p><%= link_to_add_fields "Add Experiment", f, :experiments %></p>
+      <div class="attribute_block">
+        <h3>Adding Authors</h3>
+        <p class="subtitle">Add authors in the proper order below. If you need to add more than one author use the add authors link.</p>
+        <div class="authors">
+          
+          <%= f.fields_for :authors do |builder| %>
+            <%= render 'author_fields', :f =>builder %>
+          <% end %>
+
+          <%= link_to_add_fields "Add Authors", f, :authors %>
+        </div>
+
+      </div>
+
+      <%= f.fields_for :venue do |builder| %>
+        <div class="field">
+          <%= builder.label :name, "Publication Venue" %><br />
+          <%= builder.text_field :name %>
+        </div>
+      <% end %>
+
+      <div class="field inline">
+        <%= f.label :year %><br />
+        
+        <%= f.date_select :year, {:start_year => Time.now.year, :end_year => Time.now.year - 80, :discard_day => true, :discard_month => true} %>
+      </div>
+      <div class="field inline">
+        <%= f.label :volume %><br />
+        <%= f.number_field :volume %>
+      </div>
+      <div class="field inline">
+        <%= f.label :issue %><br />
+        <%= f.number_field :issue %>
+      </div>
+      <div class="field inline" id="start_page">
+        <%= f.label :start_page, "Pages" %><br />
+        <%= f.number_field :start_page %>
+        <span class="hyphen"> - </span>
+      </div>
+      <div class="field inline" id="end_page">
+        <%= f.label :end_page %><br />
+        <%= f.number_field :end_page %>
+      </div>
+      <div class="field clear">
+        <%= f.label :paper_url %><br />
+        <%= f.text_field :paper_url %>
+      </div>
+
+      <%= f.fields_for :experiments do |builder| %>
+        <%= render 'experiment_fields', :f => builder %>
+      <% end %>
+
+    </div> 
+    <p class="new_experiment"><%= link_to_add_fields "Next Step -> Add Experiment", f, :experiments %></p>
   </div>
 
   <div class="loading_content">

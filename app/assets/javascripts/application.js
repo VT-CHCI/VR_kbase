@@ -28,6 +28,36 @@ function add_fields(link, association, content) {
   // console.log(regexp);
 
   $(link).parent().before(content.replace(regexp, new_id));
+
+  if (association == 'experiments') {
+    $('.paper').slideUp();
+    $("html, body").animate({ scrollTop: 0 }, 600);
+    $('#progress_headings h3').each(function() {
+      $(this).removeClass('current');
+    });
+
+    $('#progress_headings').append('<h3 class="current experiment paper_experiments_attributes_'+ new_id + '_title">Experiment 1</h3>');
+    $('#progress_headings').append('<a href="#" class="paper_experiments_attributes_' + new_id + '__destroy">Remove</a>');
+
+    $('.field-title input').on('keyup',function() {
+      newTitle = $(this).val();
+      if (newTitle.length < 1) {
+        newTitle = 'Unnamed Experiment';       
+      }
+      // console.log($(this).attr('id'));
+      $('#progress_headings').children('.' + $(this).attr('id')).text(newTitle);
+    });
+
+    $('#progress_headings a').on('click',function() {
+      console.log($(this).attr('class'));
+
+      $('#'+ $(this).attr('class')).val('true');
+      // console.log($('#'+ $(this).attr('class')).parent());
+      $('#'+ $(this).attr('class')).parent().hide();
+      $(this).prev(".experiment").remove();
+      $(this).remove();
+    });
+  }
 }
 
 $(document).ready(function(){
@@ -71,15 +101,6 @@ $(document).ready(function(){
           autofill('#paper_end_page',"last_page");
           autofill('#paper_paper_url',"resource");
 
-          // $('#paper_title').val($xml.find("title").text());
-          // $('#paper_venue_attributes_name').val($xml.find("full_title").text());
-          // $('#paper_year_1i').val($xml.find("year").first().text());
-          // $('#paper_volume').val($xml.find("volume").text());
-          // $('#paper_issue').val($xml.find("issue").text());
-          // $('#paper_start_page').val($xml.find("first_page").text());
-          // $('#paper_end_page').val($xml.find("last_page").text());
-          // $('#paper_paper_url').val($xml.find("resource").text());
-
           var authors = new Array();
 
           var len = $xml.find('person_name').length;
@@ -115,4 +136,6 @@ $(document).ready(function(){
       });
     }
   });
+
+  
 });

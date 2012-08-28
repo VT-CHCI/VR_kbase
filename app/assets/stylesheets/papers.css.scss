@@ -2,19 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#entry_progress {
-	width: 200px;
-	height: 538px;
-	padding: 5px 15px;
-	float: left;
-	background: #B2D6FF;
-}
-
-#entry_progress h2 {
-	text-align: center;
-	font-size: 1em;
-}
-
 .subtitle {
 	font-size: .8em;
 	line-height: 1.45em;
@@ -71,16 +58,30 @@
   margin: auto;
 }
 
-#end_page label {
+.inline input {
+  width: 75px;
+}
+
+.inline {
+  float: left;
+  margin-right: 30px;
+  margin-left: 15px;
+}
+
+#end_page label, .field-part-age-max label {
   display: none;
 }
 
-#start_page input, #end_page input {
+#start_page input, #end_page input, .field-part-age-min input, .field-part-age-max input {
   width: 30px;
 }
 
-#start_page, #end_page {
+#start_page, #end_page, .field-part-age-min, .field-part-age-max {
   margin-right: 0;
+}
+
+.field-part-age-max {
+  margin-left: 5px;
 }
 
 .hyphen {
@@ -93,16 +94,10 @@ form input[type='number']::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.inline {
-  float: left;
-  margin-right: 30px;
-  margin-left: 15px;
-}
-
-.inline input {
-  width: 75px;
-}
-
 .clear {
   clear: both;
+}
+
+.paper {
+  display: block;
 }

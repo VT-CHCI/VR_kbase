@@ -1,43 +1,66 @@
 <div class="experiment">
-  <div class="field">
-    <%= f.label :title %><br />
+  <h1>Experiment Information</h1>
+  <p class="subtitle">The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</p>
+
+  <h3>General Information</h3>
+  <p class="subtitle">Create a title / nickname for the experiment so that it can be referred back to easily in the entry progress list. Also provide the research questions and goals that motivate the experiment.</p>
+
+  <div class="field field-title">
+    <%= f.label :title, 'Experiment Title'  %><br />
     <%= f.text_field :title %>
   </div>
-  <div class="field">
-    <%= f.label :exp_desc %><br />
+  <div class="field field-exp-desc">
+    <%= f.label :exp_desc, 'Research Questions and Goals' %><br />
     <%= f.text_area :exp_desc %>
   </div>
-  <div class="field">
-    <%= f.label :part_num %><br />
+
+  <h3>Participant Information</h3>
+  <p class="subtitle">This area documents total number of participants and their age range.  Also please list the technical background and other relevant information about the participants in this experiment.</p>
+
+  <div class="field field-part-num inline">
+    <%= f.label :part_num, 'Total Number' %><br />
     <%= f.number_field :part_num %>
   </div>
-  <div class="field">
-    <%= f.label :part_age_min %><br />
+  <div class="field field-part-age-min inline">
+    <%= f.label :part_age_min, 'Age Range' %><br />
     <%= f.number_field :part_age_min %>
+    <span class="hyphen"> - </span>
   </div>
-  <div class="field">
-    <%= f.label :part_age_max %><br />
+  <div class="field field-part-age-max inline">
+    <%= f.label :part_age_max, 'Maximum Age' %><br />
     <%= f.number_field :part_age_max %>
   </div>
-  <div class="field">
-    <%= f.label :part_background %><br />
+  <div class="field field-part-background clear">
+    <%= f.label :part_background, "Participants' Background" %><br />
     <%= f.text_area :part_background %>
   </div>
-  <div class="field">
-    <%= f.label :system_desc %><br />
+
+  <h3>System Information</h3>
+  <p class="subtitle">Select all the categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then provide as much detail as you can on the harware/software used in this experiment such as dislays, input devices, tracking systems, computers, etc.</p>
+
+  <div class="field field-system-desc">
+    <%= f.label :system_desc, 'Hardware / Software Description' %><br />
     <%= f.text_area :system_desc %>
   </div>
-  <div class="field">
-    <%= f.label :other_vars %><br />
+
+  <h3>Components of Immersion</h3>
+  <p class="subtitle">Select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</p>
+
+  <div class="field field-comp-desc">
+    <%= f.label :comp_desc, 'Components of Immersion Description' %><br />
+    <%= f.text_area :comp_desc %>
+  </div>
+
+  <h3>Additional Information</h3>
+  <p class="subtitle">This last area is for documenting additional independent variables (not components of immersion) and their levels as well as other factors that were held constant in this experiment.</p>
+
+  <div class="field field-other-vars">
+    <%= f.label :other_vars, 'Additional Independant Variables' %><br />
     <%= f.text_area :other_vars %>
   </div>
-  <div class="field">
+  <div class="field field-constants">
     <%= f.label :constants %><br />
     <%= f.text_area :constants %>
-  </div>
-  <div class="field">
-    <%= f.label :comp_desc %><br />
-    <%= f.text_area :comp_desc %>
   </div>
 
   <%= link_to_remove_fields "Remove Experiment", f %>
