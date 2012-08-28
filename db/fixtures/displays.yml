@@ -1,0 +1,26 @@
+display1:
+  display: "Monitors"
+
+display2:
+  display: "Fishtank VR"
+
+display3:
+  display: "Tabletop"
+
+display4:
+  display: "Single large screen"
+
+display5:
+  display: "Multi-monitor tiled display"
+
+display6:
+  display: "Head-mounted display"
+
+display7:
+  display: "CAVEs and similar"
+
+display8:
+  display: "Domes"
+
+display9:
+  display: "Tablet display"

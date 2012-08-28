@@ -14,11 +14,6 @@ rails g scaffold Venue name:string accronym:string
 
 
 
-
-rails g scaffold Component comp_of_immersion:string
-
-rails g scaffold ExperimentComponent component:belongs_to experiment:belongs_to
-
 rails g scaffold Gender gender:string
 
 rails g scaffold ExperimentGender gender:belongs_to experiment:belongs_to
@@ -34,6 +29,10 @@ rails g scaffold ExperimentHardware hardware:belongs_to experiment:belongs_to
 rails g scaffold Software software:string
 
 rails g scaffold ExperimentSoftware software:belongs_to experiment:belongs_to
+
+rails g scaffold Component comp_of_immersion:string
+
+rails g scaffold ExperimentComponent component:belongs_to experiment:belongs_to
 
 -----------------------------------------------
  

@@ -22,7 +22,7 @@
 
 <p>
   <b>Num pages:</b>
-  <%= @paper.num_pages %>
+  <%= @paper.end_page %>
 </p>
 
 <p>
@@ -46,13 +46,13 @@
 </p>
 
 <ol>
-  <%= for experiment in @paper.experiments %>
+  <% for experiment in @paper.experiments %>
   <li><%= experiment.exp_desc %></li>
   <% end %>
 </ol>
 
 <ol>
-  <%= for experiment in @paper.experiments %>
+  <% for experiment in @paper.experiments %>
   <li><%= experiment.exp_desc %></li>
   <ul>
     <% for task in experiment.tasks %>

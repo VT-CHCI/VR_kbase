@@ -1,0 +1,12 @@
+hardware1:
+  hardware: "Dataglove"
+
+hardware2:
+  hardware: "IS900"
+
+hardware3:
+  hardware: "Sony Move"
+
+hardware4:
+  hardware: "Microsoft Kinect"
+

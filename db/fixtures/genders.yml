@@ -1,0 +1,24 @@
+female:
+  gender: "Female only"
+
+m_female:
+  gender: "Mostly female"
+
+balanced:
+  gender: "Balanced gender"
+
+m_male:
+  gender: "Mostly male"
+
+male:
+  gender: "Male only"
+
+unreported:
+  gender: "Not reported"
+
+
+
+
+
+
+

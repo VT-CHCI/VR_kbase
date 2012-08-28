@@ -1,0 +1,54 @@
+
+comp1:
+  comp_of_immersion: "Field of view (FOV)"
+
+comp2:
+  comp_of_immersion: "Field of regard (FOR)"
+
+comp3:
+  comp_of_immersion: "Software field of view (SFOV)"
+
+comp4:
+  comp_of_immersion: "Display size"
+
+comp5:
+  comp_of_immersion: "Display form factor"
+
+comp6:
+  comp_of_immersion: "Stereoscopy"
+
+comp7:
+  comp_of_immersion: "Head tracking"
+
+comp8:
+  comp_of_immersion: "Visual realism"
+
+comp9:
+  comp_of_immersion: "Refresh rate"
+
+comp10:
+  comp_of_immersion: "Frame rate"
+
+comp11:
+  comp_of_immersion: "Resolution (number of pixels)"
+
+comp12:
+  comp_of_immersion: "Resolution (pixel density)"
+
+comp13:
+  comp_of_immersion: "Audio quality"
+
+comp14:
+  comp_of_immersion: "Spatial audio (on/off)"
+
+comp15:
+  comp_of_immersion: "Haptic quality"
+
+comp16:
+  comp_of_immersion: "Haptics (on/off)"
+
+comp17:
+  comp_of_immersion: "Latency"
+
+comp18:
+  comp_of_immersion: "Jitter"

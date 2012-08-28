@@ -24,8 +24,8 @@ function add_fields(link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-  // console.log(new_id);
-  // console.log(regexp);
+   console.log(new_id);
+   console.log(regexp);
 
   $(link).parent().before(content.replace(regexp, new_id));
 
