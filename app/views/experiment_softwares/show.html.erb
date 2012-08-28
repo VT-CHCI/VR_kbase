@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Software:</b>
+  <%= @experiment_software.software %>
+</p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_software.experiment %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_software_path(@experiment_software) %> |
+<%= link_to 'Back', experiment_softwares_path %>

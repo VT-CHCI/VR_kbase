@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Hardware:</b>
+  <%= @experiment_hardware.hardware %>
+</p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_hardware.experiment %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_hardware_path(@experiment_hardware) %> |
+<%= link_to 'Back', experiment_hardwares_path %>

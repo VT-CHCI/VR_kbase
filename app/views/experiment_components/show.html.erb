@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Component:</b>
+  <%= @experiment_component.component %>
+</p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_component.experiment %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_component_path(@experiment_component) %> |
+<%= link_to 'Back', experiment_components_path %>

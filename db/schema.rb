@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827031556) do
+ActiveRecord::Schema.define(:version => 20120828154117) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -30,6 +30,68 @@ ActiveRecord::Schema.define(:version => 20120827031556) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "components", :force => true do |t|
+    t.string   "comp_of_immersion"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "displays", :force => true do |t|
+    t.string   "display"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "experiment_components", :force => true do |t|
+    t.integer  "component_id"
+    t.integer  "experiment_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "experiment_components", ["component_id"], :name => "index_experiment_components_on_component_id"
+  add_index "experiment_components", ["experiment_id"], :name => "index_experiment_components_on_experiment_id"
+
+  create_table "experiment_displays", :force => true do |t|
+    t.integer  "display_id"
+    t.integer  "experiment_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "experiment_displays", ["display_id"], :name => "index_experiment_displays_on_display_id"
+  add_index "experiment_displays", ["experiment_id"], :name => "index_experiment_displays_on_experiment_id"
+
+  create_table "experiment_genders", :force => true do |t|
+    t.integer  "gender_id"
+    t.integer  "experiment_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "experiment_genders", ["experiment_id"], :name => "index_experiment_genders_on_experiment_id"
+  add_index "experiment_genders", ["gender_id"], :name => "index_experiment_genders_on_gender_id"
+
+  create_table "experiment_hardwares", :force => true do |t|
+    t.integer  "hardware_id"
+    t.integer  "experiment_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "experiment_hardwares", ["experiment_id"], :name => "index_experiment_hardwares_on_experiment_id"
+  add_index "experiment_hardwares", ["hardware_id"], :name => "index_experiment_hardwares_on_hardware_id"
+
+  create_table "experiment_softwares", :force => true do |t|
+    t.integer  "software_id"
+    t.integer  "experiment_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "experiment_softwares", ["experiment_id"], :name => "index_experiment_softwares_on_experiment_id"
+  add_index "experiment_softwares", ["software_id"], :name => "index_experiment_softwares_on_software_id"
+
   create_table "experiments", :force => true do |t|
     t.integer  "paper_id"
     t.string   "title"
@@ -48,6 +110,19 @@ ActiveRecord::Schema.define(:version => 20120827031556) do
 
   add_index "experiments", ["paper_id"], :name => "index_experiments_on_paper_id"
 
+  create_table "genders", :force => true do |t|
+    t.string   "gender"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "hardwares", :force => true do |t|
+    t.string   "hardware"
+    t.string   "string"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "papers", :force => true do |t|
     t.string   "title"
     t.date     "year"
@@ -60,6 +135,12 @@ ActiveRecord::Schema.define(:version => 20120827031556) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "issue"
+  end
+
+  create_table "softwares", :force => true do |t|
+    t.string   "software"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tasks", :force => true do |t|

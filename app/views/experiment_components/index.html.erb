@@ -1,0 +1,25 @@
+<h1>Listing experiment_components</h1>
+
+<table>
+  <tr>
+    <th>Component</th>
+    <th>Experiment</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_components.each do |experiment_component| %>
+  <tr>
+    <td><%= experiment_component.component %></td>
+    <td><%= experiment_component.experiment %></td>
+    <td><%= link_to 'Show', experiment_component %></td>
+    <td><%= link_to 'Edit', edit_experiment_component_path(experiment_component) %></td>
+    <td><%= link_to 'Destroy', experiment_component, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment component', new_experiment_component_path %>

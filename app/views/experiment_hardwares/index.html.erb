@@ -1,0 +1,25 @@
+<h1>Listing experiment_hardwares</h1>
+
+<table>
+  <tr>
+    <th>Hardware</th>
+    <th>Experiment</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_hardwares.each do |experiment_hardware| %>
+  <tr>
+    <td><%= experiment_hardware.hardware %></td>
+    <td><%= experiment_hardware.experiment %></td>
+    <td><%= link_to 'Show', experiment_hardware %></td>
+    <td><%= link_to 'Edit', edit_experiment_hardware_path(experiment_hardware) %></td>
+    <td><%= link_to 'Destroy', experiment_hardware, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment hardware', new_experiment_hardware_path %>

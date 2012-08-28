@@ -1,4 +1,24 @@
 Kbase::Application.routes.draw do
+  resources :experiment_components
+
+  resources :components
+
+  resources :experiment_softwares
+
+  resources :softwares
+
+  resources :experiment_hardwares
+
+  resources :hardwares
+
+  resources :experiment_displays
+
+  resources :displays
+
+  resources :experiment_genders
+
+  resources :genders
+
   resources :venues
 
   resources :author_papers

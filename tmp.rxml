@@ -12,6 +12,29 @@ rails g scaffold AuthorPaper author:belongs_to paper:belongs_to
 
 rails g scaffold Venue name:string accronym:string
 
+
+
+
+rails g scaffold Component comp_of_immersion:string
+
+rails g scaffold ExperimentComponent component:belongs_to experiment:belongs_to
+
+rails g scaffold Gender gender:string
+
+rails g scaffold ExperimentGender gender:belongs_to experiment:belongs_to
+
+rails g scaffold Display display:string
+
+rails g scaffold ExperimentDisplay display:belongs_to experiment:belongs_to
+
+rails g scaffold Hardware hardware: string
+
+rails g scaffold ExperimentHardware hardware:belongs_to experiment:belongs_to
+
+rails g scaffold Software software:string
+
+rails g scaffold ExperimentSoftware software:belongs_to experiment:belongs_to
+
 -----------------------------------------------
  
 
