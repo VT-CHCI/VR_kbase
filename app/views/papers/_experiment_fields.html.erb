@@ -17,6 +17,14 @@
   <h3>Participant Information</h3>
   <p class="subtitle">This area documents total number of participants and their age range.  Also please list the technical background and other relevant information about the participants in this experiment.</p>
 
+  <div class="checkboxes">
+    <%= f.label :genders %><br />
+    <% Gender.all.each do |gender| %>
+      <%= check_box_tag "paper[experiments_attributes][new_experiments][gender_ids][]", gender.id, f.object.genders.include?(gender), :id => "experiment_gender_id_#{gender.id}" %>
+      <%= label_tag "paper[experiments_attributes][new_experiments][gender_ids][]", gender.gender, :for => "experiment_gender_id_#{gender.id}" %>
+    <% end %>
+  </div>
+
   <div class="field field-part-num inline">
     <%= f.label :part_num, 'Total Number' %><br />
     <%= f.number_field :part_num %>
