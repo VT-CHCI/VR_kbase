@@ -45,7 +45,9 @@
 
   * Only users can add papers
   * Admin view can edit all types
-    * Recently added authors / components of immersion/ hardware/ software, etc for curation / accpetance of standards
+    * Recently added authors / components of immersion/ hardware/ software, etc for curation / 
+    accpetance of standards
+      * ? New column on table for accepted:boolean ? to keep track
   * Users can see in progress papers
   * ? Mark Favorites ?
 
