@@ -1,6 +1,6 @@
 <div class="experiment">
   <h1>Experiment Information</h1>
-  <p class="subtitle">The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</p>
+  <p class="subtitle">This section is for adding the details of the experiments described in the publication. All experiments are classified as either INDEPENDENT COMPONENT STUDIES or HOLISTIC COMPARISONS. INDEPENDENT COMPONENT STUDIES are experiments varying one or more components of immersion independently (e.g., the experiment varies only field of view, and holds all other aspects of the system constant). HOLISTIC COMPARISONS are experiments varying multiple components of immersion simultaneously, so that the effects of individual components cannot be determined directly (e.g., the experiment compares a head-mounted display to a CAVE)</p>
 
   <h3>General Information</h3>
   <p class="subtitle">Create a title / nickname for the experiment so that it can be referred back to easily in the entry progress list. Also provide the research questions and goals that motivate the experiment.</p>
@@ -49,7 +49,7 @@
   </div>
 
   <h3>System Information</h3>
-  <p class="subtitle">Select all the categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then provide as much detail as you can on the harware/software used in this experiment such as dislays, input devices, tracking systems, computers, etc.</p>
+  <p class="subtitle">Use the autocomplete field to indicate categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then use the hardware and software autocomplete fields to provide general information on the system used in this experiment such as input devices, tracking systems, graphics packages, etc. Additonal details of the system such as computer specs, modifications, etc. can be added in the last text area.</p>
 
   <div class="field token-input">
       <%= f.label :display_tokens, "Displays Used" %><br />
@@ -70,7 +70,7 @@
   </div>
 
   <h3>Components of Immersion</h3>
-  <p class="subtitle">Select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</p>
+  <p class="subtitle">Use the autocoomplete to select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</p>
 
   <div class="field token-input">
       <%= f.label :component_tokens, "Components of Immersion Varied" %><br />
