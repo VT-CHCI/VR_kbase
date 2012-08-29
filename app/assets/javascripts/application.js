@@ -61,7 +61,9 @@ function add_fields(link, association, content) {
 }
 
 $(document).ready(function(){
-  $('.authors a').trigger('click');
+  if(window.location.href.indexOf("new") > -1) {
+     $('.authors a').trigger('click');
+  }
 
   $('#submit_doi').click(function() {
     if ($('#paper_doi').val()) {
