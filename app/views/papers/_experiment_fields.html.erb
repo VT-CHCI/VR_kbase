@@ -1,6 +1,6 @@
 <div class="experiment">
   <h1>Experiment Information</h1>
-  <p class="subtitle">This section is for adding the details of the experiments described in the publication. All experiments are classified as either INDEPENDENT COMPONENT STUDIES or HOLISTIC COMPARISONS. INDEPENDENT COMPONENT STUDIES are experiments varying one or more components of immersion independently (e.g., the experiment varies only field of view, and holds all other aspects of the system constant). HOLISTIC COMPARISONS are experiments varying multiple components of immersion simultaneously, so that the effects of individual components cannot be determined directly (e.g., the experiment compares a head-mounted display to a CAVE)</p>
+  <p class="subtitle">This section is for adding the details of the experiments described in the publication. All experiments are classified as either <strong>INDEPENDENT COMPONENT STUDIES</strong> or <strong>HOLISTIC COMPARISONS</strong>. <strong>INDEPENDENT COMPONENT STUDIES</strong> are experiments varying one or more components of immersion independently (e.g., the experiment varies only field of view, and holds all other aspects of the system constant). <strong>HOLISTIC COMPARISONS</strong> are experiments varying multiple components of immersion simultaneously, so that the effects of individual components cannot be determined directly (e.g., the experiment compares a head-mounted display to a CAVE)</p>
 
   <h3>General Information</h3>
   <p class="subtitle">Create a title / nickname for the experiment so that it can be referred back to easily in the entry progress list. Also provide the research questions and goals that motivate the experiment.</p>
@@ -55,6 +55,12 @@
       <%= f.label :display_tokens, "Displays Used" %><br />
       <%= f.text_field :display_tokens, "data-pre" => f.object.displays.to_json, "data-type" => "display" %>
   </div>
+
+  <div class="field field-display-desc">
+    <%= f.label :display_desc, 'Display Description' %><br />
+    <%= f.text_area :display_desc %>
+  </div>
+
   <div class="field token-input">
       <%= f.label :hardware_tokens, "Additional Hardware" %><br />
       <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware" %>

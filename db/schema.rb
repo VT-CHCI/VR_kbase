@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829180529) do
+ActiveRecord::Schema.define(:version => 20120829202642) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20120829180529) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "gender_id"
+    t.text     "display_desc"
   end
 
   add_index "experiments", ["paper_id"], :name => "index_experiments_on_paper_id"
