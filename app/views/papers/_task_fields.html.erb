@@ -1,19 +1,37 @@
 <div class="tasks">
+  <h1>User Task Information</h1>
+  <p class="subtitle">This section documents the different user tasks performed in the experiment. Most experiments will only have one user task. For each user task you will begin by providing the basic details, and then add relevent findings.</p>
+
+  <h3>General Information</h3>
+  <p class="subtitle">Create a title / nickname for the task so that it can be referred back to easily in the entry progress list.</p>
+
   <div class="field">
-    <%= f.label :title %><br />
+    <%= f.label :title, "User Task Title" %><br />
     <%= f.text_field :title %>
   </div>
+
+  <h3>Task Information</h3>
+  <p class="subtitle">This area documents what type of task was performed. Use the autocomplete field to enter the different task categories and then please provide a detailed description in the text area below.</p>
+
   <div class="field">
-    <%= f.label :task_desc %><br />
+    <%= f.label :task_desc, "User Task Description" %><br />
     <%= f.text_area :task_desc %>
   </div>
+
+  <h3>Interface / Environment Information</h3>
+  <p class="subtitle">This area describes the type of interface and enviroment the task was performed in. Please describe in detail the interface, then select from the radio buttons general information on the envrionment. Lastly provide any detailed information not captured in the last text area.</p>
+
   <div class="field">
-    <%= f.label :interface_desc %><br />
+    <%= f.label :interface_desc, "Interface Description" %><br />
     <%= f.text_area :interface_desc %>
   </div>
   <div class="field">
-    <%= f.label :env_desc %><br />
+    <%= f.label :env_desc, "Additional Environment Details" %><br />
     <%= f.text_area :env_desc %>
   </div>
+
+  <h3>Metrics</h3>
+  <p class="subtitle">Use the autocomplete field below to select all metrics used for evalutating this task.</p>
+
   <%= link_to_remove_fields "Remove Task", f %>
 </div>
