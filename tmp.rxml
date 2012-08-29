@@ -22,7 +22,7 @@ rails g scaffold Display display:string
 
 rails g scaffold ExperimentDisplay display:belongs_to experiment:belongs_to
 
-rails g scaffold Hardware hardware: string
+rails g scaffold Hardware hardware:string
 
 rails g scaffold ExperimentHardware hardware:belongs_to experiment:belongs_to
 

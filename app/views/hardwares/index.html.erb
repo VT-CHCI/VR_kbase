@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Hardware</th>
-    <th>String</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,7 +11,6 @@
 <% @hardwares.each do |hardware| %>
   <tr>
     <td><%= hardware.hardware %></td>
-    <td><%= hardware.string %></td>
     <td><%= link_to 'Show', hardware %></td>
     <td><%= link_to 'Edit', edit_hardware_path(hardware) %></td>
     <td><%= link_to 'Destroy', hardware, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
