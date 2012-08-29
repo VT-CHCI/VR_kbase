@@ -1,5 +1,70 @@
-Table between system and experiment: description
-Table between hardware/software and experiment: add description
-Table between comp and experiment: description
+# To Do #
+## Entry process ##
 
-new tables: journal, displays, Hardware
+* Input Token
+  * Add custom entry [check]
+  * Author version
+
+* Add Additional Forms
+  * Tasks
+  * Findings
+
+* Form Functionality
+  * Figure out proper flow
+  * Get jumping around to work properly
+  * Save progress automatically
+  * Error checking
+
+* Form Style 
+  * Animate progress entry titles when new one is entered to catch eyes of user
+  * ?Animate error text box?
+  * Round corners
+  * Better buttons
+  * Hover over progress bar items changes look 
+      $('#my-list li').hover(function() {
+          $(this).stop().animate({ fontSize : '20px' });
+    },
+    function() {
+          $(this).stop().animate({ fontSize : '12px' });
+    });
+
+
+## Show Process ##
+
+  * Show list of papers, experiments, or findings
+  * Syle full result 
+  * Get filtering to work
+  * Log number of views of a certain paper
+
+## Edit Process ##
+  
+  * Test to make sure it works properly
+  * Fix Bugs
+
+## Add User Support ##
+
+  * Only users can add papers
+  * Admin view can edit all types
+    * Recently added authors / components of immersion/ hardware/ software, etc for curation / accpetance of standards
+  * Users can see in progress papers
+  * ? Mark Favorites ?
+
+## Static Pages  ##
+
+  * Add welcome text
+    * Top viewed papers
+    * Recently added papers
+
+  * FAQ
+  * Contact
+
+## Search ##
+  
+  * Get it working
+
+## Overall themeing ##
+
+  * Change colors where necessary
+  * Create header graphic
+  * Overall page styling
+  * Footer with copyright
