@@ -3,6 +3,8 @@ class DisplaysController < ApplicationController
   # GET /displays.json
   def index
     @displays = Display.where("display like ?", "%#{params[:q]}%")
+    results = @displays
+    results << {:display => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
 
     respond_to do |format|
       format.html # index.html.erb

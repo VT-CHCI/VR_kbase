@@ -10,6 +10,9 @@ class Experiment < ActiveRecord::Base
   attr_reader :display_tokens
 
   def display_tokens=(ids)
+    ids.gsub!(/CREATE_(.+?)_END/) do
+      Display.create!(:display => $1).id
+    end
     self.display_ids = ids.split(",")
   end
 
@@ -31,6 +34,9 @@ class Experiment < ActiveRecord::Base
   attr_reader :software_tokens
 
   def software_tokens=(ids)
+    ids.gsub!(/CREATE_(.+?)_END/) do
+      Software.create!(:software => $1).id
+    end
     self.software_ids = ids.split(",")
   end
 
@@ -40,6 +46,9 @@ class Experiment < ActiveRecord::Base
   attr_reader :component_tokens
 
   def component_tokens=(ids)
+    ids.gsub!(/CREATE_(.+?)_END/) do
+      Component.create!(:comp_of_immersion => $1).id
+    end
     self.component_ids = ids.split(",")
   end
 
