@@ -60,21 +60,25 @@ function add_fields(link, association, content) {
 
     $('#paper_experiments_attributes_' + new_id + '_display_tokens').tokenInput('/displays.json', {
       crossDomain: false,
+      preventDuplicates: true,
       propertyToSearch: "display",
       prePopulate: $('#paper_experiments_attributes_' + new_id + '_display_tokens').data("pre")
     });
     $('#paper_experiments_attributes_' + new_id + '_software_tokens').tokenInput('/softwares.json', {
       crossDomain: false,
+      preventDuplicates: true,
       propertyToSearch: "software",
       prePopulate: $('#paper_experiments_attributes_' + new_id + '_software_tokens').data("pre")
     });
     $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').tokenInput('/hardwares.json', {
       crossDomain: false,
+      preventDuplicates: true,
       propertyToSearch: "hardware",
       prePopulate: $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').data("pre")
     });
     $('#paper_experiments_attributes_' + new_id + '_component_tokens').tokenInput('/components.json', {
       crossDomain: false,
+      preventDuplicates: true,
       propertyToSearch: "comp_of_immersion",
       prePopulate: $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').data("pre")
     });
@@ -91,6 +95,7 @@ $(document).ready(function(){
 
     $(this).tokenInput('/' + dataType + 's.json', {
       crossDomain: false,
+      preventDuplicates: true,
       propertyToSearch: dataType,
       prePopulate: $(this).data("pre")
     });
