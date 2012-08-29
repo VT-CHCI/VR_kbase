@@ -19,6 +19,9 @@ class Experiment < ActiveRecord::Base
   attr_reader :hardware_tokens
 
   def hardware_tokens=(ids)
+    ids.gsub!(/CREATE_(.+?)_END/) do
+      Hardware.create!(:hardware => $1).id
+    end
     self.hardware_ids = ids.split(",")
   end
 

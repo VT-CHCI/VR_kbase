@@ -3,6 +3,8 @@ class HardwaresController < ApplicationController
   # GET /hardwares.json
   def index
     @hardwares = Hardware.where("hardware like ?", "%#{params[:q]}%")
+    results = @hardwares
+    results << {:hardware => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
 
     respond_to do |format|
       format.html # index.html.erb
