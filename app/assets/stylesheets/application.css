@@ -18,9 +18,9 @@
 
  #entry_progress {
     width: 200px;
-    height: 538px;
     padding: 5px 15px;
     float: left;
+    position: fixed;
     /*background: #B2D6FF;*/
 }
 
@@ -35,8 +35,14 @@
   display: block !important;
 }
 
+#entry_progress a {
+  display: block;
+  text-align: right;
+  font-size: .8em
+}
+
 #entry_progress .experiment {
-    margin-left: 30px;
+    margin: 0 0 0 30px;
 }
 
 #entry_progress .subtitle {
