@@ -7,6 +7,12 @@ class Experiment < ActiveRecord::Base
   has_many :experiment_displays
   has_many :displays, :through => :experiment_displays
 
+  attr_reader :display_tokens
+
+  def display_tokens=(ids)
+    self.display_ids = ids.split(",")
+  end
+
   has_many :experiment_hardwares
   has_many :hardwares, :through => :experiment_hardwares
 
@@ -18,5 +24,5 @@ class Experiment < ActiveRecord::Base
 
   accepts_nested_attributes_for :tasks
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min, 
-    :part_background, :part_num, :system_desc, :tasks, :title, :gender_id
+    :part_background, :part_num, :system_desc, :tasks, :title, :gender_id, :display_tokens, :display_ids
 end

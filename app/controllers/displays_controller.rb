@@ -2,7 +2,7 @@ class DisplaysController < ApplicationController
   # GET /displays
   # GET /displays.json
   def index
-    @displays = Display.all
+    @displays = Display.where("display like ?", "%#{params[:q]}%")
 
     respond_to do |format|
       format.html # index.html.erb

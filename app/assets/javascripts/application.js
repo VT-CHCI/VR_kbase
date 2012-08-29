@@ -57,6 +57,12 @@ function add_fields(link, association, content) {
       $(this).prev(".experiment").remove();
       $(this).remove();
     });
+
+    $('#paper_experiments_attributes_' + new_id + '_display_tokens').tokenInput('/displays.json', {
+      crossDomain: false,
+      propertyToSearch: "display",
+      prePopulate: $('#paper_experiments_attributes_' + new_id + '_display_tokens').data("pre")
+    });
   }
 }
 
@@ -64,6 +70,16 @@ $(document).ready(function(){
   if(window.location.href.indexOf("new") > -1) {
      $('.authors a').trigger('click');
   }
+
+  $('.token-input input').each(function() {
+    var dataType = $(this).data("type");
+
+    $(this).tokenInput('/' + dataType + 's.json', {
+      crossDomain: false,
+      propertyToSearch: dataType,
+      prePopulate: $(this).data("pre")
+    });
+  });
 
   $('#submit_doi').click(function() {
     if ($('#paper_doi').val()) {
@@ -138,6 +154,4 @@ $(document).ready(function(){
       });
     }
   });
-
-  
 });

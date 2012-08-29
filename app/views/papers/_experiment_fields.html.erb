@@ -51,6 +51,11 @@
   <h3>System Information</h3>
   <p class="subtitle">Select all the categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then provide as much detail as you can on the harware/software used in this experiment such as dislays, input devices, tracking systems, computers, etc.</p>
 
+  <div class="field token-input">
+      <%= f.label :display_tokens, "Displays Used" %><br />
+      <%= f.text_field :display_tokens, "data-pre" => f.object.displays.to_json, "data-type" => "display" %>
+  </div>
+
   <div class="checkboxes">
     <%= f.label :displays %><br />
     <% Display.all.each do |display| %>
