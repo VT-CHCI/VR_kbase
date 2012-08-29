@@ -55,29 +55,13 @@
       <%= f.label :display_tokens, "Displays Used" %><br />
       <%= f.text_field :display_tokens, "data-pre" => f.object.displays.to_json, "data-type" => "display" %>
   </div>
-
-  <div class="checkboxes">
-    <%= f.label :displays %><br />
-    <% Display.all.each do |display| %>
-      <%= check_box_tag "paper[experiments_attributes][new_experiments][display_ids][]", display.id, f.object.displays.include?(display), :id => "experiment_display_id_#{display.id}" %>
-      <%= label_tag "paper[experiments_attributes][new_experiments][display_ids][]", display.display, :for => "experiment_display_id_#{display.id}" %>
-    <% end %>
+  <div class="field token-input">
+      <%= f.label :hardware_tokens, "Additional Hardware" %><br />
+      <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware" %>
   </div>
-
-  <div class="checkboxes">
-    <%= f.label :hardwares %><br />
-    <% Hardware.all.each do |hardware| %>
-      <%= check_box_tag "paper[experiments_attributes][new_experiments][hardware_ids][]", hardware.id, f.object.hardwares.include?(hardware), :id => "experiment_hardware_id_#{hardware.id}" %>
-      <%= label_tag "paper[experiments_attributes][new_experiments][hardware_ids][]", hardware.hardware, :for => "experiment_hardware_id_#{hardware.id}" %>
-    <% end %>
-  </div>
-
-  <div class="checkboxes">
-    <%= f.label :softwares %><br />
-    <% Software.all.each do |software| %>
-      <%= check_box_tag "paper[experiments_attributes][new_experiments][software_ids][]", software.id, f.object.softwares.include?(software), :id => "experiment_software_id_#{software.id}" %>
-      <%= label_tag "paper[experiments_attributes][new_experiments][software_ids][]", software.software, :for => "experiment_software_id_#{software.id}" %>
-    <% end %>
+  <div class="field token-input">
+      <%= f.label :software_tokens, "Software Used" %><br />
+      <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software" %>
   </div>
 
   <div class="field field-system-desc">
@@ -87,6 +71,11 @@
 
   <h3>Components of Immersion</h3>
   <p class="subtitle">Select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</p>
+
+  <div class="field token-input">
+      <%= f.label :component_tokens, "Components of Immersion Varied" %><br />
+      <%= f.text_field :component_tokens, "data-pre" => f.object.components.to_json, "data-type" => "comp_of_immersion" %>
+  </div>
 
   <div class="field field-comp-desc">
     <%= f.label :comp_desc, 'Components of Immersion Description' %><br />

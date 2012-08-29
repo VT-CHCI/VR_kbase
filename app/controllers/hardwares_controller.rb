@@ -2,7 +2,7 @@ class HardwaresController < ApplicationController
   # GET /hardwares
   # GET /hardwares.json
   def index
-    @hardwares = Hardware.all
+    @hardwares = Hardware.where("hardware like ?", "%#{params[:q]}%")
 
     respond_to do |format|
       format.html # index.html.erb

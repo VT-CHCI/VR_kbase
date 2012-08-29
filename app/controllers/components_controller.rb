@@ -2,7 +2,7 @@ class ComponentsController < ApplicationController
   # GET /components
   # GET /components.json
   def index
-    @components = Component.all
+    @components = Component.where("comp_of_immersion like ?", "%#{params[:q]}%")
 
     respond_to do |format|
       format.html # index.html.erb

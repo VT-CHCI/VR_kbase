@@ -63,6 +63,21 @@ function add_fields(link, association, content) {
       propertyToSearch: "display",
       prePopulate: $('#paper_experiments_attributes_' + new_id + '_display_tokens').data("pre")
     });
+    $('#paper_experiments_attributes_' + new_id + '_software_tokens').tokenInput('/softwares.json', {
+      crossDomain: false,
+      propertyToSearch: "software",
+      prePopulate: $('#paper_experiments_attributes_' + new_id + '_software_tokens').data("pre")
+    });
+    $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').tokenInput('/hardwares.json', {
+      crossDomain: false,
+      propertyToSearch: "hardware",
+      prePopulate: $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').data("pre")
+    });
+    $('#paper_experiments_attributes_' + new_id + '_component_tokens').tokenInput('/components.json', {
+      crossDomain: false,
+      propertyToSearch: "comp_of_immersion",
+      prePopulate: $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').data("pre")
+    });
   }
 }
 

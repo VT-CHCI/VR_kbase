@@ -2,7 +2,7 @@ class SoftwaresController < ApplicationController
   # GET /softwares
   # GET /softwares.json
   def index
-    @softwares = Software.all
+    @softwares = Software.where("software like ?", "%#{params[:q]}%")
 
     respond_to do |format|
       format.html # index.html.erb
