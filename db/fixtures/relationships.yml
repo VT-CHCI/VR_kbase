@@ -1,0 +1,15 @@
+relationship1:
+  id: 1
+  relationship:"Direct"
+
+relationship2:
+  id: 2
+  relationship:"Inverse"
+
+relationship3:
+  id: 3
+  relationship:"No relationship"
+
+relationship4:
+  id: 4
+  relationship:"Interaction"

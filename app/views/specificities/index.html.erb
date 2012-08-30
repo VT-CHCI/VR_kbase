@@ -1,0 +1,23 @@
+<h1>Listing specificities</h1>
+
+<table>
+  <tr>
+    <th>Level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @specificities.each do |specificity| %>
+  <tr>
+    <td><%= specificity.level %></td>
+    <td><%= link_to 'Show', specificity %></td>
+    <td><%= link_to 'Edit', edit_specificity_path(specificity) %></td>
+    <td><%= link_to 'Destroy', specificity, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Specificity', new_specificity_path %>

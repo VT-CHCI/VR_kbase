@@ -1,0 +1,19 @@
+specificity1:
+  id: 1
+  level:"Highly specific"
+
+specificity2:
+  id: 2
+  level:"Somewhat specific"
+
+specificity3:
+  id: 3
+  level:"Neither"
+
+specificity4:
+  id: 4
+  level:"Somewhat general"
+
+specificity5:
+  id: 5
+  level:"Highly general"

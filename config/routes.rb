@@ -1,4 +1,8 @@
 Kbase::Application.routes.draw do
+  resources :finding_specificities
+
+  resources :specificities
+
   resources :finding_components
 
   resources :finding_relationships

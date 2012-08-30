@@ -1,0 +1,25 @@
+<%= form_for(@finding_specificity) do |f| %>
+  <% if @finding_specificity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding_specificity.errors.count, "error") %> prohibited this finding_specificity from being saved:</h2>
+
+      <ul>
+      <% @finding_specificity.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :specificity %><br />
+    <%= f.text_field :specificity %>
+  </div>
+  <div class="field">
+    <%= f.label :finding %><br />
+    <%= f.text_field :finding %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

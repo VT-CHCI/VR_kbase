@@ -1,0 +1,15 @@
+density1:
+  id: 1
+  level: "Low (sparse, mostly empty space)"
+
+density2:
+  id: 2
+  level: "Medium"
+
+density3:
+  id: 3
+  level: "High (dense, little empty space)"
+
+density4:
+  id: 4
+  level: "Not reported"

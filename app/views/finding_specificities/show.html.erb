@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Specificity:</b>
+  <%= @finding_specificity.specificity %>
+</p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_specificity.finding %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_specificity_path(@finding_specificity) %> |
+<%= link_to 'Back', finding_specificities_path %>

@@ -1,0 +1,11 @@
+dimension1:
+  id: 1
+  level: "2.5D (3D environment where everything is on a ground plane or a terrain)"
+
+dimension2:
+  id: 2
+  level: "3D (the parts of the environment and the user's movements are in all three dimensions)"
+
+dimension3:
+  id: 3
+  level: "Not reported"

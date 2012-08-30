@@ -1,0 +1,26 @@
+metric1:
+  metric:"Time"
+
+metric2:
+  metric:"Performance"
+
+metric3:
+  metric:"Strategy"
+
+metric4:
+  metric:"Accuracy"
+
+metric5:
+  metric:"Errors"
+
+metric6:
+  metric:"Presence"
+
+metric7:
+  metric:"Heart rate"
+
+metric8:
+  metric:"Cybersickness"
+
+metric9:
+  metric:"User preference"

@@ -70,4 +70,8 @@ rails g scaffold FindingRelationship relationship:belongs_to finding:belongs_to
 
 rails g scaffold FindingComponent finding:belongs_to component:belongs_to
 
+rails g scaffold Specificity level:string
+
+rails g scaffold FindingSpecificity specificity:belongs_to finding:belongs_to
+
 

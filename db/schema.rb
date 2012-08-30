@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120830203930) do
+ActiveRecord::Schema.define(:version => 20120830211621) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -140,6 +140,16 @@ ActiveRecord::Schema.define(:version => 20120830203930) do
   add_index "finding_relationships", ["finding_id"], :name => "index_finding_relationships_on_finding_id"
   add_index "finding_relationships", ["relationship_id"], :name => "index_finding_relationships_on_relationship_id"
 
+  create_table "finding_specificities", :force => true do |t|
+    t.integer  "specificity_id"
+    t.integer  "finding_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "finding_specificities", ["finding_id"], :name => "index_finding_specificities_on_finding_id"
+  add_index "finding_specificities", ["specificity_id"], :name => "index_finding_specificities_on_specificity_id"
+
   create_table "findings", :force => true do |t|
     t.integer  "task_id"
     t.integer  "metric_id"
@@ -207,6 +217,12 @@ ActiveRecord::Schema.define(:version => 20120830203930) do
 
   create_table "softwares", :force => true do |t|
     t.string   "software"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "specificities", :force => true do |t|
+    t.string   "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

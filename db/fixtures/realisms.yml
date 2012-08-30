@@ -1,0 +1,15 @@
+realism1:
+  id: 1
+  level:"Low (abstract, cartoony, simple)"
+
+realism2:
+  id: 2
+  level:"Medium"
+
+realism3:
+  id: 3
+  level:"High (looks highly realistic)"
+
+realism4:
+  id: 4
+  level:"Not reported"
