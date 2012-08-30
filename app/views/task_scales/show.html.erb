@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Scale:</b>
+  <%= @task_scale.scale %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @task_scale.task %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_scale_path(@task_scale) %> |
+<%= link_to 'Back', task_scales_path %>

@@ -1,0 +1,21 @@
+<%= form_for(@density) do |f| %>
+  <% if @density.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@density.errors.count, "error") %> prohibited this density from being saved:</h2>
+
+      <ul>
+      <% @density.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :level %><br />
+    <%= f.text_field :level %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

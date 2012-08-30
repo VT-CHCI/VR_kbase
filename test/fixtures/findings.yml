@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  task: 
+  metric: 
+  category: 
+  title: MyString
+  summary: MyString
+  issue: MyText
+
+two:
+  task: 
+  metric: 
+  category: 
+  title: MyString
+  summary: MyString
+  issue: MyText

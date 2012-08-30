@@ -1,0 +1,2 @@
+module TaskScalesHelper
+end

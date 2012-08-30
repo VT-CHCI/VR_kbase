@@ -1,4 +1,36 @@
 Kbase::Application.routes.draw do
+  resources :finding_components
+
+  resources :finding_relationships
+
+  resources :relationships
+
+  resources :findings
+
+  resources :task_metrics
+
+  resources :metrics
+
+  resources :task_realisms
+
+  resources :realisms
+
+  resources :task_densities
+
+  resources :densities
+
+  resources :task_scales
+
+  resources :scales
+
+  resources :task_dimensions
+
+  resources :dimensions
+
+  resources :task_categories
+
+  resources :categories
+
   resources :experiment_components
 
   resources :components

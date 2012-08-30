@@ -1,0 +1,25 @@
+<%= form_for(@finding_relationship) do |f| %>
+  <% if @finding_relationship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding_relationship.errors.count, "error") %> prohibited this finding_relationship from being saved:</h2>
+
+      <ul>
+      <% @finding_relationship.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :relationship %><br />
+    <%= f.text_field :relationship %>
+  </div>
+  <div class="field">
+    <%= f.label :finding %><br />
+    <%= f.text_field :finding %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

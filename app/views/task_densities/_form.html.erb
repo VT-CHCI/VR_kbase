@@ -1,0 +1,25 @@
+<%= form_for(@task_density) do |f| %>
+  <% if @task_density.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task_density.errors.count, "error") %> prohibited this task_density from being saved:</h2>
+
+      <ul>
+      <% @task_density.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :density %><br />
+    <%= f.text_field :density %>
+  </div>
+  <div class="field">
+    <%= f.label :task %><br />
+    <%= f.text_field :task %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

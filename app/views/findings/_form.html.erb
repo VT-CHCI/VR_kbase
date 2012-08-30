@@ -1,0 +1,41 @@
+<%= form_for(@finding) do |f| %>
+  <% if @finding.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding.errors.count, "error") %> prohibited this finding from being saved:</h2>
+
+      <ul>
+      <% @finding.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :task %><br />
+    <%= f.text_field :task %>
+  </div>
+  <div class="field">
+    <%= f.label :metric %><br />
+    <%= f.text_field :metric %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br />
+    <%= f.text_field :category %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :summary %><br />
+    <%= f.text_field :summary %>
+  </div>
+  <div class="field">
+    <%= f.label :issue %><br />
+    <%= f.text_area :issue %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

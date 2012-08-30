@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Relationship:</b>
+  <%= @finding_relationship.relationship %>
+</p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_relationship.finding %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_relationship_path(@finding_relationship) %> |
+<%= link_to 'Back', finding_relationships_path %>

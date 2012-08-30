@@ -1,0 +1,25 @@
+<%= form_for(@finding_component) do |f| %>
+  <% if @finding_component.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding_component.errors.count, "error") %> prohibited this finding_component from being saved:</h2>
+
+      <ul>
+      <% @finding_component.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :finding %><br />
+    <%= f.text_field :finding %>
+  </div>
+  <div class="field">
+    <%= f.label :component %><br />
+    <%= f.text_field :component %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

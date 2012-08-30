@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Metric:</b>
+  <%= @task_metric.metric %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @task_metric.task %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_metric_path(@task_metric) %> |
+<%= link_to 'Back', task_metrics_path %>

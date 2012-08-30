@@ -1,0 +1,2 @@
+module TaskDensitiesHelper
+end

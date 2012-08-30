@@ -1,0 +1,21 @@
+<%= form_for(@realism) do |f| %>
+  <% if @realism.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@realism.errors.count, "error") %> prohibited this realism from being saved:</h2>
+
+      <ul>
+      <% @realism.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :level %><br />
+    <%= f.text_field :level %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

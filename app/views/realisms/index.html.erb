@@ -1,0 +1,23 @@
+<h1>Listing realisms</h1>
+
+<table>
+  <tr>
+    <th>Level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @realisms.each do |realism| %>
+  <tr>
+    <td><%= realism.level %></td>
+    <td><%= link_to 'Show', realism %></td>
+    <td><%= link_to 'Edit', edit_realism_path(realism) %></td>
+    <td><%= link_to 'Destroy', realism, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Realism', new_realism_path %>

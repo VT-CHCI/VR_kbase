@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_component.finding %>
+</p>
+
+<p>
+  <b>Component:</b>
+  <%= @finding_component.component %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_component_path(@finding_component) %> |
+<%= link_to 'Back', finding_components_path %>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Category:</b>
+  <%= @task_category.category %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @task_category.task %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_category_path(@task_category) %> |
+<%= link_to 'Back', task_categories_path %>

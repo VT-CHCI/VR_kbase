@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Task:</b>
+  <%= @finding.task %>
+</p>
+
+<p>
+  <b>Metric:</b>
+  <%= @finding.metric %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @finding.category %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @finding.title %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%= @finding.summary %>
+</p>
+
+<p>
+  <b>Issue:</b>
+  <%= @finding.issue %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_path(@finding) %> |
+<%= link_to 'Back', findings_path %>

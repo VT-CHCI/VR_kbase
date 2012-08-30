@@ -1,0 +1,23 @@
+<h1>Listing densities</h1>
+
+<table>
+  <tr>
+    <th>Level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @densities.each do |density| %>
+  <tr>
+    <td><%= density.level %></td>
+    <td><%= link_to 'Show', density %></td>
+    <td><%= link_to 'Edit', edit_density_path(density) %></td>
+    <td><%= link_to 'Destroy', density, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Density', new_density_path %>

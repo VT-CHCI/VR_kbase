@@ -1,0 +1,25 @@
+<h1>Listing task_realisms</h1>
+
+<table>
+  <tr>
+    <th>Realism</th>
+    <th>Task</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @task_realisms.each do |task_realism| %>
+  <tr>
+    <td><%= task_realism.realism %></td>
+    <td><%= task_realism.task %></td>
+    <td><%= link_to 'Show', task_realism %></td>
+    <td><%= link_to 'Edit', edit_task_realism_path(task_realism) %></td>
+    <td><%= link_to 'Destroy', task_realism, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Task realism', new_task_realism_path %>
