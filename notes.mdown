@@ -6,8 +6,21 @@
   * Author version
 
 * Add Additional Forms
+  * Experiment
+    * Add independant component study boolean
+      * Should that change to adding different conditions instead?
+        * Condition - different components of immersion, system information
+        * Independant studies would have only one condition
+    * Add display_desc text
   * Tasks
+    * Add 
   * Findings
+    * Should have only one Metric ?
+    * Has many Components
+    * Has many Tasks ?
+    * Has only one relationship
+    * For holistic comparisons - metrics could be evaluated against conditions rather than components
+
 
 * Form Functionality
   * Figure out proper flow
@@ -20,6 +33,7 @@
   * ?Animate error text box?
   * Round corners
   * Better buttons
+  * Token Input themeing
   * Hover over progress bar items changes look 
       $('#my-list li').hover(function() {
           $(this).stop().animate({ fontSize : '20px' });
@@ -27,6 +41,9 @@
     function() {
           $(this).stop().animate({ fontSize : '12px' });
     });
+
+* Code Cleanup
+  * Reduce JS redundant code by creating helper functions
 
 
 ## Show Process ##

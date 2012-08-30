@@ -4,7 +4,7 @@ rails g scaffold Experiment paper:belongs_to tasks:has_many title:string exp_des
 
 rails g scaffold Task experiment:belongs_to title:string task_desc:text interface_desc:text env_desc:text 
 
-
+-----------------------------------------------
 
 rails g scaffold Author first_name:string middle_initial:string last_name:string
 
@@ -12,7 +12,7 @@ rails g scaffold AuthorPaper author:belongs_to paper:belongs_to
 
 rails g scaffold Venue name:string accronym:string
 
-
+-----------------------------------------------
 
 rails g scaffold Gender gender:string
 
@@ -35,6 +35,39 @@ rails g scaffold Component comp_of_immersion:string
 rails g scaffold ExperimentComponent component:belongs_to experiment:belongs_to
 
 -----------------------------------------------
- 
 
------------------------------------------------
+rails g scaffold Category task_category:string
+
+rails g scaffold TaskCategory category:belongs_to task:belongs_to
+
+rails g scaffold Dimension level:string
+
+rails g scaffold TaskDimension dimension:belongs_to task:belongs_to
+
+rails g scaffold Scale level:string
+
+rails g scaffold TaskScale scale:belongs_to task:belongs_to
+
+rails g scaffold Density level:string
+
+rails g scaffold TaskDensity density:belongs_to task:belongs_to
+
+rails g scaffold Realism level:string
+
+rails g scaffold TaskRealism realism:belongs_to task:belongs_to
+
+rails g scaffold Metric metric:string
+
+rails g scaffold TaskMetric metric:belongs_to task:belongs_to
+
+
+
+rails g scaffold Finding task:belongs_to metric:belongs_to category:belongs_to title:string summary:string issue:text
+
+rails g scaffold Relationship relationship:string
+
+rails g scaffold FindingRelationship relationship:belongs_to finding:belongs_to
+
+rails g scaffold FindingComponent finding:belongs_to component:belongs_to
+
+
