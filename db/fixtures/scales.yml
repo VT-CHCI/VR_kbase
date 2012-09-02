@@ -1,15 +1,15 @@
 scale1:
   id: 1
-  level:"Small (0-10 meters on a side)"
+  level: "Small (0-10 meters on a side)"
 
 scale2:
   id: 2
-  level:"Medium (10-100 meters on a side)"
+  level: "Medium (10-100 meters on a side)"
 
 scale3:
   id: 3
-  level:"Large (>100 meters on a side)"
+  level: "Large (>100 meters on a side)"
 
 scale4:
   id: 4
-  level:"Not reported"
+  level: "Not reported"
