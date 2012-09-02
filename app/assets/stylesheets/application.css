@@ -50,6 +50,10 @@
     margin: 0 0 0 40px;
 }
 
+#entry_progress .findings {
+    margin: 0 0 0 54px;
+}
+
 
 #entry_progress .subtitle {
   border-top: 1px solid grey;
@@ -69,7 +73,7 @@
 }
 
 
-.field-title input {
+.field-title input, .field-summary input {
   width: 746px;
 }
 
