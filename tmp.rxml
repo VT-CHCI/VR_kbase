@@ -75,3 +75,14 @@ rails g scaffold Specificity level:string
 rails g scaffold FindingSpecificity specificity:belongs_to finding:belongs_to
 
 
+  <div class="field">
+    <div class="radio-buttons">
+      <%= f.label :dimension, 'Gender Balance' %><br />
+      <% Dimension.all.each do |dimension| %>
+        <div class="field radio-inline">
+          <%= f.radio_button :dimension_id, dimension.id %>
+          <%= f.label :dimension_id, dimension.level %>
+        </div>
+      <% end %>
+    </div>
+  </div>
