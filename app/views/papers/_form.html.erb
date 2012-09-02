@@ -3,7 +3,7 @@
     <h2>Entry Progress</h2>
     <p class="subtitle">This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</p>
     <div id="progress_headings">
-      <h3 class="current paper">Paper Details</h3>
+      <h3 class="current papers" data-id="paper">Paper Details</h3>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
         </div>
       <% end %>
 
-      <div class="paper">
+      <div id="paper" class="paper">
       <h1>Publication Information</h1>
       <p class="subtitle">The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</p>
 
@@ -56,7 +56,7 @@
       </div>
 
       <%= f.fields_for :venue do |builder| %>
-        <div class="field">
+        <div class="field .field-title">
           <%= builder.label :name, "Publication Venue" %><br />
           <%= builder.text_field :name %>
         </div>
@@ -84,7 +84,7 @@
         <%= f.label :end_page %><br />
         <%= f.number_field :end_page %>
       </div>
-      <div class="field clear">
+      <div class="field clear .field-title">
         <%= f.label :paper_url %><br />
         <%= f.text_field :paper_url %>
       </div>

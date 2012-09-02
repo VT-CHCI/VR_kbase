@@ -1,4 +1,4 @@
-<div class="experiment">
+<div id="experiment_new_experiments" class="experiment">
   <h1>Experiment Information</h1>
   <p class="subtitle">This section is for adding the details of the experiments described in the publication. All experiments are classified as either <strong>INDEPENDENT COMPONENT STUDIES</strong> or <strong>HOLISTIC COMPARISONS</strong>. <strong>INDEPENDENT COMPONENT STUDIES</strong> are experiments varying one or more components of immersion independently (e.g., the experiment varies only field of view, and holds all other aspects of the system constant). <strong>HOLISTIC COMPARISONS</strong> are experiments varying multiple components of immersion simultaneously, so that the effects of individual components cannot be determined directly (e.g., the experiment compares a head-mounted display to a CAVE)</p>
 
@@ -80,7 +80,7 @@
 
   <div class="field token-input">
       <%= f.label :component_tokens, "Components of Immersion Varied" %><br />
-      <%= f.text_field :component_tokens, "data-pre" => f.object.components.to_json, "data-type" => "comp_of_immersion" %>
+      <%= f.text_field :component_tokens, "data-pre" => f.object.components.to_json, "data-database" => "component", "data-type" => "comp_of_immersion" %>
   </div>
 
   <div class="field field-comp-desc">
@@ -105,5 +105,6 @@
   <%= f.fields_for :tasks do |builder| %>
     <%= render 'task_fields', :f => builder %>
   <% end %>
-  <p><%= link_to_add_fields "Add Task", f, :tasks %></p>
+  <!-- <p><%= link_to_add_fields "Add Task", f, :tasks %></p> -->
 </div>
+<p class="new_task"><%= link_to_add_fields "Next Step -> Add Task", f, :tasks %></p>
