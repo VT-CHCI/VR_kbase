@@ -1,0 +1,37 @@
+<div id="finding_new_findings" class="finding"> 
+  <h1>Finding Information</h1>
+  <p class="subtitle">This section documents the findings from the user task in the experiment. For each finding you will begin by providing the basic details, and then add relationships between the components of immersion a metric for a particlar task category.</p>
+
+  <h3>General Information</h3>
+  <p class="subtitle">Create a title / nickname for the finding so that it can be referred back to easily in the entry progress list.</p>
+
+  <div class="field field-title">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+
+  <h3>Finding Information</h3>
+  <p class="subtitle">This area provides the details of the finding. Choose one or more of components of immersion and the relationship between a metric for a particular task. If you choose more than one component the relationship will be automatically changed to interaction. This means that if two components of immersion have the same relationship with a metric it should be split into two findings.</p>
+  
+  <div class="field">
+    <%= f.label :metric %><br />
+    <%= f.text_field :metric %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br />
+    <%= f.text_field :category %>
+  </div>
+
+  <div class="field field-summary">
+    <%= f.label :summary, "Finding Summary" %><br />
+    <%= f.text_field :summary %>
+  </div>
+
+  <h3>Additional Information</h3>
+  <p class="subtitle">This last area is for documenting the specificity of the finding and any issues / confounds that are pertinant.</p>
+  
+  <div class="field">
+    <%= f.label :issue, "Issues" %><br />
+    <%= f.text_area :issue %>
+  </div>
+</div>

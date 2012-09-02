@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   belongs_to :experiment
+  has_many :findings, :dependent => :destroy
 
   belongs_to :dimension
   belongs_to :scale
@@ -30,6 +31,7 @@ class Task < ActiveRecord::Base
     self.metric_ids = ids.split(",")
   end
 
+  accepts_nested_attributes_for :findings
   attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
-    :density_id, :realism_id, :category_tokens, :metric_tokens
+    :density_id, :realism_id, :category_tokens, :metric_tokens, :findings
 end

@@ -60,7 +60,7 @@ rails g scaffold Metric metric:string
 
 rails g scaffold TaskMetric metric:belongs_to task:belongs_to
 
-
+-----------------------------------------------
 
 rails g scaffold Finding task:belongs_to metric:belongs_to category:belongs_to title:string summary:string issue:text
 

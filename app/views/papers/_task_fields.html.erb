@@ -93,4 +93,9 @@
   </div>
 
   <%= link_to_remove_fields "Remove Task", f %>
+
+  <%= f.fields_for :findings do |builder| %>
+    <%= render 'finding_fields', :f => builder %>
+  <% end %>
 </div>
+<p class="new_finding"><%= link_to_add_fields "Next Step -> Add Finding", f, :findings %></p>
