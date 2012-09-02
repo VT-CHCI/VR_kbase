@@ -33,17 +33,23 @@
   margin-left: 15px;
   font-size: .8em;
   display: block !important;
+  clear: right;
 }
 
 #entry_progress a {
-  display: block;
-  text-align: right;
+  float: right;
+  margin-bottom: 10px;
   font-size: .8em
 }
 
-#entry_progress .experiment {
-    margin: 0 0 0 30px;
+#entry_progress .experiments {
+    margin: 0 0 0 28px;
 }
+
+#entry_progress .tasks {
+    margin: 0 0 0 40px;
+}
+
 
 #entry_progress .subtitle {
   border-top: 1px solid grey;
@@ -60,6 +66,25 @@
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 7px solid red;
+}
+
+
+.field-title input {
+  width: 746px;
+}
+
+textarea {
+  width: 746px;
+  height: 6em;
+}
+
+.radio-buttons br {
+  line-height: 1.75em;
+}
+
+.radio-buttons .radio-inline {
+  display: inline;
+  margin-left: 15px;
 }
 
 
