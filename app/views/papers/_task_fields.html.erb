@@ -31,6 +31,54 @@
     <%= f.text_area :interface_desc %>
   </div>
 
+  <div class="field clear">
+    <div class="radio-buttons">
+      <%= f.label :dimension, 'Dimensionality of the Environment' %><br />
+      <% Dimension.all.each do |dimension| %>
+        <div class="field radio-inline">
+          <%= f.radio_button :dimension_id, dimension.id %>
+          <%= f.label :dimension_id, dimension.level %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field clear">
+    <div class="radio-buttons">
+      <%= f.label :scale, 'Scale of the Environment' %><br />
+      <% Scale.all.each do |scale| %>
+        <div class="field radio-inline">
+          <%= f.radio_button :scale_id, scale.id %>
+          <%= f.label :scale_id, scale.level %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field clear">
+    <div class="radio-buttons">
+      <%= f.label :density, 'Density of the Environment' %><br />
+      <% Density.all.each do |density| %>
+        <div class="field radio-inline">
+          <%= f.radio_button :density_id, density.id %>
+          <%= f.label :density_id, density.level %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field clear">
+    <div class="radio-buttons">
+      <%= f.label :realism, 'Realism of the Environment' %><br />
+      <% Realism.all.each do |realism| %>
+        <div class="field radio-inline">
+          <%= f.radio_button :realism_id, realism.id %>
+          <%= f.label :realism_id, realism.level %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <div class="field">
     <%= f.label :env_desc, "Additional Environment Details" %><br />
     <%= f.text_area :env_desc %>

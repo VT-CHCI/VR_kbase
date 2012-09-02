@@ -54,6 +54,6 @@ class Experiment < ActiveRecord::Base
 
   accepts_nested_attributes_for :tasks
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min, 
-    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, :display_tokens, :hardware_tokens,
-    :software_tokens, :component_tokens
+    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, :display_tokens,
+    :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes
 end

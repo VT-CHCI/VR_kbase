@@ -1,8 +1,10 @@
 class Task < ActiveRecord::Base
   belongs_to :experiment
 
-
-  belongs_to :dimension;
+  belongs_to :dimension
+  belongs_to :scale
+  belongs_to :density
+  belongs_to :realism
 
   has_many :task_categories
   has_many :categories, :through => :task_categories
@@ -16,5 +18,6 @@ class Task < ActiveRecord::Base
     self.category_ids = ids.split(",")
   end
 
-  attr_accessible :env_desc, :interface_desc, :task_desc, :title, :category_tokens, :dimension_id
+  attr_accessible :env_desc, :interface_desc, :task_desc, :title, :category_tokens, :dimension_id, :scale_id, 
+    :density_id, :realism_id
 end
