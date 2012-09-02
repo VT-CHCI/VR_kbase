@@ -18,6 +18,18 @@ class Task < ActiveRecord::Base
     self.category_ids = ids.split(",")
   end
 
-  attr_accessible :env_desc, :interface_desc, :task_desc, :title, :category_tokens, :dimension_id, :scale_id, 
-    :density_id, :realism_id
+  has_many :task_metrics
+  has_many :metrics, :through => :task_metrics
+
+  attr_reader :metric_tokens
+
+  def metric_tokens=(ids)
+    ids.gsub!(/CREATE_(.+?)_END/) do
+      Metric.create!(:metric => $1).id
+    end
+    self.metric_ids = ids.split(",")
+  end
+
+  attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
+    :density_id, :realism_id, :category_tokens, :metric_tokens
 end

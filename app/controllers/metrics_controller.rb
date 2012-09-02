@@ -2,7 +2,9 @@ class MetricsController < ApplicationController
   # GET /metrics
   # GET /metrics.json
   def index
-    @metrics = Metric.all
+    @metrics = Metric.where("metric like ?", "%#{params[:q]}%")
+    results = @metrics
+    results << {:metric => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
 
     respond_to do |format|
       format.html # index.html.erb

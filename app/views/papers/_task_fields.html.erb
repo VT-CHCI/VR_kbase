@@ -87,5 +87,10 @@
   <h3>Metrics</h3>
   <p class="subtitle">Use the autocomplete field below to select all metrics used for evalutating this task.</p>
 
+  <div class="field token-input">
+      <%= f.label :metric_tokens, "Metrics Used for Evaluation" %><br />
+      <%= f.text_field :metric_tokens, "data-pre" => f.object.metrics.to_json, "data-type" => "metric" %>
+  </div>
+
   <%= link_to_remove_fields "Remove Task", f %>
 </div>
