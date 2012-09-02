@@ -2,7 +2,9 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.where("task_category like ?", "%#{params[:q]}%")
+    results = @categories
+    results << {:task_category => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
 
     respond_to do |format|
       format.html # index.html.erb
