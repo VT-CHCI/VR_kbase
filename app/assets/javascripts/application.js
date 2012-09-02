@@ -20,68 +20,116 @@ function remove_fields(link) {
   $(link).parent().hide();
 }
 
+function add_progress_heading(association, new_id) {
+  $('#progress_headings h3').each(function() {
+    $(this).removeClass('current');
+  });
+
+  //Add to progress entry list
+  var singular = association.slice(0,-1);
+  var base = $('#' + singular + '_' + new_id + ' .field-title label').attr('for').replace('_title','');
+
+  var parentSelector = $('#progress_headings');
+
+  $('#progress_headings h3').each(function() {
+    var mySplitResult = $(this).data('id').split("_");
+    mySplitResult = mySplitResult[0] + 's_attributes_' + mySplitResult[1];
+    
+    if (base.match(mySplitResult)) {
+      parentSelector = $(this).next();
+    } 
+  });
+
+  if (parentSelector[0] == $('#progress_headings')[0]) {
+    parentSelector = $('#progress_headings h3.papers');
+  }
+
+  parentSelector.after('<a href="#" data-target="' + base + '__destroy">Remove</a>');
+  parentSelector.after('<h3 class="current ' + association + '" data-id=' + singular + '_' + new_id + ' data-target="' + base + '_title">Unnamed ' + singular + '</h3>');
+  
+  //Update headings
+  $('.field-title input').on('keyup',function() {
+    var field = $(this).attr('id');
+    var newTitle = $(this).val();
+    if (newTitle.length < 1) {
+      newTitle = 'Unnamed ' + singular;       
+    }
+
+    $('#progress_headings h3').each( function() {
+      if ($(this).data('target') == field) {
+        $(this).text(newTitle);
+      }
+    });
+  });
+
+  //Jump to correct section and hide all other sections
+  $('#progress_headings h3').on('click', function() {
+    var heading = $(this);
+    $('#progress_headings h3').each(function() {
+      $(this).removeClass('current');
+    });
+    $(this).addClass('current');
+
+    $('#paper_entry_form').children('div').each(function() {
+      if ($(this).attr('id') == heading.data('id')){
+        $(this).slideDown();
+      } else {
+        $(this).slideUp();
+      }
+    });
+
+    if($("html, body").scrollTop() < 10) {
+      $("html, body").animate({ scrollTop: 0 }, 500);
+    }
+  });
+
+  //Remove a component from the left
+  $('#progress_headings a').on('click',function() {
+    $('#'+ $(this).data('target')).val('true');
+    $('#'+ $(this).data('target')).parent().hide();
+    $(this).prev().remove();
+    $(this).remove();
+  });
+
+  return $('#' + singular + '_' + new_id)
+}
+
+function createTokenInput (focus) {
+  $('#' + focus.attr('id') + ' .token-input input').each(function() {
+    var dataType = $(this).data("type");
+    var database;
+    
+    if ($(this).data("database")) {
+      database = $(this).data("database");
+    } else {
+      database = dataType;
+    }
+
+    $(this).tokenInput('/' + database + 's.json', {
+      crossDomain: false,
+      preventDuplicates: true,
+      propertyToSearch: dataType,
+      prePopulate: $(this).data("pre")
+    });
+  });
+}
+
 function add_fields(link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-   console.log(new_id);
-   console.log(regexp);
+   //console.log(new_id);
+   //console.log(regexp);
 
   $(link).parent().before(content.replace(regexp, new_id));
 
-  if (association == 'experiments') {
-    $('.paper').slideUp();
-    $("html, body").animate({ scrollTop: 0 }, 600);
-    $('#progress_headings h3').each(function() {
-      $(this).removeClass('current');
-    });
+  if (association != 'authors') {  
+    var focus = add_progress_heading(association, new_id);
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    $('#paper_entry_form').children('div').not(focus).slideUp();
 
-    $('#progress_headings').append('<h3 class="current experiment paper_experiments_attributes_'+ new_id + '_title">Experiment 1</h3>');
-    $('#progress_headings').append('<a href="#" class="paper_experiments_attributes_' + new_id + '__destroy">Remove</a>');
-
-    $('.field-title input').on('keyup',function() {
-      newTitle = $(this).val();
-      if (newTitle.length < 1) {
-        newTitle = 'Unnamed Experiment';       
-      }
-      // console.log($(this).attr('id'));
-      $('#progress_headings').children('.' + $(this).attr('id')).text(newTitle);
-    });
-
-    $('#progress_headings a').on('click',function() {
-      console.log($(this).attr('class'));
-
-      $('#'+ $(this).attr('class')).val('true');
-      // console.log($('#'+ $(this).attr('class')).parent());
-      $('#'+ $(this).attr('class')).parent().hide();
-      $(this).prev(".experiment").remove();
-      $(this).remove();
-    });
-
-    $('#paper_experiments_attributes_' + new_id + '_display_tokens').tokenInput('/displays.json', {
-      crossDomain: false,
-      preventDuplicates: true,
-      propertyToSearch: "display",
-      prePopulate: $('#paper_experiments_attributes_' + new_id + '_display_tokens').data("pre")
-    });
-    $('#paper_experiments_attributes_' + new_id + '_software_tokens').tokenInput('/softwares.json', {
-      crossDomain: false,
-      preventDuplicates: true,
-      propertyToSearch: "software",
-      prePopulate: $('#paper_experiments_attributes_' + new_id + '_software_tokens').data("pre")
-    });
-    $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').tokenInput('/hardwares.json', {
-      crossDomain: false,
-      preventDuplicates: true,
-      propertyToSearch: "hardware",
-      prePopulate: $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').data("pre")
-    });
-    $('#paper_experiments_attributes_' + new_id + '_component_tokens').tokenInput('/components.json', {
-      crossDomain: false,
-      preventDuplicates: true,
-      propertyToSearch: "comp_of_immersion",
-      prePopulate: $('#paper_experiments_attributes_' + new_id + '_hardware_tokens').data("pre")
-    });
+    console.log(focus);
+    createTokenInput(focus);
   }
 }
 
