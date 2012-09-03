@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120830211621) do
+ActiveRecord::Schema.define(:version => 20120903014645) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -130,26 +130,6 @@ ActiveRecord::Schema.define(:version => 20120830211621) do
   add_index "finding_components", ["component_id"], :name => "index_finding_components_on_component_id"
   add_index "finding_components", ["finding_id"], :name => "index_finding_components_on_finding_id"
 
-  create_table "finding_relationships", :force => true do |t|
-    t.integer  "relationship_id"
-    t.integer  "finding_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "finding_relationships", ["finding_id"], :name => "index_finding_relationships_on_finding_id"
-  add_index "finding_relationships", ["relationship_id"], :name => "index_finding_relationships_on_relationship_id"
-
-  create_table "finding_specificities", :force => true do |t|
-    t.integer  "specificity_id"
-    t.integer  "finding_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "finding_specificities", ["finding_id"], :name => "index_finding_specificities_on_finding_id"
-  add_index "finding_specificities", ["specificity_id"], :name => "index_finding_specificities_on_specificity_id"
-
   create_table "findings", :force => true do |t|
     t.integer  "task_id"
     t.integer  "metric_id"
@@ -157,8 +137,10 @@ ActiveRecord::Schema.define(:version => 20120830211621) do
     t.string   "title"
     t.string   "summary"
     t.text     "issue"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "relationship_id"
+    t.integer  "specificity_id"
   end
 
   add_index "findings", ["category_id"], :name => "index_findings_on_category_id"
@@ -237,26 +219,6 @@ ActiveRecord::Schema.define(:version => 20120830211621) do
   add_index "task_categories", ["category_id"], :name => "index_task_categories_on_category_id"
   add_index "task_categories", ["task_id"], :name => "index_task_categories_on_task_id"
 
-  create_table "task_densities", :force => true do |t|
-    t.integer  "density_id"
-    t.integer  "task_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "task_densities", ["density_id"], :name => "index_task_densities_on_density_id"
-  add_index "task_densities", ["task_id"], :name => "index_task_densities_on_task_id"
-
-  create_table "task_dimensions", :force => true do |t|
-    t.integer  "dimension_id"
-    t.integer  "task_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "task_dimensions", ["dimension_id"], :name => "index_task_dimensions_on_dimension_id"
-  add_index "task_dimensions", ["task_id"], :name => "index_task_dimensions_on_task_id"
-
   create_table "task_metrics", :force => true do |t|
     t.integer  "metric_id"
     t.integer  "task_id"
@@ -267,26 +229,6 @@ ActiveRecord::Schema.define(:version => 20120830211621) do
   add_index "task_metrics", ["metric_id"], :name => "index_task_metrics_on_metric_id"
   add_index "task_metrics", ["task_id"], :name => "index_task_metrics_on_task_id"
 
-  create_table "task_realisms", :force => true do |t|
-    t.integer  "realism_id"
-    t.integer  "task_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "task_realisms", ["realism_id"], :name => "index_task_realisms_on_realism_id"
-  add_index "task_realisms", ["task_id"], :name => "index_task_realisms_on_task_id"
-
-  create_table "task_scales", :force => true do |t|
-    t.integer  "scale_id"
-    t.integer  "task_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "task_scales", ["scale_id"], :name => "index_task_scales_on_scale_id"
-  add_index "task_scales", ["task_id"], :name => "index_task_scales_on_task_id"
-
   create_table "tasks", :force => true do |t|
     t.integer  "experiment_id"
     t.string   "title"
@@ -295,6 +237,10 @@ ActiveRecord::Schema.define(:version => 20120830211621) do
     t.text     "env_desc"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "dimension_id"
+    t.integer  "scale_id"
+    t.integer  "density_id"
+    t.integer  "realism_id"
   end
 
   add_index "tasks", ["experiment_id"], :name => "index_tasks_on_experiment_id"
