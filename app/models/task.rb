@@ -33,5 +33,5 @@ class Task < ActiveRecord::Base
 
   accepts_nested_attributes_for :findings
   attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
-    :density_id, :realism_id, :category_tokens, :metric_tokens, :findings
+    :density_id, :realism_id, :category_tokens, :metric_tokens, :findings, :findings_attributes
 end

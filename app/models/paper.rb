@@ -8,6 +8,7 @@ class Paper < ActiveRecord::Base
   accepts_nested_attributes_for :experiments
   accepts_nested_attributes_for :venue
 
-  attr_accessible :doi, :end_page, :num_views, :paper_url, :start_page, :title, :volume, 
-    :year, :issue, :venue_attributes, :experiments_attributes, :authors_attributes, :tasks_attributes
+  attr_accessible :doi, :end_page, :num_views, :paper_url, :start_page, :title, :volume,
+    :year, :issue, :venue_attributes, :experiments_attributes, :authors_attributes,
+    :tasks_attributes, :findings_attributes
 end
