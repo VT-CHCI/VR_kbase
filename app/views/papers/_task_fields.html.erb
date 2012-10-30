@@ -31,7 +31,7 @@
     <%= f.text_area :interface_desc %>
   </div>
 
-  <div class="field clear">
+  <div class="field">
     <div class="radio-buttons">
       <%= f.label :dimension, 'Dimensionality of the Environment' %><br />
       <% Dimension.all.each do |dimension| %>
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div class="field clear">
+  <div class="field">
     <div class="radio-buttons">
       <%= f.label :scale, 'Scale of the Environment' %><br />
       <% Scale.all.each do |scale| %>
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div class="field clear">
+  <div class="field">
     <div class="radio-buttons">
       <%= f.label :density, 'Density of the Environment' %><br />
       <% Density.all.each do |density| %>
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  <div class="field clear">
+  <div class="field">
     <div class="radio-buttons">
       <%= f.label :realism, 'Realism of the Environment' %><br />
       <% Realism.all.each do |realism| %>

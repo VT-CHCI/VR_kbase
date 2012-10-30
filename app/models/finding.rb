@@ -3,5 +3,9 @@ class Finding < ActiveRecord::Base
   belongs_to :metric
   belongs_to :category
 
-  attr_accessible :issue, :summary, :title, :category, :metric
+  belongs_to :relationship
+  belongs_to :specificity
+
+  attr_accessible :issue, :summary, :title, :category, :metric, :relationship, :specificity,
+    :relationship_id, :specificity_id
 end

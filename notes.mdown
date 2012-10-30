@@ -12,6 +12,7 @@
         * Condition - different components of immersion, system information
         * Independant studies would have only one condition
     * Add display_desc text
+    * Add Average Age field
   * Tasks
     * Add 
   * Findings

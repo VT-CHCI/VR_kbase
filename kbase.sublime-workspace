@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"data",
+				"database"
+			],
+			[
+				"pare",
+				"parentSelector"
+			],
+			[
+				"field",
+				"field-title"
+			],
+			[
+				"add_",
+				"add_progress_heading"
+			],
+			[
+				"sf",
+				"software"
+			],
+			[
+				"token",
+				"tokenInput"
+			],
+			[
+				"gender",
+				"gender"
+			],
+			[
+				"h3",
+				"h3Class"
+			],
+			[
+				"xml",
+				"xmlString"
+			],
+			[
+				"author",
+				"author_papers"
+			],
+			[
+				"sca",
+				"scaffold"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
 				"experim",
 				"experiment"
 			],
@@ -84,10 +132,6 @@
 				"personClone"
 			],
 			[
-				"data",
-				"data"
-			],
-			[
 				"back",
 				"background"
 			],
@@ -118,10 +162,6 @@
 			[
 				"active",
 				"active-trail"
-			],
-			[
-				"font",
-				"font	font-weight: weight"
 			],
 			[
 				"fon",
@@ -159,39 +199,7 @@
 			"file": "app/views/papers/_form.html.erb",
 			"settings":
 			{
-				"buffer_size": 1311,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/models/paper.rb",
-			"settings":
-			{
-				"buffer_size": 239,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/models/experiment.rb",
-			"settings":
-			{
-				"buffer_size": 297,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/controllers/papers_controller.rb",
-			"settings":
-			{
-				"buffer_size": 2049,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/views/papers/show.html.erb",
-			"settings":
-			{
-				"buffer_size": 910,
+				"buffer_size": 4625,
 				"line_ending": "Unix"
 			}
 		},
@@ -199,7 +207,7 @@
 			"file": "app/views/papers/_experiment_fields.html.erb",
 			"settings":
 			{
-				"buffer_size": 268,
+				"buffer_size": 5559,
 				"line_ending": "Unix"
 			}
 		},
@@ -207,7 +215,47 @@
 			"file": "app/views/papers/_task_fields.html.erb",
 			"settings":
 			{
-				"buffer_size": 137,
+				"buffer_size": 3937,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/papers/_finding_fields.html.erb",
+			"settings":
+			{
+				"buffer_size": 2392,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/paper.rb",
+			"settings":
+			{
+				"buffer_size": 520,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/experiment.rb",
+			"settings":
+			{
+				"buffer_size": 1617,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/task.rb",
+			"settings":
+			{
+				"buffer_size": 965,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/finding.rb",
+			"settings":
+			{
+				"buffer_size": 288,
 				"line_ending": "Unix"
 			}
 		},
@@ -215,15 +263,31 @@
 			"file": "app/assets/javascripts/application.js",
 			"settings":
 			{
-				"buffer_size": 775,
+				"buffer_size": 7140,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/helpers/application_helper.rb",
+			"file": "app/assets/stylesheets/application.css",
 			"settings":
 			{
-				"buffer_size": 149,
+				"buffer_size": 4354,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "notes.mdown",
+			"settings":
+			{
+				"buffer_size": 2194,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/displays_controller.rb",
+			"settings":
+			{
+				"buffer_size": 2179,
 				"line_ending": "Unix"
 			}
 		}
@@ -231,9 +295,17 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 107.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"par",
+				"Rails Partial: Create Partial and Open"
+			],
+			[
+				"parti",
+				"Rails Partial: Create Partial and Open"
+			],
 			[
 				"partial",
 				"Rails Partial: Create Partial and Open"
@@ -264,8 +336,83 @@
 	},
 	"file_history":
 	[
-		"/Users/scerbos/Code/kbase/app/views/layouts/application.html.erb",
+		"/Users/scerbos/Code/kbase/app/controllers/metrics_controller.rb",
+		"/Users/scerbos/Code/kbase/app/controllers/categories_controller.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120903014645_edit_one_to_many_for_finding.rb",
+		"/Users/scerbos/Code/kbase/tmp.rxml",
+		"/Users/scerbos/Code/kbase/db/schema.rb",
 		"/Users/scerbos/Code/kbase/app/models/task.rb",
+		"/Users/scerbos/Code/kbase/app/models/gender.rb",
+		"/Users/scerbos/Code/kbase/app/views/papers/_author_fields.html.erb",
+		"/Users/scerbos/Code/kbase/app/assets/stylesheets/papers.css.scss",
+		"/Users/scerbos/Code/kbase/app/controllers/papers_controller.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120902173113_edit_one_to_many_for_experiment.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120902172326_edit_one_to_many_for_task.rb",
+		"/Users/scerbos/Code/kbase/app/models/category.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120902172203_create_one_to_many_for_task.rb",
+		"/Users/scerbos/Code/kbase/app/assets/stylesheets/experiments.css.scss",
+		"/Users/scerbos/Code/kbase/app/views/papers/_task_fields.html.erb",
+		"/Users/scerbos/Code/kbase/app/views/papers/_experiment_fields.html.erb",
+		"/Users/scerbos/Code/kbase/app/models/paper.rb",
+		"/Users/scerbos/Code/kbase/db/fixtures/specificities.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/scales.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/metrics.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/realisms.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/relationships.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/dimensions.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/densities.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/categories.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/components.yml",
+		"/Users/scerbos/Code/kbase/.git/config",
+		"/Users/scerbos/Code/kbase/app/helpers/components_helper.rb",
+		"/Users/scerbos/Code/kbase/app/helpers/experiments_helper.rb",
+		"/Users/scerbos/Code/kbase/app/assets/stylesheets/token-input-facebook.css",
+		"/Users/scerbos/Code/kbase/db/migrate/20120829202642_add_display_desc_to_experiment.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120829202308_add_type_and_display_desc_to_experiment.rb",
+		"/Users/scerbos/Code/kbase/app/controllers/softwares_controller.rb",
+		"/Users/scerbos/Code/kbase/app/controllers/components_controller.rb",
+		"/Users/scerbos/Code/kbase/app/controllers/displays_controller.rb",
+		"/Users/scerbos/Code/kbase/app/controllers/hardwares_controller.rb",
+		"/Users/scerbos/Code/kbase/app/assets/javascripts/displays.js.coffee",
+		"/Users/scerbos/Code/kbase/db/migrate/20120829180529_remove_string_column_from_hardware.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120828154031_create_experiment_displays.rb",
+		"/Users/scerbos/Code/kbase/app/views/hardwares/_form.html.erb",
+		"/Users/scerbos/Code/kbase/app/views/hardwares/index.html.erb",
+		"/Users/scerbos/Code/kbase/app/views/hardwares/show.html.erb",
+		"/Users/scerbos/Code/kbase/app/assets/javascripts/jquery.tokeninput.js",
+		"/Users/scerbos/Code/kbase/app/models/hardware.rb",
+		"/Users/scerbos/Code/kbase/db/fixtures/genders.yml",
+		"/Users/scerbos/Code/kbase/app/views/papers/show.html.erb",
+		"/Users/scerbos/Code/kbase/app/views/papers/index.html.erb",
+		"/Users/scerbos/Code/kbase/app/helpers/application_helper.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120828191828_add_gender_to_experiment.rb",
+		"/Users/scerbos/Code/kbase/app/views/papers/_gender_fields.html.erb",
+		"/Users/scerbos/Code/kbase/app/models/experiment.rb",
+		"/Users/scerbos/Code/kbase/app/controllers/experiments_controller.rb",
+		"/Users/scerbos/Code/kbase/config/environment.rb",
+		"/Users/scerbos/Code/kbase/db/fixtures/displays.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/softwares.yml",
+		"/Users/scerbos/Code/kbase/db/fixtures/hardwares.yml",
+		"/Users/scerbos/Code/kbase/lib/tasks/db.rake",
+		"/Users/scerbos/Code/kbase/app/models/component.rb",
+		"/Users/scerbos/Code/kbase/app/models/software.rb",
+		"/Users/scerbos/Code/kbase/app/models/display.rb",
+		"/Users/scerbos/Desktop/knowledgebase-6-14-2012/db/schema.rb",
+		"/Users/scerbos/Code/kbase/notes.mdown",
+		"/Users/scerbos/Code/kbase/app/assets/javascripts/papers.js.coffee",
+		"/Users/scerbos/Code/kbase/app/assets/stylesheets/authors.css.scss",
+		"/Users/scerbos/Code/kbase/kbase.sublime-project",
+		"/Users/scerbos/Desktop/knowledgebase-6-14-2012/config/routes.rb",
+		"/Users/scerbos/Code/kbase/app/models/venue.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120827014240_add_venue_to_paper.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120827031556_rename_num_pages_of_paper.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120827031459_add_issue_to_paper.rb",
+		"/Users/scerbos/Code/kbase/app/assets/stylesheets/application.css",
+		"/Users/scerbos/Code/kbase/tmp.js",
+		"/Users/scerbos/Code/kbase/app/models/author.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120826200434_create_authors.rb",
+		"/Users/scerbos/Code/kbase/db/migrate/20120826200650_create_authors_papers.rb",
+		"/Users/scerbos/Code/kbase/app/views/layouts/application.html.erb",
 		"/Users/scerbos/Code/kbase/app/views/papers/edit.html.erb",
 		"/Users/scerbos/Code/kbase/db/migrate/20120825021655_create_papers.rb",
 		"/Users/scerbos/Code/kbase/db/migrate/20120825021702_create_experiments.rb",
@@ -316,11 +463,7 @@
 		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/css/menu-old.css",
 		"/Applications/XAMPP/xamppfiles/htdocs/CSS/themes/andromeda/css/layout-tab.css",
 		"/Users/scerbos/Code/ComiXML/ComiXML/_js/script.js",
-		"/Users/scerbos/Code/ComiXML/ComiXML/index.html",
-		"/Users/scerbos/Code/ComiXML/ComiXML/_css/screen.css",
-		"/Users/scerbos/Code/ComiXML/ComiXML/_js/plugins.js",
-		"/Users/scerbos/Code/ComiXML/ComiXML/_js/libs/jquery-1.7.1.js",
-		"/Users/scerbos/Code/ComiXML/ComiXML Project"
+		"/Users/scerbos/Code/ComiXML/ComiXML/index.html"
 	],
 	"find":
 	{
@@ -339,6 +482,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"experiment",
+			"gender",
+			"gender_id",
+			"gender",
+			"<li>",
+			"toLower",
+			"toLowerCase",
+			"software",
+			"display",
+			"gender",
+			"gender_",
+			":\"",
+			"\"",
+			":before",
+			"::before",
+			"tmp",
 			"paper_id",
 			"int",
 			"add",
@@ -410,6 +569,13 @@
 		"regex": false,
 		"replace_history":
 		[
+			"component",
+			"software",
+			"hardware",
+			"software",
+			"hardware",
+			"",
+			": \"",
 			"\"",
 			"map",
 			"scroller",
@@ -460,7 +626,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 10,
 			"sheets":
 			[
 				{
@@ -468,15 +634,99 @@
 					"file": "app/views/papers/_form.html.erb",
 					"settings":
 					{
-						"buffer_size": 1311,
+						"buffer_size": 4625,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1139,
-								1139
+								1562,
+								1568
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 266.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/papers/_experiment_fields.html.erb",
+					"settings":
+					{
+						"buffer_size": 5559,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5559,
+								5559
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/views/papers/_task_fields.html.erb",
+					"settings":
+					{
+						"buffer_size": 3937,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2826,
+								2826
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/views/papers/_finding_fields.html.erb",
+					"settings":
+					{
+						"buffer_size": 2392,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1674,
+								1674
 							]
 						],
 						"settings":
@@ -492,19 +742,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 4,
 					"file": "app/models/paper.rb",
 					"settings":
 					{
-						"buffer_size": 239,
+						"buffer_size": 520,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								239,
-								239
+								258,
+								258
 							]
 						],
 						"settings":
@@ -520,19 +770,75 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 5,
 					"file": "app/models/experiment.rb",
 					"settings":
 					{
-						"buffer_size": 297,
+						"buffer_size": 1617,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								138,
-								138
+								1612,
+								1612
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/models/task.rb",
+					"settings":
+					{
+						"buffer_size": 965,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/models/finding.rb",
+					"settings":
+					{
+						"buffer_size": 288,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								245,
+								245
 							]
 						],
 						"settings":
@@ -546,129 +852,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "app/controllers/papers_controller.rb",
-					"settings":
-					{
-						"buffer_size": 2049,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								624,
-								624
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/views/papers/show.html.erb",
-					"settings":
-					{
-						"buffer_size": 910,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								518,
-								518
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1449.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/views/papers/_experiment_fields.html.erb",
-					"settings":
-					{
-						"buffer_size": 268,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								165,
-								165
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "app/views/papers/_task_fields.html.erb",
-					"settings":
-					{
-						"buffer_size": 137,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								87,
-								87
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "app/assets/javascripts/application.js",
 					"settings":
 					{
-						"buffer_size": 775,
+						"buffer_size": 7140,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								773,
-								773
+								4057,
+								4057
 							]
 						],
 						"settings":
@@ -678,25 +874,81 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1207.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "app/helpers/application_helper.rb",
+					"buffer": 9,
+					"file": "app/assets/stylesheets/application.css",
 					"settings":
 					{
-						"buffer_size": 149,
+						"buffer_size": 4354,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								144,
-								144
+								1126,
+								1126
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 397.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "notes.mdown",
+					"settings":
+					{
+						"buffer_size": 2194,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								436,
+								436
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 543.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "app/controllers/displays_controller.rb",
+					"settings":
+					{
+						"buffer_size": 2179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								305,
+								305
 							]
 						],
 						"settings":
@@ -756,16 +1008,20 @@
 		"selected_items":
 		[
 			[
+				"schem",
+				"db/schema.rb"
+			],
+			[
+				"sch",
+				"db/schema.rb"
+			],
+			[
 				"application",
 				"app/assets/javascripts/application.js"
 			],
 			[
 				"form",
 				"app/views/papers/_form.html.erb"
-			],
-			[
-				"schem",
-				"db/schema.rb"
 			],
 			[
 				"rour",
@@ -786,6 +1042,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 238.0,
+	"side_bar_width": 290.0,
 	"status_bar_visible": true
 }

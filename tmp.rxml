@@ -10,7 +10,7 @@ rails g scaffold Author first_name:string middle_initial:string last_name:string
 
 rails g scaffold AuthorPaper author:belongs_to paper:belongs_to
 
-rails g scaffold Venue name:string accronym:string
+rails g scaffold Venue paper:belongs_to name:string accronym:string
 
 -----------------------------------------------
 
