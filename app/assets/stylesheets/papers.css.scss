@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+/*
 .subtitle {
 	font-size: .8em;
 	line-height: 1.45em;
@@ -15,7 +16,6 @@
 	width: 750px;
 	padding: 5px 25px;
 	margin-left: 255px;
-	/*border: 2px dashed grey;*/
   overflow: auto;
 }
 
@@ -88,11 +88,7 @@
   margin: 0 0 0 10px;
 }
 
-form input[type='number']::-webkit-outer-spin-button,
-form input[type='number']::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+
 
 .clear {
   clear: both;
@@ -101,3 +97,4 @@ form input[type='number']::-webkit-inner-spin-button {
 .paper {
   display: block;
 }
+*/

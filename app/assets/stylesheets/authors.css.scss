@@ -4,10 +4,14 @@
 
 .author {
   clear: both;
-}
 
-.author .field {
-  float: left;
+  .field {
+    float: left;
+  }
+
+  a {
+    margin-left: 10px;
+  }
 }
 
 .authors a {
@@ -15,6 +19,6 @@
   display: block;
 }
 
-.author a {
-  margin-left: 10px;
+.author button {
+  padding-top: 25px;
 }

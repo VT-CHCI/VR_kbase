@@ -1,103 +1,112 @@
 <div id="experiment_new_experiments" class="experiment">
-  <h1>Experiment Information</h1>
-  <p class="subtitle">This section is for adding the details of the experiments described in the publication. All experiments are classified as either <strong>INDEPENDENT COMPONENT STUDIES</strong> or <strong>HOLISTIC COMPARISONS</strong>. <strong>INDEPENDENT COMPONENT STUDIES</strong> are experiments varying one or more components of immersion independently (e.g., the experiment varies only field of view, and holds all other aspects of the system constant). <strong>HOLISTIC COMPARISONS</strong> are experiments varying multiple components of immersion simultaneously, so that the effects of individual components cannot be determined directly (e.g., the experiment compares a head-mounted display to a CAVE)</p>
 
-  <h3>General Information</h3>
-  <p class="subtitle">Create a title / nickname for the experiment so that it can be referred back to easily in the entry progress list. Also provide the research questions and goals that motivate the experiment.</p>
+  <h1>Experiment Information</h1>
+
+  <p><small>This section is for adding the details of the experiments described in the publication. All experiments are classified as either <strong>INDEPENDENT COMPONENT STUDIES</strong> or <strong>HOLISTIC COMPARISONS</strong>. <strong>INDEPENDENT COMPONENT STUDIES</strong> are experiments varying one or more components of immersion independently (e.g., the experiment varies only field of view, and holds all other aspects of the system constant). <strong>HOLISTIC COMPARISONS</strong> are experiments varying multiple components of immersion simultaneously, so that the effects of individual components cannot be determined directly (e.g., the experiment compares a head-mounted display to a CAVE)</small></p>
+
+
+  <legend class="with-helper-text">General Information</legend>
+  <p class="after-legend"><small>Create a title / nickname for the experiment so that it can be referred back to easily in the entry progress list. Also provide the research questions and goals that motivate the experiment.</small></p>
 
   <div class="field field-title">
-    <%= f.label :title, 'Experiment Title'  %><br />
-    <%= f.text_field :title %>
+    <%= f.label :title, 'Experiment Title'  %>
+    <%= f.text_field :title, :class => 'span12' %>
   </div>
   <div class="field field-exp-desc">
-    <%= f.label :exp_desc, 'Research Questions and Goals' %><br />
-    <%= f.text_area :exp_desc %>
+    <%= f.label :exp_desc, 'Research Questions and Goals' %>
+    <%= f.text_area :exp_desc, :class => 'span12', :rows => 5 %>
   </div>
 
-  <h3>Participant Information</h3>
-  <p class="subtitle">This area documents total number of participants and their age range.  Also please list the technical background and other relevant information about the participants in this experiment.</p>
+  <legend class="with-helper-text">Participant Information</legend>
+  <p class="after-legend"><small>This area documents total number of participants and their age range.  Also please list the technical background and other relevant information about the participants in this experiment.</small></p>
 
-  <div class="field field-part-num inline">
-    <%= f.label :part_num, 'Total Number' %><br />
-    <%= f.number_field :part_num %>
-  </div>
-  <div class="field field-part-age-min inline">
-    <%= f.label :part_age_min, 'Age Range' %><br />
-    <%= f.number_field :part_age_min %>
-    <span class="hyphen"> - </span>
-  </div>
-  <div class="field field-part-age-max inline">
-    <%= f.label :part_age_max, 'Maximum Age' %><br />
-    <%= f.number_field :part_age_max %>
+  <div class="inline-group range">
+    <div class="field">
+      <%= f.label :part_num, 'Total Number' %>
+      <%= f.number_field :part_num, :class => 'input-mini' %>
+    </div>
+    <div class="field before-hyphen">
+      <%= f.label :part_age_min, 'Min Age' %>
+      <%= f.number_field :part_age_min, :class => 'input-mini' %>
+    </div>
+    <div class="field hyphen">
+      -
+    </div>
+    <div class="field after-hyphen">
+      <%= f.label :part_age_max, 'Max Age' %>
+      <%= f.number_field :part_age_max, :class => 'input-mini' %>
+    </div>
   </div>
 
   <div class="field clear">
     <div class="radio-buttons">
-      <%= f.label :gender, 'Gender Balance' %><br />
+      <%= f.label :gender, 'Gender Balance' %>
       <% Gender.all.each do |gender| %>
-        <div class="field radio-inline">
+        
+        <label class="radio inline pill">
           <%= f.radio_button :gender_id, gender.id %>
-          <%= f.label :gender_id, gender.gender %>
-        </div>
+          <%= f.label :gender_id, gender.gender, :class => 'test' %>
+        </label>
+        
       <% end %>
     </div>
   </div>
 
   <div class="field field-part-background clear">
-    <%= f.label :part_background, "Participants' Background" %><br />
-    <%= f.text_area :part_background %>
+    <%= f.label :part_background, "Participants' Background" %>
+    <%= f.text_area :part_background, :class => 'span12', :rows => 5 %>
   </div>
 
-  <h3>System Information</h3>
-  <p class="subtitle">Use the autocomplete field to indicate categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then use the hardware and software autocomplete fields to provide general information on the system used in this experiment such as input devices, tracking systems, graphics packages, etc. Additonal details of the system such as computer specs, modifications, etc. can be added in the last text area.</p>
+  <legend class="with-helper-text">System Information</legend>
+  <p class="after-legend"><small>Use the autocomplete field to indicate categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then use the hardware and software autocomplete fields to provide general information on the system used in this experiment such as input devices, tracking systems, graphics packages, etc. Additonal details of the system such as computer specs, modifications, etc. can be added in the last text area.</small></p>
 
   <div class="field token-input">
-      <%= f.label :display_tokens, "Displays Used" %><br />
-      <%= f.text_field :display_tokens, "data-pre" => f.object.displays.to_json, "data-type" => "display" %>
+      <%= f.label :display_tokens, "Displays Used" %>
+      <%= f.text_field :display_tokens, "data-pre" => f.object.displays.to_json, "data-type" => "display", :class => 'span12' %>
   </div>
 
   <div class="field field-display-desc">
-    <%= f.label :display_desc, 'Display Description' %><br />
-    <%= f.text_area :display_desc %>
+    <%= f.label :display_desc, 'Display Description' %>
+    <%= f.text_area :display_desc, :class => 'span12', :rows => 5 %>
   </div>
 
   <div class="field token-input">
-      <%= f.label :hardware_tokens, "Additional Hardware" %><br />
+      <%= f.label :hardware_tokens, "Additional Hardware" %>
       <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware" %>
   </div>
   <div class="field token-input">
-      <%= f.label :software_tokens, "Software Used" %><br />
+      <%= f.label :software_tokens, "Software Used" %>
       <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software" %>
   </div>
 
   <div class="field field-system-desc">
-    <%= f.label :system_desc, 'Hardware / Software Description' %><br />
-    <%= f.text_area :system_desc %>
+    <%= f.label :system_desc, 'Hardware / Software Description' %>
+    <%= f.text_area :system_desc, :class => 'span12', :rows => 5 %>
   </div>
 
-  <h3>Components of Immersion</h3>
-  <p class="subtitle">Use the autocoomplete to select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</p>
+  <legend class="with-helper-text">Components of Immersion</legend>
+  <p class="after-legend"><small>Use the autocoomplete to select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</small></p>
 
   <div class="field token-input">
-      <%= f.label :component_tokens, "Components of Immersion Varied" %><br />
+      <%= f.label :component_tokens, "Components of Immersion Varied" %>
       <%= f.text_field :component_tokens, "data-pre" => f.object.components.to_json, "data-database" => "component", "data-type" => "comp_of_immersion" %>
   </div>
 
   <div class="field field-comp-desc">
-    <%= f.label :comp_desc, 'Components of Immersion Description' %><br />
-    <%= f.text_area :comp_desc %>
+    <%= f.label :comp_desc, 'Components of Immersion Description' %>
+    <%= f.text_area :comp_desc, :class => 'span12', :rows => 5 %>
   </div>
 
-  <h3>Additional Information</h3>
-  <p class="subtitle">This last area is for documenting additional independent variables (not components of immersion) and their levels as well as other factors that were held constant in this experiment.</p>
+  <legend class="with-helper-text">Additional Information</legend>
+  <p class="after-legend"><small>This last area is for documenting additional independent variables (not components of immersion) and their levels as well as other factors that were held constant in this experiment.</small></p>
 
   <div class="field field-other-vars">
-    <%= f.label :other_vars, 'Additional Independant Variables' %><br />
-    <%= f.text_area :other_vars %>
+    <%= f.label :other_vars, 'Additional Independant Variables' %>
+    <%= f.text_area :other_vars, :class => 'span12', :rows => 5 %>
   </div>
   <div class="field field-constants">
-    <%= f.label :constants %><br />
-    <%= f.text_area :constants %>
+    <%= f.label :constants %>
+    <%= f.text_area :constants, :class => 'span12', :rows => 5 %>
   </div>
 
   <%= link_to_remove_fields "Remove Experiment", f %>
@@ -107,4 +116,4 @@
   <% end %>
   <!-- <p><%= link_to_add_fields "Add Task", f, :tasks %></p> -->
 </div>
-<p class="new_task"><%= link_to_add_fields "Next Step -> Add Task", f, :tasks %></p>
+<p class="new_task"><%= link_to_add_fields "Next Step -> Add Task", f, :tasks, 'btn btn-primary' %></p>

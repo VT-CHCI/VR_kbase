@@ -13,11 +13,18 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require bootstrap.min
 
 function remove_fields(link) {
   console.log($(link));
   $(link).prev("input[type=hidden]").val("true");
   $(link).parent().hide();
+}
+
+function remove_author_fields(link) {
+  console.log($(link));
+  $(link).prev("input[type=hidden]").val("true");
+  $(link).parent().parent().parent().hide();
 }
 
 function add_progress_heading(association, new_id) {
@@ -149,10 +156,23 @@ $(document).ready(function(){
     });
   });
 
-  $('#submit_doi').click(function() {
+  $('#submit-doi').click(function() {
     if ($('#paper_doi').val()) {
-      $('.loading_content').css('z-index','1')
-      $('.loading_content').animate({opacity: '1'},500)
+      $('#submit-doi').button('loading');
+      $(paper_doi).addClass('uneditable-input');
+
+      $('.doi-field').removeClass('control-group error');
+      $('.doi-field div span').remove(); //this removes error message
+
+      //Clear all fields, hide all previous inputs except the first text field
+      $('.author').each( function() {
+        $(this).find('input[type=hidden]').val('false');
+        $(this).hide();
+      });
+      
+      $('.paper input[type=text]:visible').not(':eq(0)').val('')
+      $('.paper input[type=number]').val('');
+
       // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
       var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
   
@@ -161,65 +181,66 @@ $(document).ready(function(){
         url: surl,
         dataType: "jsonp",
         success: function(data) {
+          $('#submit-doi').button('reset');
+          $(paper_doi).removeClass('uneditable-input');
+
           xmlDoc = $.parseXML( data );
           $xml = $( xmlDoc );
-
-          function autofill(selector,xmlString) {
-            if (xmlString.length > 1) {
-              $(selector).val($xml.find(xmlString).first().text());
-            } else {
-              $(selector).val($xml.find(xmlString).text());
-            }
-          }
-
-          autofill('#paper_title',"title");
-
-          if ($xml.find("journal").length) {
-            autofill('#paper_venue_attributes_name',"full_title");
-          } else if ($xml.find("conference").length) {
-            autofill('#paper_venue_attributes_name',"proceedings_title");
-          }
           
-          autofill('#paper_year_1i',"year");
-          autofill('#paper_volume',"volume");
-          autofill('#paper_issue',"issue");
-          autofill('#paper_start_page',"first_page");
-          autofill('#paper_end_page',"last_page");
-          autofill('#paper_paper_url',"resource");
+          // console.log($xml.find('error').length);
 
-          var authors = new Array();
+          if ($xml.find('error').length != 0) {
+            $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
+          } else {
+            $('.doi-well').after('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
 
-          var len = $xml.find('person_name').length;
-          var a_index = 0;
-          $xml.find('person_name').each(function(index) {
-            if ($(this).attr('contributor_role') == "author") {
-              // console.log($(this).find('surname').text());
-              $('.author').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
-              $('.author').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
-              a_index++;
-              if (index != len - 1) {
-                $('.authors a').trigger('click');
+            function autofill(selector,xmlString) {
+              if (xmlString.length > 1) {
+                $(selector).val($xml.find(xmlString).first().text());
+              } else {
+                $(selector).val($xml.find(xmlString).text());
               }
             }
-          });
 
-          // console.log($xml);
-          $('.loading_content').animate({
-            opacity: '0'
-          }, 500, function() {
-            $('.loading_content').css('z-index','-1')
-          });
+            autofill('#paper_title',"title");
+
+            if ($xml.find("journal").length) {
+              autofill('#paper_venue_attributes_name',"full_title");
+            } else if ($xml.find("conference").length) {
+              autofill('#paper_venue_attributes_name',"proceedings_title");
+            }
+            
+            autofill('#paper_year_1i',"year");
+            autofill('#paper_volume',"volume");
+            autofill('#paper_issue',"issue");
+            autofill('#paper_start_page',"first_page");
+            autofill('#paper_end_page',"last_page");
+            autofill('#paper_paper_url',"resource");
+
+            var authors = new Array();
+
+            var len = $xml.find('person_name').length;
+            var a_index = 0;
+            $xml.find('person_name').each(function(index) {
+              if ($(this).attr('contributor_role') == "author") {
+                $('.authors a').trigger('click');
+                $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(0).val($(this).find('surname').text());
+                $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(1).val($(this).find('given_name').text());
+                a_index++;
+              }
+            });
+          }
         },
         error: function(tmp) {
-          console.log(tmp);
           console.log("error");
-          $('.loading_content').animate({
-            opacity: '0'
-          }, 500, function() {
-            $('.loading_content').css('z-index','-1')
-          });
+          $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
+          $('#submit-doi').button('reset');
+          $(paper_doi).removeClass('uneditable-input');
         }
       });
+    } else {
+      $('.doi-field').addClass('control-group error');
+      $('.doi-field div').append('<span class="help-inline">Field cannot be blank</span>');
     }
   });
 });

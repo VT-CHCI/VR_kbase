@@ -12,21 +12,131 @@
  *= require_tree .
  */
 
- br {
-  line-height: 1.5em;
- }
+@import "compass_twitter_bootstrap_awesome";
+@import "compass_twitter_bootstrap_responsive";
 
- #entry_progress {
-    width: 200px;
-    padding: 5px 15px;
-    float: left;
-    position: fixed;
-    /*background: #B2D6FF;*/
+legend.with-helper-text {
+  margin-bottom: 0;
+}
+
+p.after-legend {
+  margin-bottom: 27px;
+}
+
+.input-append .btn, .input-prepend .add-on {
+  vertical-align: bottom;
+}
+
+.inline-group{
+  .field {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
+  .field:first-of-type {
+    margin-left: 0;
+  }
+}
+
+#entry_progress {
+  position: fixed;
+}
+
+#title, #name {
+  width: 584px;
+}
+
+.navbar-form .btn {
+  margin-bottom: 0;
+}
+
+.radio.inline.pill {
+  input {
+    visibility: hidden;
+  }
+
+  input[type="radio"]:checked+label{ 
+    color: white;
+    background-color: #08C;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  label {
+    color: #08C;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-right: 12px;
+    padding-left: 12px;
+    margin-right: 2px;
+    line-height: 14px;
+  }
+
+  label:hover {
+    color: #005580;
+    background-color: #eee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+  
+  padding-left: 0;
+  
+}
+
+form input[type='number']::-webkit-outer-spin-button,
+form input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.inline-group.range {
+  .field {
+    width: 15%;
+  }
+  .hyphen {
+    width: 5%;
+    font-size: 30px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 0;
+  }
+  .before-hyphen, .after-hyphen {
+    width: auto;
+  }
+  .after-hyphen {
+    margin-left: 0;
+  }
+}
+
+/*
+
+br {
+  line-height: 1.5em;
+}
+
+#entry_progress {
+  width: 200px;
+  padding: 5px 15px;
+  float: left;
+  position: fixed;
 }
 
 #entry_progress h2 {
-    text-align: center;
-    font-size: 1.2em;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 #entry_progress h3 {
@@ -235,4 +345,4 @@ top:0px;
 100%{
 -ms-transform:scale(.3)}
 
-}
+} */
