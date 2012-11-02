@@ -7,3 +7,9 @@
     width: 30%;
   }
 }
+
+.dimensions {
+  label.radio:not(:last-of-type) {
+    width: 40%;
+  }
+}

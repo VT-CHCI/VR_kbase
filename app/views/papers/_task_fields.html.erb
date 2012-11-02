@@ -40,7 +40,7 @@
     <%= f.text_area :interface_desc, :class => 'span12', :rows => 5 %>
   </div>
 
-  <div class="field">
+  <div class="field dimensions">
       <%= f.label :dimension, 'Dimensionality of the Environment' %>
       <% Dimension.all.each do |dimension| %>
         <label class="radio inline pill">
