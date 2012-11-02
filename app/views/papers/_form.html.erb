@@ -5,7 +5,7 @@
         <legend class="with-helper-text">Entry Progress</legend>
         <p class="after-legend"><small>This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</small></p>
         <div id="progress_headings">
-          <h3 class="current papers" data-id="paper">Paper Details</h3>
+          <h3 class="current papers" data-id="paper"><i class="icon-chevron-right"></i> Paper Details</h3>
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
                   <%= render 'author_fields', :f =>builder %>
                 <% end %>
 
-                <%= link_to_add_fields "Add Author", f, :authors, 'btn btn-primary' %>
+                <%= link_to_add_fields "Add Author", f, :authors, 'btn btn-primary', 'before' %>
               </div>
             </div>
           </div>
@@ -110,13 +110,16 @@
             <%= render 'experiment_fields', :f => builder %>
           <% end %>
 
+          <p class="new_experiment"><%= link_to_add_fields "Next Step -> Add Experiment", f, :experiments, 'btn btn-primary' %></p>
+
         </div> 
-        <p class="new_experiment"><%= link_to_add_fields "Next Step -> Add Experiment", f, :experiments, 'btn btn-primary' %></p>
+      </div>
+
+      <div class="actions">
+        <%= f.submit %>
       </div>
     </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
 <% end %>

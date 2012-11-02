@@ -2,6 +2,50 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+#progress_headings {
+  i {
+    float: left;
+  }
+
+  h3 {
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  h3:not(.current) {
+    margin-left: 13px;
+  }
+
+  h5 {
+    clear: both;
+    text-align: right;
+    /*
+    display: inline-block;
+    float: left;
+    width: 88%;
+    background: grey;
+    padding: 3% 0 3% 2%;
+    border-radius: 5px 0 0 5px;
+    */
+  }
+
+  a {
+    float: right;
+    margin-bottom: 10px;
+    /*
+    display: inline-block;
+    width: 10%;
+    text-align: center;
+    background: grey;
+    color: black;
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+    */
+  }
+}
+
 /*
 .subtitle {
 	font-size: .8em;

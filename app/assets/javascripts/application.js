@@ -28,7 +28,7 @@ function remove_author_fields(link) {
 }
 
 function add_progress_heading(association, new_id) {
-  $('#progress_headings h3').each(function() {
+  $('#progress_headings :header').each(function() {
     $(this).removeClass('current');
   });
 
@@ -38,7 +38,7 @@ function add_progress_heading(association, new_id) {
 
   var parentSelector = $('#progress_headings');
 
-  $('#progress_headings h3').each(function() {
+  $('#progress_headings :header').each(function() {
     var mySplitResult = $(this).data('id').split("_");
     mySplitResult = mySplitResult[0] + 's_attributes_' + mySplitResult[1];
     
@@ -52,7 +52,7 @@ function add_progress_heading(association, new_id) {
   }
 
   parentSelector.after('<a href="#" data-target="' + base + '__destroy">Remove</a>');
-  parentSelector.after('<h3 class="current ' + association + '" data-id=' + singular + '_' + new_id + ' data-target="' + base + '_title">Unnamed ' + singular + '</h3>');
+  parentSelector.after('<h5 class="current ' + association + '" data-id=' + singular + '_' + new_id + ' data-target="' + base + '_title"><i class="icon-chevron-right"></i> <span class="title">Unnamed ' + singular + '</span></h5>');
   
   //Update headings
   $('.field-title input').on('keyup',function() {
@@ -62,17 +62,18 @@ function add_progress_heading(association, new_id) {
       newTitle = 'Unnamed ' + singular;       
     }
 
-    $('#progress_headings h3').each( function() {
+    $('#progress_headings :header').each( function() {
       if ($(this).data('target') == field) {
-        $(this).text(newTitle);
+        $(this).children('.title').text(newTitle);
       }
     });
   });
 
   //Jump to correct section and hide all other sections
-  $('#progress_headings h3').on('click', function() {
+  $('#progress_headings :header').on('click', function() {
     var heading = $(this);
-    $('#progress_headings h3').each(function() {
+
+    $('#progress_headings :header').each(function() {
       $(this).removeClass('current');
     });
     $(this).addClass('current');
@@ -121,12 +122,31 @@ function createTokenInput (focus) {
   });
 }
 
-function add_fields(link, association, content) {
+function add_fields_after (link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-   //console.log(new_id);
-   //console.log(regexp);
+   // console.log(new_id);
+   // console.log(regexp);
+
+  $(link).parent().parent().after(content.replace(regexp, new_id));
+
+  if (association != 'authors') {  
+    var focus = add_progress_heading(association, new_id);
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    $('#paper_entry_form').children('div').not(focus).slideUp();
+
+    // console.log(focus);
+    createTokenInput(focus);
+  }
+}
+
+function add_fields_before (link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g");
+
+   // console.log(new_id);
+   // console.log(regexp);
 
   $(link).parent().before(content.replace(regexp, new_id));
 
@@ -135,7 +155,7 @@ function add_fields(link, association, content) {
     $("html, body").animate({ scrollTop: 0 }, 500);
     $('#paper_entry_form').children('div').not(focus).slideUp();
 
-    console.log(focus);
+    // console.log(focus);
     createTokenInput(focus);
   }
 }

@@ -38,21 +38,19 @@
     </div>
   </div>
 
-  <div class="field clear">
-    <div class="radio-buttons">
-      <%= f.label :gender, 'Gender Balance' %>
-      <% Gender.all.each do |gender| %>
-        
-        <label class="radio inline pill">
-          <%= f.radio_button :gender_id, gender.id %>
-          <%= f.label :gender_id, gender.gender, :class => 'test' %>
-        </label>
-        
-      <% end %>
-    </div>
+  <div class="field">
+    <%= f.label :gender, 'Gender Balance' %>
+    <% Gender.all.each do |gender| %>
+      
+      <label class="radio inline pill">
+        <%= f.radio_button :gender_id, gender.id %>
+        <%= f.label :gender_id, gender.gender, :class => 'test' %>
+      </label>
+      
+    <% end %>
   </div>
 
-  <div class="field field-part-background clear">
+  <div class="field field-part-background">
     <%= f.label :part_background, "Participants' Background" %>
     <%= f.text_area :part_background, :class => 'span12', :rows => 5 %>
   </div>
@@ -85,11 +83,18 @@
   </div>
 
   <legend class="with-helper-text">Components of Immersion</legend>
-  <p class="after-legend"><small>Use the autocoomplete to select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</small></p>
+  <p class="after-legend"><small>Use the buttons below to select all the components of immersion varied in this experiment then provide details on the different levels in the text area below.</small></p>
 
-  <div class="field token-input">
-      <%= f.label :component_tokens, "Components of Immersion Varied" %>
-      <%= f.text_field :component_tokens, "data-pre" => f.object.components.to_json, "data-database" => "component", "data-type" => "comp_of_immersion" %>
+  <div class="field components-of-immersion">
+    <%= f.label :components %>
+    <% Component.all.each do |component| %>
+
+      <label class="checkbox inline pill">
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.id, f.object.components.include?(component), :id => "experiment_component_id_#{component.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.comp_of_immersion, :for => "experiment_component_id_#{component.id}" %>
+      </label>
+
+    <% end %>
   </div>
 
   <div class="field field-comp-desc">
@@ -115,5 +120,6 @@
     <%= render 'task_fields', :f => builder %>
   <% end %>
   <!-- <p><%= link_to_add_fields "Add Task", f, :tasks %></p> -->
+  <p class="new_task"><%= link_to_add_fields "Next Step -> Add Task", f, :tasks, 'btn btn-primary' %></p>
 </div>
-<p class="new_task"><%= link_to_add_fields "Next Step -> Add Task", f, :tasks, 'btn btn-primary' %></p>
+

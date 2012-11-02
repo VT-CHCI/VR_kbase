@@ -1,94 +1,88 @@
 <div id="task_new_tasks" class="task">
-  <h1>User Task Information</h1>
-  <p class="subtitle">This section documents the different user tasks performed in the experiment. Most experiments will only have one user task. For each user task you will begin by providing the basic details, and then add relevent findings.</p>
 
-  <h3>General Information</h3>
-  <p class="subtitle">Create a title / nickname for the task so that it can be referred back to easily in the entry progress list.</p>
+  <h1>User Task Information</h1>
+
+  <p><small>This section documents the different user tasks performed in the experiment. Most experiments will only have one user task. For each user task you will begin by providing the basic details, and then add relevent findings.</small></p>
+
+  <legend class="with-helper-text">General Information</legend>
+  <p class="after-legend"><small>Create a title / nickname for the task so that it can be referred back to easily in the entry progress list.</small></p>
 
   <div class="field field-title">
-    <%= f.label :title, "User Task Title" %><br />
-    <%= f.text_field :title %>
+    <%= f.label :title, "User Task Title" %>
+    <%= f.text_field :title, :class => 'span12' %>
   </div>
 
-  <h3>Task Information</h3>
-  <p class="subtitle">This area documents what type of task was performed. Use the autocomplete field to enter the different task categories and then please provide a detailed description in the text area below.</p>
+  <legend class="with-helper-text">Task Information</legend>
+  <p class="after-legend"><small>This area documents what type of task was performed. Use the autocomplete field to enter the different task categories and then please provide a detailed description in the text area below.</small></p>
 
   <div class="field token-input">
-      <%= f.label :category_tokens, "User Task Category" %><br />
+      <%= f.label :category_tokens, "User Task Category" %>
       <%= f.text_field :category_tokens, "data-pre" => f.object.categories.to_json, "data-database" => "categorie", "data-type" => "task_category" %>
   </div>
 
   <div class="field">
-    <%= f.label :task_desc, "User Task Description" %><br />
-    <%= f.text_area :task_desc %>
+    <%= f.label :task_desc, "User Task Description" %>
+    <%= f.text_area :task_desc, :class => 'span12', :rows => 5 %>
   </div>
 
-  <h3>Interface / Environment Information</h3>
-  <p class="subtitle">This area describes the type of interface and enviroment the task was performed in. Please describe in detail the interface, then select from the radio buttons general information on the envrionment. Lastly provide any detailed information not captured in the last text area.</p>
+  <legend class="with-helper-text">Interface / Environment Information</legend>
+  <p class="after-legend"><small>This area describes the type of interface and enviroment the task was performed in. Please describe in detail the interface, then select from the radio buttons general information on the envrionment. Lastly provide any detailed information not captured in the last text area.</small></p>
 
   <div class="field">
-    <%= f.label :interface_desc, "Interface Description" %><br />
-    <%= f.text_area :interface_desc %>
+    <%= f.label :interface_desc, "Interface Description" %>
+    <%= f.text_area :interface_desc, :class => 'span12', :rows => 5 %>
   </div>
 
   <div class="field">
-    <div class="radio-buttons">
-      <%= f.label :dimension, 'Dimensionality of the Environment' %><br />
+      <%= f.label :dimension, 'Dimensionality of the Environment' %>
       <% Dimension.all.each do |dimension| %>
-        <div class="field radio-inline">
+        <label class="radio inline pill">
           <%= f.radio_button :dimension_id, dimension.id %>
           <%= f.label :dimension_id, dimension.level %>
-        </div>
+        </label>
       <% end %>
-    </div>
   </div>
 
   <div class="field">
-    <div class="radio-buttons">
-      <%= f.label :scale, 'Scale of the Environment' %><br />
-      <% Scale.all.each do |scale| %>
-        <div class="field radio-inline">
-          <%= f.radio_button :scale_id, scale.id %>
-          <%= f.label :scale_id, scale.level %>
-        </div>
-      <% end %>
-    </div>
+    <%= f.label :scale, 'Scale of the Environment' %>
+    <% Scale.all.each do |scale| %>
+      <label class="radio inline pill">
+        <%= f.radio_button :scale_id, scale.id %>
+        <%= f.label :scale_id, scale.level %>
+      </label>
+    <% end %>
   </div>
 
   <div class="field">
-    <div class="radio-buttons">
-      <%= f.label :density, 'Density of the Environment' %><br />
-      <% Density.all.each do |density| %>
-        <div class="field radio-inline">
-          <%= f.radio_button :density_id, density.id %>
-          <%= f.label :density_id, density.level %>
-        </div>
-      <% end %>
-    </div>
+    <%= f.label :density, 'Density of the Environment' %>
+    <% Density.all.each do |density| %>
+      <label class="radio inline pill">
+        <%= f.radio_button :density_id, density.id %>
+        <%= f.label :density_id, density.level %>
+      </label>
+    <% end %>
   </div>
 
   <div class="field">
-    <div class="radio-buttons">
-      <%= f.label :realism, 'Realism of the Environment' %><br />
-      <% Realism.all.each do |realism| %>
-        <div class="field radio-inline">
-          <%= f.radio_button :realism_id, realism.id %>
-          <%= f.label :realism_id, realism.level %>
-        </div>
-      <% end %>
-    </div>
+    <%= f.label :realism, 'Realism of the Environment' %>
+    <% Realism.all.each do |realism| %>
+      <label class="radio inline pill">
+        <%= f.radio_button :realism_id, realism.id %>
+        <%= f.label :realism_id, realism.level %>
+      </label>
+    <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :env_desc, "Additional Environment Details" %><br />
-    <%= f.text_area :env_desc %>
+    <%= f.label :env_desc, "Additional Environment Details" %>
+    <%= f.text_area :env_desc, :class => 'span12', :rows => 5 %>
   </div>
 
-  <h3>Metrics</h3>
-  <p class="subtitle">Use the autocomplete field below to select all metrics used for evalutating this task.</p>
+  <legend class="with-helper-text">Metrics</legend>
+  <p class="after-legend"><small>Use the autocomplete field below to select all metrics used for evalutating this task.</small></p>
 
   <div class="field token-input">
-      <%= f.label :metric_tokens, "Metrics Used for Evaluation" %><br />
+      <%= f.label :metric_tokens, "Metrics Used for Evaluation" %>
       <%= f.text_field :metric_tokens, "data-pre" => f.object.metrics.to_json, "data-type" => "metric" %>
   </div>
 
@@ -97,5 +91,6 @@
   <%= f.fields_for :findings do |builder| %>
     <%= render 'finding_fields', :f => builder %>
   <% end %>
+
+  <p class="new_finding"><%= link_to_add_fields "Next Step -> Add Finding", f, :findings, 'btn btn-primary' %></p>
 </div>
-<p class="new_finding"><%= link_to_add_fields "Next Step -> Add Finding", f, :findings %></p>

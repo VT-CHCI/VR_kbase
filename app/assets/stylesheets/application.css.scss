@@ -40,6 +40,10 @@ p.after-legend {
 
 #entry_progress {
   position: fixed;
+
+  h3:not(.current) i, h5:not(.current) i {
+    display: none;
+  }
 }
 
 #title, #name {
@@ -50,12 +54,23 @@ p.after-legend {
   margin-bottom: 0;
 }
 
-.radio.inline.pill {
+.radio.inline.pill, .checkbox.inline.pill {
   input {
     visibility: hidden;
   }
 
   input[type="radio"]:checked+label{ 
+    color: white;
+    background-color: #08C;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  input[type="checkbox"]:checked+label{ 
     color: white;
     background-color: #08C;
     -webkit-border-radius: 5px;
@@ -93,6 +108,7 @@ p.after-legend {
   }
   
   padding-left: 0;
+  margin-left: 10px;
   
 }
 
