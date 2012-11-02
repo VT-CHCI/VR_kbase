@@ -27,6 +27,9 @@ function remove_author_fields(link) {
   $(link).parent().parent().parent().hide();
 }
 
+var scrolled = false;
+var scrollTimeout;
+
 function add_progress_heading(association, new_id) {
   $('#progress_headings :header').each(function() {
     $(this).removeClass('current');
@@ -86,9 +89,19 @@ function add_progress_heading(association, new_id) {
       }
     });
 
-    if($("html, body").scrollTop() < 10) {
+    if (($("html, body").scrollTop() < 10) && !scrolled) {
       $("html, body").animate({ scrollTop: 0 }, 500);
+      scrolled = true;
+      console.log('Scroll Up');
     }
+
+    // Reset the timer
+    clearTimeout(scrollTimeout);
+
+    // If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
+    scrollTimeout = setTimeout(function(){
+        scrolled = false;
+    }, 500);
   });
 
   //Remove a component from the left
