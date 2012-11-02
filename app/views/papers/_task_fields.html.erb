@@ -20,8 +20,8 @@
     <% Category.all.each do |category| %>
 
       <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment_category_id_#{category.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][category_ids][]", category.task_category, :for => "experiment_category_id_#{category.id}" %>
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment__taskcategory_id_#{category.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiment_task_category_id_#{category.id}" %>
       </label>
 
     <% end %>
@@ -88,9 +88,16 @@
   <legend class="with-helper-text">Metrics</legend>
   <p class="after-legend"><small>Use the autocomplete field below to select all metrics used for evalutating this task.</small></p>
 
-  <div class="field token-input">
-      <%= f.label :metric_tokens, "Metrics Used for Evaluation" %>
-      <%= f.text_field :metric_tokens, "data-pre" => f.object.metrics.to_json, "data-type" => "metric" %>
+  <div class="field metrics">
+    <%= f.label :metric, "Metrics Used for Evaluation" %>
+    <% Metric.all.each do |metric| %>
+
+      <label class="checkbox inline pill">
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.id, f.object.metrics.include?(metric), :id => "experiment_task_metric_id_#{metric.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.metric, :for => "experiment_task_metric_id_#{metric.id}" %>
+      </label>
+
+    <% end %>
   </div>
 
   <%= link_to_remove_fields "Remove Task", f %>

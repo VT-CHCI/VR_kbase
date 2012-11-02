@@ -87,8 +87,8 @@
 
   <div class="field components-of-immersion">
     <%= f.label :components %>
+    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][component_ids][]", nil%>
     <% Component.all.each do |component| %>
-
       <label class="checkbox inline pill">
         <%= check_box_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.id, f.object.components.include?(component), :id => "experiment_component_id_#{component.id}" %>
         <%= label_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.comp_of_immersion, :for => "experiment_component_id_#{component.id}" %>
@@ -119,7 +119,7 @@
   <%= f.fields_for :tasks do |builder| %>
     <%= render 'task_fields', :f => builder %>
   <% end %>
-  <!-- <p><%= link_to_add_fields "Add Task", f, :tasks %></p> -->
+
   <p class="new_task"><%= link_to_add_fields "Next Step -> Add Task", f, :tasks, 'btn btn-primary' %></p>
 </div>
 
