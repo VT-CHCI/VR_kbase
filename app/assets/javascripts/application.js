@@ -199,7 +199,7 @@ $(document).ready(function(){
 
       //Clear all fields, hide all previous inputs except the first text field
       $('.author').each( function() {
-        $(this).find('input[type=hidden]').val('false');
+        $(this).find('input[type=hidden]').val('true');
         $(this).hide();
       });
       
