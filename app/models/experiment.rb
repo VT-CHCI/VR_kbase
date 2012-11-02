@@ -7,6 +7,14 @@ class Experiment < ActiveRecord::Base
   has_many :experiment_displays
   has_many :displays, :through => :experiment_displays
 
+  accepts_nested_attributes_for :tasks
+  
+  # validates_presence_of :title
+  
+  attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min, 
+    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, :display_tokens,
+    :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, :component_ids
+
   attr_reader :display_tokens
 
   def display_tokens=(ids)
@@ -51,9 +59,4 @@ class Experiment < ActiveRecord::Base
     end
     self.component_ids = ids.split(",")
   end
-
-  accepts_nested_attributes_for :tasks
-  attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min, 
-    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, :display_tokens,
-    :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes
 end
