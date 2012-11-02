@@ -15,9 +15,16 @@
   <legend class="with-helper-text">Task Information</legend>
   <p class="after-legend"><small>This area documents what type of task was performed. Use the autocomplete field to enter the different task categories and then please provide a detailed description in the text area below.</small></p>
 
-  <div class="field token-input">
-      <%= f.label :category_tokens, "User Task Category" %>
-      <%= f.text_field :category_tokens, "data-pre" => f.object.categories.to_json, "data-database" => "categorie", "data-type" => "task_category" %>
+  <div class="field task-categories">
+    <%= f.label :categories, "User Task Category" %>
+    <% Category.all.each do |category| %>
+
+      <label class="checkbox inline pill">
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment_category_id_#{category.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][category_ids][]", category.task_category, :for => "experiment_category_id_#{category.id}" %>
+      </label>
+
+    <% end %>
   </div>
 
   <div class="field">
