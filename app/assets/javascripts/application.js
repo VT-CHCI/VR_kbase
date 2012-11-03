@@ -138,17 +138,17 @@ function populate_radio_buttons (focus, id) {
   var parentId = focus.children('.field-title').children('input').attr('name').split('][')[3];
   var tasksParent = focus.children('.field').children('.tasks');
 
+  function autoReplace (buttonText, type) {
+    buttonText = buttonText.replace(new RegExp('task_'+type,'g'), 'task_finding_'+type);
+    buttonText = buttonText.replace(new RegExp(type+'_ids][]','g'), 'findings_attributes]['+id+']['+type+'_id]');
+    buttonText = buttonText.replace(new RegExp('type="checkbox"','g'), 'type="radio"');
+    buttonText = buttonText.replace(new RegExp('for="experiment_task_finding_'+type+'_id_(.*?)"'), 'for="experiment_task_finding_'+type+'_id"');
+
+    return '<label class="radio inline pill">' + buttonText + '</label>'
+  }
+
   $('#task_' + parentId + ' .task-categories input:checked').parent().each ( function() {
-    var categoryButton = $(this).html();
-
-    categoryButton = categoryButton.replace(/task_category/g, 'task_finding_category');
-    categoryButton = categoryButton.replace(/category_ids\]\[\]/g, 'findings_attributes]['+ id +'][category_id]');
-    categoryButton = categoryButton.replace(/type="checkbox"/g, 'type="radio"');
-
-    var re = /for="experiment_task_finding_category_id_(.*?)"/;
-    categoryButton = categoryButton.replace(re, 'for="experiment_task_finding_category_id"');
-
-    tasksParent.append('<label class="radio inline pill">' + categoryButton + '</label>');
+    tasksParent.append(autoReplace($(this).html(),'category'));
   });
   console.log(parentId);
 }
