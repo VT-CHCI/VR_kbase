@@ -20,7 +20,7 @@
     <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", nil, :class => 'hidden' %>
     <% Category.all.each do |category| %>
       <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment__taskcategory_id_#{category.id}" %>
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment_task_category_id_#{category.id}" %>
         <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiment_task_category_id_#{category.id}" %>
       </label>
     <% end %>

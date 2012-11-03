@@ -44,10 +44,10 @@ function add_progress_heading(association, new_id) {
   $('#progress_headings :header').each(function() {
     var mySplitResult = $(this).data('id').split("_");
     mySplitResult = mySplitResult[0] + 's_attributes_' + mySplitResult[1];
-    
+
     if (base.match(mySplitResult)) {
       parentSelector = $(this).next();
-    } 
+    }
   });
 
   if (parentSelector[0] == $('#progress_headings')[0]) {
@@ -56,13 +56,13 @@ function add_progress_heading(association, new_id) {
 
   parentSelector.after('<a href="#" data-target="' + base + '__destroy">Remove</a>');
   parentSelector.after('<h5 class="current ' + association + '" data-id=' + singular + '_' + new_id + ' data-target="' + base + '_title"><i class="icon-chevron-right"></i> <span class="title">Unnamed ' + singular + '</span></h5>');
-  
+
   //Update headings
   $('.field-title input').on('keyup',function() {
     var field = $(this).attr('id');
     var newTitle = $(this).val();
     if (newTitle.length < 1) {
-      newTitle = 'Unnamed ' + singular;       
+      newTitle = 'Unnamed ' + singular;
     }
 
     $('#progress_headings :header').each( function() {
@@ -92,7 +92,6 @@ function add_progress_heading(association, new_id) {
     if (($("html, body").scrollTop() < 10) && !scrolled) {
       $("html, body").animate({ scrollTop: 0 }, 500);
       scrolled = true;
-      console.log('Scroll Up');
     }
 
     // Reset the timer
@@ -112,14 +111,14 @@ function add_progress_heading(association, new_id) {
     $(this).remove();
   });
 
-  return $('#' + singular + '_' + new_id)
+  return $('#' + singular + '_' + new_id);
 }
 
 function createTokenInput (focus) {
   $('#' + focus.attr('id') + ' .token-input input').each(function() {
     var dataType = $(this).data("type");
     var database;
-    
+
     if ($(this).data("database")) {
       database = $(this).data("database");
     } else {
@@ -135,22 +134,36 @@ function createTokenInput (focus) {
   });
 }
 
+function populate_radio_buttons (focus, id) {
+  var parentId = focus.children('.field-title').children('input').attr('name').split('][')[3];
+  var tasksParent = focus.children('.field').children('.tasks');
+
+  $('#task_' + parentId + ' .task-categories input:checked').parent().each ( function() {
+    $(this).html($(this).html().replace(/task_category/g, 'task_finding_category'));
+    $(this).html($(this).html().replace(/category_ids\]\[\]/g, 'findings_attributes]['+ id +'][category_id]'));
+    $(this).html($(this).html().replace(/type="checkbox"/g, 'type="radio"'));
+
+    tasksParent.append('<label class="radio inline pill">' + $(this).html() + '</label>');
+  });
+  console.log(parentId);
+}
+
 function add_fields_after (link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-   // console.log(new_id);
-   // console.log(regexp);
-
   $(link).parent().parent().after(content.replace(regexp, new_id));
 
-  if (association != 'authors') {  
+  if (association != 'authors') {
     var focus = add_progress_heading(association, new_id);
     $("html, body").animate({ scrollTop: 0 }, 500);
     $('#paper_entry_form').children('div').not(focus).slideUp();
 
-    // console.log(focus);
     createTokenInput(focus);
+
+    if (association == 'findings') {
+      populate_radio_buttons(focus, new_id);
+    }
   }
 }
 
@@ -158,19 +171,7 @@ function add_fields_before (link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-   // console.log(new_id);
-   // console.log(regexp);
-
   $(link).parent().before(content.replace(regexp, new_id));
-
-  if (association != 'authors') {  
-    var focus = add_progress_heading(association, new_id);
-    $("html, body").animate({ scrollTop: 0 }, 500);
-    $('#paper_entry_form').children('div').not(focus).slideUp();
-
-    // console.log(focus);
-    createTokenInput(focus);
-  }
 }
 
 $(document).ready(function(){
@@ -202,13 +203,13 @@ $(document).ready(function(){
         $(this).find('input[type=hidden]').val('true');
         $(this).hide();
       });
-      
-      $('.paper input[type=text]:visible').not(':eq(0)').val('')
+
+      $('.paper input[type=text]:visible').not(':eq(0)').val('');
       $('.paper input[type=number]').val('');
 
       // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
       var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
-  
+
       $.ajax({
         type: "GET",
         url: surl,
@@ -219,7 +220,7 @@ $(document).ready(function(){
 
           xmlDoc = $.parseXML( data );
           $xml = $( xmlDoc );
-          
+
           // console.log($xml.find('error').length);
 
           if ($xml.find('error').length != 0) {
@@ -242,7 +243,7 @@ $(document).ready(function(){
             } else if ($xml.find("conference").length) {
               autofill('#paper_venue_attributes_name',"proceedings_title");
             }
-            
+
             autofill('#paper_year_1i',"year");
             autofill('#paper_volume',"volume");
             autofill('#paper_issue',"issue");
@@ -254,6 +255,7 @@ $(document).ready(function(){
 
             var len = $xml.find('person_name').length;
             var a_index = 0;
+
             $xml.find('person_name').each(function(index) {
               if ($(this).attr('contributor_role') == "author") {
                 $('.authors a').trigger('click');
