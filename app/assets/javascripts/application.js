@@ -139,14 +139,16 @@ function populate_radio_buttons (focus, id) {
   var tasksParent = focus.children('.field').children('.tasks');
 
   $('#task_' + parentId + ' .task-categories input:checked').parent().each ( function() {
-    $(this).html($(this).html().replace(/task_category/g, 'task_finding_category'));
-    $(this).html($(this).html().replace(/category_ids\]\[\]/g, 'findings_attributes]['+ id +'][category_id]'));
-    $(this).html($(this).html().replace(/type="checkbox"/g, 'type="radio"'));
+    var categoryButton = $(this).html();
+
+    categoryButton = categoryButton.replace(/task_category/g, 'task_finding_category');
+    categoryButton = categoryButton.replace(/category_ids\]\[\]/g, 'findings_attributes]['+ id +'][category_id]');
+    categoryButton = categoryButton.replace(/type="checkbox"/g, 'type="radio"');
 
     var re = /for="experiment_task_finding_category_id_(.*?)"/;
-    $(this).html($(this).html().replace(re, 'for="experiment_task_finding_category_id"'));
+    categoryButton = categoryButton.replace(re, 'for="experiment_task_finding_category_id"');
 
-    tasksParent.append('<label class="radio inline pill">' + $(this).html() + '</label>');
+    tasksParent.append('<label class="radio inline pill">' + categoryButton + '</label>');
   });
   console.log(parentId);
 }
