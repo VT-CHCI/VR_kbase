@@ -143,6 +143,9 @@ function populate_radio_buttons (focus, id) {
     $(this).html($(this).html().replace(/category_ids\]\[\]/g, 'findings_attributes]['+ id +'][category_id]'));
     $(this).html($(this).html().replace(/type="checkbox"/g, 'type="radio"'));
 
+    var re = /for="experiment_task_finding_category_id_(.*?)"/;
+    $(this).html($(this).html().replace(re, 'for="experiment_task_finding_category_id"'));
+
     tasksParent.append('<label class="radio inline pill">' + $(this).html() + '</label>');
   });
   console.log(parentId);
