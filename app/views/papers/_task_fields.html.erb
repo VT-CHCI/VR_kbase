@@ -17,13 +17,12 @@
 
   <div class="field task-categories">
     <%= f.label :categories, "User Task Category" %>
+    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", nil, :class => 'hidden' %>
     <% Category.all.each do |category| %>
-
       <label class="checkbox inline pill">
         <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment__taskcategory_id_#{category.id}" %>
         <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiment_task_category_id_#{category.id}" %>
       </label>
-
     <% end %>
   </div>
 
@@ -90,13 +89,12 @@
 
   <div class="field metrics">
     <%= f.label :metric, "Metrics Used for Evaluation" %>
+    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", nil, :class => 'hidden' %>
     <% Metric.all.each do |metric| %>
-
       <label class="checkbox inline pill">
         <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.id, f.object.metrics.include?(metric), :id => "experiment_task_metric_id_#{metric.id}" %>
         <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.metric, :for => "experiment_task_metric_id_#{metric.id}" %>
       </label>
-
     <% end %>
   </div>
 
