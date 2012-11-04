@@ -16,8 +16,9 @@
   <p class="after-legend"><small>This area provides the details of the finding. Choose one or more of components of immersion and the relationship between a metric for a particular task. If you choose more than one component the relationship will be automatically changed to interaction. This means that if two components of immersion have the same relationship with a metric it should be split into two findings.</small></p>
 
   <div class="field">
-    <%= f.label :metric %>
-    <div class="metrics">
+    <%= f.label :component %>
+    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][findings_attributes][new_findings][category_ids][]", nil, :class => 'hidden' %>
+    <div class="components-of-immersion">
 
     </div>
   </div>
@@ -33,8 +34,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :component %>
-    <div class="components">
+    <%= f.label :metric %>
+    <div class="metrics">
 
     </div>
   </div>

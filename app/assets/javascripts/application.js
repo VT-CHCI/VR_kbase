@@ -136,21 +136,35 @@ function createTokenInput (focus) {
 
 function populate_radio_buttons (focus, id) {
   var parentId = focus.children('.field-title').children('input').attr('name').split('][')[3];
-  var tasksParent = focus.children('.field').children('.tasks');
+  var grandParentId = focus.children('.field-title').children('input').attr('name').split('][')[1];
 
-  function autoReplace (buttonText, type) {
-    buttonText = buttonText.replace(new RegExp('task_'+type,'g'), 'task_finding_'+type);
-    buttonText = buttonText.replace(new RegExp(type+'_ids][]','g'), 'findings_attributes]['+id+']['+type+'_id]');
-    buttonText = buttonText.replace(new RegExp('type="checkbox"','g'), 'type="radio"');
-    buttonText = buttonText.replace(new RegExp('for="experiment_task_finding_'+type+'_id_(.*?)"'), 'for="experiment_task_finding_'+type+'_id"');
+  function autoReplace (buttonText, type, ButtonType) {
+    if ( ButtonType == 'radio' )  {
+      buttonText = buttonText.replace(new RegExp('task_'+type,'g'), 'task_finding_'+type);
+      buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'findings_attributes]['+id+']['+type+'_id]');
+      buttonText = buttonText.replace(new RegExp('type="checkbox"','g'), 'type="radio"');
+      buttonText = buttonText.replace(new RegExp('for="experiment_task_finding_'+type+'_id_(.*?)"'), 'for="experiment_task_finding_'+type+'_id"');
 
-    return '<label class="radio inline pill">' + buttonText + '</label>'
+      return '<label class="radio inline pill">' + buttonText + '</label>'
+    } else {
+      buttonText = buttonText.replace(new RegExp('experiment_'+type,'g'), 'experiment_task_finding_'+type);
+      buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'tasks_attributes]['+parentId+'][findings_attributes]['+id+']['+type+'_ids][]');
+
+      return '<label class="checkbox inline pill">' + buttonText + '</label>'
+    }
   }
 
-  $('#task_' + parentId + ' .task-categories input:checked').parent().each ( function() {
-    tasksParent.append(autoReplace($(this).html(),'category'));
+  $('#experiment_' + grandParentId + ' .components-of-immersion input:checked').parent().each ( function() {
+    focus.children('.field').children('.components-of-immersion').append(autoReplace($(this).html(), 'component', 'checkbox'));
   });
-  console.log(parentId);
+
+  $('#task_' + parentId + ' .metrics input:checked').parent().each ( function() {
+    focus.children('.field').children('.metrics').append(autoReplace($(this).html(), 'metric', 'radio'));
+  });
+
+  $('#task_' + parentId + ' .task-categories input:checked').parent().each ( function() {
+    focus.children('.field').children('.tasks').append(autoReplace($(this).html(), 'category', 'radio'));
+  });
 }
 
 function add_fields_after (link, association, content) {
