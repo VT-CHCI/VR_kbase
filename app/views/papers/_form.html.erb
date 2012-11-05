@@ -24,7 +24,7 @@
             </ul>
           </div>
         <% end %>
-     
+
         <div id="paper" class="paper">
 
           <h1>Publication Information</h1>
@@ -39,11 +39,11 @@
               <%= f.label :doi, 'DOI' %>
               <div class="input-append">
                 <%= f.text_field :doi, :class => 'input-large' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
-              </div>    
+              </div>
             </div>
             <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
           </div>
-          
+
           <legend class="with-helper-text">Manual Entry</legend>
           <p class="after-legend"><small>This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the wizard to move onto adding an experiment.</small></p>
 
@@ -52,12 +52,12 @@
             <%= f.text_field :title, :class => 'span12' %>
           </div>
 
-          <div class="well"> 
+          <div class="well">
             <div class="attribute_block">
               <legend class="with-helper-text">Adding Authors</legend>
               <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add authors link.</small></p>
               <div class="authors">
-                
+
                 <%= f.fields_for :authors do |builder| %>
                   <%= render 'author_fields', :f =>builder %>
                 <% end %>
@@ -77,7 +77,7 @@
           <div class="inline-group range">
             <div class="field">
               <%= f.label :year %>
-              
+
               <%= f.date_select :year, {:start_year => Time.now.year, :end_year => 1950, :discard_day => true, :discard_month => true}, :class => 'input-small' %>
             </div>
             <div class="field">
@@ -112,7 +112,7 @@
 
           <p class="new_experiment"><%= link_to_add_fields "Next Step -> Add Experiment", f, :experiments, 'btn btn-primary' %></p>
 
-        </div> 
+        </div>
       </div>
 
       <div class="actions">
@@ -121,5 +121,5 @@
     </div>
   </div>
 
-  
+
 <% end %>

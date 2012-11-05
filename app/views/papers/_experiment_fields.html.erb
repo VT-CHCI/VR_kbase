@@ -41,12 +41,12 @@
   <div class="field">
     <%= f.label :gender, 'Gender Balance' %>
     <% Gender.all.each do |gender| %>
-      
+
       <label class="radio inline pill">
         <%= f.radio_button :gender_id, gender.id %>
         <%= f.label :gender_id, gender.gender, :class => 'test' %>
       </label>
-      
+
     <% end %>
   </div>
 
@@ -70,11 +70,11 @@
 
   <div class="field token-input">
       <%= f.label :hardware_tokens, "Additional Hardware" %>
-      <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware" %>
+      <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware", :class => 'span12' %>
   </div>
   <div class="field token-input">
       <%= f.label :software_tokens, "Software Used" %>
-      <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software" %>
+      <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software", :class => 'span12' %>
   </div>
 
   <div class="field field-system-desc">
@@ -115,7 +115,7 @@
   </div>
 
   <%= link_to_remove_fields "Remove Experiment", f %>
-  
+
   <%= f.fields_for :tasks do |builder| %>
     <%= render 'task_fields', :f => builder %>
   <% end %>
