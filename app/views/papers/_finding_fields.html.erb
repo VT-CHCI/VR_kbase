@@ -28,7 +28,7 @@
     <% Relationship.all.each do |relationship| %>
       <label class="radio inline pill">
         <%= f.radio_button :relationship_id, relationship.id %>
-        <%= f.label :relationship_id, relationship.relationship %>
+        <%= f.label :relationship_id, relationship.relationship, :value => relationship.id %>
       </label>
     <% end %>
   </div>
@@ -61,7 +61,7 @@
     <% Specificity.all.each do |specificity| %>
       <label class="radio inline pill">
         <%= f.radio_button :specificity_id, specificity.id %>
-        <%= f.label :specificity_id, specificity.level %>
+        <%= f.label :specificity_id, specificity.level, :value => specificity.id %>
       </label>
     <% end %>
   </div>

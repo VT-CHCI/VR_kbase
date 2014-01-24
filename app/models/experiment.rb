@@ -10,7 +10,8 @@ class Experiment < ActiveRecord::Base
 
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min,
     :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, :display_tokens,
-    :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, :component_ids
+    :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, 
+    :component_ids
 
   has_many :experiment_displays
   has_many :displays, :through => :experiment_displays

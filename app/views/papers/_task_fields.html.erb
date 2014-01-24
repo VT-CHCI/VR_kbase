@@ -44,7 +44,7 @@
       <% Dimension.all.each do |dimension| %>
         <label class="radio inline pill">
           <%= f.radio_button :dimension_id, dimension.id %>
-          <%= f.label :dimension_id, dimension.level %>
+          <%= f.label :dimension_id, dimension.level, :value => dimension.id %>
         </label>
       <% end %>
   </div>
@@ -54,7 +54,7 @@
     <% Scale.all.each do |scale| %>
       <label class="radio inline pill">
         <%= f.radio_button :scale_id, scale.id %>
-        <%= f.label :scale_id, scale.level %>
+        <%= f.label :scale_id, scale.level, :value => scale.id %>
       </label>
     <% end %>
   </div>
@@ -64,7 +64,7 @@
     <% Density.all.each do |density| %>
       <label class="radio inline pill">
         <%= f.radio_button :density_id, density.id %>
-        <%= f.label :density_id, density.level %>
+        <%= f.label :density_id, density.level, :value => density.id %>
       </label>
     <% end %>
   </div>
@@ -74,7 +74,7 @@
     <% Realism.all.each do |realism| %>
       <label class="radio inline pill">
         <%= f.radio_button :realism_id, realism.id %>
-        <%= f.label :realism_id, realism.level %>
+        <%= f.label :realism_id, realism.level, :value => realism.id %>
       </label>
     <% end %>
   </div>

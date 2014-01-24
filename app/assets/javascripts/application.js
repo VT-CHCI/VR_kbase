@@ -194,6 +194,10 @@ function add_fields_before (link, association, content) {
 }
 
 $(document).ready(function(){
+  $(window).bind("popstate", function () {
+      $.getScript(location.href);
+    });
+
   if(window.location.href.indexOf("new") > -1) {
      $('.authors a').trigger('click');
   }
