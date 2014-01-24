@@ -13,3 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore sublime files
+*.sublime-project
+*.sublime-workspace
