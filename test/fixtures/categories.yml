@@ -1,7 +1,32 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+category1:
+  task_category: "Passive experience of the VE"
 
-one:
-  task_category: MyString
+category2:
+  task_category: "Interactive experience of the VE"
 
-two:
-  task_category: MyString
+category3:
+  task_category: "Comprehension of spatial information"
+
+category4:
+  task_category: "Comprehension of non-spatial information"
+
+category5:
+  task_category: "Visual search (without travel)"
+
+category6:
+  task_category: "Travel - exploration"
+
+category7:
+  task_category: "Travel - search"
+
+category8:
+  task_category: "Travel - maneuvering"
+
+category9:
+  task_category: "Object selection"
+
+category10:
+  task_category: "Object manipulation"
+
+category11:
+  task_category: "Learning/memorization"

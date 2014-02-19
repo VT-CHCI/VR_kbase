@@ -1,7 +1,17 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+software1:
+  software: "Windows"
 
-one:
-  software: MyString
+software2:
+  software: "Linux"
 
-two:
-  software: MyString
+software3:
+  software: "Kinect SDK"
+
+software4:
+  software: "Diverse"
+
+software5:
+  software: "Vizard"
+
+software6:
+  software: "Unity3d"

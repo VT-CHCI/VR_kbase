@@ -1,7 +1,15 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+relationship1:
+  id: 1
+  relationship: "Direct"
 
-one:
-  relationship: MyString
+relationship2:
+  id: 2
+  relationship: "Inverse"
 
-two:
-  relationship: MyString
+relationship3:
+  id: 3
+  relationship: "No relationship"
+
+relationship4:
+  id: 4
+  relationship: "Interaction"

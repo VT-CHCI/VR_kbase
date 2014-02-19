@@ -1,0 +1,25 @@
+<h1>Listing paper_venues</h1>
+
+<table>
+  <tr>
+    <th>Paper</th>
+    <th>Venue</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @paper_venues.each do |paper_venue| %>
+  <tr>
+    <td><%= paper_venue.paper %></td>
+    <td><%= paper_venue.venue %></td>
+    <td><%= link_to 'Show', paper_venue %></td>
+    <td><%= link_to 'Edit', edit_paper_venue_path(paper_venue) %></td>
+    <td><%= link_to 'Destroy', paper_venue, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New paper venue', new_paper_venue_path %>

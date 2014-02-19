@@ -1,9 +1,12 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+hardware1:
+  hardware: "Dataglove"
 
-one:
-  hardware: MyString
-  string: MyString
+hardware2:
+  hardware: "IS900"
 
-two:
-  hardware: MyString
-  string: MyString
+hardware3:
+  hardware: "Sony Move"
+
+hardware4:
+  hardware: "Microsoft Kinect"
+

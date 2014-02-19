@@ -1,7 +1,26 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+display1:
+  display: "Monitors"
 
-one:
-  display: MyString
+display2:
+  display: "Fishtank VR"
 
-two:
-  display: MyString
+display3:
+  display: "Tabletop"
+
+display4:
+  display: "Single large screen"
+
+display5:
+  display: "Multi-monitor tiled display"
+
+display6:
+  display: "Head-mounted display"
+
+display7:
+  display: "CAVEs and similar"
+
+display8:
+  display: "Domes"
+
+display9:
+  display: "Tablet display"

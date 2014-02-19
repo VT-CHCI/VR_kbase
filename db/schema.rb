@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903014645) do
+ActiveRecord::Schema.define(:version => 20140219084938) do
 
   create_table "author_papers", :force => true do |t|
     t.integer  "author_id"
@@ -165,6 +166,16 @@ ActiveRecord::Schema.define(:version => 20120903014645) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "paper_venues", :force => true do |t|
+    t.integer  "venue_id"
+    t.integer  "paper_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "paper_venues", ["paper_id"], :name => "index_paper_venues_on_paper_id"
+  add_index "paper_venues", ["venue_id"], :name => "index_paper_venues_on_venue_id"
+
   create_table "papers", :force => true do |t|
     t.string   "title"
     t.date     "year"
@@ -250,7 +261,6 @@ ActiveRecord::Schema.define(:version => 20120903014645) do
     t.string   "accronym"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "paper_id"
   end
 
 end

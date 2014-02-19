@@ -1,4 +1,5 @@
 Kbase::Application.routes.draw do
+
   resources :finding_specificities
 
   resources :specificities
@@ -66,6 +67,8 @@ Kbase::Application.routes.draw do
   resources :experiments
 
   resources :papers
+
+  resources :paper_venues
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

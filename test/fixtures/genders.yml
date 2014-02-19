@@ -1,7 +1,23 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+female:
+  id: 1
+  gender: "Female only"
 
-one:
-  gender: MyString
+m_female:
+  id: 2
+  gender: "Mostly female"
 
-two:
-  gender: MyString
+balanced:
+  id: 3
+  gender: "Balanced gender"
+
+m_male:
+  id: 4
+  gender: "Mostly male"
+
+male:
+  id: 5
+  gender: "Male only"
+
+unreported:
+  id: 6
+  gender: "Not reported"

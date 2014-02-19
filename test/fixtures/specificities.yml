@@ -1,7 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+specificity1:
+  id: 1
+  level: "Highly specific"
 
-one:
-  level: MyString
+specificity2:
+  id: 2
+  level: "Somewhat specific"
 
-two:
-  level: MyString
+specificity3:
+  id: 3
+  level: "Neither"
+
+specificity4:
+  id: 4
+  level: "Somewhat general"
+
+specificity5:
+  id: 5
+  level: "Highly general"

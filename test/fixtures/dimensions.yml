@@ -1,7 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+dimension1:
+  id: 1
+  level: "2.5D (3D environment constrained to a ground plane or terrain)"
 
-one:
-  level: MyString
+dimension2:
+  id: 2
+  level: "3D (Environment and user's movements are in all three dimensions)"
 
-two:
-  level: MyString
+dimension3:
+  id: 3
+  level: "Not reported"

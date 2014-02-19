@@ -1,7 +1,15 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+scale1:
+  id: 1
+  level: "Small (0-10 meters per side)"
 
-one:
-  level: MyString
+scale2:
+  id: 2
+  level: "Medium (10-100 meters per side)"
 
-two:
-  level: MyString
+scale3:
+  id: 3
+  level: "Large (>100 meters per side)"
+
+scale4:
+  id: 4
+  level: "Not reported"

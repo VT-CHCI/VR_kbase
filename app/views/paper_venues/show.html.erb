@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Paper:</b>
+  <%= @paper_venue.paper %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @paper_venue.venue %>
+</p>
+
+
+<%= link_to 'Edit', edit_paper_venue_path(@paper_venue) %> |
+<%= link_to 'Back', paper_venues_path %>

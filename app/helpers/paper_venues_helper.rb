@@ -1,0 +1,2 @@
+module PaperVenuesHelper
+end
