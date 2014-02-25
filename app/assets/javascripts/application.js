@@ -165,6 +165,57 @@ function populate_radio_buttons (focus, id) {
   $('#task_' + parentId + ' .task-categories input:checked').parent().each ( function() {
     focus.children('.field').children('.tasks').append(autoReplace($(this).html(), 'category', 'radio'));
   });
+
+  $('.finding:visible').on('change', 'input', function() {
+    var autoGenSentence = '_component_ had a _relationship_ relationship on _metric_ for _task_';
+    var replaceSentence = 4;
+
+    var componentText = $(".finding:visible .components-of-immersion input:checked").map(function() {
+        return $(this).next("label").text();
+      }).get();
+    var relationshipText = $(".finding:visible .relationships input:checked").map(function() {
+        return $(this).next("label").text();
+      }).get();
+    var metricText = $(".finding:visible .metrics input:checked").map(function() {
+        return $(this).next("label").text();
+      }).get();
+    var taskText = $(".finding:visible .tasks input:checked").map(function() {
+        return $(this).next("label").text();
+      }).get();
+
+    if (componentText != '') {
+      autoGenSentence = autoGenSentence.replace(new RegExp('_component_','g'), componentText.join(' and '));
+      replaceSentence = replaceSentence - 1;
+    }
+
+    if (relationshipText != '') {
+      if (relationshipText == 'No relationship') {
+        autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_ relationship','g'), relationshipText);
+      } else if (relationshipText == 'Interaction') {
+        autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_ relationship on','g'), 'an ' + relationshipText + ' with');
+      } else if (relationshipText == 'Inverse') {
+        autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_','g'), 'an ' + relationshipText);
+      } else {
+        autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_','g'), relationshipText);
+      }
+      replaceSentence = replaceSentence - 1;
+    }
+
+    if (metricText != '') {
+      autoGenSentence = autoGenSentence.replace(new RegExp('_metric_','g'), metricText);
+      replaceSentence = replaceSentence - 1;
+    }
+
+    if (taskText != '') {
+      autoGenSentence = autoGenSentence.replace(new RegExp('_task_','g'), taskText);
+      replaceSentence = replaceSentence - 1;
+    } 
+
+    if (replaceSentence == 0) {
+
+      $(".finding:visible .field-summary input").val(autoGenSentence.charAt(0) + autoGenSentence.slice(1).toLowerCase());
+    }
+  });
 }
 
 function add_fields_after (link, association, content) {

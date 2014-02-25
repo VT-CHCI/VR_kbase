@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= f.label :component %>
-    <div class="components-of-immersion">
+    <div class="components-of-immersion auto-gen-field">
 
     </div>
   </div>
@@ -25,7 +25,7 @@
   <div class="field">
     <%= f.label :relationship %>
     <% Relationship.all.each do |relationship| %>
-      <label class="radio inline pill">
+      <label class="radio inline pill relationships auto-gen-field">
         <%= f.radio_button :relationship_id, relationship.id %>
         <%= f.label :relationship_id, relationship.relationship, :value => relationship.id %>
       </label>
@@ -34,14 +34,14 @@
 
   <div class="field">
     <%= f.label :metric %>
-    <div class="metrics">
+    <div class="metrics auto-gen-field">
 
     </div>
   </div>
 
   <div class="field">
     <%= f.label :task %>
-    <div class="tasks">
+    <div class="tasks auto-gen-field">
 
     </div>
   </div>
