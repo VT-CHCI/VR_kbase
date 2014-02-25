@@ -6,6 +6,7 @@ class Paper < ActiveRecord::Base
   has_one :venue, :through => :paper_venue
 
   accepts_nested_attributes_for :authors
+  accepts_nested_attributes_for :author_papers
   accepts_nested_attributes_for :experiments
   accepts_nested_attributes_for :venue
 

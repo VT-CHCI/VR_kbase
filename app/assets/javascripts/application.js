@@ -28,7 +28,7 @@ function remove_author_fields(link) {
 }
 
 function update_author_order() {
-  console.log('Update author order');
+  //console.log('Update author order');
   var a_index = 0;
   $('.author:visible').each(function(index) {
     $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(3).val(a_index);
