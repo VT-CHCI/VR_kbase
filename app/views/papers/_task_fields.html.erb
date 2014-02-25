@@ -20,8 +20,8 @@
     <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", nil, :class => 'hidden' %>
     <% Category.all.each do |category| %>
       <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiment_task_category_id_#{category.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiment_task_category_id_#{category.id}" %>
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}" %>
       </label>
     <% end %>
   </div>
@@ -92,8 +92,8 @@
     <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", nil, :class => 'hidden' %>
     <% Metric.all.each do |metric| %>
       <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.id, f.object.metrics.include?(metric), :id => "experiment_task_metric_id_#{metric.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.metric, :for => "experiment_task_metric_id_#{metric.id}" %>
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.id, f.object.metrics.include?(metric), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.metric, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}" %>
       </label>
     <% end %>
   </div>

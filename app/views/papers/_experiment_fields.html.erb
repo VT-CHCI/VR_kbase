@@ -90,8 +90,8 @@
     <%= hidden_field_tag "paper[experiments_attributes][new_experiments][component_ids][]", nil, :class => 'hidden' %>
     <% Component.all.each do |component| %>
       <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.id, f.object.components.include?(component), :id => "experiment_component_id_#{component.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.comp_of_immersion, :for => "experiment_component_id_#{component.id}" %>
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.id, f.object.components.include?(component), :id => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.comp_of_immersion, :for => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
       </label>
 
     <% end %>
