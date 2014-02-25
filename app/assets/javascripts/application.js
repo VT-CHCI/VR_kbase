@@ -140,10 +140,10 @@ function populate_radio_buttons (focus, id) {
 
   function autoReplace (buttonText, type, ButtonType) {
     if ( ButtonType == 'radio' )  {
+
       buttonText = buttonText.replace(new RegExp('task_'+type,'g'), 'task_finding_'+type);
       buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'findings_attributes]['+id+']['+type+'_id]');
       buttonText = buttonText.replace(new RegExp('type="checkbox"','g'), 'type="radio"');
-      buttonText = buttonText.replace(new RegExp('for="experiment_task_finding_'+type+'_id_(.*?)"'), 'for="experiment_task_finding_'+type+'_id"');
 
       return '<label class="radio inline pill">' + buttonText + '</label>'
     } else {
