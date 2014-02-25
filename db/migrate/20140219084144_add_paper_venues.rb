@@ -7,7 +7,7 @@ class AddPaperVenues < ActiveRecord::Migration
       t.belongs_to :paper
 
       t.timestamps
-	end
+	  end
 
     add_index :paper_venues, :venue_id
     add_index :paper_venues, :paper_id
