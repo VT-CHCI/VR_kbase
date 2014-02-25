@@ -27,6 +27,15 @@ function remove_author_fields(link) {
   $(link).parent().parent().parent().hide();
 }
 
+function update_author_order() {
+  console.log('Update author order');
+  var a_index = 0;
+  $('.author:visible').each(function(index) {
+    $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(3).val(a_index);
+    a_index++;
+  });
+}
+
 var scrolled = false;
 var scrollTimeout;
 
@@ -184,6 +193,8 @@ function add_fields_after (link, association, content) {
       populate_radio_buttons(focus, new_id);
     }
   }
+
+  update_author_order();
 }
 
 function add_fields_before (link, association, content) {
@@ -191,6 +202,8 @@ function add_fields_before (link, association, content) {
   var regexp = new RegExp("new_" + association, "g");
 
   $(link).parent().before(content.replace(regexp, new_id));
+
+  update_author_order();
 }
 
 $(document).ready(function(){
@@ -284,6 +297,8 @@ $(document).ready(function(){
                 $('.authors a').trigger('click');
                 $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(0).val($(this).find('surname').text());
                 $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(1).val($(this).find('given_name').text());
+                //$('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
+                $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(3).val(a_index);
                 a_index++;
               }
             });

@@ -9,12 +9,17 @@
       <%= f.text_field :first_name, :class => 'input-large' %>
     </div>
     <div class="field">
-      <%= f.label :first_name, 'M.I.' %>
+      <%= f.label :middle_initial, 'M.I.' %>
       <%= f.text_field :middle_initial, :class => 'input-small' %>
     </div>
+    <%= f.fields_for :author_papers do |builder| %>
+      <div class="field .field-title">
+        <%= builder.hidden_field(:order) %>
+      </div>
+    <% end %>
     <div class="field">
       <%= link_to_remove_fields "x", f %>
-      <button type="button" onclick="remove_author_fields(this); return false;" class="close">×</button>
+      <button type="button" onclick="remove_author_fields(this); update_author_order(); return false;" class="close">×</button>
     </div>
   </div>
   
