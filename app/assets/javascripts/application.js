@@ -36,6 +36,18 @@ function update_author_order() {
   });
 }
 
+function click_add_finding() {
+  
+}
+
+function click_add_task() {
+  
+}
+
+function click_add_experiment() {
+  $('p.new_experiment').children().click();
+}
+
 var scrolled = false;
 var scrollTimeout;
 

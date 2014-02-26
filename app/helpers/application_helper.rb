@@ -14,6 +14,6 @@ module ApplicationHelper
     else
        link_to_function(name, "add_fields_after(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class => css_class)
     end
-
+    
   end
 end
