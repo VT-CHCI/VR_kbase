@@ -67,12 +67,13 @@
             </div>
           </div>
 
-          <%= f.fields_for :venue do |builder| %>
-            <div class="field .field-title">
-              <%= builder.label :name, "Publication Venue" %>
-              <%= builder.text_field :name, :class => 'span12' %>
-            </div>
-          <% end %>
+          <div class="venue">
+            <%= f.fields_for :venues do |builder| %>
+              <%= render 'venue_fields', :f =>builder %>
+            <% end %>
+
+            <!-- <%= link_to_add_fields "Add Venue", f, :venues, 'btn btn-primary', 'before' %> -->
+          </div>
 
           <div class="inline-group range">
             <div class="field">
