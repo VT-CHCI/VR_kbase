@@ -12,6 +12,6 @@ class Paper < ActiveRecord::Base
 
   attr_accessible :doi, :end_page, :num_views, :paper_url, :start_page, :title, :volume,
     :year, :issue, :venue_attributes, :experiments_attributes, :authors_attributes,
-    :tasks_attributes, :findings_attributes, :paper_venue_attributes, :author_paper_attributes,
+    :tasks_attributes, :findings_attributes, :paper_venues_attributes, :author_papers_attributes,
     :category_ids, :order
 end

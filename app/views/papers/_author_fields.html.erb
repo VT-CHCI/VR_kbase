@@ -12,11 +12,14 @@
       <%= f.label :middle_initial, 'M.I.' %>
       <%= f.text_field :middle_initial, :class => 'input-small' %>
     </div>
-    <%= f.fields_for :author_papers do |builder| %>
+    <!--<%= f.fields_for :author_papers do |builder| %>
       <div class="field .field-title">
         <%= builder.hidden_field(:order) %>
       </div>
-    <% end %>
+    <% end %>-->
+    <div class="field">
+      <%= hidden_field_tag "paper[author_papers_attributes][new_author_papers][order]", nil, :class => 'hidden' %>
+    </div>
     <div class="field">
       <%= link_to_remove_fields "x", f %>
       <button type="button" onclick="remove_author_fields(this); update_author_order(); return false;" class="close">×</button>
