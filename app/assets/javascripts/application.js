@@ -166,12 +166,24 @@ function populate_radio_buttons (focus, id) {
       buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'findings_attributes]['+id+']['+type+'_id]');
       buttonText = buttonText.replace(new RegExp('type="checkbox"','g'), 'type="radio"');
 
-      return '<label class="radio inline pill">' + buttonText + '</label>'
+      var tempButtonText = buttonText.split("\"");
+      var tempAttributes = tempButtonText[3].split(/[[\]]{1,2}/);
+
+      tempButtonText[1] = 'paper_experiments_attributes_' + tempAttributes[2] + '_tasks_attributes_' + tempAttributes[4] + '_findings_attributes_' + tempAttributes[6] + '_' + tempAttributes[7] + '_' + tempButtonText[7];
+      tempButtonText[9] = tempButtonText[1]
+
+      return '<label class="radio inline pill">' + tempButtonText.join('"') + '</label>'
     } else {
       buttonText = buttonText.replace(new RegExp('experiment_'+type,'g'), 'experiment_task_finding_'+type);
       buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'tasks_attributes]['+parentId+'][findings_attributes]['+id+']['+type+'_ids][]');
 
-      return '<label class="checkbox inline pill">' + buttonText + '</label>'
+      var tempButtonText = buttonText.split("\"");
+      var tempAttributes = tempButtonText[3].split(/[[\]]{1,2}/);
+
+      tempButtonText[1] = 'paper_experiments_attributes_' + tempAttributes[2] + '_tasks_attributes_' + tempAttributes[4] + '_findings_attributes_' + tempAttributes[6] + '_' + tempAttributes[7] + '_' + tempButtonText[7];
+      tempButtonText[9] = tempButtonText[1]
+      
+      return '<label class="checkbox inline pill">' + tempButtonText.join('"') + '</label>'
     }
   }
 
