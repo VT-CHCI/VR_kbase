@@ -4,7 +4,7 @@ class Experiment < ActiveRecord::Base
 
   belongs_to :gender
 
-  accepts_nested_attributes_for :tasks
+  accepts_nested_attributes_for :tasks, :allow_destroy => true
 
   # validates_presence_of :title
 

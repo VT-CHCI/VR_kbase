@@ -13,7 +13,13 @@ class AuthorPaper < ActiveRecord::Base
     if existing_author = Author.where(:last_name => author.last_name, :first_name => author.first_name, :middle_initial => author.middle_initial).first
       self.author = existing_author
     else
-      self.author = author
+      tmp = Author.new
+      tmp.last_name = author.last_name
+      tmp.first_name = author.first_name
+      tmp.middle_initial = author.middle_initial
+      self.author = tmp
+      self.author.save!
+      self.author_id = self.author.id
     end
   end
 end
