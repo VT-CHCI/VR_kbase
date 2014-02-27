@@ -56,13 +56,14 @@
             <div class="attribute_block">
               <legend class="with-helper-text">Adding Authors</legend>
               <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add authors link.</small></p>
-              <div class="authors">
 
-                <%= f.fields_for :authors do |builder| %>
-                  <%= render 'author_fields', :f =>builder %>
+              <div class="authors-generator">
+
+                <%= f.fields_for :author_papers do |builder| %>
+                  <%= render 'author_paper_fields', :f =>builder %>
                 <% end %>
 
-                <%= link_to_add_fields "Add Author", f, :authors, 'btn btn-primary', 'before' %>
+                <%= link_to_add_fields "Add Author", f, :author_papers, 'btn btn-primary', 'before' %>
               </div>
             </div>
           </div>
@@ -71,8 +72,6 @@
             <%= f.fields_for :venues do |builder| %>
               <%= render 'venue_fields', :f =>builder %>
             <% end %>
-
-            <!-- <%= link_to_add_fields "Add Venue", f, :venues, 'btn btn-primary', 'before' %> -->
           </div>
 
           <div class="inline-group range">

@@ -1,0 +1,15 @@
+<div class="author_paper">
+  <div class="inline-group">
+    <div class="order hidden">
+      <%= f.text_field :order, :class => 'input-small' %>
+    </div>
+
+    <%= add_fields f, :author %>
+
+    <div class="field destroy-author">
+      <%= link_to_remove_fields "x", f %>
+      <button type="button" onclick="remove_author_paper_fields(this); update_author_order(); return false;" class="close">×</button>
+    </div>
+  </div>
+  
+</div>

@@ -25,7 +25,7 @@ class AuthorPapersController < ApplicationController
   # GET /author_papers/new.json
   def new
     @author_paper = AuthorPaper.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @author_paper }
