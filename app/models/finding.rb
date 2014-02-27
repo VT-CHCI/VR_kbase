@@ -6,7 +6,7 @@ class Finding < ActiveRecord::Base
   belongs_to :relationship
   belongs_to :specificity
 
-  has_many :finding_components
+  has_many :finding_components, :dependent => :destroy
   has_many :components, :through => :finding_components
 
   attr_accessible :issue, :summary, :title, :category, :metric, :relationship, :specificity,

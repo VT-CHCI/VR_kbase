@@ -7,7 +7,7 @@ class Task < ActiveRecord::Base
   belongs_to :density
   belongs_to :realism
 
-  has_many :task_categories
+  has_many :task_categories, :dependent => :destroy
   has_many :categories, :through => :task_categories
 
   attr_reader :category_tokens
@@ -19,7 +19,7 @@ class Task < ActiveRecord::Base
     self.category_ids = ids.split(",")
   end
 
-  has_many :task_metrics
+  has_many :task_metrics, :dependent => :destroy
   has_many :metrics, :through => :task_metrics
 
   attr_reader :metric_tokens
