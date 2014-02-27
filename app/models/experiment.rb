@@ -13,7 +13,7 @@ class Experiment < ActiveRecord::Base
     :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, 
     :component_ids, :category_ids
 
-  has_many :experiment_displays
+  has_many :experiment_displays, :dependent => :destroy
   has_many :displays, :through => :experiment_displays
 
   attr_reader :display_tokens
@@ -25,7 +25,7 @@ class Experiment < ActiveRecord::Base
     self.display_ids = ids.split(",")
   end
 
-  has_many :experiment_hardwares
+  has_many :experiment_hardwares, :dependent => :destroy
   has_many :hardwares, :through => :experiment_hardwares
 
   attr_reader :hardware_tokens
@@ -37,7 +37,7 @@ class Experiment < ActiveRecord::Base
     self.hardware_ids = ids.split(",")
   end
 
-  has_many :experiment_softwares
+  has_many :experiment_softwares, :dependent => :destroy
   has_many :softwares, :through => :experiment_softwares
 
   attr_reader :software_tokens
@@ -49,7 +49,7 @@ class Experiment < ActiveRecord::Base
     self.software_ids = ids.split(",")
   end
 
-  has_many :experiment_components
+  has_many :experiment_components, :dependent => :destroy
   has_many :components, :through => :experiment_components
 
   attr_reader :component_tokens
