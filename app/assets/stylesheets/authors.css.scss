@@ -14,11 +14,18 @@
   }
 }
 
-.authors a {
-  clear: both;
-  display: block;
+.authors-generator a {
+    clear: both;
+    display: block;    
 }
 
 .author button {
   padding-top: 25px;
 }
+
+.author_paper {
+  .destroy-author {
+    margin: 26px 0 0 20px;
+  }
+}
+
