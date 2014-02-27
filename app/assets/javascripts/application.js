@@ -350,9 +350,9 @@ $(document).ready(function(){
             autofill('#paper_title',"title");
 
             if ($xml.find("journal").length) {
-              autofill('#paper_venue_attributes_name',"full_title");
+              autofill('#paper_venues_attributes_0_name',"full_title");
             } else if ($xml.find("conference").length) {
-              autofill('#paper_venue_attributes_name',"proceedings_title");
+              autofill('#paper_venues_attributes_0_name',"proceedings_title");
             }
 
             autofill('#paper_year_1i',"year");
