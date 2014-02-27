@@ -41,12 +41,24 @@ function update_author_order() {
   });
 }
 
-function click_add_finding() {
-  
+function click_add_finding(task_id) {
+  //console.log(task_id);
+  $('p.new_finding').each(function() {
+    //console.log($(this).parent().attr('id').indexOf(String(task_id)));
+    if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
+      $(this).children().click();
+  });
+  //$('p.new_finding').children().click();
 }
 
-function click_add_task() {
-  
+function click_add_task(experiment_id) {
+  //console.log(experiment_id);
+  $('p.new_task').each(function() {
+    //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
+    if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
+      $(this).children().click();
+  });
+  //$('p.new_task').children().click();
 }
 
 function click_add_experiment() {

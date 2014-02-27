@@ -1,8 +1,8 @@
 class Paper < ActiveRecord::Base
-  has_many :author_papers
+  has_many :author_papers, :dependent => :destroy
   has_many :authors, :through => :author_papers
   has_many :experiments, :dependent => :destroy
-  has_many :paper_venues
+  has_many :paper_venues, :dependent => :destroy
   has_many :venues, :through => :paper_venues
 
   # accepts_nested_attributes_for :authors
