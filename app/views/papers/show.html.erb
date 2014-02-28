@@ -1,27 +1,30 @@
 <div class="row-fluid">
   <div class="paper-show span12">
 
-    <h1><%= @paper.title %></h1>
-
-    <div class= "paper-details">
-      <blockquote>
-        <ul class="authors">
-          <% for author in @paper.authors %>
-            <li class="author"><a href="#"><%= author.first_name %> 
-              <% if author.middle_initial != "" %>
-                <%= author.middle_initial + '.' %>
-              <% end %>
-              <%= author.last_name %></a></li>
+    <div class="row-fluid">
+      <div class="span1"></div>
+      <div class= "paper-details span10 well">
+        <h1><%= @paper.title %></h1>
+        <blockquote>
+          <ul class="authors">
+            <% for author in @paper.authors %>
+              <li class="author"><a href="#"><%= author.first_name %> 
+                <% if author.middle_initial != "" %>
+                  <%= author.middle_initial + '.' %>
+                <% end %>
+                <%= author.last_name %></a></li>
+            <% end %>
+          </ul>
+          <%= @paper.venues.first.name %> (<%= @paper.year.year %>), 
+          <% if @paper.start_page && @paper.start_page != "" && @paper.end_page && @paper.start_page != "" %>
+            pp. <%= @paper.start_page %>-<%= @paper.end_page %>, 
           <% end %>
-        </ul>
-        <%= @paper.venues.first.name %> (<%= @paper.year.year %>), 
-        <% if @paper.start_page && @paper.start_page != "" && @paper.end_page && @paper.start_page != "" %>
-          pp. <%= @paper.start_page %>-<%= @paper.end_page %>, 
-        <% end %>
-        <% if @paper.doi != "" && @paper.doi %>
-          doi: <a href="<%= @paper.paper_url %>"><%= @paper.doi %></a>
-        <% end %>
-      </blockquote>
+          <% if @paper.doi != "" && @paper.doi %>
+            doi: <a href="<%= @paper.paper_url %>"><%= @paper.doi %></a>
+          <% end %>
+        </blockquote>
+        <%= link_to 'Edit', edit_paper_path(@paper), :class => "edit-paper" %>
+      </div>
     </div>
 
     <div class="row-fluid headings">
@@ -118,6 +121,87 @@
 
           <div class="exp-desc span4">
             <p><%= experiment.exp_desc %></p>
+
+            <div class="title well">
+              <h6 class="inline">Components of fidelity & desc - </h6>
+              <ul class="list inline">
+                <% for component in experiment.components %>
+                  <li class="object"><a href="#"><%= component.comp_of_immersion.downcase %></a></li>
+                <% end %>
+              </ul>
+            </div>
+            <p><%= experiment.comp_desc %></p>
+
+            <div class="title">
+              <h6>System Info</h6>
+            </div>
+
+            <div class="title">
+              <h6 class="inline">Displays - </h6>
+              <ul class="list inline">
+                <% for display in experiment.displays %>
+                  <li class="object"><a href="#"><%= display.display.downcase %></a></li>
+                <% end %>
+              </ul>
+            </div>
+            <p><%= experiment.display_desc %></p>
+
+            <div class="title">
+              <h6 class="inline">Hardware - </h6>
+              <ul class="list inline">
+                <% if experiment.hardwares.count > 0 %>
+                  <% for hardware in experiment.hardwares %>
+                    <li class="object"><a href="#"><%= hardware.hardware.downcase %></a></li>
+                  <% end %>
+                <% else %>
+                  not reported
+                <% end %>
+              </ul>
+            </div>
+            <div class="title">
+              <h6 class="inline">Software - </h6>
+              <ul class="list inline">
+                <% if experiment.softwares.count > 0 %>
+                  <% for software in experiment.softwares %>
+                    <li class="object"><a href="#"><%= software.software.downcase %></a></li>
+                  <% end %>
+                <% else %>
+                  not reported
+                <% end %>
+              </ul>
+            </div>
+            <p><%= experiment.system_desc %></p>
+
+            <div class="title">
+              <h6>Other Variables</h6>
+            </div>
+            <p><%= experiment.other_vars %></p>
+
+            <div class="title">
+              <h6>Constants</h6>
+            </div>
+            <p><%= experiment.constants %></p>
+
+            <div class="title">
+              <h6>Participant Info</h6>
+            </div>
+            <p><%= experiment.part_background %></p>
+            <table class="table part-table">
+              <thead>
+                <tr>
+                  <th>Total #</th>
+                  <th>Age Range</th>
+                  <th>Gender Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= experiment.part_num %></td>
+                  <td><%= experiment.part_age_min %> - <%= experiment.part_age_max %></td>
+                  <td><%= experiment.gender.gender %></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
       </div>
     <% end %>
@@ -125,33 +209,5 @@
 </div>
 
 <p id="notice"><%= notice %></p>
+ <!-- <%= link_to 'Back', papers_path %> -->
 
-
-
-<p>
-  <b>Experiments:</b>
-  <%= @paper.experiments %>
-</p>
-
-<ol>
-  <% for experiment in @paper.experiments %>
-  <li><%= experiment.exp_desc %></li>
-  <% end %>
-</ol>
-
-<ol>
-  <% for experiment in @paper.experiments %>
-  <li><%= experiment.exp_desc %></li>
-  <ul>
-    <% for task in experiment.tasks %>
-      <li><%= task.title %></li>
-    <% end %>
-  </ul>
-  <% end %>
-</ol>
-
-
-
-
-<%= link_to 'Edit', edit_paper_path(@paper) %> |
-<%= link_to 'Back', papers_path %>
