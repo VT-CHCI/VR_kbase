@@ -1,39 +1,111 @@
-<h1>Listing papers</h1>
+<div id="paper-list">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well">
+        <legend class="with-helper-text">Filter Options</legend>
+        <p class="after-legend"><small>This will be an area for filters.</small></p>
+      </div>
+    </div>
+    <div class="span9">
+      <div class="row-fluid">
+        <div class="span8"><legend>Publications</legend></div>
+        <div class="span4"><legend>Keywords</legend></div>
+      </div>
+        <% @papers.each do |paper| %>
+          <div class="row-fluid paper-entry">
+            <div class="paper-show span8"> 
+              <h4><%= link_to paper.title, paper %></h4>
+              <div class= "paper-details">
+                <blockquote>
+                  <ul class="authors">
+                    <% for author in paper.authors %>
+                      <li class="author">
+                        <% author_name = author.first_name %> 
+                        <% if author.middle_initial != "" %>
+                          <% author_name += ' ' + author.middle_initial + '.' %>
+                        <% end %>
+                        <% author_name += ' ' + author.last_name %>
+                        <%= link_to author_name, author %>
+                      </li>
+                    <% end %>
+                  </ul>
 
-<table>
-  <tr>
-    <th>Experiments</th>
-    <th>Title</th>
-    <th>Year</th>
-    <th>Volume</th>
-    <th>Num pages</th>
-    <th>Start page</th>
-    <th>Doi</th>
-    <th>Paper url</th>
-    <th>Num views</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+                  <% if paper.venues.count > 0 %>
+                    <%= paper.venues.first.name %> 
+                  <%end %> 
+                  (<%= paper.year.year %>), 
+                  <% if paper.start_page && paper.start_page != "" && paper.end_page && paper.start_page != "" %>
+                      pp. <%= paper.start_page %>-<%= paper.end_page %>, 
+                  <% end %>
+                  <% if paper.doi != "" && paper.doi %>
+                    doi: <a href="<%= paper.paper_url %>"><%= paper.doi %></a>
+                  <% end %>
+                </blockquote>
+              </div>
+            </div>
+            <div class="paper-keywords span4">
+              <ul class="list">
 
-<% @papers.each do |paper| %>
-  <tr>
-    <td><%= paper.experiments %></td>
-    <td><%= paper.title %></td>
-    <td><%= paper.year %></td>
-    <td><%= paper.volume %></td>
-    <td><%= paper.end_page %></td>
-    <td><%= paper.start_page %></td>
-    <td><%= paper.doi %></td>
-    <td><%= paper.paper_url %></td>
-    <td><%= paper.num_views %></td>
-    <td><%= link_to 'Show', paper %></td>
-    <td><%= link_to 'Edit', edit_paper_path(paper) %></td>
-    <td><%= link_to 'Destroy', paper, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+                <% if paper.experiments.count > 0 %>
+                  <% for experiment in paper.experiments %>
+
+                    <% if experiment.components.count > 0 %>
+                      <% for component in experiment.components %>
+                        <li class="object"><a href="#"><%= component.comp_of_immersion.downcase %></a></li>
+                      <% end %>
+                    <% end %>
+
+                    <% if experiment.tasks.count > 0 %>
+                      <% for task in experiment.tasks %>
+
+                        <% if task.metrics.count > 0 %>
+                          <% for metric in task.metrics %>
+                            <li class="object"><a href="#"><%= metric.metric.downcase %></a></li>
+                          <% end %>
+                        <% end %>
+
+                        <% if task.categories.count > 0 %>
+                          <% for category in task.categories %>
+                            <li class="object"><a href="#"><%= category.task_category %></a></li>
+                          <% end %>
+                        <% end %>
+
+                      <% end %>
+                    <% end %>
+
+
+                    <% if experiment.displays.count > 0 %>
+                      <% for display in experiment.displays %>
+                        <li class="object"><a href="#"><%= display.display.downcase %></a></li>
+                      <% end %>
+                    <% end %>
+                    
+                    <% if experiment.softwares.count > 0 %>
+                      <% for software in experiment.softwares %>
+                        <li class="object"><a href="#"><%= software.software.downcase %></a></li>
+                      <% end %>
+                    <% end %>
+
+                    <% if experiment.hardwares.count > 0 %>
+                      <% for hardware in experiment.hardwares %>
+                        <li class="object"><a href="#"><%= hardware.hardware.downcase %></a></li>
+                      <% end %>
+                    <% end %>
+
+
+                  <% end %>
+                <% end %>
+              </ul>
+            </div> 
+              <!-- <%= link_to 'x', paper, :method => :delete, :class => "close", :data => { :confirm => 'Are you sure?' } %>
+             <td><%= link_to 'Edit', edit_paper_path(paper) %></td> -->
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <br />
 
-<%= link_to 'New Paper', new_paper_path %>
+<!-- <%= link_to 'New Paper', new_paper_path %> -->

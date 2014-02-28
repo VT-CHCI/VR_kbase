@@ -27,21 +27,38 @@ function remove_author_fields(link) {
   $(link).parent().parent().parent().hide();
 }
 
+function remove_author_paper_fields(link) {
+  console.log($(link));
+  $(link).prev("input[type=hidden]").val("true");
+  $(link).parent().parent().parent().hide();
+}
+
 function update_author_order() {
   //console.log('Update author order');
   var a_index = 0;
-  $('.author:visible').each(function(index) {
-    $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(3).val(a_index);
-    a_index++;
+  $('.author_paper:visible').each(function(index) {
+    $(this).children('.inline-group').children('.order').children('input').eq(0).val(index);
   });
 }
 
-function click_add_finding() {
-  
+function click_add_finding(task_id) {
+  //console.log(task_id);
+  $('p.new_finding').each(function() {
+    //console.log($(this).parent().attr('id').indexOf(String(task_id)));
+    if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
+      $(this).children().click();
+  });
+  //$('p.new_finding').children().click();
 }
 
-function click_add_task() {
-  
+function click_add_task(experiment_id) {
+  //console.log(experiment_id);
+  $('p.new_task').each(function() {
+    //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
+    if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
+      $(this).children().click();
+  });
+  //$('p.new_task').children().click();
 }
 
 function click_add_experiment() {
@@ -369,11 +386,10 @@ $(document).ready(function(){
 
             $xml.find('person_name').each(function(index) {
               if ($(this).attr('contributor_role') == "author") {
-                $('.authors a').trigger('click');
-                $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(0).val($(this).find('surname').text());
-                $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(1).val($(this).find('given_name').text());
-                //$('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
-                $('.author:visible').eq(a_index).children('.inline-group').children('.field').children('input').eq(3).val(a_index);
+                $('.authors-generator a').trigger('click');
+                $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
+                $('.author:visible').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
+                //$('.author:visible').eq(a_index).children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
                 a_index++;
               }
             });

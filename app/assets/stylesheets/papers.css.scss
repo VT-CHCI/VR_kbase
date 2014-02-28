@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+//Paper create/edit
 #progress_headings {
   i {
     float: left;
@@ -27,4 +27,201 @@
     float: right;
     margin-bottom: 10px;
   }
+}
+
+
+//Paper View
+
+.paper-show {
+  .paper-details {
+    position: relative;
+
+    .paper-modify {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
+  }
+
+  ul.authors { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+
+    li.author { 
+      display: inline; 
+    }
+  
+    li.author:after { 
+      content: ","; 
+    } 
+
+    li.author:last-child:after { 
+      content: ""; 
+    }
+
+    li.author a {
+      margin-left: 0;
+    }
+  }
+
+  .headings {
+    div {
+      text-align: center;
+    }
+
+    legend {
+      border: none;
+      margin-bottom: 10px;
+    }
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .task {
+    margin-bottom: 15px;
+    border-top: 5px solid #eee;
+    padding: 10px 0;
+  }
+
+  p {
+    text-align: justify;
+  }
+
+  .inline {
+    display: inline;
+  }
+
+  .task-desc {
+    ul.task-categories, ul.task-metrics {
+      list-style: none; 
+      margin: 0; 
+      padding: 0;
+      text-align: center; 
+
+      li.category, li.metric { 
+        display: inline; 
+      }
+    
+      li.category:after, li.metric:after { 
+        content: ","; 
+      } 
+
+      li.category:last-child:after, li.metric:last-child:after { 
+        content: ""; 
+      }
+
+      h6 {
+        display: inline;
+      }
+    }
+
+    .env-table {
+      td {
+        width: 22%;
+      }
+
+      td:first-child {
+        width: 34%;
+      }
+    }
+  }
+
+  .exp-desc {
+    .part-table {
+      th, td {
+        text-align: center;
+      }
+    }
+
+    ul.list { 
+      list-style: none; 
+      margin: 0; 
+      padding: 0; 
+
+      li.object { 
+        display: inline; 
+      }
+    
+      li.object:after { 
+        content: ","; 
+      } 
+
+      li.object:last-child:after { 
+        content: ""; 
+      }
+
+      li.object a {
+        margin-left: 0;
+      }
+    }
+  }
+
+  li.finding {
+    text-align: justify;
+
+    h5 {
+      border-left: 5px solid #eee;
+      padding-left: 5px;
+    }
+
+    p {
+      margin-left: 10px;
+      margin-bottom: 15px;
+      padding-left: 10px;
+    }
+
+    p.divider {
+      border-top: 1px solid;
+    }
+  }
+}
+
+//Paper List
+#paper-list {
+  .paper-entry {
+    blockquote {
+      margin-bottom: 10px;
+    }
+
+    .paper-destroy {
+      margin: 25px 0 0 0;
+      padding: 0;
+      width: 5.5%;
+      height: 50px;
+    }
+  }
+
+  .paper-entry:hover {
+    background: #eee;
+  }
+
+  .paper-show {
+    /*border-right: solid 5px #eee;*/
+  }
+
+  ul.list { 
+      list-style: none; 
+      margin: 0; 
+      padding: 0; 
+
+      li.object { 
+        display: inline; 
+      }
+    
+      li.object:after { 
+        content: ","; 
+      } 
+
+      li.object:last-child:after { 
+        content: ""; 
+      }
+
+      li.object a {
+        margin-left: 0;
+        font-size: smaller;
+      }
+    }
 }

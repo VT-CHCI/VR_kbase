@@ -7,7 +7,7 @@ class Task < ActiveRecord::Base
   belongs_to :density
   belongs_to :realism
 
-  has_many :task_categories
+  has_many :task_categories, :dependent => :destroy
   has_many :categories, :through => :task_categories
 
   attr_reader :category_tokens
@@ -19,7 +19,7 @@ class Task < ActiveRecord::Base
     self.category_ids = ids.split(",")
   end
 
-  has_many :task_metrics
+  has_many :task_metrics, :dependent => :destroy
   has_many :metrics, :through => :task_metrics
 
   attr_reader :metric_tokens
@@ -31,7 +31,8 @@ class Task < ActiveRecord::Base
     self.metric_ids = ids.split(",")
   end
 
-  accepts_nested_attributes_for :findings
+  accepts_nested_attributes_for :findings, :allow_destroy => true
+  
   attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
     :density_id, :realism_id, :category_tokens, :metric_tokens, :findings, :findings_attributes, 
     :metric_ids, :category_ids
