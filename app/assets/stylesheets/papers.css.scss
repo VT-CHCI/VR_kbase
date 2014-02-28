@@ -36,7 +36,7 @@
   .paper-details {
     position: relative;
 
-    a.edit-paper {
+    .paper-modify {
       position: absolute;
       top: 15px;
       right: 20px;
@@ -177,4 +177,51 @@
       border-top: 1px solid;
     }
   }
+}
+
+//Paper List
+#paper-list {
+  .paper-entry {
+    blockquote {
+      margin-bottom: 10px;
+    }
+
+    .paper-destroy {
+      margin: 25px 0 0 0;
+      padding: 0;
+      width: 5.5%;
+      height: 50px;
+    }
+  }
+
+  .paper-entry:hover {
+    background: #eee;
+  }
+
+  .paper-show {
+    /*border-right: solid 5px #eee;*/
+  }
+
+  ul.list { 
+      list-style: none; 
+      margin: 0; 
+      padding: 0; 
+
+      li.object { 
+        display: inline; 
+      }
+    
+      li.object:after { 
+        content: ","; 
+      } 
+
+      li.object:last-child:after { 
+        content: ""; 
+      }
+
+      li.object a {
+        margin-left: 0;
+        font-size: smaller;
+      }
+    }
 }

@@ -23,7 +23,10 @@
             doi: <a href="<%= @paper.paper_url %>"><%= @paper.doi %></a>
           <% end %>
         </blockquote>
-        <%= link_to 'Edit', edit_paper_path(@paper), :class => "edit-paper" %>
+        <div class="paper-modify">
+          <%= link_to 'edit', edit_paper_path(@paper), :class => "edit-paper" %> |
+          <%= link_to 'delete', @paper, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+        </div>
       </div>
     </div>
 
