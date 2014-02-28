@@ -1,38 +1,45 @@
 <h1>Listing papers</h1>
 
-<table>
-  <tr>
-    <th>Experiments</th>
-    <th>Title</th>
-    <th>Year</th>
-    <th>Volume</th>
-    <th>Num pages</th>
-    <th>Start page</th>
-    <th>Doi</th>
-    <th>Paper url</th>
-    <th>Num views</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id="paper-list">
+  <% @papers.each do |paper| %>
 
-<% @papers.each do |paper| %>
-  <tr>
-    <td><%= paper.experiments %></td>
-    <td><%= paper.title %></td>
-    <td><%= paper.year %></td>
-    <td><%= paper.volume %></td>
-    <td><%= paper.end_page %></td>
-    <td><%= paper.start_page %></td>
-    <td><%= paper.doi %></td>
-    <td><%= paper.paper_url %></td>
-    <td><%= paper.num_views %></td>
-    <td><%= link_to 'Show', paper %></td>
+    <div class="row-fluid">
+      <div class="paper-show span12"> 
+        <h1><%= link_to paper.title, paper %></h1>
+        <div class= "paper-details">
+          <blockquote>
+            <ul class="authors">
+              <% for author in paper.authors %>
+                <li class="author">
+                  <% author_name = author.first_name %> 
+                  <% if author.middle_initial != "" %>
+                    <% author_name += ' ' + author.middle_initial + '.' %>
+                  <% end %>
+                  <% author_name += ' ' + author.last_name %>
+                  <%= link_to author_name, author %>
+                </li>
+              <% end %>
+            </ul>
+
+            <% if paper.venues.count > 0 %>
+              <%= paper.venues.first.name %> 
+            <%end %> 
+            (<%= paper.year.year %>), 
+            <% if paper.start_page && paper.start_page != "" && paper.end_page && paper.start_page != "" %>
+                pp. <%= paper.start_page %>-<%= paper.end_page %>, 
+            <% end %>
+            <% if paper.doi != "" && paper.doi %>
+              doi: <a href="<%= paper.paper_url %>"><%= paper.doi %></a>
+            <% end %>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    
     <td><%= link_to 'Edit', edit_paper_path(paper) %></td>
     <td><%= link_to 'Destroy', paper, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+  <% end %>
+</div>
 
 <br />
 
