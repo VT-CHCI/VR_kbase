@@ -18,7 +18,15 @@ module ApplicationHelper
   end
 
   def add_fields(f, association)
-    new_object = f.object.class.reflect_on_association(association).klass.new
+    new_object = nil
+    # check if the object for the given association exists (edit), and if so, assign it to new_objcte
+    f.fields_for association do |builder|
+      new_object = builder.object
+    end
+    # else, create new instance of that object
+    if !new_object
+      new_object = f.object.class.reflect_on_association(association).klass.new
+    end
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", :f => builder)
     end
