@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+//Paper create/edit
 #progress_headings {
   i {
     float: left;
@@ -26,5 +26,115 @@
   a {
     float: right;
     margin-bottom: 10px;
+  }
+}
+
+
+//Paper View
+
+.paper-show {
+  ul.authors { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+
+    li.author { 
+      display: inline; 
+    }
+  
+    li.author:after { 
+      content: ","; 
+    } 
+
+    li.author:last-child:after { 
+      content: ""; 
+    }
+
+    li.author a {
+      margin-left: 0;
+    }
+  }
+
+  .headings {
+    div {
+      text-align: center;
+    }
+
+    legend {
+      border: none;
+      margin-bottom: 10px;
+    }
+  }
+
+  .task {
+    margin-bottom: 15px;
+    border-top: 5px solid #eee;
+    padding: 10px 0;
+  }
+
+  .task-desc {
+    ul.task-categories, ul.task-metrics {
+      list-style: none; 
+      margin: 0; 
+      padding: 0;
+      text-align: center; 
+
+      li.category, li.metric { 
+        display: inline; 
+      }
+    
+      li.category:after, li.metric:after { 
+        content: ","; 
+      } 
+
+      li.category:last-child:after, li.metric:last-child:after { 
+        content: ""; 
+      }
+
+      h6 {
+        display: inline;
+      }
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .env-table {
+      td {
+        width: 22%;
+      }
+
+      td:first-child {
+        width: 34%;
+      }
+    }
+
+    .inline {
+      display: inline;
+    }
+  }
+
+  li.finding {
+    text-align: justify;
+
+    h5 {
+      border-left: 5px solid #eee;
+      padding-left: 5px;
+    }
+
+    p {
+      margin-left: 10px;
+      margin-bottom: 15px;
+      padding-left: 10px;
+    }
+
+    p.divider {
+      border-top: 1px solid;
+    }
   }
 }

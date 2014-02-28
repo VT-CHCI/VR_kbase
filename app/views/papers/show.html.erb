@@ -1,48 +1,136 @@
+<div class="row-fluid">
+  <div class="paper-show span12">
+
+    <h1><%= @paper.title %></h1>
+
+    <div class= "paper-details">
+      <blockquote>
+        <ul class="authors">
+          <% for author in @paper.authors %>
+            <li class="author"><a href="#"><%= author.first_name %> 
+              <% if author.middle_initial != "" %>
+                <%= author.middle_initial + '.' %>
+              <% end %>
+              <%= author.last_name %></a></li>
+          <% end %>
+        </ul>
+        <%= @paper.venues.first.name %> (<%= @paper.year.year %>), 
+        <% if @paper.start_page && @paper.start_page != "" && @paper.end_page && @paper.start_page != "" %>
+          pp. <%= @paper.start_page %>-<%= @paper.end_page %>, 
+        <% end %>
+        <% if @paper.doi != "" && @paper.doi %>
+          doi: <a href="<%= @paper.paper_url %>"><%= @paper.doi %></a>
+        <% end %>
+      </blockquote>
+    </div>
+
+    <div class="row-fluid headings">
+      <div class="span4"><legend>Findings</legend></div>
+      <div class="span4"><legend>Tasks</legend></div>
+      <div class="span4"><legend>Experiments</legend></div>
+    </div>
+
+    <% for experiment in @paper.experiments %>
+      <div class="row-fluid">
+        
+          <div class="span8">
+            <% for task in experiment.tasks %>
+              <div class="row-fluid task">
+                <div class="span6">
+                  <ol>
+                    <% for finding in task.findings %>
+                      <li class="finding">
+                        <% p = finding.summary %>
+                        <% for component in finding.components %>
+                          <% p = p.gsub(/#{Regexp.new(Regexp.escape(component.comp_of_immersion), Regexp::IGNORECASE)}/, link_to(component.comp_of_immersion,component)) %>
+                        <% end %>
+                        <% p = p.gsub(/#{Regexp.new(Regexp.escape(Metric.find_by_id(finding.metric_id).metric), Regexp::IGNORECASE)}/, link_to(Metric.find_by_id(finding.metric_id).metric.downcase,Metric.find_by_id(finding.metric_id))) %>
+                        <% p = p.gsub(/#{Regexp.new(Regexp.escape(Category.find_by_id(finding.category_id).task_category), Regexp::IGNORECASE)}/,link_to(Category.find_by_id(finding.category_id).task_category.downcase,Category.find_by_id(finding.category_id))) %>
+                        
+                        <h5><%= p.html_safe %></h5>
+
+                        <% if finding.specificity_id || finding.issue != "" %>
+                          <p class="divider">
+                        <% else %>
+                          <p>
+                        <% end%>
+                          <% if finding.specificity_id %>
+                            <small>Specificity: <%= finding.specificity.level %></small>
+                          <% end %>
+                          <% if finding.issue != "" %>
+                            <br><%= finding.issue %>
+                          <% end %>
+                        </p>
+                      </li>
+                    <% end %>
+                  </ol>
+                </div>
+
+                <div class="task-desc span6">
+                  <ul class="task-categories">
+                    <% for category in task.categories %>
+                      <li class="category"><h6><a href="#"><%= category.task_category %></a></h6></li>
+                    <% end %>
+                  </ul>
+                  <p><%= task.task_desc %></p>
+
+                  <div class="title">
+                    <h6>Interface</h6>
+                  </div>
+                  <p><%= task.interface_desc %></p>
+
+                  <div class="title">
+                    <h6>Environment</h6>
+                  </div>
+                  <p><%= task.env_desc %></p>
+                  <table class="table env-table">
+                    <thead>
+                      <tr>
+                        <th>Dimensionality</th>
+                        <th>Scale</th>
+                        <th>Density</th>
+                        <th>Visual Realism</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><%= task.dimension.level %></td>
+                        <td><%= task.scale.level %></td>
+                        <td><%= task.density.level %></td>
+                        <td><%= task.realism.level %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="title">
+                    <h6 class="inline">Metrics - </h6>
+                    <ul class="task-metrics inline">
+                      <% for metric in task.metrics %>
+                        <li class="metric"><a href="#"><%= metric.metric.downcase %></a></li>
+                      <% end %>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="exp-desc span4">
+            <p><%= experiment.exp_desc %></p>
+          </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <p id="notice"><%= notice %></p>
+
+
 
 <p>
   <b>Experiments:</b>
   <%= @paper.experiments %>
-</p>
-
-<p>
-  <b>Title:</b>
-  <%= @paper.title %>
-</p>
-
-<p>
-  <b>Year:</b>
-  <%= @paper.year %>
-</p>
-
-<p>
-  <b>Volume:</b>
-  <%= @paper.volume %>
-</p>
-
-<p>
-  <b>Num pages:</b>
-  <%= @paper.end_page %>
-</p>
-
-<p>
-  <b>Start page:</b>
-  <%= @paper.start_page %>
-</p>
-
-<p>
-  <b>Doi:</b>
-  <%= @paper.doi %>
-</p>
-
-<p>
-  <b>Paper url:</b>
-  <%= @paper.paper_url %>
-</p>
-
-<p>
-  <b>Num views:</b>
-  <%= @paper.num_views %>
 </p>
 
 <ol>
@@ -61,6 +149,8 @@
   </ul>
   <% end %>
 </ol>
+
+
 
 
 <%= link_to 'Edit', edit_paper_path(@paper) %> |
