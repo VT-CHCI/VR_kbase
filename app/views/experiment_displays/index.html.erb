@@ -4,6 +4,7 @@
   <tr>
     <th>Display</th>
     <th>Experiment</th>
+    <th>Description</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,8 +12,9 @@
 
 <% @experiment_displays.each do |experiment_display| %>
   <tr>
-    <td><%= experiment_display.display %></td>
-    <td><%= experiment_display.experiment %></td>
+    <td><%= experiment_display.display.display %></td>
+    <td><%= experiment_display.experiment.id %></td>
+    <td><%= experiment_display.desc %></td>
     <td><%= link_to 'Show', experiment_display %></td>
     <td><%= link_to 'Edit', edit_experiment_display_path(experiment_display) %></td>
     <td><%= link_to 'Destroy', experiment_display, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
