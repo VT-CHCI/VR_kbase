@@ -1,5 +1,33 @@
 Kbase::Application.routes.draw do
 
+  resources :experiment_indy_variables
+
+  resources :indy_variables
+
+  resources :experiment_system_apps
+
+  resources :system_appropriatenesses
+
+  resources :experiment_controls
+
+  resources :control_symmetries
+
+  resources :experiment_biomechanicals
+
+  resources :biomechanical_symmetries
+
+  resources :experiment_aurals
+
+  resources :aural_fidelities
+
+  resources :experiment_haptics
+
+  resources :haptic_fidelities
+
+  resources :experiment_visuals
+
+  resources :visual_fidelities
+
   resources :finding_specificities
 
   resources :specificities

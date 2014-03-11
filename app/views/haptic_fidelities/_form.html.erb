@@ -1,0 +1,21 @@
+<%= form_for(@haptic_fidelity) do |f| %>
+  <% if @haptic_fidelity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@haptic_fidelity.errors.count, "error") %> prohibited this haptic_fidelity from being saved:</h2>
+
+      <ul>
+      <% @haptic_fidelity.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :component %><br />
+    <%= f.text_field :component %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

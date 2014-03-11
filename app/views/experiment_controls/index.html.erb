@@ -1,0 +1,27 @@
+<h1>Listing experiment_controls</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>Control symmetry</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_controls.each do |experiment_control| %>
+  <tr>
+    <td><%= experiment_control.experiment %></td>
+    <td><%= experiment_control.control_symmetry %></td>
+    <td><%= experiment_control.desc %></td>
+    <td><%= link_to 'Show', experiment_control %></td>
+    <td><%= link_to 'Edit', edit_experiment_control_path(experiment_control) %></td>
+    <td><%= link_to 'Destroy', experiment_control, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment control', new_experiment_control_path %>

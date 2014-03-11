@@ -1,0 +1,21 @@
+<%= form_for(@biomechanical_symmetry) do |f| %>
+  <% if @biomechanical_symmetry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@biomechanical_symmetry.errors.count, "error") %> prohibited this biomechanical_symmetry from being saved:</h2>
+
+      <ul>
+      <% @biomechanical_symmetry.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :component %><br />
+    <%= f.text_field :component %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

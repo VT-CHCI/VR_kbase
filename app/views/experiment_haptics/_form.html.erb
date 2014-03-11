@@ -1,0 +1,29 @@
+<%= form_for(@experiment_haptic) do |f| %>
+  <% if @experiment_haptic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@experiment_haptic.errors.count, "error") %> prohibited this experiment_haptic from being saved:</h2>
+
+      <ul>
+      <% @experiment_haptic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :experiment %><br />
+    <%= f.text_field :experiment %>
+  </div>
+  <div class="field">
+    <%= f.label :haptic_fidelity %><br />
+    <%= f.text_field :haptic_fidelity %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

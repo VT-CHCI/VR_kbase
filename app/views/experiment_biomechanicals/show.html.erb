@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_biomechanical.experiment %>
+</p>
+
+<p>
+  <b>Biomechanical symmetry:</b>
+  <%= @experiment_biomechanical.biomechanical_symmetry %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_biomechanical.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_biomechanical_path(@experiment_biomechanical) %> |
+<%= link_to 'Back', experiment_biomechanicals_path %>

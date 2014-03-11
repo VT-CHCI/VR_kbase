@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_system_app.experiment %>
+</p>
+
+<p>
+  <b>System appropriateness:</b>
+  <%= @experiment_system_app.system_appropriateness %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_system_app.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_system_app_path(@experiment_system_app) %> |
+<%= link_to 'Back', experiment_system_apps_path %>

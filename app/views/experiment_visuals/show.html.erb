@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_visual.experiment %>
+</p>
+
+<p>
+  <b>Visual fidelity:</b>
+  <%= @experiment_visual.visual_fidelity %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_visual.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_visual_path(@experiment_visual) %> |
+<%= link_to 'Back', experiment_visuals_path %>

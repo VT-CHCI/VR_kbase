@@ -1,0 +1,2 @@
+module ControlSymmetriesHelper
+end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  experiment: 
+  visual_fidelity: 
+  desc: MyString
+
+two:
+  experiment: 
+  visual_fidelity: 
+  desc: MyString

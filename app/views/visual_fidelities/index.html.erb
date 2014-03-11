@@ -1,0 +1,23 @@
+<h1>Listing visual_fidelities</h1>
+
+<table>
+  <tr>
+    <th>Component</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @visual_fidelities.each do |visual_fidelity| %>
+  <tr>
+    <td><%= visual_fidelity.component %></td>
+    <td><%= link_to 'Show', visual_fidelity %></td>
+    <td><%= link_to 'Edit', edit_visual_fidelity_path(visual_fidelity) %></td>
+    <td><%= link_to 'Destroy', visual_fidelity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Visual fidelity', new_visual_fidelity_path %>

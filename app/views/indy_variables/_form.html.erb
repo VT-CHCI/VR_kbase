@@ -1,0 +1,21 @@
+<%= form_for(@indy_variable) do |f| %>
+  <% if @indy_variable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@indy_variable.errors.count, "error") %> prohibited this indy_variable from being saved:</h2>
+
+      <ul>
+      <% @indy_variable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :variable %><br />
+    <%= f.text_field :variable %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

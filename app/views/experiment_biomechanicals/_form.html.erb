@@ -1,0 +1,29 @@
+<%= form_for(@experiment_biomechanical) do |f| %>
+  <% if @experiment_biomechanical.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@experiment_biomechanical.errors.count, "error") %> prohibited this experiment_biomechanical from being saved:</h2>
+
+      <ul>
+      <% @experiment_biomechanical.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :experiment %><br />
+    <%= f.text_field :experiment %>
+  </div>
+  <div class="field">
+    <%= f.label :biomechanical_symmetry %><br />
+    <%= f.text_field :biomechanical_symmetry %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

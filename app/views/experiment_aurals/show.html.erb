@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_aural.experiment %>
+</p>
+
+<p>
+  <b>Aural fidelity:</b>
+  <%= @experiment_aural.aural_fidelity %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_aural.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_aural_path(@experiment_aural) %> |
+<%= link_to 'Back', experiment_aurals_path %>

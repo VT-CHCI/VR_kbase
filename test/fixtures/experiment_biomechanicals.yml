@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  experiment: 
+  biomechanical_symmetry: 
+  desc: MyString
+
+two:
+  experiment: 
+  biomechanical_symmetry: 
+  desc: MyString

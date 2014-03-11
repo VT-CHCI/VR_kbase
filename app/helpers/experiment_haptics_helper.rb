@@ -1,0 +1,2 @@
+module ExperimentHapticsHelper
+end

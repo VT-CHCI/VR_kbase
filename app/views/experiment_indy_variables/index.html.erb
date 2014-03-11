@@ -1,0 +1,27 @@
+<h1>Listing experiment_indy_variables</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>Indy variable</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_indy_variables.each do |experiment_indy_variable| %>
+  <tr>
+    <td><%= experiment_indy_variable.experiment %></td>
+    <td><%= experiment_indy_variable.indy_variable %></td>
+    <td><%= experiment_indy_variable.desc %></td>
+    <td><%= link_to 'Show', experiment_indy_variable %></td>
+    <td><%= link_to 'Edit', edit_experiment_indy_variable_path(experiment_indy_variable) %></td>
+    <td><%= link_to 'Destroy', experiment_indy_variable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment indy variable', new_experiment_indy_variable_path %>
