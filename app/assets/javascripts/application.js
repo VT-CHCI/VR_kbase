@@ -154,21 +154,26 @@ function add_progress_heading(association, new_id) {
 
 function createTokenInput (focus) {
   $('#' + focus.attr('id') + ' .token-input input').each(function() {
-    var dataType = $(this).data("type");
-    var database;
+    createSingleTokenInput(this)
+  });
+}
 
-    if ($(this).data("database")) {
-      database = $(this).data("database");
-    } else {
-      database = dataType;
-    }
+function createSingleTokenInput (focus) {
+  var dataType = $(focus).data("type");
+  var database;
 
-    $(this).tokenInput('/' + database + 's.json', {
-      crossDomain: false,
-      preventDuplicates: true,
-      propertyToSearch: dataType,
-      prePopulate: $(this).data("pre")
-    });
+  if ($(focus).data("database")) {
+    database = $(focus).data("database");
+  } else {
+    database = dataType;
+  }
+
+  $(focus).tokenInput('/' + database + 's.json', {
+    crossDomain: false,
+    preventDuplicates: true,
+    propertyToSearch: dataType,
+    prePopulate: $(focus).data("pre"),
+    tokenLimit: 1
   });
 }
 
@@ -294,8 +299,14 @@ function add_fields_before (link, association, content) {
   var regexp = new RegExp("new_" + association, "g");
 
   $(link).parent().before(content.replace(regexp, new_id));
+  
+  if (association == 'authors') {
+    update_author_order();
+  } 
 
-  update_author_order();
+  else if (association == 'experiment_displays') {
+    createSingleTokenInput($(link).parent().prev().find('.token-input input'));
+  }
 }
 
 $(document).ready(function(){
@@ -314,7 +325,8 @@ $(document).ready(function(){
       crossDomain: false,
       preventDuplicates: true,
       propertyToSearch: dataType,
-      prePopulate: $(this).data("pre")
+      prePopulate: $(this).data("pre"),
+      tokenLimit: 1
     });
   });
 

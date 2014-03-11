@@ -9,21 +9,17 @@ class Experiment < ActiveRecord::Base
   # validates_presence_of :title
 
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min,
-    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, :display_tokens,
+    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, #:display_tokens,
     :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, 
-    :component_ids, :category_ids
+    :component_ids, :category_ids, :experiment_displays_attributes
+
 
   has_many :experiment_displays, :dependent => :destroy
   has_many :displays, :through => :experiment_displays
 
-  attr_reader :display_tokens
+  accepts_nested_attributes_for :experiment_displays
 
-  def display_tokens=(ids)
-    ids.gsub!(/CREATE_(.+?)_END/) do
-      Display.create!(:display => $1).id
-    end
-    self.display_ids = ids.split(",")
-  end
+
 
   has_many :experiment_hardwares, :dependent => :destroy
   has_many :hardwares, :through => :experiment_hardwares

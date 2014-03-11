@@ -58,14 +58,15 @@
   <legend class="with-helper-text">System Information</legend>
   <p class="after-legend"><small>Use the autocomplete field to indicate categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then use the hardware and software autocomplete fields to provide general information on the system used in this experiment such as input devices, tracking systems, graphics packages, etc. Additonal details of the system such as computer specs, modifications, etc. can be added in the last text area.</small></p>
 
-  <div class="field token-input">
-      <%= f.label :display_tokens, "Displays Used" %>
-      <%= f.text_field :display_tokens, "data-pre" => f.object.displays.to_json, "data-type" => "display", :class => 'span12' %>
-  </div>
 
-  <div class="field field-display-desc">
-    <%= f.label :display_desc, 'Display Description' %>
-    <%= f.text_area :display_desc, :class => 'span12', :rows => 5 %>
+  <h1> Display Test </h1>
+
+  <div id="displays" class="displays well">
+      <%= add_fields f, :experiment_displays %>
+
+      <div class="display-generator">
+        <%= link_to_add_fields "Add Another Display", f, :experiment_displays, 'btn btn-primary', 'before' %>
+      </div>
   </div>
 
   <div class="field token-input">
