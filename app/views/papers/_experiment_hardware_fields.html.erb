@@ -2,7 +2,7 @@
 	<div class="inline-group">
 		<div class="field token-input span3">
 		  <%= f.label :hardware_tokens, "Input Device" %>
-		  <%= f.text_field :hardware_tokens, "data-pre" => f.object.display.to_json, "data-type" => "hardware", :class => 'span3' %>
+		  <%= f.text_field :hardware_tokens, "data-pre" => f.object.display.to_json, "data-type" => "hardware", "data-limit" => 1, :class => 'span3' %>
 		</div>
 
 		<div class="span9">

@@ -192,6 +192,7 @@ function createTokenInput (focus) {
 function createSingleTokenInput (focus) {
   var dataType = $(focus).data("type");
   var database;
+  var limit;
 
   if ($(focus).data("database")) {
     database = $(focus).data("database");
@@ -199,12 +200,18 @@ function createSingleTokenInput (focus) {
     database = dataType;
   }
 
+  if ($(focus).data("limit")) {
+    limit = $(focus).data("limit");
+  } else {
+    limit = null;
+  }
+  
   $(focus).tokenInput('/' + database + 's.json', {
     crossDomain: false,
     preventDuplicates: true,
     propertyToSearch: dataType,
     prePopulate: $(focus).data("pre"),
-    tokenLimit: 1
+    tokenLimit: limit
   });
 }
 
@@ -360,18 +367,6 @@ $(document).ready(function(){
   }
 
   $('[ref=tooltip]').tooltip();
-
-  $('.token-input input').each(function() {
-    var dataType = $(this).data("type");
-
-    $(this).tokenInput('/' + dataType + 's.json', {
-      crossDomain: false,
-      preventDuplicates: true,
-      propertyToSearch: dataType,
-      prePopulate: $(this).data("pre"),
-      tokenLimit: 1
-    });
-  });
 
   $('#submit-doi').click(function() {
     if ($('#paper_doi').val()) {
