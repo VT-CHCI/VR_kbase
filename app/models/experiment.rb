@@ -9,7 +9,7 @@ class Experiment < ActiveRecord::Base
   # validates_presence_of :title
 
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min,
-    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id, #:display_tokens,
+    :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id,
     :hardware_tokens, :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, 
     :component_ids, :category_ids, :experiment_displays_attributes
 
