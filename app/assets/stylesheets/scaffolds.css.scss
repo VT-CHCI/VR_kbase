@@ -1,4 +1,4 @@
-body {
+/*body {
   background-color: #fff;
   color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
@@ -18,7 +18,7 @@ pre {
   font-size: 11px;
 }
 
-/*a {
+a {
   color: #000;
   &:visited {
     color: #fff;
@@ -27,13 +27,13 @@ pre {
     color: #fff;
     background-color: #000;
   }
-}*/
+}
 
 div {
   &.field, &.actions {
     margin-bottom: 10px;
   }
-}
+}*/
 
 #notice {
   color: green;
