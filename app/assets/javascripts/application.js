@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require_tree .
 //= require bootstrap.min
+//= require parsley
 
 function remove_fields(link) {
   console.log($(link));
@@ -39,6 +40,8 @@ function update_author_order() {
   $('.author_paper:visible').each(function(index) {
     $(this).children('.inline-group').children('.order').children('input').eq(0).val(index);
   });
+
+  $('[ref=tooltip]').tooltip();
 }
 
 function click_add_finding(task_id) {
@@ -49,6 +52,8 @@ function click_add_finding(task_id) {
       $(this).children().click();
   });
   //$('p.new_finding').children().click();
+
+  $('[ref=tooltip]').tooltip();
 }
 
 function click_add_task(experiment_id) {
@@ -59,6 +64,8 @@ function click_add_task(experiment_id) {
       $(this).children().click();
   });
   //$('p.new_task').children().click();
+
+  $('[ref=tooltip]').tooltip();
 }
 
 function click_add_experiment() {
@@ -300,10 +307,9 @@ function add_fields_before (link, association, content) {
 
   $(link).parent().before(content.replace(regexp, new_id));
   
-  if (association == 'authors') {
-    update_author_order();
+  if (association == 'author_papers') {
+    update_author_order ();
   } 
-
   else if (association == 'experiment_displays') {
     createSingleTokenInput($(link).parent().prev().find('.token-input input'));
   }
@@ -317,6 +323,8 @@ $(document).ready(function(){
   if(window.location.href.indexOf("new") > -1) {
      $('.authors a').trigger('click');
   }
+
+  $('[ref=tooltip]').tooltip();
 
   $('.token-input input').each(function() {
     var dataType = $(this).data("type");
