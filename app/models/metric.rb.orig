@@ -1,0 +1,15 @@
+class Metric < ActiveRecord::Base
+<<<<<<< HEAD
+  has_many :task_metrics
+  has_many :tasks, :through => :task_metric
+
+  has_one :finding
+
+=======
+	has_many :task_metrics
+  has_many :tasks, :through => :task_metric
+
+  has_one :finding
+>>>>>>> master
+  attr_accessible :metric
+end

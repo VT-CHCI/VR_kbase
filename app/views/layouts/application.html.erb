@@ -47,11 +47,18 @@
               </ul>
             </li> -->
           </ul>
-          <form class="navbar-form pull-right">
-            <input class="span2" type="text" placeholder="Email">
-            <input class="span2" type="password" placeholder="Password">
-            <button type="submit" class="btn">Sign in</button>
-          </form>
+          <% if user_signed_in? %>
+            Signed in as <%= current_user.email %>. Not you? 
+            <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+          <% else %>
+            <%= form_for :user, html: {class: "navbar-form pull-right"}, :url => session_path("user") do |user| %>
+              <%= user.email_field :email, :class => "span2", :placeholder => "Email" %>
+              <%= user.password_field :password, :class => "span2", :placeholder => "Password" %>
+              <%= user.check_box :remember_me %> remember me? 
+              <%= user.submit "Sign in", :url => user_session_path, :class => "btn" %>
+              or <%= link_to "Sign up", new_user_registration_path %>
+            <% end %>
+          <% end %> 
         </div><!--/.nav-collapse -->
       </div>
     </div>
