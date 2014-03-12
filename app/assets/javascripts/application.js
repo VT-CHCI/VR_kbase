@@ -307,10 +307,9 @@ function add_fields_before (link, association, content) {
 
   $(link).parent().before(content.replace(regexp, new_id));
   
-  if (association == 'authors') {
-    update_author_order();
+  if (association == 'author_papers') {
+    update_author_order ();
   } 
-
   else if (association == 'experiment_displays') {
     createSingleTokenInput($(link).parent().prev().find('.token-input input'));
   }
