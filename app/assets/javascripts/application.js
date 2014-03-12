@@ -320,6 +320,17 @@ function add_fields_after (link, association, content) {
     if (association == 'findings') {
       populate_radio_buttons(focus, new_id);
     }
+
+    if (association == 'experiments') {
+      $('.accordion-group').on('hidden', function () {
+        $(this).find('.icon-plus-sign').show();
+        $(this).find('.icon-minus-sign').hide();
+      });
+      $('.accordion-group').on('shown', function () {
+        $(this).find('.icon-plus-sign').hide();
+        $(this).find('.icon-minus-sign').show();
+      });
+    }
   }
 
   update_author_order();

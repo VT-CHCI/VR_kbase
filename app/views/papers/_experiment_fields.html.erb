@@ -58,9 +58,6 @@
   <legend class="with-helper-text">System Information</legend>
   <p class="after-legend"><small>Use the autocomplete field to indicate categories of displays used in this experiment and then provide technical specifications of these displays in the text area below. Then use the hardware and software autocomplete fields to provide general information on the system used in this experiment such as input devices, tracking systems, graphics packages, etc. Additonal details of the system such as computer specs, modifications, etc. can be added in the last text area.</small></p>
 
-
-  <h1> Display Test </h1>
-
   <div id="displays" class="displays well">
       <%= add_fields f, :experiment_displays %>
 
@@ -86,26 +83,14 @@
   <legend class="with-helper-text">Components of Fidelity</legend>
   <p class="after-legend"><small>Use the buttons below to select all the components of fidelity varied in this experiment then provide details on the different levels in the text area below.</small></p>
 
-<!--   <div class="field components-of-immersion">
-    <%= f.label :components %>
-    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][component_ids][]", nil, :class => 'hidden' %>
-    <% Component.all.each do |component| %>
-      <label class="checkbox inline pill">
-        <%= check_box_tag nil, component.id, f.object.components.include?(component), :id => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.comp_of_immersion, :for => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
-      </label>
-
-    <% end %>
-  </div> -->
-
   <div class="accordion" id="accordion2">
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-          <h4>Display Fidelity</h4>
+          <i class="icon-plus-sign" style="display: none;"></i><i class="icon-minus-sign"></i> Display Fidelity
         </a>
       </div>
-      <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+      <div id="collapseOne" class="accordion-body in collapse">
         <div class="fidelity accordion-inner">
           <div class="fidelity-list span12">
             <legend>Visual Fidelity</legend>
@@ -117,7 +102,7 @@
 
             <% end %>
           </div>
-          <div id="experiment_new_experiments_experiment_visual" class="fidelity-desc"></div>
+          <div id="experiment_new_experiments_experiment_visual" class="fidelity-desc span12"></div>
 
           <div class="fidelity-list span12">
             <legend>Auditory Fidelity</legend>
@@ -129,7 +114,7 @@
 
             <% end %>
           </div>
-          <div id="experiment_new_experiments_experiment_aural" class="fidelity-desc"></div>
+          <div id="experiment_new_experiments_experiment_aural" class="fidelity-desc span12"></div>
 
           <div class="fidelity-list span12">
             <legend>Haptic Fidelity</legend>
@@ -141,7 +126,7 @@
 
             <% end %>
           </div>
-          <div id="experiment_new_experiments_experiment_haptic" class="fidelity-desc"></div>
+          <div id="experiment_new_experiments_experiment_haptic" class="fidelity-desc span12"></div>
 
         </div>
       </div>
@@ -149,10 +134,10 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-          Interaction Fidelity
+          <i class="icon-plus-sign"></i><i class="icon-minus-sign" style="display: none;"></i> Interaction Fidelity
         </a>
       </div>
-      <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
+      <div id="collapseTwo" class="accordion-body collapse">
         <div class="fidelity accordion-inner">
           <div class="fidelity-list span12">
             <legend>Biomechanical Symmetry</legend>
@@ -164,7 +149,7 @@
 
             <% end %>
           </div>
-          <div id="experiment_new_experiments_experiment_biomechanical" class="fidelity-desc"></div>
+          <div id="experiment_new_experiments_experiment_biomechanical" class="fidelity-desc span12"></div>
 
           <div class="fidelity-list span12">
             <legend>Control Symmetry</legend>
@@ -176,7 +161,7 @@
 
             <% end %>
           </div>
-          <div id="experiment_new_experiments_experiment_control" class="fidelity-desc"></div>
+          <div id="experiment_new_experiments_experiment_control" class="fidelity-desc span12"></div>
 
           <div class="fidelity-list span12">
             <legend>System Appropriateness</legend>
@@ -188,7 +173,7 @@
 
             <% end %>
           </div>
-          <div id="experiment_new_experiments_experiment_system_app" class="fidelity-desc"></div>
+          <div id="experiment_new_experiments_experiment_system_app" class="fidelity-desc span12"></div>
 
         </div>
       </div>
@@ -196,20 +181,15 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-          Scenario Fidelity
+          <i class="icon-plus-sign"></i><i class="icon-minus-sign" style="display: none;"></i> Scenario Fidelity
         </a>
       </div>
-      <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
+      <div id="collapseThree" class="accordion-body collapse">
         <div class="fidelity accordion-inner">
           Being curated, check back soon!
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="field field-comp-desc">
-    <%= f.label :comp_desc, 'Components of Fidelity Description' %>
-    <%= f.text_area :comp_desc, :class => 'span12', :rows => 5 %>
   </div>
 
   <legend class="with-helper-text">Additional Information</legend>
