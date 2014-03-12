@@ -29,9 +29,9 @@ ul.token-input-list li input {
 
 li.token-input-token {
     overflow: hidden; 
-    height: auto !important; 
-    height: 15px;
-    margin: 3px;
+    /*height: auto !important; */
+    height: 20px;
+    margin: 2px;
     padding: 2px 6px;
     color: #08C;
     /*background-color: #eee;*/
@@ -89,11 +89,12 @@ li.token-input-input-token {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    height: 28px;
 }
 
 div.token-input-dropdown {
     position: absolute;
-    width: 400px;
+    width: 287px;
     background-color: #fff;
     overflow: hidden;
     border-left: 1px solid #ccc;
