@@ -91,6 +91,26 @@ li.token-input-input-token {
     list-style-type: none;
     height: 28px;
 }
+li.token-input-input-token input[type="text"] {
+    background-color: none;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+li.token-input-input-token input[type="text"]:focus {
+    border-color: none;
+    outline: 0;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
 
 div.token-input-dropdown {
     position: absolute;
