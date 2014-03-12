@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_control.experiment %>
+</p>
+
+<p>
+  <b>Control symmetry:</b>
+  <%= @experiment_control.control_symmetry %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_control.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_control_path(@experiment_control) %> |
+<%= link_to 'Back', experiment_controls_path %>

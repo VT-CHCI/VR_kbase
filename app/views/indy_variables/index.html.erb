@@ -1,0 +1,23 @@
+<h1>Listing indy_variables</h1>
+
+<table>
+  <tr>
+    <th>Variable</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @indy_variables.each do |indy_variable| %>
+  <tr>
+    <td><%= indy_variable.variable %></td>
+    <td><%= link_to 'Show', indy_variable %></td>
+    <td><%= link_to 'Edit', edit_indy_variable_path(indy_variable) %></td>
+    <td><%= link_to 'Destroy', indy_variable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Indy variable', new_indy_variable_path %>

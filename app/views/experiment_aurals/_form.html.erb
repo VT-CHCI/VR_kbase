@@ -1,0 +1,29 @@
+<%= form_for(@experiment_aural) do |f| %>
+  <% if @experiment_aural.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@experiment_aural.errors.count, "error") %> prohibited this experiment_aural from being saved:</h2>
+
+      <ul>
+      <% @experiment_aural.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :experiment %><br />
+    <%= f.text_field :experiment %>
+  </div>
+  <div class="field">
+    <%= f.label :aural_fidelity %><br />
+    <%= f.text_field :aural_fidelity %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

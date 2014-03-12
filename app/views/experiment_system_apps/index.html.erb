@@ -1,0 +1,27 @@
+<h1>Listing experiment_system_apps</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>System appropriateness</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_system_apps.each do |experiment_system_app| %>
+  <tr>
+    <td><%= experiment_system_app.experiment %></td>
+    <td><%= experiment_system_app.system_appropriateness %></td>
+    <td><%= experiment_system_app.desc %></td>
+    <td><%= link_to 'Show', experiment_system_app %></td>
+    <td><%= link_to 'Edit', edit_experiment_system_app_path(experiment_system_app) %></td>
+    <td><%= link_to 'Destroy', experiment_system_app, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment system app', new_experiment_system_app_path %>

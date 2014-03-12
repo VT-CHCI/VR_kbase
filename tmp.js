@@ -108,3 +108,15 @@ $.ajax({
 		}
 	}
 })
+
+##########################################################################
+
+paperComponents = ['.experiment','.task','.finding'];
+
+$.each ($(paperComponents.join(", ")), function() {
+	console.log($(this));
+	$.each ($(this), function() {
+		$(this).insertAfter($(this).parent());
+		$(this).hide();
+	});
+});

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  experiment: 
+  control_symmetry: 
+  desc: MyString
+
+two:
+  experiment: 
+  control_symmetry: 
+  desc: MyString

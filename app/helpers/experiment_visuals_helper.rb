@@ -1,0 +1,2 @@
+module ExperimentVisualsHelper
+end

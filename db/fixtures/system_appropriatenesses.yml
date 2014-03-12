@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Input accuracy"
+
+comp2:
+  component: "Input precision"
+
+comp3:
+  component: "Latency"
+
+comp4:
+  component: "Form factor"

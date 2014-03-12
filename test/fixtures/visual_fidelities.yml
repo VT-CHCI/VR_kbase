@@ -1,0 +1,44 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Latency"
+
+comp2:
+  component: "Frame rate"
+
+comp3:
+  component: "Head tracking"
+
+comp4:
+  component: "Display size"
+
+comp5:
+  component: "Form factor"
+
+comp6:
+  component: "Refresh rate"
+
+comp7:
+  component: "Stereoscopy"
+
+comp8:
+  component: "Resolution (number of pixels)"
+
+comp9:
+  component: "Resolution (pixel density)"
+
+comp10:
+  component: "Field of view (FOV)"
+
+comp11:
+  component: "Jitter"
+
+comp12:
+  component: "Field of regard (FOR)"
+
+comp13:
+  component: "Software field of view (SFOV)"
+
+comp14:
+  component: "Visual realism"
+

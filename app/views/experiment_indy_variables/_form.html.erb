@@ -1,0 +1,29 @@
+<%= form_for(@experiment_indy_variable) do |f| %>
+  <% if @experiment_indy_variable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@experiment_indy_variable.errors.count, "error") %> prohibited this experiment_indy_variable from being saved:</h2>
+
+      <ul>
+      <% @experiment_indy_variable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :experiment %><br />
+    <%= f.text_field :experiment %>
+  </div>
+  <div class="field">
+    <%= f.label :indy_variable %><br />
+    <%= f.text_field :indy_variable %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

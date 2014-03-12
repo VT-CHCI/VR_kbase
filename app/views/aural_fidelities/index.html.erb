@@ -1,0 +1,23 @@
+<h1>Listing aural_fidelities</h1>
+
+<table>
+  <tr>
+    <th>Component</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @aural_fidelities.each do |aural_fidelity| %>
+  <tr>
+    <td><%= aural_fidelity.component %></td>
+    <td><%= link_to 'Show', aural_fidelity %></td>
+    <td><%= link_to 'Edit', edit_aural_fidelity_path(aural_fidelity) %></td>
+    <td><%= link_to 'Destroy', aural_fidelity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Aural fidelity', new_aural_fidelity_path %>

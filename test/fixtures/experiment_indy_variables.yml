@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  experiment: 
+  indy_variable: 
+  desc: MyString
+
+two:
+  experiment: 
+  indy_variable: 
+  desc: MyString

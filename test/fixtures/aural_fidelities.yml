@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Audio (On/Off)"
+
+comp2:
+  component: "Audio Quality"
+
+comp3:
+  component: "Latency"
+
+comp4:
+  component: "Spacial Audio (On/Off)"
