@@ -16,6 +16,30 @@
 //= require bootstrap.min
 //= require parsley
 
+function create_description(focus, name, experimentId, componentId, throughTable, component) {
+  var new_id = new Date().getTime();
+
+  if (focus.checked) {
+    //fires when component of immersion is checked
+    //checks to see if there is a detail that already exists for that component
+    if($('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).length) {
+      //the detail existed (i.e. the user changed their mind) so we show it and mark destroy as false
+      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).show();
+      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId+' input.destroy').val(false);
+    }
+    else {
+      //the detail doesn't exist, so we need to create it
+      $('#experiment_'+ experimentId+'_'+throughTable).append('<div id="'+component+'_'+componentId+'"><input id="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'" name="paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+']['+component+']" type="hidden" value="'+componentId+'"><label for="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'">'+name+' levels</label><input class="span12" id="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'" name="paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+']['+component+']" size="30" type="text"><input class="destroy" id="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'__destroy" name="paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+'][_destroy]" type="hidden" value="false"></div>');
+    }
+  } else {
+    //this means the user unchecked the component so we make sure the detail exists, if it does we hide it and mark it to be destroyed
+    if($('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).length) {
+      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).hide();
+      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId+' input.destroy').val(true);
+    }
+  }  
+}
+
 function remove_fields(link) {
   console.log($(link));
   $(link).prev("input[type=hidden]").val("true");

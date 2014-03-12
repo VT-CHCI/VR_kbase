@@ -74,28 +74,137 @@
       <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware", :class => 'span12' %>
   </div>
   <div class="field token-input">
-      <%= f.label :software_tokens, "Software Used" %>
+      <%= f.label :software_tokens, "VR Software Used" %>
       <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software", :class => 'span12' %>
   </div>
 
   <div class="field field-system-desc">
-    <%= f.label :system_desc, 'Hardware / Software Description' %>
+    <%= f.label :system_desc, 'Other Hardware / Software' %>
     <%= f.text_area :system_desc, :class => 'span12', :rows => 5 %>
   </div>
 
   <legend class="with-helper-text">Components of Fidelity</legend>
   <p class="after-legend"><small>Use the buttons below to select all the components of fidelity varied in this experiment then provide details on the different levels in the text area below.</small></p>
 
-  <div class="field components-of-immersion">
+<!--   <div class="field components-of-immersion">
     <%= f.label :components %>
     <%= hidden_field_tag "paper[experiments_attributes][new_experiments][component_ids][]", nil, :class => 'hidden' %>
     <% Component.all.each do |component| %>
       <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.id, f.object.components.include?(component), :id => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
+        <%= check_box_tag nil, component.id, f.object.components.include?(component), :id => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
         <%= label_tag "paper[experiments_attributes][new_experiments][component_ids][]", component.comp_of_immersion, :for => "experiments_attributes_new_experiments_component_id_#{component.id}" %>
       </label>
 
     <% end %>
+  </div> -->
+
+  <div class="accordion" id="accordion2">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+          <h4>Display Fidelity</h4>
+        </a>
+      </div>
+      <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+        <div class="fidelity accordion-inner">
+          <div class="fidelity-list span12">
+            <legend>Visual Fidelity</legend>
+            <% VisualFidelity.all.each do |component| %>
+              <label class="checkbox inline pill">
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_visual_id_#{component.id}" , :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_visual', 'visual_fidelity')" %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_visual_id_#{component.id}" %>
+              </label>
+
+            <% end %>
+          </div>
+          <div id="experiment_new_experiments_experiment_visual" class="fidelity-desc"></div>
+
+          <div class="fidelity-list span12">
+            <legend>Auditory Fidelity</legend>
+            <% AuralFidelity.all.each do |component| %>
+              <label class="checkbox inline pill">
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_auditory_id_#{component.id}" , :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_aural', 'aural_fidelity')" %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_auditory_id_#{component.id}" %>
+              </label>
+
+            <% end %>
+          </div>
+          <div id="experiment_new_experiments_experiment_aural" class="fidelity-desc"></div>
+
+          <div class="fidelity-list span12">
+            <legend>Haptic Fidelity</legend>
+            <% HapticFidelity.all.each do |component| %>
+              <label class="checkbox inline pill">
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_haptic_id_#{component.id}" , :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_haptic', 'haptic_fidelity')" %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_haptic_id_#{component.id}" %>
+              </label>
+
+            <% end %>
+          </div>
+          <div id="experiment_new_experiments_experiment_haptic" class="fidelity-desc"></div>
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+          Interaction Fidelity
+        </a>
+      </div>
+      <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
+        <div class="fidelity accordion-inner">
+          <div class="fidelity-list span12">
+            <legend>Biomechanical Symmetry</legend>
+            <% BiomechanicalSymmetry.all.each do |component| %>
+              <label class="checkbox inline pill">
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}", :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_biomechanical', 'biomechanical_symmetry')" %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}" %>
+              </label>
+
+            <% end %>
+          </div>
+          <div id="experiment_new_experiments_experiment_biomechanical" class="fidelity-desc"></div>
+
+          <div class="fidelity-list span12">
+            <legend>Control Symmetry</legend>
+            <% ControlSymmetry.all.each do |component| %>
+              <label class="checkbox inline pill">
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_control_id_#{component.id}", :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_control', 'control_symmetry')" %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_control_id_#{component.id}" %>
+              </label>
+
+            <% end %>
+          </div>
+          <div id="experiment_new_experiments_experiment_control" class="fidelity-desc"></div>
+
+          <div class="fidelity-list span12">
+            <legend>System Appropriateness</legend>
+            <% SystemAppropriateness.all.each do |component| %>
+              <label class="checkbox inline pill">
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_system_app_id_#{component.id}", :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_system_app', 'system_appropriateness')" %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_system_app_id_#{component.id}" %>
+              </label>
+
+            <% end %>
+          </div>
+          <div id="experiment_new_experiments_experiment_system_app" class="fidelity-desc"></div>
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+          Scenario Fidelity
+        </a>
+      </div>
+      <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
+        <div class="fidelity accordion-inner">
+          Being curated, check back soon!
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="field field-comp-desc">
