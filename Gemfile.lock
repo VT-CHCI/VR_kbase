@@ -62,6 +62,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     multi_json (1.9.0)
+    parsley-rails (1.2.4.0)
+      railties (>= 3.0.0)
     polyglot (0.3.4)
     rack (1.4.5)
     rack-cache (1.2)
@@ -117,6 +119,7 @@ DEPENDENCIES
   compass_twitter_bootstrap
   jquery-rails
   json
+  parsley-rails (~> 1.2.4.0)
   rails (= 3.2.8.rc2)
   sass-rails (~> 3.2.3)
   sqlite3
