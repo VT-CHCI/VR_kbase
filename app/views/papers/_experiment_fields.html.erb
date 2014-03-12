@@ -66,10 +66,15 @@
       </div>
   </div>
 
-  <div class="field token-input">
-      <%= f.label :hardware_tokens, "Additional Hardware" %>
-      <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardwares.to_json, "data-type" => "hardware", :class => 'span12' %>
+  <div id="hardwares" class="hardwares well">
+      <%= add_fields f, :experiment_hardwares %>
+
+      <div class="hardware-generator">
+        <%= link_to_add_fields "Add Another Input Device Including Tracking", f, :experiment_hardwares, 'btn btn-primary', 'before' %>
+      </div>
   </div>
+
+
   <div class="field token-input">
       <%= f.label :software_tokens, "VR Software Used" %>
       <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software", :class => 'span12' %>
