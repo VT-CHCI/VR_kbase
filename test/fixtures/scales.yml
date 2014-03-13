@@ -10,6 +10,11 @@ scale3:
   id: 3
   level: "Large (>100 meters per side)"
 
-scale4:
+scale5:
   id: 4
+  level: "Variable"
+
+scale4:
+  id: 5
   level: "Not reported"
+

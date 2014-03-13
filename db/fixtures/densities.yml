@@ -10,6 +10,10 @@ density3:
   id: 3
   level: "High (dense, little empty space)"
 
-density4:
+density5:
   id: 4
+  level: "Variable"
+
+density4:
+  id: 5
   level: "Not reported"
