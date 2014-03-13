@@ -74,7 +74,6 @@
       </div>
   </div>
 
-
   <div class="field token-input">
       <%= f.label :software_tokens, "VR Software Used" %>
       <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software", :class => 'span12' %>
@@ -199,6 +198,14 @@
 
   <legend class="with-helper-text">Additional Information</legend>
   <p class="after-legend"><small>This last area is for documenting additional independent variables (not components of fidelity) and their levels as well as other factors that were held constant in this experiment.</small></p>
+
+  <div id="indy-variables" class="indy-variables well">
+      <%= add_fields f, :experiment_indy_variables %>
+
+      <div class="indy-variable-generator">
+        <%= link_to_add_fields "Add Another Independent Variable", f, :experiment_indy_variables, 'btn btn-primary', 'before' %>
+      </div>
+  </div>
 
   <div class="field field-other-vars">
     <%= f.label :other_vars, 'Additional Independent Variables' %>

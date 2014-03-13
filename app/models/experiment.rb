@@ -10,10 +10,11 @@ class Experiment < ActiveRecord::Base
 
   attr_accessible :comp_desc, :constants, :exp_desc, :other_vars, :part_age_max, :part_age_min,
     :part_background, :part_num, :display_desc, :system_desc, :tasks, :title, :gender_id,
-    :software_tokens, :component_tokens, :tasks_attributes, :findings_attributes, :component_ids,
-    :category_ids, :experiment_displays_attributes, :experiment_hardwares_attributes,
-    :experiment_aurals_attributes, :experiment_visuals_attributes, :experiment_haptics_attributes, 
-    :experiment_biomechanicals_attributes, :experiment_controls_attributes, :experiment_system_apps_attributes
+    :software_tokens, :tasks_attributes, :findings_attributes, :component_ids, 
+    :experiment_indy_variables_attributes, :category_ids, :experiment_displays_attributes, 
+    :experiment_hardwares_attributes, :experiment_aurals_attributes, :experiment_visuals_attributes, 
+    :experiment_haptics_attributes, :experiment_biomechanicals_attributes, :experiment_controls_attributes, 
+    :experiment_system_apps_attributes
 
 
   has_many :experiment_displays, :dependent => :destroy
@@ -26,8 +27,6 @@ class Experiment < ActiveRecord::Base
 
   accepts_nested_attributes_for :experiment_hardwares
 
-
-
   has_many :experiment_softwares, :dependent => :destroy
   has_many :softwares, :through => :experiment_softwares
 
@@ -39,11 +38,6 @@ class Experiment < ActiveRecord::Base
     end
     self.software_ids = ids.split(",")
   end
-
-  has_many :experiment_components, :dependent => :destroy
-  has_many :components, :through => :experiment_components
-
-
 
   has_many :experiment_aurals, :dependent => :destroy
   has_many :aural_fidelities, :through => :experiment_aurals
@@ -74,5 +68,10 @@ class Experiment < ActiveRecord::Base
   has_many :system_appropriatenesses, :through => :experiment_system_apps
 
   accepts_nested_attributes_for :experiment_system_apps
+
+  has_many :experiment_indy_variables, :dependent => :destroy
+  has_many :indy_variables, :through => :experiment_indy_variables
+
+  accepts_nested_attributes_for :experiment_indy_variables
 
 end
