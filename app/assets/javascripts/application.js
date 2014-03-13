@@ -205,7 +205,7 @@ function createSingleTokenInput (focus) {
   } else {
     limit = null;
   }
-  
+
   $(focus).tokenInput('/' + database + 's.json', {
     crossDomain: false,
     preventDuplicates: true,
@@ -282,9 +282,7 @@ function populate_radio_buttons (focus, id) {
     }
 
     if (relationshipText != '') {
-      if (relationshipText == 'No relationship') {
-        autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_ relationship','g'), relationshipText);
-      } else if (relationshipText == 'Interaction') {
+      if (relationshipText == 'Interaction') {
         autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_ relationship on','g'), 'an ' + relationshipText + ' with');
       } else if (relationshipText == 'Inverse') {
         autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_','g'), 'an ' + relationshipText);
