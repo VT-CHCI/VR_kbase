@@ -10,5 +10,5 @@ class Finding < ActiveRecord::Base
   has_many :components, :through => :finding_components
 
   attr_accessible :issue, :summary, :title, :category, :metric, :relationship, :specificity,
-    :relationship_id, :specificity_id, :category_id, :metric_id, :component_ids
+    :relationship_id, :specificity_id, :category_id, :metric_id, :component_ids, :finding_note
 end
