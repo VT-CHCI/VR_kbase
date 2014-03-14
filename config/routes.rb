@@ -1,5 +1,11 @@
 Kbase::Application.routes.draw do
 
+  get "landing/index"
+
+  resources :user_authors
+
+  resources :user_papers
+
   devise_for :users
 
   resources :experiment_indy_variables

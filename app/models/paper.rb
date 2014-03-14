@@ -4,14 +4,17 @@ class Paper < ActiveRecord::Base
   has_many :experiments, :dependent => :destroy
   has_many :paper_venues, :dependent => :destroy
   has_many :venues, :through => :paper_venues, :autosave => true
+  has_many :user_papers, :dependent => :destroy
+  has_many :users, :through => :user_papers
 
   accepts_nested_attributes_for :author_papers, :allow_destroy => true
   accepts_nested_attributes_for :experiments, :allow_destroy => true
   accepts_nested_attributes_for :venues
+  accepts_nested_attributes_for :users
 
   attr_accessible :doi, :end_page, :num_views, :paper_url, :start_page, :title, :volume,
     :year, :issue, :venues_attributes, :experiments_attributes, :author_papers_attributes, 
-    :tasks_attributes, :findings_attributes, :category_ids
+    :tasks_attributes, :findings_attributes, :users_attributes, :category_ids
 
   # If you need to validate the associated record, you can add a method like this:
   #     validate_associated_record_for_venue

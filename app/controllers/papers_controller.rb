@@ -44,6 +44,7 @@ class PapersController < ApplicationController
   # POST /papers.json
   def create
     @paper = Paper.new(params[:paper])
+    @paper.users = [User.find_by_email(current_user.email)]
 
     respond_to do |format|
       if @paper.save
