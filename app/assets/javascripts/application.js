@@ -338,7 +338,7 @@ function add_fields_before (link, association, content) {
   if (association == 'author_papers') {
     update_author_order ();
   } 
-  else if (association == 'experiment_displays' || association == 'experiment_hardwares') {
+  else if (association == 'experiment_displays' || association == 'experiment_hardwares' || association == 'experiment_indy_variables') {
     createSingleTokenInput($(link).parent().prev().find('.token-input input'));
   }
 }
