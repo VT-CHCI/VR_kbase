@@ -2,7 +2,9 @@ class IndyVariablesController < ApplicationController
   # GET /indy_variables
   # GET /indy_variables.json
   def index
-    @indy_variables = IndyVariable.all
+    @indy_variables = IndyVariable.where("variable like ?", "%#{params[:q]}%")
+    results = @indy_variables
+    results << {:variable => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
 
     respond_to do |format|
       format.html # index.html.erb

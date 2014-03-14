@@ -1,5 +1,17 @@
 class ExperimentIndyVariable < ActiveRecord::Base
-  belongs_to :experiment
   belongs_to :indy_variable
-  attr_accessible :desc
+  belongs_to :experiment
+  
+  accepts_nested_attributes_for :indy_variable
+
+  attr_accessible :desc, :indy_variable_attributes, :indy_variable_tokens
+
+  attr_reader :indy_variable_tokens
+
+  def indy_variable_tokens=(id)
+    id.gsub!(/CREATE_(.+?)_END/) do
+      IndyVariable.create!(:indy_variable => $1).id
+    end
+    self.indy_variable_id = id
+  end
 end

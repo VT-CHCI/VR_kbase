@@ -15,6 +15,10 @@
 @import "compass_twitter_bootstrap_awesome";
 @import "compass_twitter_bootstrap_responsive";
 
+.navbar-fixed-top .container {
+  width: 95%;
+}
+
 .field {
   margin-bottom: 10px;
 }

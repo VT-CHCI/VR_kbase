@@ -74,7 +74,6 @@
       </div>
   </div>
 
-
   <div class="field token-input">
       <%= f.label :software_tokens, "VR Software Used" %>
       <%= f.text_field :software_tokens, "data-pre" => f.object.softwares.to_json, "data-type" => "software", :class => 'span12' %>
@@ -101,7 +100,7 @@
             <legend>Visual Fidelity</legend>
             <% VisualFidelity.all.each do |component| %>
               <label class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_visual_id_#{component.id}" , :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_visual', 'visual_fidelity')" %>
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_visual_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_visual', 'visual_fidelity')", :class => "fidelity-component" %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_visual_id_#{component.id}" %>
               </label>
 
@@ -113,7 +112,7 @@
             <legend>Auditory Fidelity</legend>
             <% AuralFidelity.all.each do |component| %>
               <label class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_auditory_id_#{component.id}" , :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_aural', 'aural_fidelity')" %>
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_auditory_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_aural', 'aural_fidelity')", :class => "fidelity-component" %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_auditory_id_#{component.id}" %>
               </label>
 
@@ -125,7 +124,7 @@
             <legend>Haptic Fidelity</legend>
             <% HapticFidelity.all.each do |component| %>
               <label class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_haptic_id_#{component.id}" , :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_haptic', 'haptic_fidelity')" %>
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_haptic_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_haptic', 'haptic_fidelity')", :class => "fidelity-component" %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_haptic_id_#{component.id}" %>
               </label>
 
@@ -148,7 +147,7 @@
             <legend>Biomechanical Symmetry</legend>
             <% BiomechanicalSymmetry.all.each do |component| %>
               <label class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}", :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_biomechanical', 'biomechanical_symmetry')" %>
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_biomechanical', 'biomechanical_symmetry')", :class => "fidelity-component" %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}" %>
               </label>
 
@@ -160,7 +159,7 @@
             <legend>Control Symmetry</legend>
             <% ControlSymmetry.all.each do |component| %>
               <label class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_control_id_#{component.id}", :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_control', 'control_symmetry')" %>
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_control_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_control', 'control_symmetry')", :class => "fidelity-component" %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_control_id_#{component.id}" %>
               </label>
 
@@ -172,7 +171,7 @@
             <legend>System Appropriateness</legend>
             <% SystemAppropriateness.all.each do |component| %>
               <label class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_system_app_id_#{component.id}", :onchange => "create_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_system_app', 'system_appropriateness')" %>
+                <%= check_box_tag nil, component.id, false, :id => "experiments_attributes_new_experiments_system_app_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', new_experiments, #{component.id}, 'experiment_system_app', 'system_appropriateness')", :class => "fidelity-component" %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_system_app_id_#{component.id}" %>
               </label>
 
@@ -200,10 +199,14 @@
   <legend class="with-helper-text">Additional Information</legend>
   <p class="after-legend"><small>This last area is for documenting additional independent variables (not components of fidelity) and their levels as well as other factors that were held constant in this experiment.</small></p>
 
-  <div class="field field-other-vars">
-    <%= f.label :other_vars, 'Additional Independent Variables' %>
-    <%= f.text_area :other_vars, :class => 'span12', :rows => 5 %>
+  <div id="indy-variables" class="indy-variables well">
+      <%= add_fields f, :experiment_indy_variables %>
+
+      <div class="indy-variable-generator">
+        <%= link_to_add_fields "Add Another Independent Variable", f, :experiment_indy_variables, 'btn btn-primary', 'before' %>
+      </div>
   </div>
+
   <div class="field field-constants">
     <%= f.label :constants %>
     <%= f.text_area :constants, :class => 'span12', :rows => 5 %>
