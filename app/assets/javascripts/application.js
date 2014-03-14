@@ -40,19 +40,7 @@ function create_component_description(focus, name, experimentId, componentId, th
   }  
 }
 
-function remove_fields(link) {
-  console.log($(link));
-  $(link).prev("input[type=hidden]").val("true");
-  $(link).parent().hide();
-}
-
-function remove_author_fields(link) {
-  console.log($(link));
-  $(link).prev("input[type=hidden]").val("true");
-  $(link).parent().parent().parent().hide();
-}
-
-function remove_author_paper_fields(link) {
+function remove_auto_gen_field(link) {
   console.log($(link));
   $(link).prev("input[type=hidden]").val("true");
   $(link).parent().parent().parent().hide();
