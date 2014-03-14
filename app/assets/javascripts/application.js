@@ -16,7 +16,7 @@
 //= require bootstrap.min
 //= require parsley
 
-function create_description(focus, name, experimentId, componentId, throughTable, component) {
+function create_component_description(focus, name, experimentId, componentId, throughTable, component) {
   var new_id = new Date().getTime();
 
   if (focus.checked) {
