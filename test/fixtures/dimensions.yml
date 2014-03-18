@@ -6,6 +6,14 @@ dimension2:
   id: 2
   level: "3D (Environment and user's movements are in all three dimensions)"
 
-dimension3:
+uncontrolled:
   id: 3
+  level: "Uncontrolled variable"
+
+controlled:
+  id: 4
+  level: "Controlled variable"
+
+dimension3:
+  id: 5
   level: "Not reported"
