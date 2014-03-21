@@ -2,6 +2,8 @@
 
 comp1:
   component: "Dimensional"
+  validated: true
 
 comp2:
-  component: "Tranfer function"
+  component: "Transfer function"
+  validated: true

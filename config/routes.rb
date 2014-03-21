@@ -1,7 +1,5 @@
 Kbase::Application.routes.draw do
 
-  get "landing/index"
-
   resources :user_authors
 
   resources :user_papers
@@ -72,10 +70,6 @@ Kbase::Application.routes.draw do
 
   resources :categories
 
-  resources :experiment_components
-
-  resources :components
-
   resources :experiment_softwares
 
   resources :softwares
@@ -105,6 +99,10 @@ Kbase::Application.routes.draw do
   resources :papers
 
   resources :paper_venues
+
+  resources :users
+
+  resources :landing
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -155,7 +153,7 @@ Kbase::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'papers#index'
+  root :to => 'landing#index'
 
   # See how all your routes lay out with "rake routes"
 

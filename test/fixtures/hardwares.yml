@@ -1,12 +1,16 @@
 hardware1:
   hardware: "Dataglove"
+  validated: true
 
 hardware2:
   hardware: "IS900"
+  validated: true
 
 hardware3:
   hardware: "Sony Move"
+  validated: true
 
 hardware4:
   hardware: "Microsoft Kinect"
+  validated: true
 

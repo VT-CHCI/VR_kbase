@@ -1,0 +1,34 @@
+<h1>Users</h1>
+
+<div class="row-fluid">
+  <div class="span12"> 
+    <div class="row-fluid">
+      <div class="span1"><legend>Admin</legend></div>
+      <div class="span2"><legend>Email</legend></div>
+      <div class="span1"><legend>Submissions</legend></div>
+      <div class="span2"><legend>Last sign in</legend></div>
+      <div class="span2"><legend>Created</legend></div>
+    </div>
+  	<% @users.each do |user| %>
+      <div class="row-fluid">
+        <div class="span1">
+          <%= form_for user, :url => '/users/'+user.id.to_s, :html=>{:id=>'admin_form_'+user.id.to_s}, :method => :put do |f| %>
+            <%= f.check_box :admin, :selected => user.admin, onchange: "$('#admin_form_"+user.id.to_s+"').submit();" %>
+          <% end %>
+        </div>
+        <div class="span2">
+          <% if user.admin %>
+            <h4><%= link_to user.email, user, :style => "color:#ff0000;" %></h4>
+          <% else %>
+            <h4><%= link_to user.email, user %></h4>  
+          <% end %>
+        </div>
+        <div class="span1"><%= user.papers.count %></div>
+        <div class="span2"><%= user.last_sign_in_at %></div>
+        <div class="span2"><%= user.created_at %></div>
+      </div>
+    <% end %>
+    <hr>
+    <!-- <h6 style="color:#ff0000;">*admin</h6> -->
+  </div>
+</div>

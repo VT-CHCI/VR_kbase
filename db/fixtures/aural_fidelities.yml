@@ -2,12 +2,16 @@
 
 comp1:
   component: "Audio (On/Off)"
+  validated: true
 
 comp2:
   component: "Audio Quality"
+  validated: true
 
 comp3:
   component: "Latency"
+  validated: true
 
 comp4:
   component: "Spatial Audio (On/Off)"
+  validated: true

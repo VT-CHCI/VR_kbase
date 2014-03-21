@@ -6,6 +6,10 @@ relationship2:
   id: 2
   relationship: "Inverse"
 
-relationship4:
+relationship3:
   id: 3
+  relationship: "No relationship"
+
+relationship4:
+  id: 4
   relationship: "Interaction"

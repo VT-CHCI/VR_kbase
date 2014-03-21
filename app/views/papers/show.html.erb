@@ -47,11 +47,13 @@
                     <% for finding in task.findings %>
                       <li class="finding">
                         <% p = finding.summary %>
+                       <!--  <% if false %>
                         <% for component in finding.components %>
                           <% p = p.gsub(/#{Regexp.new(Regexp.escape(component.comp_of_immersion), Regexp::IGNORECASE)}/, link_to(component.comp_of_immersion,component)) %>
-                        <% end %>
+                        <% end %> 
                         <% p = p.gsub(/#{Regexp.new(Regexp.escape(Metric.find_by_id(finding.metric_id).metric), Regexp::IGNORECASE)}/, link_to(Metric.find_by_id(finding.metric_id).metric.downcase,Metric.find_by_id(finding.metric_id))) %>
                         <% p = p.gsub(/#{Regexp.new(Regexp.escape(Category.find_by_id(finding.category_id).task_category), Regexp::IGNORECASE)}/,link_to(Category.find_by_id(finding.category_id).task_category.downcase,Category.find_by_id(finding.category_id))) %>
+                        <% end %> -->
                         
                         <h5><%= p.html_safe %></h5>
 
@@ -125,14 +127,16 @@
           <div class="exp-desc span4">
             <p><%= experiment.exp_desc %></p>
 
-            <div class="title well">
+            <!-- <div class="title well">
               <h6 class="inline">Components of fidelity & desc - </h6>
               <ul class="list inline">
+                <% if false %>
                 <% for component in experiment.components %>
                   <li class="object"><a href="#"><%= component.comp_of_immersion.downcase %></a></li>
                 <% end %>
+                <% end %>
               </ul>
-            </div>
+            </div> -->
             <p><%= experiment.comp_desc %></p>
 
             <div class="title">

@@ -38,6 +38,16 @@ class PapersController < ApplicationController
   # GET /papers/1/edit
   def edit
     @paper = Paper.find(params[:id])
+    
+    respond_to do |format|
+      if !current_user.admin and current_user.papers.find_by_id(params[:id]) == nil
+        format.html { redirect_to @paper, :notice => 'You cannot edit this paper.' }
+        format.json { render :json => @paper.errors, :status => :unprocessable_entity }
+      else
+        format.html # index.html.erb
+        format.json { render :json => @papers }
+      end
+    end
   end
 
   # POST /papers

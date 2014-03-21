@@ -145,6 +145,43 @@ form input[type='number']::-webkit-inner-spin-button {
   }
 }
 
+.second-navbar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 40px;
+  z-index: 1029;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  border-bottom: 0px;
+  // remove 18px margin for default navbar
+}
+
+.second-navbar .navbar-inner {
+  padding-left: 0;
+  padding-right: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.second-navbar .navbar-inner {
+  border-width: 0 0 1px;
+  -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+.second-navbar .container {
+  width: 95%;
+}
+
+.black-caret
+{
+  border-top-color: black !important;
+  border-bottom-color: black !important;
+}
+
 /*
 
 br {

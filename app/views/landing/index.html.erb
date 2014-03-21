@@ -74,9 +74,19 @@
     </div>
   </div>
 
-  <% if user_signed_in? and %>    
-    <%= render 'user_paper_fields' %>
-    <br />
+  <% if user_signed_in? %>    
+    <br/><br/>
+    <div id="paper-list" class="left">
+      <div class="row-fluid">
+        <div class="span6">
+          <%= render 'recent_paper_fields' %>
+        </div>
+        <div class="span6">
+          <%= render 'recent_paper_in_progress_fields' %>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
   <% end %> 
 
   <div id="front_logos" class="row-fluid">

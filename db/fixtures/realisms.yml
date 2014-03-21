@@ -11,8 +11,8 @@ realism3:
   level: "High (looks highly realistic)"
 
 realism5:
-	id: 4
-	level: "Variable"
+  id: 4
+  level: "Variable"
 
 realism4:
   id: 5
