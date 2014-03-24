@@ -1,4 +1,4 @@
-<%= form_for(@paper) do |f| %>
+<%= form_for(@paper, :builder => Judge::FormBuilder) do |f| %>
   <% if @paper.new_record? %>  
     <h1>New Record!</h1>
   <% else %>                      

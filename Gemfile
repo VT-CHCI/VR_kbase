@@ -9,7 +9,8 @@ gem 'sqlite3'
 
 gem 'json'
 
-gem 'parsley-rails','~> 1.2.4.0'
+#gem 'parsley-rails','~> 1.2.4.0'
+gem 'judge'
 
 gem 'devise'
 

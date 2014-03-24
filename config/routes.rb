@@ -1,5 +1,7 @@
 Kbase::Application.routes.draw do
 
+  mount Judge::Engine => '/judge'
+
   get "validate/index"
 
   resources :user_authors
