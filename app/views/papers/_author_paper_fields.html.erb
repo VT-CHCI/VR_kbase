@@ -1,4 +1,4 @@
-<div class="author_paper">
+<div class="author_paper generated" data-author-paper="new_author_papers" data-type="author-paper">
   <div class="inline-group">
     <div class="order hidden">
       <%= f.text_field :order, :class => 'input-small', :'data-attribute' => 'order' %>
@@ -8,7 +8,7 @@
 
     <div class="field destroy-author">
       <%= link_to_remove_fields "x", f %>
-      <button type="button" onclick="remove_auto_gen_field(this); update_author_order(); return false;" class="close">×</button>
+      <button type="button" onclick="remove_auto_gen_field(this); return false;" class="close">×</button>
     </div>
   </div>
   

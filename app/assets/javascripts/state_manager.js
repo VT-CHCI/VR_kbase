@@ -40,10 +40,17 @@ var paperManager = {
   cleanUp: function () {
     $('.readonly').prop('readonly', true);
 
+    $('.generated._destroy').each(function () {
+      var type = $(this).data('type');
+      var instance = $(this).data(type);
+
+      $('[id*='+type.split('-').join('_')+'s_attributes_'+instance+'_id]').remove();
+    });
+
     if ($('._destroy').remove().length > 0) {
       console.log('Stuff was destroyed so we are going to recount!');
 
-      // this.authors.recount();
+      this.authors.setCounts();
       // $(this.experiments).each( function() {
       //   $(this).recount();
       // });
@@ -302,12 +309,6 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
             $(this).prop('id', 'paper_author_papers_attributes_'+a_index+'_author_attributes_'+$(this).data('attribute'));
             $(this).prop('name', 'paper[author_papers_attributes]['+a_index+'][author_attributes]['+$(this).data('attribute')+']');
           }
-        } else {
-          $('.authors input').each(function() { 
-            if (!$(this).data('attribute')) { 
-              console.log(this) 
-            }
-          });
         }
       }
       else if (a_type == '.display') {
@@ -362,6 +363,31 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
     });
   });
 
+  var index = 0;
+
+  if (a_type == '.author_paper') {
+    $(a_type).each(function(index) {
+      $(this).data('author-paper', index);
+    });
+
+    var i = 0;
+    $('.authors input').each(function() {
+      i = Math.floor(index/2);
+      
+      if (!$(this).data('attribute')) { 
+        console.log(i);
+        if($(this).prop('id').search("author_attributes") > -1) {
+          $(this).prop('id', 'paper_author_papers_attributes_'+i+'_author_attributes_id');
+          $(this).prop('name', 'paper[author_papers_attributes]['+i+'][author_attributes][id]');
+        } else {
+          $(this).prop('id', 'paper_author_papers_attributes_'+i+'_id');
+          $(this).prop('name', 'paper[author_papers_attributes]['+i+'][id]');
+        }
+        index = index+1;
+      }
+    });
+  }
+
   this.count = a_index;
 };
 
@@ -380,5 +406,6 @@ counter.prototype.addCount = function() {
   } else {
     this.count = this.count + 1;
   }
+
   return this.count;
 };
