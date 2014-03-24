@@ -171,7 +171,7 @@ function create_other(focus, name, componentId, throughTable, component, type, d
     //Add new other field
     $('.'+component+'-checkboxes').eq(0).append(
       '<div class="checkbox inline pill other">\
-        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
+        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+descriptor+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \''+descriptor+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
         <label data-attribute="'+attribute+'" for="'+newOtherId+'_'+(new_id+1)+'">Other<span class="colon">:</span> <input class="input-small" type="text"></label>\
       </div>'
     ); 
