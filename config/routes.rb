@@ -1,5 +1,7 @@
 Kbase::Application.routes.draw do
 
+  get "validate/index"
+
   resources :user_authors
 
   resources :user_papers

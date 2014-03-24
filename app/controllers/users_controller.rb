@@ -45,6 +45,17 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      if !current_user.admin and current_user != @user
+        format.html { redirect_to '/', :notice => 'You are not an admin.' }
+        format.json { render :json => @user, :status => :unprocessable_entity }
+      else
+        format.html # index.html.erb
+        format.json { render :json => @user }
+      end
+    end
   end
 
 end

@@ -1,2 +1,11 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1><%= @user.email %></h1>
+
+<div class="row-fluid">
+  <div class="span12"> 
+    <%= render 'in_progress_paper_fields' %>
+    <hr>
+    <%= render 'completed_paper_fields' %>
+    <hr>
+    <!-- <h6 style="color:#ff0000;">*admin</h6> -->
+  </div>
+</div>
