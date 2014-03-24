@@ -105,3 +105,9 @@ rails g scaffold ExperimentSystemApp experiment:belongs_to system_appropriatenes
 rails g scaffold IndyVariable variable:string
 
 rails g scaffold ExperimentIndyVariable experiment:belongs_to indy_variable:belongs_to desc:string
+
+-----------------------------------------------
+
+rails g scaffold UserPaper user:belongs_to paper:belongs_to
+
+rails g scaffold UserAuthor user:belongs_to author:belongs_to

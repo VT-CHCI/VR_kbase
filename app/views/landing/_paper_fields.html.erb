@@ -1,0 +1,32 @@
+<div class="row-fluid paper-entry">
+  <div class="paper-show span12"> 
+    <h4><%= link_to paper.title, paper %></h4>
+    <div class= "paper-details">
+      <blockquote>
+        <ul class="authors">
+          <% for author in paper.authors %>
+            <li class="author">
+              <% author_name = author.first_name %> 
+              <% if author.middle_initial != "" %>
+                <% author_name += ' ' + author.middle_initial + '.' %>
+              <% end %>
+              <% author_name += ' ' + author.last_name %>
+              <%= link_to author_name, author %>
+            </li>
+          <% end %>
+        </ul>
+
+        <% if paper.venues.count > 0 %>
+          <%= paper.venues.first.name %> 
+        <%end %> 
+        (<%= paper.year.year %>), 
+        <% if paper.start_page && paper.start_page != "" && paper.end_page && paper.start_page != "" %>
+            pp. <%= paper.start_page %>-<%= paper.end_page %>, 
+        <% end %>
+        <% if paper.doi != "" && paper.doi %>
+          doi: <a href="<%= paper.paper_url %>"><%= paper.doi %></a>
+        <% end %>
+      </blockquote>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<h1>Users</h1>
+
+<div class="row-fluid">
+  <div class="span12"> 
+    <div class="row-fluid">
+      <!--<div class="span1"><legend>Admin</legend></div>-->
+      <div class="span6"><legend>Email</legend></div>
+      <div class="span1"><legend>In progress</legend></div>
+      <div class="span1"><legend>Submissions</legend></div>
+      <div class="span2"><legend>Last sign in</legend></div>
+      <div class="span2"><legend>Created</legend></div>
+    </div>
+  	<% @users.each do |user| %>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="hidden">
+            <%= form_for user, :url => '/users/'+user.id.to_s, :html=>{:id=>'admin_form_'+user.id.to_s}, :method => :put do |f| %>
+              <%= f.check_box :admin, :selected => user.admin, :id => 'admin_checkbox_'+user.id.to_s, onchange: "$('#admin_form_"+user.id.to_s+"').submit();" %>
+            <% end %>
+          </div> 
+          <div class="btn-group">
+            <% if user.admin %>
+              <a class="btn btn-danger " href="/users/<%= user.id %>"><i class="icon-user icon-white"></i> admin: <%= user.email %></a>
+              <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret white-caret" ></span></a>
+            <% else %> 
+              <a class="btn btn-default" href="/users/<%= user.id %>"><i class="icon-user icon-white"></i> <%= user.email %></a>
+              <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret black-caret" ></span></a>
+            <% end %>
+            <ul class="dropdown-menu">
+              <% if user.admin %>
+                <li><a href="javascript: $('#admin_checkbox_<%= user.id.to_s %>').click();"><i class="i"></i> Demote user</a></li>
+              <% else %>
+                <li><a href="javascript: $('#admin_checkbox_<%= user.id.to_s %>').click();"><i class="i"></i> Make admin</a></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="span1"><%= user.papers.where(:published => false).count %></div>
+        <div class="span1"><%= user.papers.where(:published => true).count %></div>
+        <div class="span2"><%= user.last_sign_in_at %></div>
+        <div class="span2"><%= user.created_at %></div>
+      </div>
+    <% end %>
+    <hr>
+    <!-- <h6 style="color:#ff0000;">*admin</h6> -->
+  </div>
+</div>

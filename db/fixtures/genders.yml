@@ -18,14 +18,6 @@ male:
   id: 5
   gender: "Male only"
 
-uncontrolled:
-  id: 6
-  gender: "Uncontrolled variable"
-
-controlled:
-  id: 7
-  gender: "Controlled variable"
-
 unreported:
-  id: 8
+  id: 6
   gender: "Not reported"

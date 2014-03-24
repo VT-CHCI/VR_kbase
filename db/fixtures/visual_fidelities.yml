@@ -2,43 +2,57 @@
 
 comp1:
   component: "Latency"
+  validated: true
 
 comp2:
   component: "Frame rate"
+  validated: true
 
 comp3:
   component: "Head tracking"
+  validated: true
 
 comp4:
   component: "Display size"
+  validated: true
 
 comp5:
   component: "Form factor"
+  validated: true
 
 comp6:
   component: "Refresh rate"
+  validated: true
 
 comp7:
   component: "Stereoscopy"
+  validated: true
 
 comp8:
   component: "Resolution (number of pixels)"
+  validated: true
 
 comp9:
   component: "Resolution (pixel density)"
+  validated: true
 
 comp10:
   component: "Field of view (FOV)"
+  validated: true
 
 comp11:
   component: "Jitter"
+  validated: true
 
 comp12:
   component: "Field of regard (FOR)"
+  validated: true
 
 comp13:
   component: "Software field of view (SFOV)"
+  validated: true
 
 comp14:
   component: "Visual realism"
+  validated: true
 

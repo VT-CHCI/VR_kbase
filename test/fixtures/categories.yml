@@ -1,32 +1,43 @@
 category1:
   task_category: "Passive experience of the VE"
+  validated: true
 
 category2:
   task_category: "Interactive experience of the VE"
+  validated: true
 
 category3:
   task_category: "Comprehension of spatial information"
+  validated: true
 
 category4:
   task_category: "Comprehension of non-spatial information"
+  validated: true
 
 category5:
   task_category: "Visual search (without travel)"
+  validated: true
 
 category6:
   task_category: "Travel - exploration"
+  validated: true
 
 category7:
   task_category: "Travel - search"
+  validated: true
 
 category8:
   task_category: "Travel - maneuvering"
+  validated: true
 
 category9:
   task_category: "Object selection"
+  validated: true
 
 category10:
   task_category: "Object manipulation"
+  validated: true
 
 category11:
   task_category: "Learning/memorization"
+  validated: true

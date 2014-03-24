@@ -1,26 +1,35 @@
 metric1:
   metric: "Time"
+  validated: true
 
 metric2:
   metric: "Performance"
+  validated: true
 
 metric3:
   metric: "Strategy"
+  validated: true
 
 metric4:
   metric: "Accuracy"
+  validated: true
 
 metric5:
   metric: "Errors"
+  validated: true
 
 metric6:
   metric: "Presence"
+  validated: true
 
 metric7:
   metric: "Heart rate"
+  validated: true
 
 metric8:
   metric: "Cybersickness"
+  validated: true
 
 metric9:
   metric: "User preference"
+  validated: true

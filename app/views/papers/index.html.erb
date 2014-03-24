@@ -29,17 +29,23 @@
                       </li>
                     <% end %>
                   </ul>
-
-                  <% if paper.venues.count > 0 %>
-                    <%= paper.venues.first.name %> 
-                  <%end %> 
-                  (<%= paper.year.year %>), 
-                  <% if paper.start_page && paper.start_page != "" && paper.end_page && paper.start_page != "" %>
-                      pp. <%= paper.start_page %>-<%= paper.end_page %>, 
-                  <% end %>
-                  <% if paper.doi != "" && paper.doi %>
-                    doi: <a href="<%= paper.paper_url %>"><%= paper.doi %></a>
-                  <% end %>
+                  <div class="row-fluid">
+                    <% if paper.venues.count > 0 %>
+                      <%= paper.venues.first.name %> 
+                    <%end %> 
+                    (<%= paper.year.year %>), 
+                    <% if paper.start_page && paper.start_page != "" && paper.end_page && paper.start_page != "" %>
+                        pp. <%= paper.start_page %>-<%= paper.end_page %>, 
+                    <% end %>
+                    <% if paper.doi != "" && paper.doi %>
+                      doi: <a href="<%= paper.paper_url %>"><%= paper.doi %></a>
+                    <% end %>
+                  </div>
+                  <div class="row-fluid">
+                    <% if user_signed_in? and current_user.admin and paper.users.first != nil %>
+                      Added by: <%= link_to paper.users.first.email, paper.users.first %>
+                    <% end %>
+                  </div>
                 </blockquote>
               </div>
             </div>
@@ -49,11 +55,13 @@
                 <% if paper.experiments.count > 0 %>
                   <% for experiment in paper.experiments %>
 
+                <!--<% if false %>
                     <% if experiment.components.count > 0 %>
                       <% for component in experiment.components %>
                         <li class="object"><a href="#"><%= component.comp_of_immersion.downcase %></a></li>
                       <% end %>
                     <% end %>
+                    <% end %> -->
 
                     <% if experiment.tasks.count > 0 %>
                       <% for task in experiment.tasks %>

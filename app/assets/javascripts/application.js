@@ -14,7 +14,29 @@
 //= require jquery_ujs
 //= require_tree .
 //= require bootstrap.min
-//= require parsley
+//= require underscore
+//= require json2
+//= require judge
+
+
+function validate_all_fields() {
+  $('.field').each(function() {
+    validate_field(this);
+  });
+}
+
+function validate_field(focus) {
+  //console.log(focus);
+  judge.validate(focus, {
+    valid: function(element) {
+      element.style.border = '1px solid green';
+    },
+    invalid: function(element, messages) {
+      element.style.border = '1px solid red';
+      alert(messages.join(','));
+    }
+  });
+}
 
 // ##########################################################################
 // Auto Generation of Detail Fields

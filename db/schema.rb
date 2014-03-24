@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140312210205) do
+ActiveRecord::Schema.define(:version => 20140318190542) do
 
   create_table "aural_fidelities", :force => true do |t|
     t.string   "component"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "author_papers", :force => true do |t|
@@ -40,26 +41,23 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   create_table "biomechanical_symmetries", :force => true do |t|
     t.string   "component"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "categories", :force => true do |t|
     t.string   "task_category"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  create_table "components", :force => true do |t|
-    t.string   "comp_of_immersion"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "validated",     :default => false, :null => false
   end
 
   create_table "control_symmetries", :force => true do |t|
     t.string   "component"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "densities", :force => true do |t|
@@ -76,8 +74,9 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   create_table "displays", :force => true do |t|
     t.string   "display"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "experiment_aurals", :force => true do |t|
@@ -101,16 +100,6 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   add_index "experiment_biomechanicals", ["biomechanical_symmetry_id"], :name => "index_experiment_biomechanicals_on_biomechanical_symmetry_id"
   add_index "experiment_biomechanicals", ["experiment_id"], :name => "index_experiment_biomechanicals_on_experiment_id"
-
-  create_table "experiment_components", :force => true do |t|
-    t.integer  "component_id"
-    t.integer  "experiment_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "experiment_components", ["component_id"], :name => "index_experiment_components_on_component_id"
-  add_index "experiment_components", ["experiment_id"], :name => "index_experiment_components_on_experiment_id"
 
   create_table "experiment_controls", :force => true do |t|
     t.integer  "experiment_id"
@@ -255,26 +244,30 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   create_table "haptic_fidelities", :force => true do |t|
     t.string   "component"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "hardwares", :force => true do |t|
     t.string   "hardware"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "indy_variables", :force => true do |t|
     t.string   "variable"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "metrics", :force => true do |t|
     t.string   "metric"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "paper_venues", :force => true do |t|
@@ -296,9 +289,11 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
     t.string   "doi"
     t.string   "paper_url"
     t.integer  "num_views"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "issue"
+    t.boolean  "validated",  :default => false, :null => false
+    t.boolean  "published",  :default => false, :null => false
   end
 
   create_table "realisms", :force => true do |t|
@@ -321,8 +316,9 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   create_table "softwares", :force => true do |t|
     t.string   "software"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "specificities", :force => true do |t|
@@ -333,8 +329,9 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   create_table "system_appropriatenesses", :force => true do |t|
     t.string   "component"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
   create_table "task_categories", :force => true do |t|
@@ -373,19 +370,40 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   add_index "tasks", ["experiment_id"], :name => "index_tasks_on_experiment_id"
 
+  create_table "user_authors", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "author_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_authors", ["author_id"], :name => "index_user_authors_on_author_id"
+  add_index "user_authors", ["user_id"], :name => "index_user_authors_on_user_id"
+
+  create_table "user_papers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "paper_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_papers", ["paper_id"], :name => "index_user_papers_on_paper_id"
+  add_index "user_papers", ["user_id"], :name => "index_user_papers_on_user_id"
+
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0,  :null => false
+    t.integer  "sign_in_count",          :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.boolean  "admin",                  :default => false, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -400,8 +418,9 @@ ActiveRecord::Schema.define(:version => 20140312210205) do
 
   create_table "visual_fidelities", :force => true do |t|
     t.string   "component"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "validated",  :default => false, :null => false
   end
 
 end

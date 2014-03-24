@@ -1,17 +1,23 @@
 software1:
   software: "Windows"
+  validated: true
 
 software2:
   software: "Linux"
+  validated: true
 
 software3:
   software: "Kinect SDK"
+  validated: true
 
 software4:
   software: "Diverse"
+  validated: true
 
 software5:
   software: "Vizard"
+  validated: true
 
 software6:
   software: "Unity3d"
+  validated: true

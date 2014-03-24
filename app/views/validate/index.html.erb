@@ -1,0 +1,23 @@
+<h1>Submissions</h1>
+
+<%= render 'validate_paper_fields' %>
+
+<!-- 
+  	@papers = Paper.find(:all, :order => "updated_at DESC").where(:published => true).where(:validated => false)
+  	
+  	@auditories = AuralFidelity.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@biomechanicals = BiomechanicalSymmetry.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@controls = ControlSymmetry.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@haptics = HapticFidelity.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@systems = SystemAppropriateness.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@visuals = VisualFidelity.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	
+  	@displays = Display.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@hardwares = Hardware.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@softwares = Software.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	
+  	@independents = IndyVariable.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	
+  	@metrics = Metric.find(:all, :order => "updated_at DESC").where(:validated => false)
+
+    @categories = Category.find(:all, :order => "updated_at DESC").where(:validated => false) -->
