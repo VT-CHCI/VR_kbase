@@ -28,7 +28,7 @@ legend.with-helper-text {
 }
 
 p.after-legend {
-  margin-bottom: 27px;
+  margin-bottom: 15px;
 }
 
 .input-append .btn, .input-prepend .add-on {
@@ -114,6 +114,16 @@ p.after-legend {
     padding-right: 12px;
     padding-left: 12px;
   }
+
+  label input {
+    visibility: visible;
+    display: none;
+    margin-bottom: 0;
+  }
+
+  label .colon {
+    display: none;
+  }
   
   padding-left: 0;
   margin-left: 10px;
@@ -145,228 +155,82 @@ form input[type='number']::-webkit-inner-spin-button {
   }
 }
 
-/*
+#progress-headings {
+  margin-top: -5px;
 
-br {
-  line-height: 1.5em;
+  a {
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+  }
+  a:hover {
+    background: #e6e6e6;
+  }
+  a.current {
+    color: white;
+    background: #08C;
+  }
+
+  .publication-heading, .experiment-heading, .task-heading, .finding-heading {
+    display: table;
+  }
+
+  .title-field, .number-field, .close-field {
+    display: table-cell; 
+    float: none;
+  }
+  .title-field {
+    padding-right: 5px;
+  }
+  .number-field {
+    text-align: right;
+    font-size: 11px;
+  }
+  .close-field {
+    vertical-align: middle;
+    text-align: center;
+    width: 5%;
+
+    .close {
+      line-height: 15px;
+      padding-bottom: 3px;
+    }
+  }
+
+  .publication-heading {
+    .title-field {
+      width: 100%;
+    } 
+  }
+  .experiment-heading {
+    .number-field {
+      width: 5%;
+      padding-right: 5px;
+    }
+
+    .title-field {
+      width: 90%;
+      padding-left: 4px;
+    }
+  }
+  .task-heading {
+    .number-field {
+      width: 10%;
+      padding-right: 9px;
+    }
+
+    .title-field {
+      width: 85%;
+    }
+  }
+  .finding-heading {
+    .number-field {
+      width: 15%;
+      padding-right: 10px;
+    }
+
+    .title-field {
+      width: 81%;
+    }
+  }
 }
-
-#entry_progress {
-  width: 200px;
-  padding: 5px 15px;
-  float: left;
-  position: fixed;
-}
-
-#entry_progress h2 {
-  text-align: center;
-  font-size: 1.2em;
-}
-
-#entry_progress h3 {
-  margin-left: 15px;
-  font-size: .8em;
-  display: block !important;
-  clear: right;
-}
-
-#entry_progress a {
-  float: right;
-  margin-bottom: 10px;
-  font-size: .8em
-}
-
-#entry_progress .experiments {
-    margin: 0 0 0 28px;
-}
-
-#entry_progress .tasks {
-    margin: 0 0 0 40px;
-}
-
-#entry_progress .findings {
-    margin: 0 0 0 54px;
-}
-
-
-#entry_progress .subtitle {
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
-}
-
-#entry_progress .current:before {
-    content: ' ';
-    height: 0;
-    position: absolute;
-    width: 0;
-    margin: 4px 0 0 -13px;
-
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 7px solid red;
-}
-
-
-.field-title input, .field-summary input {
-  width: 746px;
-}
-
-textarea {
-  width: 746px;
-  height: 6em;
-}
-
-.radio-buttons br {
-  line-height: 1.75em;
-}
-
-.radio-buttons .radio-inline {
-  display: inline;
-  margin-left: 15px;
-}
-
-
-.attribute_block {
-  width: 720px;
-  margin-left: 0px;
-  margin-bottom: 15px;
-  border: 1px solid grey;
-  padding: 15px;
-}
-
-#circular3dG{
-position:relative;
-width:128px;
-height:128px;
-}
-
-.circular3dG{
-position:absolute;
-background-color:#FFCB83;
-width:36px;
-height:36px;
--webkit-border-radius:38px;
--moz-border-radius:38px;
-border-radius:38px;
--webkit-animation-name:bounce_circular3dG;
--webkit-animation-duration:1.04s;
--webkit-animation-iteration-count:infinite;
--webkit-animation-direction:linear;
--moz-animation-name:bounce_circular3dG;
--moz-animation-duration:1.04s;
--moz-animation-iteration-count:infinite;
--moz-animation-direction:linear;
--o-animation-name:bounce_circular3dG;
--o-animation-duration:1.04s;
--o-animation-iteration-count:infinite;
--o-animation-direction:linear;
--ms-animation-name:bounce_circular3dG;
--ms-animation-duration:1.04s;
--ms-animation-iteration-count:infinite;
--ms-animation-direction:linear;
-}
-
-#circular3d_1G{
-left:52px;
-top:8px;
--webkit-animation-delay:0.39s;
--moz-animation-delay:0.39s;
--o-animation-delay:0.39s;
--ms-animation-delay:0.39s}
-
-#circular3d_2G{
-left:78px;
-top:30px;
--webkit-animation-delay:0.52s;
--moz-animation-delay:0.52s;
--o-animation-delay:0.52s;
--ms-animation-delay:0.52s;
-}
-
-#circular3d_3G{
-left:94px;
-top:58px;
--webkit-animation-delay:0.65s;
--moz-animation-delay:0.65s;
--o-animation-delay:0.65s;
--ms-animation-delay:0.65s;
-}
-
-#circular3d_4G{
-left:88px;
-top:86px;
--webkit-animation-delay:0.78s;
--moz-animation-delay:0.78s;
--o-animation-delay:0.78s;
--ms-animation-delay:0.78s}
-
-#circular3d_5G{
-left:54px;
-top:94px;
--webkit-animation-delay:0.9099999999999999s;
--moz-animation-delay:0.9099999999999999s;
--o-animation-delay:0.9099999999999999s;
--ms-animation-delay:0.9099999999999999s}
-
-#circular3d_6G{
-left:10px;
-top:62px;
--webkit-animation-delay:1.04s;
--moz-animation-delay:1.04s;
--o-animation-delay:1.04s;
--ms-animation-delay:1.04s;
-}
-
-#circular3d_7G{
-left:0px;
-top:18px;
--webkit-animation-delay:1.1700000000000002s;
--moz-animation-delay:1.1700000000000002s;
--o-animation-delay:1.1700000000000002s;
--ms-animation-delay:1.1700000000000002s;
-}
-
-#circular3d_8G{
-left:22px;
-top:0px;
--webkit-animation-delay:1.3s;
--moz-animation-delay:1.3s;
--o-animation-delay:1.3s;
--ms-animation-delay:1.3s;
-}
-
-@-webkit-keyframes bounce_circular3dG{
-0%{
--webkit-transform:scale(1)}
-
-100%{
--webkit-transform:scale(.3)}
-
-}
-
-@-moz-keyframes bounce_circular3dG{
-0%{
--moz-transform:scale(1)}
-
-100%{
--moz-transform:scale(.3)}
-
-}
-
-@-o-keyframes bounce_circular3dG{
-0%{
--o-transform:scale(1)}
-
-100%{
--o-transform:scale(.3)}
-
-}
-
-@-ms-keyframes bounce_circular3dG{
-0%{
--ms-transform:scale(1)}
-
-100%{
--ms-transform:scale(.3)}
-
-} */

@@ -4,7 +4,7 @@ class ExperimentDisplay < ActiveRecord::Base
 
   accepts_nested_attributes_for :display
 
-  attr_accessible :desc, :display_attributes, :display_tokens
+  attr_accessible :desc, :display_attributes, :display_tokens, :display_id
 
   attr_reader :display_tokens
 

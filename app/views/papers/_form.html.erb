@@ -1,17 +1,24 @@
-<%= form_for(@paper) do |f| %>
+<%= form_for(@paper, remote: true, :html => { :class => "paper-form"}) do |f| %>
   <% if @paper.new_record? %>  
-    <h1>New Record!</h1>
+    <!-- <h1>New Record!</h1> -->
+
   <% else %>                      
-    <h1>Editing Record!</h1>
-    <a id="tooltip-test" href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top">Tooltip on top</a>    
+    <!-- <h1>Editing Record!</h1> -->
+        
   <% end %>
   <div class="row-fluid">
     <div class="span3">
       <div id="entry_progress" class="well span3">
-        <legend class="with-helper-text">Entry Progress</legend>
+        <legend class="with-helper-text">Entry Navigation</legend>
         <p class="after-legend"><small>This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</small></p>
-        <div id="progress_headings">
-          <h3 class="current papers" data-id="paper"><i class="icon-chevron-right"></i> Paper Details</h3>
+        <div id="progress-headings">
+
+          <a class="current publication-block" data-target="#paper" onclick="show_element(this)">
+            <div class="publication-heading">
+              <div class="title-field">Publication Information</div>
+            </div>
+          </a>
+
         </div>
       </div>
     </div>
@@ -31,7 +38,7 @@
           </div>
         <% end %>
 
-        <div id="paper" class="paper">
+        <div id="paper" class="paper core-element">
 
           <h1>Publication Information</h1>
 
@@ -42,9 +49,9 @@
             <legend class="with-helper-text">Using a DOI (Digital Object Identifier)</legend>
             <p class="after-legend"><small>If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</small></p>
             <div class="field doi-field">
-              <%= f.label :doi, 'DOI' %>
+             <!--  <%= f.label :doi, 'DOI' %> -->
               <div class="input-append">
-                <%= f.text_field :doi, :class => 'input-large' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
+                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'bottom' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
               </div>
             </div>
             <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
@@ -63,13 +70,19 @@
               <legend class="with-helper-text">Adding Authors</legend>
               <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add authors link.</small></p>
 
-              <div class="authors-generator">
+              <div class="authors">
 
-                <%= f.fields_for :author_papers do |builder| %>
-                  <%= render 'author_paper_fields', :f =>builder %>
+                <% if @paper.new_record? %>  
+                  <%= add_fields f, :author_papers %>
+                <% else %>
+                  <%= f.fields_for :author_papers do |builder| %>
+                    <%= render 'author_paper_fields', :f =>builder %>
+                  <% end %>
                 <% end %>
 
-                <%= link_to_add_fields "Add Author", f, :author_papers, 'btn btn-primary', 'before' %>
+                <div class="author-generator">
+                  <%= link_to_add_fields "Add Author", f, :author_papers, 'btn btn-primary', 'before' %>
+                </div>
               </div>
             </div>
           </div>
@@ -116,14 +129,16 @@
             <%= render 'experiment_fields', :f => builder %>
           <% end %>
 
-          <p class="new_experiment"><%= link_to_add_fields "Next Step -> Add Experiment", f, :experiments, 'btn btn-primary' %></p>
+          <p class="new_experiment">
+            <%= button_to_add_elements "Autosave and Continue", f, :experiments %>
+          </p>
 
         </div>
       </div>
 
-      <div class="actions">
+      <!-- <div class="actions">
         <%= f.submit %>
-      </div>
+      </div> -->
     </div>
   </div>
 

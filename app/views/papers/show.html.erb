@@ -125,6 +125,7 @@
           <div class="exp-desc span4">
             <p><%= experiment.exp_desc %></p>
 
+            <% if false %>
             <div class="title well">
               <h6 class="inline">Components of fidelity & desc - </h6>
               <ul class="list inline">
@@ -133,6 +134,7 @@
                 <% end %>
               </ul>
             </div>
+            <% end %>
             <p><%= experiment.comp_desc %></p>
 
             <div class="title">
@@ -201,7 +203,7 @@
                 <tr>
                   <td><%= experiment.part_num %></td>
                   <td><%= experiment.part_age_min %> - <%= experiment.part_age_max %></td>
-                  <td><%= experiment.gender.gender %></td>
+                  <td><% if false %><%= experiment.gender.gender %><% end %></td>
                 </tr>
               </tbody>
             </table>

@@ -88,3 +88,56 @@
   * Create header graphic
   * Overall page styling
   * Footer with copyright
+
+## Components of Fidelity ##
+
+Components of Display Fidelity
+
+  Visual
+    Latency
+    Frame rate
+    Head tracking
+    Display size
+    Form factor
+    Refresh rate
+    Stereoscopy
+    Resolution (number of pixels)
+    Resolution (pixel density)
+    Field of view (FOV)
+    Jitter
+    Field of regard (FOR)
+    Software field of view (SFOV)
+    Visual realism
+
+  Haptic
+    Haptics (On/Off)
+    Latency
+    Form factor
+    Response Time
+    Haptic quality
+    Resolution
+
+  Auditory
+    Audio (On/Off)
+    Audio Quality
+    Latency
+    Spacial Audio (On/Off)
+
+Components of Interaction Fidelity
+
+  Biomechanical symmetry
+    Kinematic
+    Kinetic
+    Anthropometric
+
+  Control symmetry
+    Dimensional
+    Tranfer function
+
+  System approriateness
+    Input accuracy
+    Input precision
+    Latency
+    Form factor
+
+Components of Scenario Fidelity

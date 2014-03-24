@@ -1,0 +1,41 @@
+Displays:
+- recount for displays working in state manager
+
+Metrics:
+- Add descriptions (refactor code to keep track of task)
+- recount for metrics working in state manager
+- add other field
+
+Progress Headings:
+- Progress headings for paper detail, experiments, tasks
+- disable back button and have modal explaining what how to navigate / look progress
+
+autosave stuff:
+go through and save each 'other field' first to populate the dom with their ids
+clean up the forms
+inject ids in the proper places
+
+- Prevent changes to inputs 
+- save for real
+- keep track of id after first save, add field to update
+- clean up destroyed things
+- renumber
+
+work on findings
+
+make sure editing all field values are being populated correctly
+
+other:
+have state manager rename other form ids
+- work on multiple other fields
+
+$.ajax({
+  type: "POST",
+  url: "/visual_fidelities",
+  data: $('<form data-remote="true"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="rm6jXia0fWmT5AeIBpqFwXetWyZqh1T2xq7SLQAIopw="><input name="visual_fidelity[component]" type="text" value="Check this!"></form>').serialize(),
+  dataType: "json",
+  success: function(data, status) {
+    console.log(data); //contains the paper id needed to update (data.id)
+    console.log(status); //whether successful or not
+  }
+});

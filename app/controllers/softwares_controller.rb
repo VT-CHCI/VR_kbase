@@ -4,7 +4,7 @@ class SoftwaresController < ApplicationController
   def index
     @softwares = Software.where("software like ?", "%#{params[:q]}%")
     results = @softwares
-    results << {:software => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
+    results << {:software => "#{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
 
     respond_to do |format|
       format.html # index.html.erb

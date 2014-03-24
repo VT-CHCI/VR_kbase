@@ -151,6 +151,9 @@ Kbase::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'papers#index'
 
+  get '/authors/:last_name/:first_name/:middle_initial', to: 'authors#search_name'
+  get '/authors/:last_name/:first_name', to: 'authors#search_name'
+
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

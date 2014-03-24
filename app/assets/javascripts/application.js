@@ -16,39 +16,200 @@
 //= require bootstrap.min
 //= require parsley
 
-function create_component_description(focus, name, experimentId, componentId, throughTable, component) {
-  var new_id = new Date().getTime();
+// ##########################################################################
+// Auto Generation of Detail Fields
+// ##########################################################################
+
+function create_component_description(focus, name, componentId, throughTable, component, descriptor) {
+  var new_id = new Date().getTime(); //this isn't the being used it is a backup in case the id isn't set
+  var experimentId = $(focus).data('experiment');
+  var taskId = $(focus).data('task');
+
+  if (taskId != undefined) {
+    console.log(new_id);
+
+    var selector = '#experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
+    new_id = eval('paperManager.experiments['+experimentId+'].tasks['+taskId+'].'+component+'.addCount()');
+    
+    var container = '#experiment_'+ experimentId+'_task_'+taskId+'_'+throughTable;
+  
+    var divId = 'experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
+
+    var componentIdId = 'paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
+    var componentIdName = 'paper[experiments_attributes]['+experimentId+'][tasks_attributes]['+taskId+']['+throughTable+'s_attributes]['+new_id+']['+component+'_id]';
+
+    var componentDescId = 'paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'_desc';
+    var componentDescName = 'paper[experiments_attributes]['+experimentId+'][tasks_attributes]['+taskId+']['+throughTable+'s_attributes]['+new_id+'][desc]';
+
+    var componentDestroyId = 'paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'__destroy';
+    var componentDestroyName = 'paper[experiments_attributes]['+experimentId+'][tasks_attributes]['+taskId+']['+throughTable+'s_attributes]['+new_id+'][_destroy]';
+
+  } else {
+    var selector = '#experiment_'+ experimentId+'_'+component+'_'+componentId;
+    new_id = eval('paperManager.experiments['+experimentId+'].'+component+'.addCount()');
+
+    var container = '#experiment_'+ experimentId+'_'+throughTable;
+
+    var divId = 'experiment_'+ experimentId+'_'+component+'_'+componentId;
+
+    var componentIdId = 'paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
+    var componentIdName = 'paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+']['+component+'_id]';
+
+    var componentDescId = 'paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_desc';
+    var componentDescName = 'paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+'][desc]';
+
+    var componentDestroyId = 'paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'__destroy';
+    var componentDestroyName = 'paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+'][_destroy]';
+  }
 
   if (focus.checked) {
     //fires when component of immersion is checked
     //checks to see if there is a detail that already exists for that component
-    if($('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).length) {
+    if($(selector).length) {
       //the detail existed (i.e. the user changed their mind) so we show it and mark destroy as false
-      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).show();
-      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId+' input.destroy').val(false);
+      $(selector).show();
+      $(selector).removeClass('_destroy');
+      $(selector+' input.destroy').val(false);
     }
     else {
       //the detail doesn't exist, so we need to create it
-      $('#experiment_'+ experimentId+'_'+throughTable).append('<div id="'+component+'_'+componentId+'"><input id="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'" name="paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+']['+component+'_id]" type="hidden" value="'+componentId+'"><label for="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'">'+name+' levels</label><input class="span12" id="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'" name="paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+'][desc]" size="30" type="text"><input class="destroy" id="paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'__destroy" name="paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+'][_destroy]" type="hidden" value="false"></div>');
+      $(container).append(
+        '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field">\
+        <input data-attribute="'+component+'_id" id="'+componentIdId+'" name="'+componentIdName+'" type="hidden" value="'+componentId+'">\
+        <label data-attribute="desc" for="'+componentDescId+'">'+name+' '+descriptor+'</label>\
+        <input data-attribute="desc" class="span12" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text">\
+        <input data-attribute="_destroy" class="destroy" id="'+componentDestroyId+'" name="'+componentDestroyName+'" type="hidden" value="false">\
+        </div></div>'
+      );
     }
   } else {
     //this means the user unchecked the component so we make sure the detail exists, if it does we hide it and mark it to be destroyed
-    if($('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).length) {
-      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId).hide();
-      $('#experiment_'+ experimentId+'_'+throughTable + ' #'+component+'_'+componentId+' input.destroy').val(true);
+    if($(selector).length) {
+      $(selector).hide();
+      $(selector).addClass('_destroy');
+      $(selector+' input.destroy').val(true);
     }
   }  
 }
 
-function remove_auto_gen_field(link) {
-  console.log($(link));
-  $(link).prev("input[type=hidden]").val("true");
-  $(link).parent().parent().parent().hide();
+// ##########################################################################
+// Other Fields Functionality
+// ##########################################################################
+
+function create_other(focus, name, componentId, throughTable, component, type, descriptor, authenticityToken) {
+  var label = $('label[for="'+$(focus).prop('id')+'"]');
+  var experimentId = $(focus).data('experiment');
+  var taskId = $(focus).data('task');
+  var attribute = $(focus).data('attribute');
+
+  if (taskId != undefined) {
+    var selector = '#experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
+    var new_id = $(selector).data('id');
+    
+    var idSelector = '#paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
+    var newRecordId = 'paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_'+type;
+    
+    var newOtherId = 'experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+attribute+'_other';
+    var newOtherData =  'data-experiment="'+experimentId+'" data-task="'+taskId+'"';
+  } else {
+    var selector = '#experiment_'+ experimentId+'_'+component+'_'+componentId;
+    var new_id = $(selector).data('id');
+    
+    var idSelector = '#paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
+    var newRecordId = 'paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_'+type;
+    
+    var newOtherId = 'experiments_attributes_'+experimentId+'_'+attribute+'_other';
+    var newOtherData = 'data-experiment="'+experimentId+'"';
+  }
+
+  if (!$(label).find('input').is(':visible')) {
+    //Show input field
+    $(label).find('input').show();
+    $(label).find('span').show();
+
+    //Create new item
+    var uid = generateUniqueId($(focus).parent().parent().children().find('input'), 1E8);
+
+    $(selector+' div.field').prepend(
+      '<form class="hidden other-form other-add" data-remote="true">\
+        <input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="'+authenticityToken+'">\
+        <input id="'+newRecordId+'" name="'+component+'['+type+']" type="text" value="">\
+      </form>'
+    );
+
+    //Set value of the id (this needs to set by form callback)
+    $(idSelector).val(uid);
+
+    //Set value of component name
+    $(label).find('input').on('keyup change', function() {
+      $('#'+newRecordId).val($(this).val());
+      $(selector+' label').text($(this).val()+' '+descriptor);
+    });
+
+    //Add new other field
+    $('.'+component+'-checkboxes').eq(0).append(
+      '<div class="checkbox inline pill other">\
+        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
+        <label data-attribute="'+attribute+'" for="'+newOtherId+'_'+(new_id+1)+'">Other<span class="colon">:</span> <input class="input-small" type="text"></label>\
+      </div>'
+    ); 
+  } else {
+    if (focus.checked) {
+      $(selector+' form').addClass('other-add');
+      $(selector+' form').removeClass('other-destroy');
+    } else {
+      $(selector+' form').removeClass('other-add');
+      $(selector+' form').addClass('other-destroy');
+    }
+  }
 }
+
+// ##########################################################################
+// Unique ID Generator
+// ##########################################################################
+
+function generateUniqueId(inputs, size) {
+  var notUnique = true;
+
+  if ($(inputs).val() != undefined) {
+    while (notUnique) {
+      var uniqueId = Math.floor(Math.random()*size);
+
+      $(inputs).each( function() {
+        if ($(this).val() != uniqueId) {
+          notUnique = false;
+        } else {
+          notUnique = true;
+          return false;
+        }
+      });
+    }
+    return uniqueId;
+  }
+}
+
+// ##########################################################################
+// Remove Auto Generated Fields
+// ##########################################################################
+
+function remove_auto_gen_field(link, parentLevel) {
+  $(link).prev("input[type=hidden]").val("true");
+
+  if (parentLevel == 4) {
+    $(link).parent().parent().parent().parent().hide();
+    $(link).parent().parent().parent().parent().addClass('_destroy');
+  } else {
+    $(link).parent().parent().parent().hide();
+    $(link).parent().parent().parent().addClass('_destroy');
+  }
+}
+
+// ##########################################################################
+// Update Author
+// ##########################################################################
 
 function update_author_order() {
   //console.log('Update author order');
-  var a_index = 0;
   $('.author_paper:visible').each(function(index) {
     $(this).children('.inline-group').children('.order').children('input').eq(0).val(index);
   });
@@ -56,120 +217,152 @@ function update_author_order() {
   $('[ref=tooltip]').tooltip();
 }
 
-function click_add_finding(task_id) {
-  //console.log(task_id);
-  $('p.new_finding').each(function() {
-    //console.log($(this).parent().attr('id').indexOf(String(task_id)));
-    if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
-      $(this).children().click();
-  });
-  //$('p.new_finding').children().click();
+// function click_add_finding(task_id) {
+//   //console.log(task_id);
+//   $('p.new_finding').each(function() {
+//     //console.log($(this).parent().attr('id').indexOf(String(task_id)));
+//     if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
+//       $(this).children().click();
+//   });
+//   //$('p.new_finding').children().click();
 
-  $('[ref=tooltip]').tooltip();
-}
+//   $('[ref=tooltip]').tooltip();
+// }
 
-function click_add_task(experiment_id) {
-  //console.log(experiment_id);
-  $('p.new_task').each(function() {
-    //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
-    if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
-      $(this).children().click();
-  });
-  //$('p.new_task').children().click();
+// function click_add_task(experiment_id) {
+//   //console.log(experiment_id);
+//   $('p.new_task').each(function() {
+//     //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
+//     if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
+//       $(this).children().click();
+//   });
+//   //$('p.new_task').children().click();
 
-  $('[ref=tooltip]').tooltip();
-}
+//   $('[ref=tooltip]').tooltip();
+// }
 
-function click_add_experiment() {
-  $('p.new_experiment').children().click();
-}
+// function click_add_experiment() {
+//   $('p.new_experiment').children().click();
+// }
 
-var scrolled = false;
-var scrollTimeout;
+// ##########################################################################
+// Progress Heading
+// ##########################################################################
 
-function add_progress_heading(association, new_id) {
-  $('#progress_headings :header').each(function() {
-    $(this).removeClass('current');
-  });
+function add_progress_heading(association, focus) {
+  var experimentId = $(focus).data('experiment');
+  var taskId = $(focus).data('task');
+  var findingId = $(focus).data('finding');
 
-  //Add to progress entry list
-  var singular = association.slice(0,-1);
-  var base = $('#' + singular + '_' + new_id + ' .field-title label').attr('for').replace('_title','');
+  var headingIndex = [experimentId+1];
 
-  var parentSelector = $('#progress_headings');
-
-  $('#progress_headings :header').each(function() {
-    var mySplitResult = $(this).data('id').split("_");
-    mySplitResult = mySplitResult[0] + 's_attributes_' + mySplitResult[1];
-
-    if (base.match(mySplitResult)) {
-      parentSelector = $(this).next();
-    }
-  });
-
-  if (parentSelector[0] == $('#progress_headings')[0]) {
-    parentSelector = $('#progress_headings h3.papers');
+  if (taskId != undefined) {
+    headingIndex.push(taskId+1);
+  }
+  if (findingId != undefined) {
+    headingIndex.push(findingId+1);
   }
 
-  parentSelector.after('<a href="#" data-target="' + base + '__destroy">Remove</a>');
-  parentSelector.after('<h5 class="current ' + association + '" data-id=' + singular + '_' + new_id + ' data-target="' + base + '_title"><i class="icon-chevron-right"></i> <span class="title">Unnamed ' + singular + '</span></h5>');
+  //Create heading
+  if (association == 'experiments') {
+    var heading = 'experiment-block-'+experimentId;
 
-  //Update headings
-  $('.field-title input').on('keyup',function() {
-    var field = $(this).attr('id');
+    $('#progress-headings').append(
+      '<div class="'+heading+'">\
+        <a class="experiment-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
+          <div class="number-field">'+headingIndex.join('.')+'</div>\
+          <div class="title-field">Unnamed Experiment</div>\
+          <div class="close-field">\
+            <button type="button" class="close">×</button>\
+          </div>\
+        </a>\
+      </div>'
+    );
+    heading = '.'+heading+' .experiment-heading';
+    
+  }
+  else if (association == 'tasks') {
+    var heading = 'task-block-'+taskId;
+
+    $('.experiment-block-'+experimentId).append(
+      '<div class="'+heading+'">\
+        <a class="task-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
+          <div class="number-field">'+headingIndex.join('.')+'</div>\
+          <div class="title-field">Unnamed Task</div>\
+          <div class="close-field">\
+            <button type="button" class="close">×</button>\
+          </div>\
+        </a>\
+        <div class="finding-block"></div>\
+      </div>'
+    );
+    heading = '.experiment-block-'+experimentId+' .'+heading+' .task-heading';
+    
+  } 
+  else if (association == 'findings') {
+    
+  
+  }
+
+  //Set newely created heading to current and show it
+  $('#progress-headings a.current').removeClass('current');
+  $('#progress-headings '+heading).addClass('current');
+
+  show_element($('#progress-headings '+heading), true);
+
+  //Bind element title to heading title
+  $(focus.selector + ' .field-title input').on('keyup',function() {
     var newTitle = $(this).val();
+    
     if (newTitle.length < 1) {
+      var singular = association.slice(0,-1);
+
       newTitle = 'Unnamed ' + singular;
     }
 
-    $('#progress_headings :header').each( function() {
-      if ($(this).data('target') == field) {
-        $(this).children('.title').text(newTitle);
-      }
-    });
+    $('#progress-headings '+heading+' .title-field').text(newTitle);
   });
-
-  //Jump to correct section and hide all other sections
-  $('#progress_headings :header').on('click', function() {
-    var heading = $(this);
-
-    $('#progress_headings :header').each(function() {
-      $(this).removeClass('current');
-    });
-    $(this).addClass('current');
-
-    $('#paper_entry_form').children('div').each(function() {
-      if ($(this).attr('id') == heading.data('id')){
-        $(this).slideDown();
-      } else {
-        $(this).slideUp();
-      }
-    });
-
-    if (($("html, body").scrollTop() < 10) && !scrolled) {
-      $("html, body").animate({ scrollTop: 0 }, 500);
-      scrolled = true;
-    }
-
-    // Reset the timer
-    clearTimeout(scrollTimeout);
-
-    // If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
-    scrollTimeout = setTimeout(function(){
-        scrolled = false;
-    }, 500);
-  });
-
-  //Remove a component from the left
-  $('#progress_headings a').on('click',function() {
-    $('#'+ $(this).data('target')).val('true');
-    $('#'+ $(this).data('target')).parent().hide();
-    $(this).prev().remove();
-    $(this).remove();
-  });
-
-  return $('#' + singular + '_' + new_id);
 }
+
+function show_element (focus, slide) {
+  var scrolled = false;
+  var scrollTimeout;
+
+  //Set click heading to current
+  $('#progress-headings a.current').removeClass('current');
+  $(focus).addClass('current');
+
+  //Hide currently visible element and show new element
+  if (slide) {
+    $('.core-element:visible').fadeOut()
+    $($(focus).data('target')).slideDown()
+  } else {
+    $('.core-element:visible').fadeOut()
+    $($(focus).data('target')).fadeIn()
+  }
+
+  //The rest of the code is to prevent over scrolling 
+  if (($("html, body").scrollTop() < 10) && !scrolled) {
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    scrolled = true;
+  }
+
+  //Reset the timer
+  clearTimeout(scrollTimeout);
+
+  //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
+  scrollTimeout = setTimeout(function(){
+      scrolled = false;
+  }, 500);   
+}
+
+function delete_element (focus) {
+
+}
+
+// ##########################################################################
+// Token Input Instantiation
+// ##########################################################################
 
 function createTokenInput (focus) {
   $('#' + focus.attr('id') + ' .token-input input').each(function() {
@@ -222,21 +415,26 @@ function populate_radio_buttons (focus, id) {
 
       return '<label class="radio inline pill">' + tempButtonText.join('"') + '</label>'
     } else {
-      buttonText = buttonText.replace(new RegExp('experiment_'+type,'g'), 'experiment_task_finding_'+type);
-      buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'tasks_attributes]['+parentId+'][findings_attributes]['+id+']['+type+'_ids][]');
+      if (type == 'component') {
+        console.log('bt',buttonText);
+      }
+      else {
+        buttonText = buttonText.replace(new RegExp('experiment_'+type,'g'), 'experiment_task_finding_'+type);
+        buttonText = buttonText.replace(new RegExp(type+'_ids\\]\\[\\]','g'), 'tasks_attributes]['+parentId+'][findings_attributes]['+id+']['+type+'_ids][]');
 
-      var tempButtonText = buttonText.split("\"");
-      var tempAttributes = tempButtonText[3].split(/[[\]]{1,2}/);
+        var tempButtonText = buttonText.split("\"");
+        var tempAttributes = tempButtonText[3].split(/[[\]]{1,2}/);
 
-      tempButtonText[1] = 'paper_experiments_attributes_' + tempAttributes[2] + '_tasks_attributes_' + tempAttributes[4] + '_findings_attributes_' + tempAttributes[6] + '_' + tempAttributes[7] + '_' + tempButtonText[7];
-      tempButtonText[9] = tempButtonText[1]
+        tempButtonText[1] = 'paper_experiments_attributes_' + tempAttributes[2] + '_tasks_attributes_' + tempAttributes[4] + '_findings_attributes_' + tempAttributes[6] + '_' + tempAttributes[7] + '_' + tempButtonText[7];
+        tempButtonText[9] = tempButtonText[1]
+      }
       
       return '<label class="checkbox inline pill">' + tempButtonText.join('"') + '</label>'
     }
   }
 
-  $('#experiment_' + grandParentId + ' .components-of-immersion input:checked').parent().each ( function() {
-    focus.children('.field').children('.components-of-immersion').append(autoReplace($(this).html(), 'component', 'checkbox'));
+  $('#experiment_' + grandParentId + ' .fidelity-component:checked').parent().each ( function() {
+    focus.children('.field').children('.fidelity').append(autoReplace($(this).html(), 'component', 'checkbox'));
   });
 
   $('#task_' + parentId + ' .metrics input:checked').parent().each ( function() {
@@ -251,7 +449,7 @@ function populate_radio_buttons (focus, id) {
     var autoGenSentence = '_component_ had a _relationship_ relationship on _metric_ for _task_';
     var replaceSentence = 4;
 
-    var componentText = $(".finding:visible .components-of-immersion input:checked").map(function() {
+    var componentText = $(".finding:visible .fidelity input:checked").map(function() {
         return $(this).next("label").text();
       }).get();
     var relationshipText = $(".finding:visible .relationships input:checked").map(function() {
@@ -301,72 +499,200 @@ function add_fields_after (link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-  $(link).parent().parent().after(content.replace(regexp, new_id));
-
-  if (association != 'authors') {
-    var focus = add_progress_heading(association, new_id);
-    $("html, body").animate({ scrollTop: 0 }, 500);
-    $('#paper_entry_form').children('div').not(focus).slideUp();
-
-    createTokenInput(focus);
-
-    if (association == 'findings') {
-      populate_radio_buttons(focus, new_id);
-    }
-
-    if (association == 'experiments') {
-      $('.accordion-group').on('hidden', function () {
-        $(this).find('.icon-plus-sign').show();
-        $(this).find('.icon-minus-sign').hide();
-      });
-      $('.accordion-group').on('shown', function () {
-        $(this).find('.icon-plus-sign').hide();
-        $(this).find('.icon-minus-sign').show();
-      });
-    }
+  if (association == 'experiments') {
+    var focus = paperManager.addExperiment(link, association, content);
+    
+  } else if (association == 'tasks') {
+    var focus = paperManager.addTask(link, association, content);
+    
+  } else if (association == 'findings') {
+    populate_radio_buttons(focus, new_id);
+  }
+  else{
+    $(link).parent().parent().after(content.replace(regexp, new_id));
   }
 
-  update_author_order();
+  add_progress_heading(association, focus);
 }
 
 function add_fields_before (link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
 
-  $(link).parent().before(content.replace(regexp, new_id));
-  
   if (association == 'author_papers') {
-    update_author_order ();
+    new_id = paperManager.authors.addCount();
   } 
   else if (association == 'experiment_displays' || association == 'experiment_hardwares' || association == 'experiment_indy_variables') {
-    createSingleTokenInput($(link).parent().prev().find('.token-input input'));
+    if (association == 'experiment_hardwares') {
+      new_id = paperManager.experiments[$(link).parents().find('.experiment').data('id')].inputs.addCount();
+    }
+    else if (association == 'experiment_indy_variables') {
+      new_id = paperManager.experiments[$(link).parents().find('.experiment').data('id')].indyVariables.addCount();
+    }
   }
+
+  $(link).parent().before(content.replace(regexp, new_id));
+  createSingleTokenInput($(link).parent().prev().find('.token-input input'));
 }
+
+// ##########################################################################
+// Add Ids
+// ##########################################################################
+
+function add_author_ids (data) {
+  $(data.author_papers).each( function(i) {
+    var index = this.order;
+    console.log(i,index);
+
+    $('.author_paper').eq(index).append('<input id="paper_author_papers_attributes_'+index+'_id" name="paper[author_papers_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
+    $('.author_paper').eq(index).children().find('.author').append('<input id="paper_author_papers_attributes_'+index+'_author_attributes_id" name="paper[author_papers_attributes]['+index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
+  });
+}
+
+
+// ##########################################################################
+// Ajax Calls
+// ##########################################################################
+
+var paperId = null;
+var testData;
+
+function save_paper (focus, association, content) {
+  update_author_order();
+  add_fields_after (focus, association, content);
+
+
+  // if (paperId == null) {
+  //   console.log('first post');
+  //   $(focus).button('loading');
+    
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: '/papers',
+  //     data: $('form.paper-form').serialize(),
+  //     dataType: 'json',
+  //     success: function(data, status) {
+  //       console.log(status, data); //whether successful or not
+
+  //       //Get information and add put method for updating paper
+  //       paperId = data.id;
+  //       $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+
+  //       //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+  //       paperManager.cleanUp();
+
+  //       //Add nested attributes ids to form
+  //       testData = data;
+  //       add_author_ids(data);
+
+  //       //Reset the button and add element
+  //       $(focus).button('reset');
+  //       // add_fields_after (focus, association, content)
+  //     },
+  //     error: function (error) {
+  //       alert('There was an error when saving! Please notify an admin.');
+  //       $(focus).button('reset');
+  //     }
+  //   });
+  // } else {
+  //   console.log('updating');
+
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: '/papers/'+paperId,
+  //     data: $('form.paper-form').serialize(),
+  //     dataType: 'json',
+  //     success: function(data, status) {
+  //       console.log(status, data);
+
+  //       //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+  //       paperManager.cleanUp();
+
+  //       //Reset the button and add element
+  //       $(focus).button('reset');
+  //       // add_fields_after (focus, association, content)
+  //     },
+  //     error: function (error) {
+  //       alert('There was an error when saving! Please notify an admin.');
+  //       $(focus).button('reset');
+  //     }
+  //   });
+  // }
+}
+
+function save_other_fields () {
+
+}
+
+function add_test (focus) {
+  $.ajax({
+    type: 'GET',
+    url: '/authors/Scerbo/Siroberto',
+    dataType: 'json',
+    success: function(data, status) {
+      console.log(status, data);
+    },
+    error: function (error) {
+      alert('There was an error when saving! Please notify an admin.');
+      console.log(status, data);
+    }
+  });
+}
+
+// ##########################################################################
+// Document Ready
+// ##########################################################################
 
 $(document).ready(function(){
   $(window).bind("popstate", function () {
       $.getScript(location.href);
     });
 
-  if(window.location.href.indexOf("new") > -1) {
-     $('.authors a').trigger('click');
+  var paperState = $('form').prop('id').split('_');
+
+  if (paperState[0] == 'edit') {
+    paperId = paperState[2];
+    paperManager.authors.getCounts();
+  } else {
+    paperManager.authors.setCounts();
   }
+
+  //Prevents users from accidentally leaving the page
+  // window.onbeforeunload = function() { 
+  //   return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
+  // };
+
+  //Prevents form from being submitted by enter key
+  $('#new_paper').bind("keyup keypress", function(e) {
+    var code = e.keyCode || e.which; 
+    if (code  == 13) {               
+      e.preventDefault();
+      return false;
+    }
+  });
 
   $('[ref=tooltip]').tooltip();
 
+// ##########################################################################
+// Getting DOI Information
+// ##########################################################################
+  var timer;
+
   $('#submit-doi').click(function() {
+    $('.doi-field').removeClass('control-group error');
+    $('.doi-field span').remove(); //this removes error message
+
+    window.clearTimeout(timer);
+    $('.alert').alert('close');
+
     if ($('#paper_doi').val()) {
       $('#submit-doi').button('loading');
-      $(paper_doi).addClass('uneditable-input');
+      $('#paper_doi').addClass('uneditable-input');
+      $('#paper_doi').prop('readonly', true);
 
-      $('.doi-field').removeClass('control-group error');
-      $('.doi-field div span').remove(); //this removes error message
-
-      //Clear all fields, hide all previous inputs except the first text field
-      $('.author').each( function() {
-        $(this).find('input[type=hidden]').val('true');
-        $(this).hide();
-      });
+      //Clear all author fields
+      $('.destroy-author:visible button').trigger('click');
+      $('.alert').alert('close');
 
       $('.paper input[type=text]:visible').not(':eq(0)').val('');
       $('.paper input[type=number]').val('');
@@ -381,6 +707,7 @@ $(document).ready(function(){
         success: function(data) {
           $('#submit-doi').button('reset');
           $(paper_doi).removeClass('uneditable-input');
+          $('#paper_doi').prop('readonly', false);
 
           xmlDoc = $.parseXML( data );
           $xml = $( xmlDoc );
@@ -388,9 +715,9 @@ $(document).ready(function(){
           // console.log($xml.find('error').length);
 
           if ($xml.find('error').length != 0) {
-            $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
+            $('.doi-well').after('<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
           } else {
-            $('.doi-well').after('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
+            $('.doi-well').after('<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
 
             function autofill(selector,xmlString) {
               if (xmlString.length > 1) {
@@ -422,7 +749,7 @@ $(document).ready(function(){
 
             $xml.find('person_name').each(function(index) {
               if ($(this).attr('contributor_role') == "author") {
-                $('.authors-generator a').trigger('click');
+                $('.author-generator a').trigger('click');
                 $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
                 $('.author:visible').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
                 //$('.author:visible').eq(a_index).children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
@@ -432,15 +759,20 @@ $(document).ready(function(){
           }
         },
         error: function(tmp) {
-          console.log("error");
+          console.log("doi error");
           $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
           $('#submit-doi').button('reset');
           $(paper_doi).removeClass('uneditable-input');
+          $('#paper_doi').prop('readonly', true);
         }
       });
+
+      timer = window.setTimeout(function() { 
+        $('.alert').alert('close'); 
+      }, 10000);
     } else {
       $('.doi-field').addClass('control-group error');
-      $('.doi-field div').append('<span class="help-inline">Field cannot be blank</span>');
+      $('.doi-field').append('<span class="help-inline">Field cannot be blank</span>');
     }
   });
 });
