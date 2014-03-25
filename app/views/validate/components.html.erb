@@ -1,3 +1,5 @@
+<h1>Component Submissions</h1>
+
 <div class="row-fluid">
   <div class="span12"> 
     <div class="row-fluid">
@@ -7,10 +9,10 @@
       <div class="span2"><legend>Last updated</legend></div>
       <div class="span2"><legend>Actions</legend></div>
     </div>
-    <% @papers.each do |paper| %>
+    <% @auditories.each do |component| %>
       <div class="row-fluid">
         <div class="span6">
-          <%= render 'paper_fields', :paper => paper %>
+          <%= auditories.component %>
         </div>
         <div class="span2">
           <% if paper.users.first != nil %>
@@ -22,7 +24,7 @@
           <a class="btn btn-default" href="#"><i class="icon-ok icon-white"></i> Validate</a>
           <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret black-caret" ></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#"><i class="i"></i> Change</a></li>
+            <li><a href="#"><i class="i"></i> View paper</a></li>
           </ul>
         </div>
       </div>
@@ -31,3 +33,15 @@
     <!-- <h6 style="color:#ff0000;">*admin</h6> -->
   </div>
 </div>
+
+
+
+<!-- 
+  	
+  	@auditories = AuralFidelity.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@biomechanicals = BiomechanicalSymmetry.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@controls = ControlSymmetry.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@haptics = HapticFidelity.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@systems = SystemAppropriateness.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	@visuals = VisualFidelity.find(:all, :order => "updated_at DESC").where(:validated => false)
+  	 -->

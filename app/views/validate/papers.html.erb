@@ -1,0 +1,36 @@
+<h1>Paper Submissions</h1>
+
+<div class="row-fluid">
+  <div class="span12"> 
+    <div class="row-fluid">
+      <!--<div class="span1"><legend>Admin</legend></div>-->
+      <div class="span6"><legend>Submission</legend></div>
+      <div class="span2"><legend>Submitted by</legend></div>
+      <div class="span2"><legend>Last updated</legend></div>
+      <div class="span2"><legend>Actions</legend></div>
+    </div>
+    <% @papers.each do |paper| %>
+      <div class="row-fluid">
+        <div class="span6">
+          <%= render 'paper_fields', :paper => paper %>
+        </div>
+        <div class="span2">
+          <% if paper.users.first != nil %>
+            <%= paper.users.first.email %>
+          <% end %>
+        </div>
+        <div class="span2"><%= paper.updated_at %></div>
+        <div class="span2 btn-group">
+          <a class="btn btn-default" href="#"><i class="icon-ok icon-white"></i> Validate</a>
+          <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret black-caret" ></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><i class="i"></i> Change</a></li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+    <hr>
+    <!-- <h6 style="color:#ff0000;">*admin</h6> -->
+  </div>
+</div>
+

@@ -2,10 +2,6 @@ metric1:
   metric: "Time"
   validated: true
 
-metric2:
-  metric: "Performance"
-  validated: true
-
 metric3:
   metric: "Strategy"
   validated: true
