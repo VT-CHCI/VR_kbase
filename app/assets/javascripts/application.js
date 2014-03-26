@@ -20,7 +20,7 @@
 
 
 function validate_all_fields() {
-  $('.field').each(function() {
+  $('.field').each( function() {
     validate_field(this);
   });
 }
@@ -171,7 +171,7 @@ function create_other(focus, name, componentId, throughTable, component, type, d
     //Add new other field
     $('.'+component+'-checkboxes').eq(0).append(
       '<div class="checkbox inline pill other">\
-        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
+        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+descriptor+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \''+descriptor+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
         <label data-attribute="'+attribute+'" for="'+newOtherId+'_'+(new_id+1)+'">Other<span class="colon">:</span> <input class="input-small" type="text"></label>\
       </div>'
     ); 
@@ -224,6 +224,8 @@ function remove_auto_gen_field(link, parentLevel) {
     $(link).parent().parent().parent().hide();
     $(link).parent().parent().parent().addClass('_destroy');
   }
+
+  update_author_order();
 }
 
 // ##########################################################################
@@ -232,7 +234,7 @@ function remove_auto_gen_field(link, parentLevel) {
 
 function update_author_order() {
   //console.log('Update author order');
-  $('.author_paper:visible').each(function(index) {
+  $('.author_paper:visible').each( function(index) {
     $(this).children('.inline-group').children('.order').children('input').eq(0).val(index);
   });
 
@@ -241,7 +243,7 @@ function update_author_order() {
 
 // function click_add_finding(task_id) {
 //   //console.log(task_id);
-//   $('p.new_finding').each(function() {
+//   $('p.new_finding').each( function() {
 //     //console.log($(this).parent().attr('id').indexOf(String(task_id)));
 //     if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
 //       $(this).children().click();
@@ -253,7 +255,7 @@ function update_author_order() {
 
 // function click_add_task(experiment_id) {
 //   //console.log(experiment_id);
-//   $('p.new_task').each(function() {
+//   $('p.new_task').each( function() {
 //     //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
 //     if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
 //       $(this).children().click();
@@ -387,7 +389,7 @@ function delete_element (focus) {
 // ##########################################################################
 
 function createTokenInput (focus) {
-  $('#' + focus.attr('id') + ' .token-input input').each(function() {
+  $('#' + focus.attr('id') + ' .token-input input').each( function() {
     createSingleTokenInput(this)
   });
 }
@@ -554,6 +556,8 @@ function add_fields_before (link, association, content) {
   }
 
   $(link).parent().before(content.replace(regexp, new_id));
+
+  update_author_order();
   createSingleTokenInput($(link).parent().prev().find('.token-input input'));
 }
 
