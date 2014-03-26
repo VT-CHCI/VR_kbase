@@ -13,7 +13,7 @@ var paperManager = {
     if (!(link == undefined && association == undefined && content == undefined)) {
       //Add to HTML with current number
       var regexp = new RegExp("new_" + association, "g");
-      $(link).parent().parent().append(content.replace(regexp, exp.count));
+      $(link).parent().parent().after(content.replace(regexp, exp.count));
     }
 
     //Set counts for everything and return the DOM element
@@ -30,7 +30,7 @@ var paperManager = {
     var task = this.experiments[e_index].addTask();
 
     //Add to HTML with current number
-    $(link).parent().parent().append(content.replace(regexp, task.count));
+    $(link).parent().parent().after(content.replace(regexp, task.count));
 
     //Set counts for everything and return the DOM element
     return task.setup();
