@@ -1,0 +1,59 @@
+<div class="span12">
+  <div class="row-fluid">
+    <div class="span8"><legend>Finding</legend></div>
+    <div class="span4"><legend>Keywords</legend></div>
+  </div>
+  <% @findings.each do |finding| %>
+    <% paper = finding.task.experiment.paper %>
+
+    <% if paper != nil %>
+      <div class="row-fluid paper-entry">
+        <div class="paper-show span8"> 
+          <h4><%= link_to finding.summary, paper %></h4>
+          <div class= "paper-details">
+            <blockquote>
+              <ul class="authors">
+                <% if paper.authors.count > 0 %>
+                  <% author = paper.authors.first %>
+                  <li class="author">
+                    <% author_name = author.first_name %> 
+                    <% if author.middle_initial != "" %>
+                      <% author_name += ' ' + author.middle_initial + '.' %>
+                    <% end %>
+                    <% author_name += ' ' + author.last_name %>
+                    <%= link_to author_name, author %>
+                    <% if paper.authors.count > 1 %>
+                      et al.
+                    <% end %>
+                    , <%= paper.title %>
+                  </li>
+                <% end %>
+              </ul>
+              <div class="row-fluid">
+                <% if paper.venues.count > 0 %>
+                  <%= paper.venues.first.name %> 
+                <%end %> 
+                (<%= paper.year.year %>), 
+                <% if paper.start_page && paper.start_page != "" && paper.end_page && paper.start_page != "" %>
+                    pp. <%= paper.start_page %>-<%= paper.end_page %>, 
+                <% end %>
+                <% if paper.doi != "" && paper.doi %>
+                  doi: <a href="<%= paper.paper_url %>"><%= paper.doi %></a>
+                <% end %>
+              </div>
+              <div class="row-fluid">
+                <% if user_signed_in? and current_user.admin and paper.users.first != nil %>
+                  Added by: <%= link_to paper.users.first.email, paper.users.first %>
+                <% end %>
+              </div>
+            </blockquote>
+          </div>
+        </div>
+
+        <%= render "papers/keywords", :paper => paper %>
+        <!-- <%= link_to 'x', paper, :method => :delete, :class => "close", :data => { :confirm => 'Are you sure?' } %>
+        <td><%= link_to 'Edit', edit_paper_path(paper) %></td> -->
+      </div>
+    <% end %>
+  <% end %>  
+</div>

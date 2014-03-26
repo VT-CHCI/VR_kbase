@@ -1,5 +1,7 @@
 Kbase::Application.routes.draw do
 
+  get "browse/index"
+
   mount Judge::Engine => '/judge'
 
   get "validate/papers"
