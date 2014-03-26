@@ -13,7 +13,7 @@ var paperManager = {
     if (!(link == undefined && association == undefined && content == undefined)) {
       //Add to HTML with current number
       var regexp = new RegExp("new_" + association, "g");
-      $(link).parent().parent().after(content.replace(regexp, exp.count));
+      $(link).parent().parent().append(content.replace(regexp, exp.count));
     }
 
     //Set counts for everything and return the DOM element
@@ -30,7 +30,7 @@ var paperManager = {
     var task = this.experiments[e_index].addTask();
 
     //Add to HTML with current number
-    $(link).parent().parent().after(content.replace(regexp, task.count));
+    $(link).parent().parent().append(content.replace(regexp, task.count));
 
     //Set counts for everything and return the DOM element
     return task.setup();
@@ -241,7 +241,7 @@ function experiment(count) {
 
     //recount tasks now
     $(this.tasks).each( function() {
-      $(this).recount();
+      this.recount();
     });
   };
 
@@ -266,7 +266,7 @@ function task(count, e_index) {
   this.count = count;
   this.e_index = e_index;
 
-  this.metric = new counter('.metric');
+  this.metric = new counter('.metric', 'task_metric');
   this.findings = [];
 
   //This should only be called once! It allows us to find the experiment in the DOM even after name changes.
@@ -281,12 +281,13 @@ function task(count, e_index) {
     console.log('recounting task '+this.count+'!');
     var e_index = this.e_index;
     var t_index = this.count;
+    var focus = this.focus;
 
-    $(this.focus).prop('id', 'experiment_'+this.e_index+'_task_'+this.count);
-    $(this.focus).data('experiment', e_index);
-    $(this.focus).data('task', this.count);
+    $(focus).prop('id', 'experiment_'+this.e_index+'_task_'+this.count);
+    $(focus).data('experiment', e_index);
+    $(focus).data('task', this.count);
 
-    $(this.focus).find('.task-field').each( function(index) { 
+    $(focus).find('.task-field').each( function(index) { 
       $(this).find('label').each( function() {
         $(this).prop('for', 'paper_experiment_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute'));
       });
@@ -301,18 +302,32 @@ function task(count, e_index) {
     });
 
     //recount dimension, scale, density, realism
-    this.recountRadioButtons(this.focus, '.dimension input', e_index, t_index);
-    this.recountRadioButtons(this.focus, '.scale input', e_index, t_index);
-    this.recountRadioButtons(this.focus, '.density input', e_index, t_index);
-    this.recountRadioButtons(this.focus, '.realism input', e_index, t_index);
+    this.recountRadioButtons(focus, '.dimension input', e_index, t_index);
+    this.recountRadioButtons(focus, '.scale input', e_index, t_index);
+    this.recountRadioButtons(focus, '.density input', e_index, t_index);
+    this.recountRadioButtons(focus, '.realism input', e_index, t_index);
 
     //recount task categories
-    $(this.focus).find('.task-category input').each( function() { 
+    $(focus).find('.task-category input').each( function() { 
       var label = $('label[for="'+$(this).prop('id')+'"]');
       label.prop('for', 'paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute')+'_'+$(this).val());
 
       $(this).prop('id', 'paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute')+'_'+$(this).val());
       $(this).prop('name', 'paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+$(this).data('attribute')+'s][]');
+    });
+
+    //recount metric pills and descriptions
+    $(focus).find('.metric-list input:checkbox').each( function() { 
+      var label = $('label[for="'+$(this).prop('id')+'"]');
+      (focus).find(label).prop('for', 'experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute')+'_'+$(this).val());
+
+      $(this).prop('id', 'experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute')+'_'+$(this).val());
+      $(this).data('experiment', e_index);
+      $(this).data('task', t_index);
+    });
+    $(focus).find('.metric-desc').each( function() {
+      $(this).prop('id', 'experiment_'+e_index+'_task_'+t_index+'_task_'+$(this).data('attribute'));
+      $(this).parent().prop('id', 'experiment_'+e_index+'_task_'+t_index+'_task_'+$(this).data('attribute')+'s');
     });
 
     //recount counters
@@ -460,11 +475,6 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
     });
 
     var i = 0;
-    if (type == '.display') {
-      var selector = '.display-desc';
-    } else {
-      var selector = '.fidelity-desc';
-    }
     $('#experiment_'+e_index+' .'+throughTable+'-desc input').each( function() {
       if (!$(this).data('attribute')) { 
         $(this).prop('id', 'paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id');
@@ -480,6 +490,23 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
       if (!($(this).data('attribute') || $(this).data('prefix'))) {
         $(this).prop('id', 'paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id');
         $(this).prop('name', 'paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]');
+        i = i + 1;
+      }
+    });
+  }
+  else if (type == '.metric') {
+    $('#experiment_'+e_index+'_task_'+t_index+' '+type).each( function(i) { 
+      var val = $(this).prop('id').split('_');
+
+      $(this).prop('id', 'experiment_'+e_index+'_task_'+t_index+'_'+type.slice(1)+'_'+val[val.length-1]);
+      $(this).data('id', i);
+    });
+
+    var i = 0;
+    $('#experiment_'+e_index+'_task_'+t_index+' .'+throughTable+'-desc input').each( function() {
+      if (!$(this).data('attribute')) { 
+        $(this).prop('id', 'paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+throughTable+'s_attributes_'+i+'_id');
+        $(this).prop('name', 'paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+throughTable+'s_attributes]['+i+'][id]');
         i = i + 1;
       }
     });

@@ -54,7 +54,7 @@ function create_component_description(focus, name, componentId, throughTable, co
     var container = '#experiment_'+ experimentId+'_task_'+taskId+'_'+throughTable;
   
     var divId = 'experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
-    var throughTableId;
+    var throughTableId = '#paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+$(selector).data('id')+'_id';
 
     var componentIdId = 'paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
     var componentIdName = 'paper[experiments_attributes]['+experimentId+'][tasks_attributes]['+taskId+']['+throughTable+'s_attributes]['+new_id+']['+component+'_id]';
@@ -558,7 +558,7 @@ function add_fields_after (link, association, content) {
     populate_radio_buttons(focus, new_id);
   }
   else{
-    $(link).parent().parent().after(content.replace(regexp, new_id));
+    $(link).parent().parent().append(content.replace(regexp, new_id));
   }
 
   add_progress_heading(association, focus, false);
@@ -594,10 +594,11 @@ function add_author_ids (data) {
   var idsFound = $('[id *=author_papers_attributes][id $=_id]').length/2;
 
   if ($(data.author_papers).length != idsFound) {
-    $(data.author_papers).each( function(i) {
+    $(data.author_papers).each( function(a_index) {
       var index = this.order;
 
       if (index > idsFound-1) {
+        console.log('Adding author id ', index);
         $('.author_paper').eq(index).append('<input id="paper_author_papers_attributes_'+index+'_id" name="paper[author_papers_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
         $('.author_paper').eq(index).children().find('.author').append('<input id="paper_author_papers_attributes_'+index+'_author_attributes_id" name="paper[author_papers_attributes]['+index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
       }
@@ -606,38 +607,82 @@ function add_author_ids (data) {
 }
 
 function add_experiment_ids (data) {
-  var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]');
+  var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]').length;
 
   if ($(data.experiments).length != idsFound) {
-    $(data.experiments).each( function(i) {
-      if (i > idsFound-1) {
-        $('.paper').append('<input id="paper_experiments_attributes_'+index+'_id" name="paper[experiments_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
+    $(data.experiments).each( function(e_index) {
+      if (e_index > idsFound-1) {
+        console.log('Adding experiment id ', e_index);
+        $('.paper').append('<input id="paper_experiments_attributes_'+e_index+'_id" name="paper[experiments_attributes]['+e_index+'][id]" type="hidden" value="'+this.id+'">');
       }
     });
   }
 }
 
 function add_experiment_nested_ids (data, throughTable) {
-  $('.experiment').each( function(index) {
+  $('.experiment').each( function(e_index) {
     var idsFound = 0;
     
-    $('#experiment_'+index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+    $('#experiment_'+e_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
       if ($(this).data('attribute') == undefined) {
         idsFound = idsFound+1;
       }
     });
 
-    if (eval('$(data.experiments[index].'+throughTable+'s)').length != idsFound) {
-      eval('$(data.experiments[index].'+throughTable+'s)').each( function(i) {
+    if (eval('$(data.experiments['+e_index+'].'+throughTable+'s)').length != idsFound) {
+      eval('$(data.experiments['+e_index+'].'+throughTable+'s)').each( function(i) {
         if (i > idsFound-1) {
-          $('#experiment_'+index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+          console.log('Adding ', throughTable, ' id ', i, 'for experiment', e_index);
+          $('#experiment_'+e_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
         }
       });
     }
 
+    add_task_ids (data, e_index);
+    add_task_nested_ids(data, e_index, 'task_metric');
   });
 }
 
+function add_task_ids (data, e_index) {
+  var idsFound = $('#experiment_'+e_index+' [id *=tasks_attributes_][id $=_id]').length;
+
+  if (eval('$(data.experiments['+e_index+'].tasks)').length != idsFound) {
+    eval('$(data.experiments['+e_index+'].tasks)').each( function(t_index) {
+      if (t_index > idsFound-1) {
+        console.log('Adding task id ', t_index, 'for experiment', e_index);
+        $('#experiment_'+e_index).append('<input id="paper_experiments_attributes_'+e_index+'tasks_attributes_'+t_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][id]" type="hidden" value="'+this.id+'">');
+      }
+    });
+  }
+}
+
+function add_task_nested_ids (data, e_index, throughTable) {
+  $('.task').each( function() {
+    var t_index = 0;
+    
+    if ($(this).data('experiment') == e_index) {
+      var idsFound = 0;
+    
+      $('#experiment_'+e_index+'_task_'+t_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+        if ($(this).data('attribute') == undefined) {
+          idsFound = idsFound+1;
+        }
+      });
+
+      if (eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').length != idsFound) {
+        eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').each( function(i) {
+          if (i > idsFound-1) {
+            console.log('Adding ', throughTable, 'id ', i, 'for task', t_index, 'in experiment', e_index);
+            $('#experiment_'+e_index+'_task_'+t_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_task_'+t_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+          }
+        });
+      }
+
+      t_index = t_index + 1;
+    }
+
+  });
+}
 
 // ##########################################################################
 // Ajax Calls
@@ -649,64 +694,7 @@ var testData;
 function save_paper (focus, association, content) {
   update_author_order();
   add_fields_after (focus, association, content);
-
-
-  // if (paperId == null) {
-  //   console.log('first post');
-  //   $(focus).button('loading');
-    
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/papers',
-  //     data: $('form.paper-form').serialize(),
-  //     dataType: 'json',
-  //     success: function(data, status) {
-  //       console.log(status, data); //whether successful or not
-
-  //       //Get information and add put method for updating paper
-  //       paperId = data.id;
-  //       $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
-
-  //       //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-  //       paperManager.cleanUp();
-
-  //       //Add nested attributes ids to form
-  //       testData = data;
-  //       add_author_ids(data);
-
-  //       //Reset the button and add element
-  //       $(focus).button('reset');
-  //       // add_fields_after (focus, association, content)
-  //     },
-  //     error: function (error) {
-  //       alert('There was an error when saving! Please notify an admin.');
-  //       $(focus).button('reset');
-  //     }
-  //   });
-  // } else {
-  //   console.log('updating');
-
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/papers/'+paperId,
-  //     data: $('form.paper-form').serialize(),
-  //     dataType: 'json',
-  //     success: function(data, status) {
-  //       console.log(status, data);
-
-  //       //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-  //       paperManager.cleanUp();
-
-  //       //Reset the button and add element
-  //       $(focus).button('reset');
-  //       // add_fields_after (focus, association, content)
-  //     },
-  //     error: function (error) {
-  //       alert('There was an error when saving! Please notify an admin.');
-  //       $(focus).button('reset');
-  //     }
-  //   });
-  // }
+  
 }
 
 function save_other_fields () {
@@ -714,18 +702,86 @@ function save_other_fields () {
 }
 
 function add_test (focus) {
-  $.ajax({
-    type: 'GET',
-    url: '/authors/Scerbo/Siroberto',
-    dataType: 'json',
-    success: function(data, status) {
-      console.log(status, data);
-    },
-    error: function (error) {
-      alert('There was an error when saving! Please notify an admin.');
-      console.log(status, data);
-    }
-  });
+  if (paperId == null) {
+    console.log('first post');
+    $(focus).button('loading');
+    
+    $.ajax({
+      type: 'POST',
+      url: '/papers',
+      data: $('form.paper-form').serialize(),
+      dataType: 'json',
+      success: function(data, status) {
+        console.log(status, data); //whether successful or not
+
+        //Get information and add put method for updating paper
+        paperId = data.id;
+        $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+
+        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+        paperManager.cleanUp();
+
+        //Add new nested attributes ids to form
+        testData = data;
+        add_author_ids(data);
+        add_experiment_ids(data);
+        add_experiment_nested_ids (data, 'experiment_display');
+        add_experiment_nested_ids (data, 'experiment_hardware');
+        add_experiment_nested_ids (data, 'experiment_visual');
+        add_experiment_nested_ids (data, 'experiment_aural');
+        add_experiment_nested_ids (data, 'experiment_haptic');
+        add_experiment_nested_ids (data, 'experiment_biomechanical');
+        add_experiment_nested_ids (data, 'experiment_control');
+        add_experiment_nested_ids (data, 'experiment_system_app');
+        add_experiment_nested_ids (data, 'experiment_indy_variable');
+
+        //Reset the button and add element
+        $(focus).button('reset');
+        // add_fields_after (focus, association, content)
+      },
+      error: function (error) {
+        alert('There was an error when saving! Please notify an admin.');
+        $(focus).button('reset');
+      }
+    });
+  } else {
+    console.log('updating');
+
+    $.ajax({
+      type: 'POST',
+      url: '/papers/'+paperId,
+      data: $('form.paper-form').serialize(),
+      dataType: 'json',
+      success: function(data, status) {
+        console.log(status, data);
+
+        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+        paperManager.cleanUp();
+
+        //Add new nested attributes ids to form
+        testData = data;
+        add_author_ids(data);
+        add_experiment_ids(data);
+        add_experiment_nested_ids (data, 'experiment_display');
+        add_experiment_nested_ids (data, 'experiment_hardware');
+        add_experiment_nested_ids (data, 'experiment_visual');
+        add_experiment_nested_ids (data, 'experiment_aural');
+        add_experiment_nested_ids (data, 'experiment_haptic');
+        add_experiment_nested_ids (data, 'experiment_biomechanical');
+        add_experiment_nested_ids (data, 'experiment_control');
+        add_experiment_nested_ids (data, 'experiment_system_app');
+        add_experiment_nested_ids (data, 'experiment_indy_variable');
+
+        //Reset the button and add element
+        $(focus).button('reset');
+        // add_fields_after (focus, association, content)
+      },
+      error: function (error) {
+        alert('There was an error when saving! Please notify an admin.');
+        $(focus).button('reset');
+      }
+    });
+  }
 }
 
 // ##########################################################################

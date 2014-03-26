@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140318190542) do
+ActiveRecord::Schema.define(:version => 20140326135706) do
 
   create_table "aural_fidelities", :force => true do |t|
     t.string   "component"
@@ -349,6 +349,7 @@ ActiveRecord::Schema.define(:version => 20140318190542) do
     t.integer  "task_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "desc"
   end
 
   add_index "task_metrics", ["metric_id"], :name => "index_task_metrics_on_metric_id"

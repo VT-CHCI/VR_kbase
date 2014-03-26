@@ -21,6 +21,7 @@
           </a>
 
         </div>
+        <button class="btn btn-primary" data-loading-text="Autosaving..." onclick="add_test(this); return false;">Save</button>
       </div>
     </div>
 
@@ -72,7 +73,6 @@
               <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add authors link.</small></p>
 
               <div class="authors">
-
                 <% if @paper.new_record? %>  
                   <%= add_fields f, :author_papers %>
                 <% else %>
