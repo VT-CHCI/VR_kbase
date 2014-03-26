@@ -161,9 +161,11 @@ function experiment(count) {
 
     $(focus).find('.new_task').data('experiment', e_index);
 
+    //change text in create new buttons to add the right experiment number for children
     var regexp = new RegExp("new_experiments", "g");
     $(focus).find('.new_task').html($(focus).find('.new_task').html().replace(regexp, e_index));
 
+    //recount general fields
     $(focus).find('.exp-field').each( function(index) { 
       $(this).find('label').each( function() {
         $(this).prop('for', 'paper_experiment_attributes_'+e_index+'_'+$(this).data('attribute'));
@@ -191,6 +193,16 @@ function experiment(count) {
       $(this).prop('name', 'paper[experiments_attributes]['+e_index+']['+$(this).data('attribute')+']');
     });
 
+    //recount accordian
+    $(focus).find('.accordion').prop('id', 'accordion_'+e_index);
+    $(focus).find('.accordion-toggle').each( function(i) {
+      $(this).data('parent', '#accordion_'+e_index);
+      $(this).prop('href', '#collapse_'+e_index+'_'+i);
+    });
+    $(focus).find('.accordion-body').each( function(i) {
+      $(this).prop('id', 'collapse_'+e_index+'_'+i);
+    })
+
     //recount fidelity pills and descriptions
     $(focus).find('.fidelity-list input').each( function() { 
       var label = $('label[for="'+$(this).prop('id')+'"]');
@@ -213,6 +225,7 @@ function experiment(count) {
     });
     $(focus).find('.display-desc').each( function() {
       $(this).prop('id', 'experiment_'+e_index+'_experiment_'+$(this).data('attribute'));
+      $(this).parent().prop('id', 'experiment_'+e_index+'_experiment_'+$(this).data('attribute')+'s');
     });
 
     //recount counters
@@ -335,13 +348,11 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
 
   if (e_index != undefined) {
     var focus = '#experiment_'+e_index+' '+this.type;
-    $('#experiment_'+e_index+' #experiment_new_experiments_'+throughTable+'s').prop('id', 'experiment_'+e_index+'_'+throughTable+'s');
-  
-  } else if (t_index != undefined) {
+  } 
+  if (t_index != undefined) {
     var focus = '#experiment_'+e_index+'_task_'+t_index+' '+this.type;
-  } else if (f_index != undefined) {
-    var focus = this.type;
-  } else {
+  } 
+  if (f_index != undefined) {
     var focus = this.type;
   }
 
