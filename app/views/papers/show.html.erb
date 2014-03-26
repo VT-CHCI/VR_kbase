@@ -127,16 +127,46 @@
           <div class="exp-desc span4">
             <p><%= experiment.exp_desc %></p>
 
-            <% if false %>
-              <div class="title well">
-                <h6 class="inline">Components of fidelity & desc - </h6>
-                <ul class="list inline">
-                  <% for component in experiment.components %>
-                    <li class="object"><a href="#"><%= component.comp_of_immersion.downcase %></a></li>
+            <div class="title well">
+              <h6 class="inline">Components of fidelity & desc - </h6>
+              <ul class="list inline">
+                <% if experiment.visual_fidelities.count > 0 %>
+                  <% for component in experiment.visual_fidelities %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
                   <% end %>
-                </ul>
-              </div>
-            <% end %>
+                <% end %>
+
+                <% if experiment.aural_fidelities.count > 0 %>
+                  <% for component in experiment.aural_fidelities %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.haptic_fidelities.count > 0 %>
+                  <% for component in experiment.haptic_fidelities %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.biomechanical_symmetries.count > 0 %>
+                  <% for component in experiment.biomechanical_symmetries %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.control_symmetries.count > 0 %>
+                  <% for component in experiment.control_symmetries %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.system_appropriatenesses.count > 0 %>
+                  <% for component in experiment.system_appropriatenesses %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
 
             <p><%= experiment.comp_desc %></p>
 
