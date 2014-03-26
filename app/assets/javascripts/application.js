@@ -694,7 +694,7 @@ var testData;
 function save_paper (focus, association, content) {
   update_author_order();
   add_fields_after (focus, association, content);
-  
+  $('[ref=tooltip]').tooltip();
 }
 
 function save_other_fields () {

@@ -17,10 +17,11 @@
 
   <div class="field task-categories">
     <%= f.label nil, "User Task Category" %>
+    <p class="after-legend"><small>Click on all task categories relevant to this task.</small></p>
     <% Category.all.each do |category| %>
       <div class="checkbox inline pill task-category">
         <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}", :'data-attribute' => 'category_id' %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}", :'data-attribute' => 'category_id' %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}", :'data-attribute' => 'category_id', :title => category.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
       </div>
     <% end %>
   </div>
@@ -35,7 +36,7 @@
 
   <div class="field task-field">
     <%= f.label :interface_desc, "Interaction Description", :'data-attribute' => 'interface_desc' %>
-    <%= f.text_area :interface_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'interface_desc' %>
+    <%= f.text_area :interface_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'interface_desc', :title => 'Describe the types of interaction the user could perform on this task and the methods used to perform them', :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
   </div>
 
   <div class="field dimensions">
@@ -43,7 +44,7 @@
       <% Dimension.all.each do |dimension| %>
         <div class="radio inline pill dimension">
           <%= f.radio_button :dimension_id, dimension.id, :'data-attribute' => 'dimension_id' %>
-          <%= f.label :dimension_id, dimension.level, :value => dimension.id, :'data-attribute' => 'dimension_id' %>
+          <%= f.label :dimension_id, dimension.level, :value => dimension.id, :'data-attribute' => 'dimension_id', :title => dimension.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
         </div>
       <% end %>
   </div>
@@ -53,7 +54,7 @@
     <% Scale.all.each do |scale| %>
       <div class="radio inline pill scale">
         <%= f.radio_button :scale_id, scale.id, :'data-attribute' => 'scale_id' %>
-        <%= f.label :scale_id, scale.level, :value => scale.id, :'data-attribute' => 'scale_id' %>
+        <%= f.label :scale_id, scale.level, :value => scale.id, :'data-attribute' => 'scale_id', :title => scale.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
       </div>
     <% end %>
   </div>
@@ -63,7 +64,7 @@
     <% Density.all.each do |density| %>
       <div class="radio inline pill density">
         <%= f.radio_button :density_id, density.id, :'data-attribute' => 'density_id' %>
-        <%= f.label :density_id, density.level, :value => density.id, :'data-attribute' => 'density_id' %>
+        <%= f.label :density_id, density.level, :value => density.id, :'data-attribute' => 'density_id', :title => density.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
       </div>
     <% end %>
   </div>
@@ -73,7 +74,7 @@
     <% Realism.all.each do |realism| %>
       <div class="radio inline pill realism">
         <%= f.radio_button :realism_id, realism.id, :'data-attribute' => 'realism_id' %>
-        <%= f.label :realism_id, realism.level, :value => realism.id, :'data-attribute' => 'realism_id' %>
+        <%= f.label :realism_id, realism.level, :value => realism.id, :'data-attribute' => 'realism_id', :title => realism.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
       </div>
     <% end %>
   </div>
@@ -83,16 +84,16 @@
     <%= f.text_area :env_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'env_desc' %>
   </div>
 
-  <legend class="with-helper-text">Metrics</legend>
-  <p class="after-legend"><small>Use the autocomplete field below to select all metrics used for evalutating this task.</small></p>
+  <!-- <legend class="with-helper-text">Metrics</legend> -->
 
   <div id="experiment_new_experiments_task_new_tasks_task_metrics" class="metrics well">
     <div class="field metric-list metric-checkboxes">
       <legend class="mini">Metrics</legend>
+      <p class="after-legend"><small>Select all metrics used for evalutating this task.</small></p>
       <% Metric.all.each do |metric| %>
         <div class="checkbox inline pill">
           <%= check_box_tag nil, metric.id, f.object.metrics.include?(metric), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}" , :onchange => "create_component_description(this, '#{metric.metric}', #{metric.id}, 'task_metric', 'metric', 'method of measurement')", :'data-experiment' => 'new_experiments', :'data-task' => 'new_tasks', :'data-attribute' => 'metric_id' %>
-          <%= label_tag nil, metric.metric, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}", :'data-attribute' => 'metric_id' %>
+          <%= label_tag nil, metric.metric, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}", :'data-attribute' => 'metric_id', :title => metric.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
         </div>
 
       <% end %>
