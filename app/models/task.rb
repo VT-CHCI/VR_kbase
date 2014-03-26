@@ -22,18 +22,11 @@ class Task < ActiveRecord::Base
   has_many :task_metrics, :dependent => :destroy
   has_many :metrics, :through => :task_metrics
 
-  attr_reader :metric_tokens
-
-  def metric_tokens=(ids)
-    ids.gsub!(/CREATE_(.+?)_END/) do
-      Metric.create!(:metric => $1).id
-    end
-    self.metric_ids = ids.split(",")
-  end
+  accepts_nested_attributes_for :task_metrics, :allow_destroy => true
 
   accepts_nested_attributes_for :findings, :allow_destroy => true
   
   attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
-    :density_id, :realism_id, :category_tokens, :metric_tokens, :findings, :findings_attributes, 
-    :metric_ids, :category_ids
+    :density_id, :realism_id, :category_tokens, :findings, :findings_attributes, :category_ids, 
+    :task_metrics_attributes
 end

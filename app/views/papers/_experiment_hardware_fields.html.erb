@@ -1,8 +1,10 @@
-<div class="input">
+<div class="input generated" data-experiment-hardware="new_experiment_hardwares" data-type="experiment-hardware">
+    <legend class="mini">Input Devices including Tracking</legend>
+    <p class="after-legend"><small>Use the fields to provide general information on the input systems used in this experiment such as input devices, tracking systems,  etc.</small></p>
 	<div class="inline-group">
 		<div class="field token-input span3">
 		  <%= f.label :hardware_tokens, "Input Device", :'data-attribute' => 'hardware_tokens' %>
-		  <%= f.text_field :hardware_tokens, "data-pre" => f.object.display.to_json, "data-type" => "hardware", "data-limit" => 1, :class => 'span3', :'data-attribute' => 'hardware_tokens' %>
+		  <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardware.to_json, "data-type" => "hardware", "data-limit" => 1, :class => 'span3', :'data-attribute' => 'hardware_tokens' %>
 		</div>
 
 		<div class="span9">

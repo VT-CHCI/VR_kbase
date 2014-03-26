@@ -154,7 +154,7 @@ class PapersController < ApplicationController
               ]
             }}
           ]
-        ), :status => :created, :location => @paper }
+        ), :status => :created}
       else
         format.html { render :action => "edit" }
         format.json { render :json => @paper.errors, :status => :unprocessable_entity }

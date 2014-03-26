@@ -20,12 +20,12 @@ class Experiment < ActiveRecord::Base
   has_many :experiment_displays, :dependent => :destroy
   has_many :displays, :through => :experiment_displays
 
-  accepts_nested_attributes_for :experiment_displays
+  accepts_nested_attributes_for :experiment_displays, :allow_destroy => true
 
   has_many :experiment_hardwares, :dependent => :destroy
   has_many :hardwares, :through => :experiment_hardwares
 
-  accepts_nested_attributes_for :experiment_hardwares
+  accepts_nested_attributes_for :experiment_hardwares, :allow_destroy => true
 
   has_many :experiment_softwares, :dependent => :destroy
   has_many :softwares, :through => :experiment_softwares
@@ -42,36 +42,36 @@ class Experiment < ActiveRecord::Base
   has_many :experiment_aurals, :dependent => :destroy
   has_many :aural_fidelities, :through => :experiment_aurals
 
-  accepts_nested_attributes_for :experiment_aurals
+  accepts_nested_attributes_for :experiment_aurals, :allow_destroy => true
 
   has_many :experiment_visuals, :dependent => :destroy
   has_many :visual_fidelities, :through => :experiment_visuals
 
-  accepts_nested_attributes_for :experiment_visuals
+  accepts_nested_attributes_for :experiment_visuals, :allow_destroy => true
 
   has_many :experiment_haptics, :dependent => :destroy
   has_many :haptic_fidelities, :through => :experiment_haptics
 
-  accepts_nested_attributes_for :experiment_haptics
+  accepts_nested_attributes_for :experiment_haptics, :allow_destroy => true
 
   has_many :experiment_biomechanicals, :dependent => :destroy
   has_many :biomechanical_symmetries, :through => :experiment_biomechanicals
 
-  accepts_nested_attributes_for :experiment_biomechanicals
+  accepts_nested_attributes_for :experiment_biomechanicals, :allow_destroy => true
 
   has_many :experiment_controls, :dependent => :destroy
   has_many :control_symmetries, :through => :experiment_controls
 
-  accepts_nested_attributes_for :experiment_controls
+  accepts_nested_attributes_for :experiment_controls, :allow_destroy => true
 
   has_many :experiment_system_apps, :dependent => :destroy
   has_many :system_appropriatenesses, :through => :experiment_system_apps
 
-  accepts_nested_attributes_for :experiment_system_apps
+  accepts_nested_attributes_for :experiment_system_apps, :allow_destroy => true
 
   has_many :experiment_indy_variables, :dependent => :destroy
   has_many :indy_variables, :through => :experiment_indy_variables
 
-  accepts_nested_attributes_for :experiment_indy_variables
+  accepts_nested_attributes_for :experiment_indy_variables, :allow_destroy => true
 
 end

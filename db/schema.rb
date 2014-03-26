@@ -367,6 +367,7 @@ ActiveRecord::Schema.define(:version => 20140326144124) do
     t.integer  "task_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "desc"
   end
 
   add_index "task_metrics", ["metric_id"], :name => "index_task_metrics_on_metric_id"
