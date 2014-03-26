@@ -1,8 +1,8 @@
-<div class="indy-variable">
+<div class="indy-variable generated" data-experiment-indy-variable="new_experiment_indy_variables" data-type="experiment-indy-variable">
 	<div class="inline-group">
 		<div class="field token-input span3">
 		  <%= f.label :indy_variable_tokens, "Independent Variable", :'data-attribute' => 'indy_variable_tokens' %>
-		  <%= f.text_field :indy_variable_tokens, "data-pre" => f.object.display.to_json, "data-type" => "variable", "data-limit" => 1, "data-database" => "indy_variable", :class => 'span3', :'data-attribute' => 'indy_variable_tokens' %>
+		  <%= f.text_field :indy_variable_tokens, "data-pre" => f.object.indy_variable.to_json, "data-type" => "variable", "data-limit" => 1, "data-database" => "indy_variable", :class => 'span3', :'data-attribute' => 'indy_variable_tokens' %>
 		</div>
 
 		<div class="span9">

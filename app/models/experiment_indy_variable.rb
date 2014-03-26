@@ -10,7 +10,7 @@ class ExperimentIndyVariable < ActiveRecord::Base
 
   def indy_variable_tokens=(id)
     id.gsub!(/CREATE_(.+?)_END/) do
-      IndyVariable.create!(:indy_variable => $1).id
+      IndyVariable.create!(:variable => $1).id
     end
     self.indy_variable_id = id
   end

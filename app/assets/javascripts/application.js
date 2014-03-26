@@ -48,14 +48,13 @@ function create_component_description(focus, name, componentId, throughTable, co
   var taskId = $(focus).data('task');
 
   if (taskId != undefined) {
-    console.log(new_id);
-
     var selector = '#experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
     new_id = eval('paperManager.experiments['+experimentId+'].tasks['+taskId+'].'+component+'.addCount()');
     
     var container = '#experiment_'+ experimentId+'_task_'+taskId+'_'+throughTable;
   
     var divId = 'experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
+    var throughTableId;
 
     var componentIdId = 'paper_experiments_attributes_'+experimentId+'_tasks_attributes_'+taskId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
     var componentIdName = 'paper[experiments_attributes]['+experimentId+'][tasks_attributes]['+taskId+']['+throughTable+'s_attributes]['+new_id+']['+component+'_id]';
@@ -73,6 +72,7 @@ function create_component_description(focus, name, componentId, throughTable, co
     var container = '#experiment_'+ experimentId+'_'+throughTable;
 
     var divId = 'experiment_'+ experimentId+'_'+component+'_'+componentId;
+    var throughTableId = '#paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+$(selector).data('id')+'_id';
 
     var componentIdId = 'paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'_'+component+'_id';
     var componentIdName = 'paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+']['+component+'_id]';
@@ -82,6 +82,7 @@ function create_component_description(focus, name, componentId, throughTable, co
 
     var componentDestroyId = 'paper_experiments_attributes_'+experimentId+'_'+throughTable+'s_attributes_'+new_id+'__destroy';
     var componentDestroyName = 'paper[experiments_attributes]['+experimentId+']['+throughTable+'s_attributes]['+new_id+'][_destroy]';
+  
   }
 
   if (focus.checked) {
@@ -92,6 +93,7 @@ function create_component_description(focus, name, componentId, throughTable, co
       $(selector).show();
       $(selector).removeClass('_destroy');
       $(selector+' input.destroy').val(false);
+      $(throughTableId).removeClass('_destroy');
     }
     else {
       //the detail doesn't exist, so we need to create it
@@ -110,6 +112,8 @@ function create_component_description(focus, name, componentId, throughTable, co
       $(selector).hide();
       $(selector).addClass('_destroy');
       $(selector+' input.destroy').val(true);
+      console.log(throughTableId);
+      $(throughTableId).addClass('_destroy');
     }
   }  
 }
@@ -179,6 +183,7 @@ function create_other(focus, name, componentId, throughTable, component, type, d
     if (focus.checked) {
       $(selector+' form').addClass('other-add');
       $(selector+' form').removeClass('other-destroy');
+
     } else {
       $(selector+' form').removeClass('other-add');
       $(selector+' form').addClass('other-destroy');
@@ -218,12 +223,21 @@ function remove_auto_gen_field(link, parentLevel) {
   $(link).prev("input[type=hidden]").val("true");
 
   if (parentLevel == 4) {
-    $(link).parent().parent().parent().parent().hide();
-    $(link).parent().parent().parent().parent().addClass('_destroy');
+    var focus = $(link).parent().parent().parent().parent();
+    var coreParentId = $(link).parents('.experiment').data('experiment');
   } else {
-    $(link).parent().parent().parent().hide();
-    $(link).parent().parent().parent().addClass('_destroy');
+    var focus = $(link).parent().parent().parent();
+    var coreParentId = "";
   }
+
+  focus.hide();
+  focus.addClass('_destroy');
+
+  var type = focus.data('type');
+  var instance = focus.data(type);
+  
+  console.log('[id*='+coreParentId+'_'+type.split('-').join('_')+'s_attributes_'+instance+'_id]');
+  $('[id*='+coreParentId+'_'+type.split('-').join('_')+'s_attributes_'+instance+'_id]').addClass('_destroy');
 
   update_author_order();
 }
@@ -273,7 +287,7 @@ function update_author_order() {
 // Progress Heading
 // ##########################################################################
 
-function add_progress_heading(association, focus) {
+function add_progress_heading(association, focus, repopulate) {
   var experimentId = $(focus).data('experiment');
   var taskId = $(focus).data('task');
   var findingId = $(focus).data('finding');
@@ -328,56 +342,60 @@ function add_progress_heading(association, focus) {
   
   }
 
-  //Set newely created heading to current and show it
-  $('#progress-headings a.current').removeClass('current');
-  $('#progress-headings '+heading).addClass('current');
-
-  show_element($('#progress-headings '+heading), true);
-
   //Bind element title to heading title
-  $(focus.selector + ' .field-title input').on('keyup',function() {
+  $(focus.selector + ' .field-title input').eq(0).keyup( function() {
     var newTitle = $(this).val();
     
     if (newTitle.length < 1) {
-      var singular = association.slice(0,-1);
-
-      newTitle = 'Unnamed ' + singular;
+      newTitle = 'Unnamed ' + association.slice(0,-1);
     }
 
     $('#progress-headings '+heading+' .title-field').text(newTitle);
   });
+
+  if (repopulate) {
+    //Keep publicaiton info visible and rename if title is present
+    $($('#progress-headings '+heading).data('target')).hide();
+    $(focus.selector + ' .field-title input').keyup();
+
+  } else {
+    //Set newely created heading to current and show it
+    show_element($('#progress-headings '+heading), true);
+  }
 }
 
 function show_element (focus, slide) {
   var scrolled = false;
   var scrollTimeout;
 
-  //Set click heading to current
-  $('#progress-headings a.current').removeClass('current');
-  $(focus).addClass('current');
+  if (!$(focus).hasClass('current')) {
+    //Set click heading to current
+    $('#progress-headings a.current').removeClass('current');
+    $(focus).addClass('current');
 
-  //Hide currently visible element and show new element
-  if (slide) {
-    $('.core-element:visible').fadeOut()
-    $($(focus).data('target')).slideDown()
-  } else {
-    $('.core-element:visible').fadeOut()
-    $($(focus).data('target')).fadeIn()
-  }
+    //Hide currently visible element and show new element
+    if (slide) {
+      $('.core-element:visible').fadeOut()
+      $($(focus).data('target')).slideDown()
+    } else {
+      $('.core-element:visible').fadeOut()
+      $($(focus).data('target')).fadeIn()
+    }
 
-  //The rest of the code is to prevent over scrolling 
-  if (($("html, body").scrollTop() < 10) && !scrolled) {
-    $("html, body").animate({ scrollTop: 0 }, 500);
-    scrolled = true;
-  }
+    //The rest of the code is to prevent over scrolling 
+    if (($("html, body").scrollTop() < 10) && !scrolled) {
+      $("html, body").animate({ scrollTop: 0 }, 500);
+      scrolled = true;
+    }
 
-  //Reset the timer
-  clearTimeout(scrollTimeout);
+    //Reset the timer
+    clearTimeout(scrollTimeout);
 
-  //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
-  scrollTimeout = setTimeout(function(){
-      scrolled = false;
-  }, 500);   
+    //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
+    scrollTimeout = setTimeout( function(){
+        scrolled = false;
+    }, 500);
+  }   
 }
 
 function delete_element (focus) {
@@ -389,13 +407,14 @@ function delete_element (focus) {
 // ##########################################################################
 
 function createTokenInput (focus) {
-  $('#' + focus.attr('id') + ' .token-input input').each( function() {
+  $('#' + focus.prop('id') + ' .token-input input').each( function() {
     createSingleTokenInput(this)
   });
 }
 
 function createSingleTokenInput (focus) {
   var dataType = $(focus).data("type");
+  var currentData;
   var database;
   var limit;
 
@@ -410,19 +429,25 @@ function createSingleTokenInput (focus) {
   } else {
     limit = null;
   }
+  
+  if ($(focus).data("pre") === null || $(focus).data("pre") instanceof Array) {
+    currentData = $(focus).data("pre");
+  } else {
+    currentData = [$(focus).data("pre")];
+  }
 
   $(focus).tokenInput('/' + database + 's.json', {
     crossDomain: false,
     preventDuplicates: true,
     propertyToSearch: dataType,
-    prePopulate: $(focus).data("pre"),
+    prePopulate: currentData,
     tokenLimit: limit
   });
 }
 
 function populate_radio_buttons (focus, id) {
-  var parentId = focus.children('.field-title').children('input').attr('name').split('][')[3];
-  var grandParentId = focus.children('.field-title').children('input').attr('name').split('][')[1];
+  var parentId = focus.children('.field-title').children('input').prop('name').split('][')[3];
+  var grandParentId = focus.children('.field-title').children('input').prop('name').split('][')[1];
 
   function autoReplace (buttonText, type, ButtonType) {
     if ( ButtonType == 'radio' )  {
@@ -473,16 +498,16 @@ function populate_radio_buttons (focus, id) {
     var autoGenSentence = '_component_ had a _relationship_ relationship on _metric_ for _task_';
     var replaceSentence = 4;
 
-    var componentText = $(".finding:visible .fidelity input:checked").map(function() {
+    var componentText = $(".finding:visible .fidelity input:checked").map( function() {
         return $(this).next("label").text();
       }).get();
-    var relationshipText = $(".finding:visible .relationships input:checked").map(function() {
+    var relationshipText = $(".finding:visible .relationships input:checked").map( function() {
         return $(this).next("label").text();
       }).get();
-    var metricText = $(".finding:visible .metrics input:checked").map(function() {
+    var metricText = $(".finding:visible .metrics input:checked").map( function() {
         return $(this).next("label").text();
       }).get();
-    var taskText = $(".finding:visible .tasks input:checked").map(function() {
+    var taskText = $(".finding:visible .tasks input:checked").map( function() {
         return $(this).next("label").text();
       }).get();
 
@@ -536,7 +561,7 @@ function add_fields_after (link, association, content) {
     $(link).parent().parent().after(content.replace(regexp, new_id));
   }
 
-  add_progress_heading(association, focus);
+  add_progress_heading(association, focus, false);
 }
 
 function add_fields_before (link, association, content) {
@@ -548,10 +573,10 @@ function add_fields_before (link, association, content) {
   } 
   else if (association == 'experiment_displays' || association == 'experiment_hardwares' || association == 'experiment_indy_variables') {
     if (association == 'experiment_hardwares') {
-      new_id = paperManager.experiments[$(link).parents().find('.experiment').data('id')].inputs.addCount();
+      new_id = paperManager.experiments[$(link).parents().find('.experiment').data('experiment')].inputs.addCount();
     }
     else if (association == 'experiment_indy_variables') {
-      new_id = paperManager.experiments[$(link).parents().find('.experiment').data('id')].indyVariables.addCount();
+      new_id = paperManager.experiments[$(link).parents().find('.experiment').data('experiment')].indyVariables.addCount();
     }
   }
 
@@ -566,12 +591,50 @@ function add_fields_before (link, association, content) {
 // ##########################################################################
 
 function add_author_ids (data) {
-  $(data.author_papers).each( function(i) {
-    var index = this.order;
-    console.log(i,index);
+  var idsFound = $('[id *=author_papers_attributes][id $=_id]').length/2;
 
-    $('.author_paper').eq(index).append('<input id="paper_author_papers_attributes_'+index+'_id" name="paper[author_papers_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
-    $('.author_paper').eq(index).children().find('.author').append('<input id="paper_author_papers_attributes_'+index+'_author_attributes_id" name="paper[author_papers_attributes]['+index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
+  if ($(data.author_papers).length != idsFound) {
+    $(data.author_papers).each( function(i) {
+      var index = this.order;
+
+      if (index > idsFound-1) {
+        $('.author_paper').eq(index).append('<input id="paper_author_papers_attributes_'+index+'_id" name="paper[author_papers_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
+        $('.author_paper').eq(index).children().find('.author').append('<input id="paper_author_papers_attributes_'+index+'_author_attributes_id" name="paper[author_papers_attributes]['+index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
+      }
+    });
+  }
+}
+
+function add_experiment_ids (data) {
+  var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]');
+
+  if ($(data.experiments).length != idsFound) {
+    $(data.experiments).each( function(i) {
+      if (i > idsFound-1) {
+        $('.paper').append('<input id="paper_experiments_attributes_'+index+'_id" name="paper[experiments_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
+      }
+    });
+  }
+}
+
+function add_experiment_nested_ids (data, throughTable) {
+  $('.experiment').each( function(index) {
+    var idsFound = 0;
+    
+    $('#experiment_'+index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+      if ($(this).data('attribute') == undefined) {
+        idsFound = idsFound+1;
+      }
+    });
+
+    if (eval('$(data.experiments[index].'+throughTable+'s)').length != idsFound) {
+      eval('$(data.experiments[index].'+throughTable+'s)').each( function(i) {
+        if (i > idsFound-1) {
+          $('#experiment_'+index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
+
   });
 }
 
@@ -669,19 +732,29 @@ function add_test (focus) {
 // Document Ready
 // ##########################################################################
 
-$(document).ready(function(){
+$(document).ready( function() {
   $(window).bind("popstate", function () {
       $.getScript(location.href);
     });
 
-  var paperState = $('form').prop('id').split('_');
+  var paperState = $('form.paper-form').prop('id').split('_');
 
   if (paperState[0] == 'edit') {
     paperId = paperState[2];
-    paperManager.authors.getCounts();
+    
+    //Set readonly inputs to uneditable if they have values in them
+    $('.author_paper .readonly').prop('readonly', true);
+
+    
+    // //Makes all the token input work again - needs to be called once when entering edit mode
+    // $.each($('.token-input input'), function() {
+    //   createSingleTokenInput(this);
+    // });
   } else {
-    paperManager.authors.setCounts();
+    
   }
+
+  paperManager.setCounts();
 
   //Prevents users from accidentally leaving the page
   // window.onbeforeunload = function() { 
@@ -704,7 +777,7 @@ $(document).ready(function(){
 // ##########################################################################
   var timer;
 
-  $('#submit-doi').click(function() {
+  $('#submit-doi').click( function() {
     $('.doi-field').removeClass('control-group error');
     $('.doi-field span').remove(); //this removes error message
 
@@ -773,7 +846,7 @@ $(document).ready(function(){
             var len = $xml.find('person_name').length;
             var a_index = 0;
 
-            $xml.find('person_name').each(function(index) {
+            $xml.find('person_name').each( function(index) {
               if ($(this).attr('contributor_role') == "author") {
                 $('.author-generator a').trigger('click');
                 $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
@@ -793,7 +866,7 @@ $(document).ready(function(){
         }
       });
 
-      timer = window.setTimeout(function() { 
+      timer = window.setTimeout( function() { 
         $('.alert').alert('close'); 
       }, 10000);
     } else {
