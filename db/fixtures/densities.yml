@@ -10,6 +10,14 @@ density3:
   id: 3
   level: "High (dense, little empty space)"
 
-density4:
+uncontrolled:
   id: 4
+  level: "Uncontrolled variable"
+
+controlled:
+  id: 5
+  level: "Controlled variable"
+
+density4:
+  id: 6
   level: "Not reported"

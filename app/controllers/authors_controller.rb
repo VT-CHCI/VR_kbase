@@ -21,6 +21,20 @@ class AuthorsController < ApplicationController
     end
   end
 
+  # GET /authors/lastName/firstName/middleInitial.json
+  def search_name
+    if (params[:middle_initial])
+      @author = Author.where(:last_name => params[:last_name], :first_name => params[:first_name], :middle_initial => params[:middle_initial]).first
+    else
+      @author = Author.where(:last_name => params[:last_name], :first_name => params[:first_name]).first
+    end
+
+    respond_to do |format|
+      format.html # search_name.html.erb
+      format.json { render :json => @author }
+    end
+  end
+
   # GET /authors/new
   # GET /authors/new.json
   def new

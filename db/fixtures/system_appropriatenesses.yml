@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Input accuracy"
+  validated: true
+
+comp2:
+  component: "Input precision"
+  validated: true
+
+comp3:
+  component: "Latency"
+  validated: true
+
+comp4:
+  component: "Form factor"
+  validated: true

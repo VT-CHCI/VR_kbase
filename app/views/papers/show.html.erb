@@ -47,9 +47,11 @@
                     <% for finding in task.findings %>
                       <li class="finding">
                         <% p = finding.summary %>
+                       <!--  <% if false %>
                         <% for component in finding.components %>
                           <% p = p.gsub(/#{Regexp.new(Regexp.escape(component.comp_of_immersion), Regexp::IGNORECASE)}/, link_to(component.comp_of_immersion,component)) %>
-                        <% end %>
+                        <% end %> 
+                        <% end %> -->
                         <% p = p.gsub(/#{Regexp.new(Regexp.escape(Metric.find_by_id(finding.metric_id).metric), Regexp::IGNORECASE)}/, link_to(Metric.find_by_id(finding.metric_id).metric.downcase,Metric.find_by_id(finding.metric_id))) %>
                         <% p = p.gsub(/#{Regexp.new(Regexp.escape(Category.find_by_id(finding.category_id).task_category), Regexp::IGNORECASE)}/,link_to(Category.find_by_id(finding.category_id).task_category.downcase,Category.find_by_id(finding.category_id))) %>
                         
@@ -128,11 +130,44 @@
             <div class="title well">
               <h6 class="inline">Components of fidelity & desc - </h6>
               <ul class="list inline">
-                <% for component in experiment.components %>
-                  <li class="object"><a href="#"><%= component.comp_of_immersion.downcase %></a></li>
+                <% if experiment.visual_fidelities.count > 0 %>
+                  <% for component in experiment.visual_fidelities %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.aural_fidelities.count > 0 %>
+                  <% for component in experiment.aural_fidelities %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.haptic_fidelities.count > 0 %>
+                  <% for component in experiment.haptic_fidelities %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.biomechanical_symmetries.count > 0 %>
+                  <% for component in experiment.biomechanical_symmetries %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.control_symmetries.count > 0 %>
+                  <% for component in experiment.control_symmetries %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
+                <% end %>
+
+                <% if experiment.system_appropriatenesses.count > 0 %>
+                  <% for component in experiment.system_appropriatenesses %>
+                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                  <% end %>
                 <% end %>
               </ul>
             </div>
+
             <p><%= experiment.comp_desc %></p>
 
             <div class="title">
@@ -201,7 +236,7 @@
                 <tr>
                   <td><%= experiment.part_num %></td>
                   <td><%= experiment.part_age_min %> - <%= experiment.part_age_max %></td>
-                  <td><%= experiment.gender.gender %></td>
+                  <td><% if false %><%= experiment.gender.gender %><% end %></td>
                 </tr>
               </tbody>
             </table>

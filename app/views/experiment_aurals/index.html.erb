@@ -1,0 +1,27 @@
+<h1>Listing experiment_aurals</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>Aural fidelity</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_aurals.each do |experiment_aural| %>
+  <tr>
+    <td><%= experiment_aural.experiment %></td>
+    <td><%= experiment_aural.aural_fidelity %></td>
+    <td><%= experiment_aural.desc %></td>
+    <td><%= link_to 'Show', experiment_aural %></td>
+    <td><%= link_to 'Edit', edit_experiment_aural_path(experiment_aural) %></td>
+    <td><%= link_to 'Destroy', experiment_aural, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment aural', new_experiment_aural_path %>

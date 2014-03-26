@@ -1,0 +1,115 @@
+<div class="center">
+  <div id="search-container">
+    <h1>Search</h1>
+    <div id="full_text_search">
+      <form accept-charset="UTF-8" action="/search_text" method="get">
+        <div style="margin:0;padding:0;display:inline">
+          <input name="utf8" type="hidden" value="&#x2713;" />
+        </div>
+        <input id="search_text" name="search_text" size="60" type="text" />
+        <input class="btn" type="submit" value="Search" />
+      </form>
+    </div>
+    <span class="small">e.g., HMD, travel, FOV</span>
+  </div>
+  <div id="center-divider">
+    <span class="vertical-divider"></span>
+    <p>or</p>
+    <span class="vertical-divider"></span>
+  </div>
+  <div id="browse-container">
+    <h1>Browse</h1>
+    <%= button_to "papers", :papers, :method => :get, :class => "btn" %>
+    <span class="small">
+      Shows the the entire knowledgebase, and allows you to filter results
+    </span>
+  </div>
+  <div class="clear">
+    <label class="welcome-text collapsed" data-toggle="collapse" data-target="#welcome_text">
+      What is the VR knowledgebase?
+    </label>
+
+    <div id="welcome_text" class="left collapse">
+      <span style="font-size:20px;font-weight:bold;">Welcome to the VR Knowledgebase!</span>
+      <p>
+        The VR knowledgebase is a curated repository of research findings in the field of virtual reality. The site is meant to be a resource for researchers, practitioners, and developers of VR technologies, systems, and applications. At its core, the knowledgebase helps us answer the question, "What do we know about VR technologies and their impact on human users?" We were motivated to develop this site because of the difficulty of "knowing what we know" due to the large and diverse literature in the field. In particular, we were interested in the effects of immersion (display fidelity) and other types of realism, since the implicit goal of much VR research is to increase realism.
+      </p>
+
+      <p>
+        Using this site, you can discover knowledge, taken from the peer-reviewed literature, about the effects of various types of realism and other VR system characteristics. The findings are presented in a standard format, and the site is designed to help you discover knowledge about specific VR system components (e.g., field of view, stereoscopy), user tasks (e.g., object manipulation, visual search), experiment metrics (e.g., accuracy, cybersickness), and system types (e.g., HMD, CAVE). The research findings can help you answer questions such as:
+        <ul>
+          <li>
+            When should immersive VR be used, and what level of immersion is needed?
+          </li>
+          <li>
+            What is the effect of a particular system component on a particular task?
+          </li>
+          <li>
+            What sort of VR display is the most cost-effective for a certain application?
+          </li>
+          <li>
+            What tasks are generally improved with higher levels of realism?
+          </li>
+        </ul>
+        To start discovering knowledge relevant to your interests, just use the filter options on the left, or the free text search at the top of the page. For tips on using the site most effectively, see the FAQ.
+      </p>
+
+      <p>
+        We are launching the knowledgebase with a moderate number of records, but registered users of the site can also enter information about other publications, experiments, and findings to broaden the knowledge available on the site. These entries will be curated by the site administrators and made available to everyone. To get started entering your own research findings or those of others, just click the "sign up" link at the top of the page. Once you're signed in, you can use the "Add New Entry" button to add information to the knowledgebase.
+      </p>
+
+      <p>
+        The VR knowledgebase is a project of the
+        <a href="http://research.cs.vt.edu/3di/">3D Interaction Group</a>
+        in the
+        <a href="http://www.hci.vt.edu/">Center for Human-Computer Interaction</a>
+        and the
+        <a href="http://cs.vt.edu/">Department of Computer Science</a>
+        at
+        <a href="http://www.vt.edu/">Virginia Tech</a>
+        . Partial funding for the project was provided by the
+        <a href="http://www.onr.navy.mil/">Office of Naval Research</a>
+        .
+      </p>
+    </div>
+  </div>
+
+  <% if user_signed_in? %>    
+    <br/><br/>
+    <div id="paper-list" class="left">
+      <div class="row-fluid">
+        <div class="span6">
+          <%= render 'recent_paper_fields' %>
+        </div>
+        <div class="span6">
+          <%= render 'recent_paper_in_progress_fields' %>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
+  <% end %> 
+
+  <div id="front_logos" class="row-fluid">
+    <div class="span3">
+      <a href="http://www.vt.edu">
+        <%= image_tag "vt-logo.png", :height => "42", :width => "195" %>
+      </a>
+    </div>
+    <div class="span3">
+      <a href="http://www.hci.vt.edu">
+        <%= image_tag "chci-logo.png", :height => "42", :width => "118" %>
+      </a>
+    </div>
+    <div class="span3">
+      <a href="http://www.cs.vt.edu">
+        <%= image_tag "cs_vt-logo.png", :height => "42", :width => "117" %>
+      </a>
+    </div>
+    <div class="span3">
+      <a href="http://www.onr.navy.mil/">
+        <%= image_tag "onr-logo.png", :height => "42", :width => "118" %>
+      </a>
+    </div>
+  </div>
+</div>
+

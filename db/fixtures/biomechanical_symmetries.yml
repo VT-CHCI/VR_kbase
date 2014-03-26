@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Kinematic"
+  validated: true
+
+comp2:
+  component: "Kinetic"
+  validated: true
+
+comp3:
+  component: "Anthropometric"
+  validated: true

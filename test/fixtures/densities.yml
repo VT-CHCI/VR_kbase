@@ -1,6 +1,7 @@
 density1:
   id: 1
-  level: "Low (sparse, mostly empty space)"
+  level: "Low"
+  tooltip: "Sparse, mostly empty space"
 
 density2:
   id: 2
@@ -8,8 +9,17 @@ density2:
 
 density3:
   id: 3
-  level: "High (dense, little empty space)"
+  level: "High"
+  tooltip: "Dense, little empty space"
+
+uncontrolled:
+  id: 4
+  level: "Uncontrolled variable"
+
+controlled:
+  id: 5
+  level: "Controlled variable"
 
 density4:
-  id: 4
+  id: 6
   level: "Not reported"

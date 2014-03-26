@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Haptics (On/Off)"
+  validated: true
+  tooltip: "Whether or not haptic feedback/display is present"
+
+comp2:
+  component: "Latency"
+  validated: true
+  tooltip: "Delay between an action/event and the haptic display of the results of that action/event"
+
+comp3:
+  component: "Form factor"
+  validated: true
+  tooltip: "Size, shape, weight, fit and other physical qualities of the haptic display device"
+
+#comp4:
+#  component: "Response Time"
+#  validated: true
+#  tooltip: ""
+
+comp5:
+  component: "Haptic quality"
+  validated: true
+  tooltip: "The general realism of the haptic feedback"
+
+comp6:
+  component: "Resolution"
+  validated: true
+  tooltip: "The granularity of haptic feedback with respect to position"

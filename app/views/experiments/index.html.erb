@@ -1,45 +1,18 @@
 <h1>Listing experiments</h1>
 
-<table>
-  <tr>
-    <th>Paper</th>
-    <th>Tasks</th>
-    <th>Title</th>
-    <th>Exp desc</th>
-    <th>Part num</th>
-    <th>Part age min</th>
-    <th>Part age max</th>
-    <th>Part background</th>
-    <th>System desc</th>
-    <th>Other vars</th>
-    <th>Constants</th>
-    <th>Comp desc</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @experiments.each do |experiment| %>
-  <tr>
-    <td><%= experiment.paper %></td>
-    <td><%= experiment.tasks %></td>
-    <td><%= experiment.title %></td>
-    <td><%= experiment.exp_desc %></td>
-    <td><%= experiment.part_num %></td>
-    <td><%= experiment.part_age_min %></td>
-    <td><%= experiment.part_age_max %></td>
-    <td><%= experiment.part_background %></td>
-    <td><%= experiment.system_desc %></td>
-    <td><%= experiment.other_vars %></td>
-    <td><%= experiment.constants %></td>
-    <td><%= experiment.comp_desc %></td>
-    <td><%= link_to 'Show', experiment %></td>
-    <td><%= link_to 'Edit', edit_experiment_path(experiment) %></td>
-    <td><%= link_to 'Destroy', experiment, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<div id="finding-list">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well">
+        <legend class="with-helper-text">Filter Options</legend>
+        <p class="after-legend"><small>This will be an area for filters.</small></p>
+      </div>
+    </div>
+    <div class="span9">
+      <%= render "browse" %>
+    </div>
+  </div>
+</div>
 
 <br />
 
-<%= link_to 'New Experiment', new_experiment_path %>

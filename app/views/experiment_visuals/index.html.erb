@@ -1,0 +1,27 @@
+<h1>Listing experiment_visuals</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>Visual fidelity</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_visuals.each do |experiment_visual| %>
+  <tr>
+    <td><%= experiment_visual.experiment %></td>
+    <td><%= experiment_visual.visual_fidelity %></td>
+    <td><%= experiment_visual.desc %></td>
+    <td><%= link_to 'Show', experiment_visual %></td>
+    <td><%= link_to 'Edit', edit_experiment_visual_path(experiment_visual) %></td>
+    <td><%= link_to 'Destroy', experiment_visual, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment visual', new_experiment_visual_path %>

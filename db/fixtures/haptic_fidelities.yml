@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Haptics (On/Off)"
+  validated: true
+
+comp2:
+  component: "Latency"
+  validated: true
+
+comp3:
+  component: "Form factor"
+  validated: true
+
+comp4:
+  component: "Response Time"
+  validated: true
+
+comp5:
+  component: "Haptic quality"
+  validated: true
+
+comp6:
+  component: "Resolution"
+  validated: true

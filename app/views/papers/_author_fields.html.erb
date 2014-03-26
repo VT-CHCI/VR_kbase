@@ -1,14 +1,14 @@
 <div class="author">
-    <div class="field">
-      <%= f.label :last_name, 'Last Name' %>
-      <%= f.text_field :last_name, :class => 'input-large' %>
-    </div>
-    <div class="field">
-      <%= f.label :first_name, 'First Name' %>
-      <%= f.text_field :first_name, :class => 'input-large' %>
-    </div>
-    <div class="field">
-      <%= f.label :middle_initial, 'M.I.' %>
-      <%= f.text_field :middle_initial, :class => 'input-small' %>
-    </div>
+  <div class="field span5">
+    <%= f.label :last_name, 'Last Name', :'data-attribute' => 'last_name'%>
+    <%= f.text_field :last_name, :class => 'span12 readonly', :title => 'Please provide last name of the author', :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-attribute' => 'last_name' %>
+  </div>
+  <div class="field span5">
+    <%= f.label :first_name, 'First Name', :'data-attribute' => 'first_name'%>
+    <%= f.text_field :first_name, :class => 'span12 readonly', :title => 'Please provide first name of the author', :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-attribute' => 'first_name' %>
+  </div>
+  <div class="field span1">
+    <%= f.label :middle_initial, 'M.I.', :'data-attribute' => 'middle_initial' %>
+    <%= f.text_field :middle_initial, :class => 'span12 readonly', :title => 'Please provide middle initial of the author', :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-attribute' => 'middle_initial' %>
+  </div>
 </div>

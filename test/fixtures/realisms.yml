@@ -1,6 +1,7 @@
 realism1:
   id: 1
-  level: "Low (abstract, cartoony, simple)"
+  level: "Low"
+  tooltip: "Abstract, cartoony, simple"
 
 realism2:
   id: 2
@@ -8,8 +9,17 @@ realism2:
 
 realism3:
   id: 3
-  level: "High (looks highly realistic)"
+  level: "High"
+  tooltip: "Looks highly realistic"
+
+uncontrolled:
+  id: 4
+  level: "Uncontrolled variable"
+
+controlled:
+  id: 5
+  level: "Controlled variable"
 
 realism4:
-  id: 4
+  id: 6
   level: "Not reported"

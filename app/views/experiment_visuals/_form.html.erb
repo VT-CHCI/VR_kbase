@@ -1,0 +1,29 @@
+<%= form_for(@experiment_visual) do |f| %>
+  <% if @experiment_visual.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@experiment_visual.errors.count, "error") %> prohibited this experiment_visual from being saved:</h2>
+
+      <ul>
+      <% @experiment_visual.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :experiment %><br />
+    <%= f.text_field :experiment %>
+  </div>
+  <div class="field">
+    <%= f.label :visual_fidelity %><br />
+    <%= f.text_field :visual_fidelity %>
+  </div>
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

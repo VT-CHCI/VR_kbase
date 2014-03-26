@@ -1,26 +1,44 @@
 display1:
   display: "Monitors"
+  validated: true
+  tooltip: ""
 
 display2:
-  display: "Fishtank VR"
+  display: "3D monitors"
+  validated: true
+  tooltip: ""
 
 display3:
   display: "Tabletop"
+  validated: true
+  tooltip: ""
 
 display4:
   display: "Single large screen"
+  validated: true
+  tooltip: ""
 
 display5:
   display: "Multi-monitor tiled display"
+  validated: true
+  tooltip: ""
 
 display6:
   display: "Head-mounted display"
+  validated: true
+  tooltip: ""
 
 display7:
-  display: "CAVEs and similar"
+  display: "Surround screen display"
+  validated: true
+  tooltip: ""
 
 display8:
   display: "Domes"
+  validated: true
+  tooltip: ""
 
 display9:
   display: "Tablet display"
+  validated: true
+  tooltip: ""

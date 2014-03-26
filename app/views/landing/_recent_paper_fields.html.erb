@@ -1,0 +1,8 @@
+<div class="row-fluid">
+  <div class="span12"><legend>Most Recent Submissions</legend></div>
+</div>
+<% @papers.take(5).each do |paper| %>
+  <div class="span12">
+    <%= render 'paper_fields', :paper => paper %>
+  </div>
+<% end %>

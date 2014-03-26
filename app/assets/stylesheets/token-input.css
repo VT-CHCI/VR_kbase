@@ -29,9 +29,9 @@ ul.token-input-list li input {
 
 li.token-input-token {
     overflow: hidden; 
-    height: auto !important; 
-    height: 15px;
-    margin: 3px;
+    /*height: auto !important; */
+    height: 20px;
+    margin: 2px;
     padding: 2px 6px;
     color: #08C;
     /*background-color: #eee;*/
@@ -89,11 +89,32 @@ li.token-input-input-token {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    height: 28px;
+}
+li.token-input-input-token input[type="text"] {
+    background-color: none;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+li.token-input-input-token input[type="text"]:focus {
+    border-color: none;
+    outline: 0;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 div.token-input-dropdown {
     position: absolute;
-    width: 400px;
+    width: 217px;
     background-color: #fff;
     overflow: hidden;
     border-left: 1px solid #ccc;

@@ -1,0 +1,2 @@
+module BiomechanicalSymmetriesHelper
+end

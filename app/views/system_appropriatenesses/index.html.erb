@@ -1,0 +1,23 @@
+<h1>Listing system_appropriatenesses</h1>
+
+<table>
+  <tr>
+    <th>Component</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @system_appropriatenesses.each do |system_appropriateness| %>
+  <tr>
+    <td><%= system_appropriateness.component %></td>
+    <td><%= link_to 'Show', system_appropriateness %></td>
+    <td><%= link_to 'Edit', edit_system_appropriateness_path(system_appropriateness) %></td>
+    <td><%= link_to 'Destroy', system_appropriateness, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New System appropriateness', new_system_appropriateness_path %>

@@ -1,0 +1,95 @@
+<div class="paper-keywords span4">
+  <ul class="list">
+    <% keywords = Set.new %>
+     
+    <% if paper.experiments.count > 0 %>
+      <% for experiment in paper.experiments %> 
+        
+        <% if experiment.displays.count > 0 %>
+          <% for display in experiment.displays %>
+            <% keywords.add(display.display.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.visual_fidelities.count > 0 %>
+          <% for component in experiment.visual_fidelities %>
+            <% keywords.add(component.component.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.aural_fidelities.count > 0 %>
+          <% for component in experiment.aural_fidelities %>
+            <% keywords.add(component.component.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.haptic_fidelities.count > 0 %>
+          <% for component in experiment.haptic_fidelities %>
+            <% keywords.add(component.component.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.biomechanical_symmetries.count > 0 %>
+          <% for component in experiment.biomechanical_symmetries %>
+            <% keywords.add(component.component.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.control_symmetries.count > 0 %>
+          <% for component in experiment.control_symmetries %>
+            <% keywords.add(component.component.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.system_appropriatenesses.count > 0 %>
+          <% for component in experiment.system_appropriatenesses %>
+            <% keywords.add(component.component.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.indy_variables.count > 0 %>
+          <% for variable in experiment.indy_variables %>
+            <% keywords.add(variable.variable.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.hardwares.count > 0 %>
+          <% for hardware in experiment.hardwares %>
+            <% keywords.add(hardware.hardware.downcase) %>
+          <% end %>
+        <% end %>
+        
+        <% if experiment.softwares.count > 0 %>
+          <% for software in experiment.softwares %>
+            <% keywords.add(software.software.downcase) %>
+          <% end %>
+        <% end %>
+
+        <% if experiment.tasks.count > 0 %>
+          <% for task in experiment.tasks %>
+
+            <% if task.metrics.count > 0 %>
+              <% for metric in task.metrics %>
+                <% keywords.add(metric.metric.downcase) %>
+              <% end %>
+            <% end %>
+
+            <% if task.categories.count > 0 %>
+              <% for category in task.categories %>
+                <% keywords.add(category.task_category.downcase) %>
+              <% end %>
+            <% end %>
+
+          <% end %>
+        <% end %>
+
+      <% end %>
+    <% end %>
+
+    <% if keywords.count > 0 %>
+      <% for keyword in keywords %>
+        <li class="object"><a href="#"><%= keyword %></a></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div> 

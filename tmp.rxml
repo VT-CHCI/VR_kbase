@@ -73,3 +73,41 @@ rails g scaffold FindingComponent finding:belongs_to component:belongs_to
 rails g scaffold Specificity level:string
 
 rails g scaffold FindingSpecificity specificity:belongs_to finding:belongs_to
+
+-----------------------------------------------
+
+rails g scaffold VisualFidelity component:string
+
+rails g scaffold ExperimentVisual experiment:belongs_to visual_fidelity:belongs_to desc:string
+
+rails g scaffold HapticFidelity component:string
+
+rails g scaffold ExperimentHaptic experiment:belongs_to haptic_fidelity:belongs_to desc:string
+
+rails g scaffold AuralFidelity component:string
+
+rails g scaffold ExperimentAural experiment:belongs_to aural_fidelity:belongs_to desc:string
+
+rails g scaffold BiomechanicalSymmetry component:string
+
+rails g scaffold ExperimentBiomechanical experiment:belongs_to biomechanical_symmetry:belongs_to desc:string
+
+rails g scaffold ControlSymmetry component:string
+
+rails g scaffold ExperimentControl experiment:belongs_to control_symmetry:belongs_to desc:string
+
+rails g scaffold SystemAppropriateness component:string
+
+rails g scaffold ExperimentSystemApp experiment:belongs_to system_appropriateness:belongs_to desc:string
+
+-----------------------------------------------
+
+rails g scaffold IndyVariable variable:string
+
+rails g scaffold ExperimentIndyVariable experiment:belongs_to indy_variable:belongs_to desc:string
+
+-----------------------------------------------
+
+rails g scaffold UserPaper user:belongs_to paper:belongs_to
+
+rails g scaffold UserAuthor user:belongs_to author:belongs_to

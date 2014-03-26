@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @user_author.user %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @user_author.author %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_author_path(@user_author) %> |
+<%= link_to 'Back', user_authors_path %>

@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 //Paper create/edit
-#progress_headings {
+/*#progress_headings {
   i {
     float: left;
   }
@@ -26,6 +26,18 @@
   a {
     float: right;
     margin-bottom: 10px;
+  }
+}*/
+
+.new_paper {
+  #paper {
+    .help-block {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 12px;
+      margin-top: -15px;
+      padding-left: 5px;
+    }
   }
 }
 
@@ -203,25 +215,25 @@
   }
 
   ul.list { 
-      list-style: none; 
-      margin: 0; 
-      padding: 0; 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
 
-      li.object { 
-        display: inline; 
-      }
-    
-      li.object:after { 
-        content: ","; 
-      } 
-
-      li.object:last-child:after { 
-        content: ""; 
-      }
-
-      li.object a {
-        margin-left: 0;
-        font-size: smaller;
-      }
+    li.object { 
+      display: inline; 
     }
+  
+    li.object:after { 
+      content: ","; 
+    } 
+
+    li.object:last-child:after { 
+      content: ""; 
+    }
+
+    li.object a {
+      margin-left: 0;
+      font-size: smaller;
+    }
+  }
 }

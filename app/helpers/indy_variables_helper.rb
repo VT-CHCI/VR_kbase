@@ -1,0 +1,2 @@
+module IndyVariablesHelper
+end

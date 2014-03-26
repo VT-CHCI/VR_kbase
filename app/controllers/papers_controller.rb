@@ -1,4 +1,6 @@
 class PapersController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   # GET /papers
   # GET /papers.json
   def index
@@ -7,6 +9,7 @@ class PapersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @papers }
+      
     end
   end
 
@@ -17,7 +20,33 @@ class PapersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @paper }
+      # format.json { render :json => @paper }
+      format.json { render :json => @paper.to_json(
+        :include => [
+          {:author_papers => {:include => [:author]}},
+          {:experiments => {
+            :include => [
+              {:experiment_displays => {:include => [:display]}},
+              {:experiment_hardwares => {:include => [:hardware]}},
+              {:experiment_softwares=> {:include => [:software]}},
+              {:experiment_visuals => {:include => [:visual_fidelity]}},
+              {:experiment_aurals => {:include => [:aural_fidelity]}},
+              {:experiment_haptics => {:include => [:haptic_fidelity]}},
+              {:experiment_biomechanicals => {:include => [:biomechanical_symmetry]}},
+              {:experiment_controls => {:include => [:control_symmetry]}},
+              {:experiment_system_apps => {:include => [:system_appropriateness]}},
+              {:experiment_indy_variables => {:include => [:indy_variable]}},
+              {:tasks => { 
+                :include => [
+                  {:task_categories => {:include => [:category]}},
+                  {:task_metrics => {:include => [:metric]}},
+                  :findings
+                ]
+              }}
+            ]
+          }}
+        ]
+      )}
     end
   end
 
@@ -36,17 +65,54 @@ class PapersController < ApplicationController
   # GET /papers/1/edit
   def edit
     @paper = Paper.find(params[:id])
+    
+    respond_to do |format|
+      if !current_user.admin and current_user.papers.find_by_id(params[:id]) == nil
+        format.html { redirect_to @paper, :notice => 'You cannot edit this paper.' }
+        format.json { render :json => @paper.errors, :status => :unprocessable_entity }
+      else
+        format.html # index.html.erb
+        format.json { render :json => @papers }
+      end
+    end
   end
 
   # POST /papers
   # POST /papers.json
   def create
     @paper = Paper.new(params[:paper])
+    @paper.users = [User.find_by_email(current_user.email)]
 
     respond_to do |format|
       if @paper.save
         format.html { redirect_to @paper, :notice => 'Paper was successfully created.' }
-        format.json { render :json => @paper, :status => :created, :location => @paper }
+        # format.json { render :json => @paper, :status => :created, :location => @paper, :include => :author }
+        format.json { render :json => @paper.to_json(
+          :include => [
+            {:author_papers => {:include => [:author]}},
+            {:experiments => {
+              :include => [
+                {:experiment_displays => {:include => [:display]}},
+                {:experiment_hardwares => {:include => [:hardware]}},
+                {:experiment_softwares=> {:include => [:software]}},
+                {:experiment_visuals => {:include => [:visual_fidelity]}},
+                {:experiment_aurals => {:include => [:aural_fidelity]}},
+                {:experiment_haptics => {:include => [:haptic_fidelity]}},
+                {:experiment_biomechanicals => {:include => [:biomechanical_symmetry]}},
+                {:experiment_controls => {:include => [:control_symmetry]}},
+                {:experiment_system_apps => {:include => [:system_appropriateness]}},
+                {:experiment_indy_variables => {:include => [:indy_variable]}},
+                {:tasks => { 
+                  :include => [
+                    {:task_categories => {:include => [:category]}},
+                    {:task_metrics => {:include => [:metric]}},
+                    :findings
+                  ]
+                }}
+              ]
+            }}
+          ]
+        ), :status => :created, :location => @paper }
       else
         format.html { render :action => "new" }
         format.json { render :json => @paper.errors, :status => :unprocessable_entity }
@@ -62,7 +128,33 @@ class PapersController < ApplicationController
     respond_to do |format|
       if @paper.update_attributes(params[:paper])
         format.html { redirect_to @paper, :notice => 'Paper was successfully updated.' }
-        format.json { head :no_content }
+        # format.json { head :no_content }
+        format.json { render :json => @paper.to_json(
+          :include => [
+            {:author_papers => {:include => [:author]}},
+            {:experiments => {
+              :include => [
+                {:experiment_displays => {:include => [:display]}},
+                {:experiment_hardwares => {:include => [:hardware]}},
+                {:experiment_softwares=> {:include => [:software]}},
+                {:experiment_visuals => {:include => [:visual_fidelity]}},
+                {:experiment_aurals => {:include => [:aural_fidelity]}},
+                {:experiment_haptics => {:include => [:haptic_fidelity]}},
+                {:experiment_biomechanicals => {:include => [:biomechanical_symmetry]}},
+                {:experiment_controls => {:include => [:control_symmetry]}},
+                {:experiment_system_apps => {:include => [:system_appropriateness]}},
+                {:experiment_indy_variables => {:include => [:indy_variable]}},
+                {:tasks => { 
+                  :include => [
+                    {:task_categories => {:include => [:category]}},
+                    {:task_metrics => {:include => [:metric]}},
+                    :findings
+                  ]
+                }}
+              ]
+            }}
+          ]
+        ), :status => :created, :location => @paper }
       else
         format.html { render :action => "edit" }
         format.json { render :json => @paper.errors, :status => :unprocessable_entity }

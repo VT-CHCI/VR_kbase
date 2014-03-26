@@ -1,0 +1,2 @@
+module VisualFidelitiesHelper
+end

@@ -1,0 +1,59 @@
+// Place all the styles related to the landing controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.center {
+	width: 1000px;
+	margin: 150px auto;
+	text-align: center;
+}
+
+.left {
+	text-align: left;
+}
+
+#search-container {
+	float: left;
+	width: 45%;
+}
+
+#full_text_search {
+	padding-top: 1px;
+}
+
+#search_text {
+	width: 80%;
+	height: 18px;
+}
+
+.clear {
+	clear: both;
+}
+
+.small {
+	color: grey;
+}
+
+#front_logos {
+	clear: both;
+	padding-top: 15px;
+}
+
+#center-divider {
+	float: left;
+	margin: 0 30px 20px 45px;
+}
+
+#center-divider .vertical-divider {
+	height: 57px;
+	width: 5px;
+	display: inline-block;
+	border-left: 1px solid black;
+}
+
+.welcome-text {
+	font-size: 10px;
+	border-bottom: 1px dashed;
+	width: 165px;
+	margin: 30px auto;
+}

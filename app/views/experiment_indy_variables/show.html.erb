@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_indy_variable.experiment %>
+</p>
+
+<p>
+  <b>Indy variable:</b>
+  <%= @experiment_indy_variable.indy_variable %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_indy_variable.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_indy_variable_path(@experiment_indy_variable) %> |
+<%= link_to 'Back', experiment_indy_variables_path %>

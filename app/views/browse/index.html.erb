@@ -1,0 +1,29 @@
+<div id="paper-list">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well">
+        <legend class="with-helper-text">Filter Options</legend>
+        <p class="after-legend"><small>This will be an area for filters.</small></p>
+      </div>
+    </div>
+    <div class="span9">
+      <div>
+        <ul class="nav nav-tabs" id="browse">
+          <li class="active"><a href="#papers" data-toggle="tab">Publications</a></li>
+          <li><a href="#experiments" data-toggle="tab">Experiments</a></li>
+          <li><a href="#findings" data-toggle="tab">Findings</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="papers"><%= render "papers/browse", :@papers => Paper.all %></div>
+          <div class="tab-pane" id="experiments"><%= render "experiments/browse", :@experiments => Experiment.all %></div>
+          <div class="tab-pane" id="findings"><%= render "findings/browse", :@findings => Finding.all %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<!-- <%= link_to 'New Paper', new_paper_path %> -->
+

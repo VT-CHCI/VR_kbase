@@ -10,6 +10,14 @@ realism3:
   id: 3
   level: "High (looks highly realistic)"
 
-realism4:
+uncontrolled:
   id: 4
+  level: "Uncontrolled variable"
+
+controlled:
+  id: 5
+  level: "Controlled variable"
+
+realism4:
+  id: 6
   level: "Not reported"

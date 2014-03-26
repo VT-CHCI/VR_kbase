@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Experiment:</b>
+  <%= @experiment_haptic.experiment %>
+</p>
+
+<p>
+  <b>Haptic fidelity:</b>
+  <%= @experiment_haptic.haptic_fidelity %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @experiment_haptic.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_experiment_haptic_path(@experiment_haptic) %> |
+<%= link_to 'Back', experiment_haptics_path %>

@@ -1,0 +1,23 @@
+<h1>Listing biomechanical_symmetries</h1>
+
+<table>
+  <tr>
+    <th>Component</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @biomechanical_symmetries.each do |biomechanical_symmetry| %>
+  <tr>
+    <td><%= biomechanical_symmetry.component %></td>
+    <td><%= link_to 'Show', biomechanical_symmetry %></td>
+    <td><%= link_to 'Edit', edit_biomechanical_symmetry_path(biomechanical_symmetry) %></td>
+    <td><%= link_to 'Destroy', biomechanical_symmetry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Biomechanical symmetry', new_biomechanical_symmetry_path %>

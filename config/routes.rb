@@ -1,5 +1,50 @@
 Kbase::Application.routes.draw do
 
+  get "browse/index"
+
+  mount Judge::Engine => '/judge'
+
+  get "validate/papers"
+  get "validate/categories"
+  get "validate/components"
+  get "validate/indy_variables"
+  get "validate/metrics"
+  get "validate/systems"
+
+  resources :user_authors
+
+  resources :user_papers
+
+  devise_for :users
+
+  resources :experiment_indy_variables
+
+  resources :indy_variables
+
+  resources :experiment_system_apps
+
+  resources :system_appropriatenesses
+
+  resources :experiment_controls
+
+  resources :control_symmetries
+
+  resources :experiment_biomechanicals
+
+  resources :biomechanical_symmetries
+
+  resources :experiment_aurals
+
+  resources :aural_fidelities
+
+  resources :experiment_haptics
+
+  resources :haptic_fidelities
+
+  resources :experiment_visuals
+
+  resources :visual_fidelities
+
   resources :finding_specificities
 
   resources :specificities
@@ -36,10 +81,6 @@ Kbase::Application.routes.draw do
 
   resources :categories
 
-  resources :experiment_components
-
-  resources :components
-
   resources :experiment_softwares
 
   resources :softwares
@@ -69,6 +110,10 @@ Kbase::Application.routes.draw do
   resources :papers
 
   resources :paper_venues
+
+  resources :users
+
+  resources :landing
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -119,7 +164,10 @@ Kbase::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'landing#index'
+
+  get '/authors/:last_name/:first_name/:middle_initial', to: 'authors#search_name'
+  get '/authors/:last_name/:first_name', to: 'authors#search_name'
 
   # See how all your routes lay out with "rake routes"
 

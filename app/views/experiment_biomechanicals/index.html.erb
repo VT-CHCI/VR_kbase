@@ -1,0 +1,27 @@
+<h1>Listing experiment_biomechanicals</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>Biomechanical symmetry</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_biomechanicals.each do |experiment_biomechanical| %>
+  <tr>
+    <td><%= experiment_biomechanical.experiment %></td>
+    <td><%= experiment_biomechanical.biomechanical_symmetry %></td>
+    <td><%= experiment_biomechanical.desc %></td>
+    <td><%= link_to 'Show', experiment_biomechanical %></td>
+    <td><%= link_to 'Edit', edit_experiment_biomechanical_path(experiment_biomechanical) %></td>
+    <td><%= link_to 'Destroy', experiment_biomechanical, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment biomechanical', new_experiment_biomechanical_path %>

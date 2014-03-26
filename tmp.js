@@ -108,3 +108,138 @@ $.ajax({
 		}
 	}
 })
+
+##########################################################################
+AJAX CALLS FOR AUTOSAVE
+##########################################################################
+
+$.ajax({
+  type: "POST",
+  url: "/papers",
+  data: $('form').serialize(),
+  dataType: "json",
+  success: function(data, status) {
+    console.log(data); //contains the paper id needed to update
+    console.log(status); //whether successful or not
+  }
+});
+
+//after the first post this field needs to be added to the form so
+//the controller will update the created form instead (103 needs to be the paper_id) 
+
+$('form').prepend('<input name="_method" type="hidden" value="put">')
+
+$.ajax({
+  type: "POST",
+  url: "/papers/103",
+  data: $('form').serialize(),
+  dataType: "json",
+  success: function(data, status) {
+    console.log(data);
+    console.log(status);
+  }
+});
+
+##########################################################################
+EDITING
+##########################################################################
+
+//splits all the components out so that they can be hidden properly
+
+paperComponents = ['.experiment','.task','.finding'];
+
+$.each ($(paperComponents.join(", ")), function() {
+	console.log($(this));
+	$.each ($(this), function() {
+		$(this).insertAfter($(this).parent());
+		$(this).hide();
+	});
+});
+
+//makes all the token input work again - needs to be called once when entering edit mode
+
+$.each($('.token-input input'), function() {
+	createSingleTokenInput(this);
+});
+
+##########################################################################
+RENUMBERING
+##########################################################################
+
+var paperCounter = {
+    authors: [],
+    experiments: [],
+    cleanUp: function () {
+    	$('._destroy').remove();
+    	console.log('all things destroyed');
+    },
+    recountAll: function () {
+    	console.log('recounting!');
+    }
+}
+
+function authorCounter (type) {
+    this.count = null;
+}
+ 
+authorCounter.prototype.recount = function() {
+	var a_index = null;
+
+	$.each( $('.author_paper'), function(index) { 
+		a_index = index;
+		$.each( $(this).children().find('label'), function() {
+			$(this).attr('for', 'paper_author_papers_attributes_'+a_index+'_author_attributes_'+$(this).data('attribute'));
+		});
+		$.each( $(this).children().find('input'), function() {
+			$(this).attr('id', 'paper_author_papers_attributes_'+a_index+'_author_attributes_'+$(this).data('attribute'));
+			$(this).attr('name', 'paper[author_papers_attributes]['+a_index+'][author_attributes]['+$(this).data('attribute')+']');
+		});
+	});
+
+	this.count = a_index;
+};
+
+authorCounter.prototype.addAuthor = function() {
+		if (this.count == null) {
+			this.count = 0;
+		} else {
+			this.count = this.count + 1;
+		}
+    return this.count;
+};
+
+function expCounter (type) {
+    this.count = 0;
+    this.displayCount = 0;
+    this.inputCount = 0;
+    this.visualCount = 0;
+    this.auditoryCount = 0;
+    this.hapticCount = 0;
+    this.biomechanicalCount = 0;
+    this.controlCount = 0;
+    this.systemAppCount = 0;
+    this.indyVarCount = 0;
+    this.tasks = [];
+}
+ 
+expCounter.prototype.getInfo = function() {
+    return this.color + ' ' + this.type + ' apple';
+};
+
+function taskCounter (type) {
+    this.count = 0;
+}
+ 
+taskCounter.prototype.getInfo = function() {
+    return this.color + ' ' + this.type + ' apple';
+};
+
+function findingCounter (type) {
+    this.count = 0;
+}
+ 
+findingCounter.prototype.getInfo = function() {
+    return this.color + ' ' + this.type + ' apple';
+};
+
+

@@ -10,6 +10,14 @@ scale3:
   id: 3
   level: "Large (>100 meters per side)"
 
-scale4:
+uncontrolled:
   id: 4
+  level: "Uncontrolled variable"
+
+controlled:
+  id: 5
+  level: "Controlled variable"
+
+scale4:
+  id: 6
   level: "Not reported"

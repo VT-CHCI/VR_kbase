@@ -1,0 +1,27 @@
+<h1>Listing experiment_haptics</h1>
+
+<table>
+  <tr>
+    <th>Experiment</th>
+    <th>Haptic fidelity</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @experiment_haptics.each do |experiment_haptic| %>
+  <tr>
+    <td><%= experiment_haptic.experiment %></td>
+    <td><%= experiment_haptic.haptic_fidelity %></td>
+    <td><%= experiment_haptic.desc %></td>
+    <td><%= link_to 'Show', experiment_haptic %></td>
+    <td><%= link_to 'Edit', edit_experiment_haptic_path(experiment_haptic) %></td>
+    <td><%= link_to 'Destroy', experiment_haptic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Experiment haptic', new_experiment_haptic_path %>

@@ -1,0 +1,20 @@
+<div class="display">
+	<div class="inline-group">
+		<div class="field token-input span3">
+		  <%= f.label :display_tokens, "Display Category" %>
+		  <%= f.text_field :display_tokens, "data-pre" => f.object.display.to_json, "data-type" => "display", "data-limit" => 1, :class => 'span3' %>
+		</div>
+
+		<div class="span9">
+			<div class="field field-display-desc span11">
+			  <%= f.label :desc, 'Display Description' %>
+			  <%= f.text_field :desc, :class => 'span12' %>
+			</div>
+
+			<div class="field destroy-hardware span1">
+	      <%= link_to_remove_fields "x", f %>
+	      <button type="button" onclick="remove_auto_gen_field(this); return false;" class="close">×</button>
+	    </div>
+	  </div>
+	</div>
+</div>

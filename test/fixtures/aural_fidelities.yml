@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+comp1:
+  component: "Audio (On/Off)"
+  validated: true
+  tooltip: "Whether or not auditory feedback/display is present"
+
+comp2:
+  component: "Audio Quality"
+  validated: true
+  tooltip: "The general realism of the auditory feedback"
+
+comp3:
+  component: "Latency"
+  validated: true
+  tooltip: "Delay between an action/event and the auditory display of the results of that action/event"
+
+comp4:
+  component: "Spatial Audio (On/Off)"
+  validated: true
+  tooltip: "Whether or not auditory feedback displayed to a user is modulated based on the position/orientation of the user"

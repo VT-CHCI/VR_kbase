@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <div class="span12"><legend>Submissions in Progress</legend></div>
+</div>
+<% count = 0 %>
+<% @user.papers.where(:published => false).reorder('updated_at').reverse_order.each do |paper| %>
+  <% if paper.users.first != nil and paper.users.first.email == @user.email %>
+    <% count = count + 1 %>
+    <%= render 'paper_fields', :paper => paper %>
+  <% end %>
+<% end %>
+<% if count == 0 %>
+  You don't have submissions in progress
+<% end %>

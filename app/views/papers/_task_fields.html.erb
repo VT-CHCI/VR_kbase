@@ -1,4 +1,4 @@
-<div id="task_new_tasks" class="task">
+<div id="experiment_new_experiments_task_new_tasks" class="task core-element" data-experiment="new_experiments" data-task="new_tasks">
 
   <h1>User Task Information</h1>
 
@@ -7,95 +7,102 @@
   <legend class="with-helper-text">General Information</legend>
   <p class="after-legend"><small>Create a title / nickname for the task so that it can be referred back to easily in the entry progress list.</small></p>
 
-  <div class="field field-title">
-    <%= f.label :title, "User Task Title" %>
-    <%= f.text_field :title, :class => 'span12' %>
+  <div class="field field-title task-field">
+    <%= f.label :title, "User Task Title", :'data-attribute' => 'title' %>
+    <%= f.text_field :title, :class => 'span12', :'data-attribute' => 'title' %>
   </div>
 
   <legend class="with-helper-text">Task Information</legend>
   <p class="after-legend"><small>This area documents what type of task was performed. Use the autocomplete field to enter the different task categories and then please provide a detailed description in the text area below.</small></p>
 
   <div class="field task-categories">
-    <%= f.label :categories, "User Task Category" %>
-    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", nil, :class => 'hidden' %>
+    <%= f.label nil, "User Task Category" %>
     <% Category.all.each do |category| %>
-      <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}" %>
-      </label>
+      <div class="checkbox inline pill task-category">
+        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.id, f.object.categories.include?(category), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}", :'data-attribute' => 'category_id' %>
+        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][category_ids][]", category.task_category, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_category_id_#{category.id}", :'data-attribute' => 'category_id' %>
+      </div>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :task_desc, "User Task Description" %>
-    <%= f.text_area :task_desc, :class => 'span12', :rows => 5 %>
+  <div class="field task-field">
+    <%= f.label :task_desc, "User Task Description", :'data-attribute' => 'task_desc' %>
+    <%= f.text_area :task_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'task_desc' %>
   </div>
 
-  <legend class="with-helper-text">Interface / Environment Information</legend>
-  <p class="after-legend"><small>This area describes the type of interface and enviroment the task was performed in. Please describe in detail the interface, then select from the radio buttons general information on the envrionment. Lastly provide any detailed information not captured in the last text area.</small></p>
+  <legend class="with-helper-text">Interaction / Environment Information</legend>
+  <p class="after-legend"><small>This area describes the type of interface and enviroment the task was performed in. Please describe in detail the interaction and interface, then select from the radio buttons general information on the envrionment. Lastly provide any detailed information not captured in the last text area.</small></p>
 
-  <div class="field">
-    <%= f.label :interface_desc, "Interface Description" %>
-    <%= f.text_area :interface_desc, :class => 'span12', :rows => 5 %>
+  <div class="field task-field">
+    <%= f.label :interface_desc, "Interaction Description", :'data-attribute' => 'interface_desc' %>
+    <%= f.text_area :interface_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'interface_desc' %>
   </div>
 
   <div class="field dimensions">
-      <%= f.label :dimension, 'Dimensionality of the Environment' %>
+      <%= f.label :nil, 'Dimensionality of the Environment' %>
       <% Dimension.all.each do |dimension| %>
-        <label class="radio inline pill">
-          <%= f.radio_button :dimension_id, dimension.id %>
-          <%= f.label :dimension_id, dimension.level, :value => dimension.id %>
-        </label>
+        <div class="radio inline pill dimension">
+          <%= f.radio_button :dimension_id, dimension.id, :'data-attribute' => 'dimension_id' %>
+          <%= f.label :dimension_id, dimension.level, :value => dimension.id, :'data-attribute' => 'dimension_id' %>
+        </div>
       <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :scale, 'Scale of the Environment' %>
+    <%= f.label :nil, 'Scale of the Environment' %>
     <% Scale.all.each do |scale| %>
-      <label class="radio inline pill">
-        <%= f.radio_button :scale_id, scale.id %>
-        <%= f.label :scale_id, scale.level, :value => scale.id %>
-      </label>
+      <div class="radio inline pill scale">
+        <%= f.radio_button :scale_id, scale.id, :'data-attribute' => 'scale_id' %>
+        <%= f.label :scale_id, scale.level, :value => scale.id, :'data-attribute' => 'scale_id' %>
+      </div>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :density, 'Density of the Environment' %>
+    <%= f.label :nil, 'Density of the Environment' %>
     <% Density.all.each do |density| %>
-      <label class="radio inline pill">
-        <%= f.radio_button :density_id, density.id %>
-        <%= f.label :density_id, density.level, :value => density.id %>
-      </label>
+      <div class="radio inline pill density">
+        <%= f.radio_button :density_id, density.id, :'data-attribute' => 'density_id' %>
+        <%= f.label :density_id, density.level, :value => density.id, :'data-attribute' => 'density_id' %>
+      </div>
     <% end %>
   </div>
 
   <div class="field">
-    <%= f.label :realism, 'Realism of the Environment' %>
+    <%= f.label :nil, 'Realism of the Environment' %>
     <% Realism.all.each do |realism| %>
-      <label class="radio inline pill">
-        <%= f.radio_button :realism_id, realism.id %>
-        <%= f.label :realism_id, realism.level, :value => realism.id %>
-      </label>
+      <div class="radio inline pill realism">
+        <%= f.radio_button :realism_id, realism.id, :'data-attribute' => 'realism_id' %>
+        <%= f.label :realism_id, realism.level, :value => realism.id, :'data-attribute' => 'realism_id' %>
+      </div>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :env_desc, "Additional Environment Details" %>
-    <%= f.text_area :env_desc, :class => 'span12', :rows => 5 %>
+  <div class="field task-field">
+    <%= f.label :env_desc, "Additional Environment Details", :'data-attribute' => 'env_desc' %>
+    <%= f.text_area :env_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'env_desc' %>
   </div>
 
   <legend class="with-helper-text">Metrics</legend>
   <p class="after-legend"><small>Use the autocomplete field below to select all metrics used for evalutating this task.</small></p>
 
-  <div class="field metrics">
-    <%= f.label :metric, "Metrics Used for Evaluation" %>
-    <%= hidden_field_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", nil, :class => 'hidden' %>
-    <% Metric.all.each do |metric| %>
-      <label class="checkbox inline pill">
-        <%= check_box_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.id, f.object.metrics.include?(metric), :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}" %>
-        <%= label_tag "paper[experiments_attributes][new_experiments][tasks_attributes][new_tasks][metric_ids][]", metric.metric, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}" %>
-      </label>
-    <% end %>
+  <div id="metrics" class="metrics well">
+    <div class="field metric-checkboxes">
+      <legend class="mini">Metrics</legend>
+      <% Metric.all.each do |metric| %>
+        <div class="checkbox inline pill">
+          <%= check_box_tag nil, metric.id, false, :id => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}" , :onchange => "create_component_description(this, '#{metric.metric}', #{metric.id}, 'task_metric', 'metric', 'method of measurement')", :'data-experiment' => 'new_experiments', :'data-task' => 'new_tasks', :'data-attribute' => 'metric_id' %>
+          <%= label_tag nil, metric.metric, :for => "experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_#{metric.id}", :'data-attribute' => 'metric_id' %>
+        </div>
+
+      <% end %>
+      <div class="checkbox inline pill other">
+        <input data-attribute="metric_id" data-experiment="new_experiments" data-task="new_tasks" id="experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_other_0" onchange="create_component_description(this, 'Other', 'other_0', 'task_metric', 'metric', 'method of measurement');create_other(this, 'Other', 'other_0', 'task_metric', 'metric', 'metric', 'method of measurement', '<%= form_authenticity_token %>')" type="checkbox" value="other">
+        <label data-attribute="metric_id" for="experiments_attributes_new_experiments_tasks_attributes_new_tasks_metric_id_other_0">Other<span class="colon">:</span> <input class="input-small" type="text"></label>
+      </div>
+
+    </div>
+    <div id="experiment_new_experiments_task_new_tasks_task_metric" class="task-metric-desc row-fluid" data-attribute="metric"></div>
   </div>
 
   <%= link_to_remove_fields "Remove Task", f %>

@@ -1,0 +1,23 @@
+<h1>Listing control_symmetries</h1>
+
+<table>
+  <tr>
+    <th>Component</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @control_symmetries.each do |control_symmetry| %>
+  <tr>
+    <td><%= control_symmetry.component %></td>
+    <td><%= link_to 'Show', control_symmetry %></td>
+    <td><%= link_to 'Edit', edit_control_symmetry_path(control_symmetry) %></td>
+    <td><%= link_to 'Destroy', control_symmetry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Control symmetry', new_control_symmetry_path %>
