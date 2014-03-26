@@ -1,8 +1,15 @@
 Kbase::Application.routes.draw do
 
+  get "browse/index"
+
   mount Judge::Engine => '/judge'
 
-  get "validate/index"
+  get "validate/papers"
+  get "validate/categories"
+  get "validate/components"
+  get "validate/indy_variables"
+  get "validate/metrics"
+  get "validate/systems"
 
   resources :user_authors
 

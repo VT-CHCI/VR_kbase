@@ -1,14 +1,17 @@
 scale1:
   id: 1
-  level: "Small (0-10 meters per side)"
+  level: "Small"
+  tooltip: "0-10 meters per side"
 
 scale2:
   id: 2
-  level: "Medium (10-100 meters per side)"
+  level: "Medium"
+  tooltip: "10-100 meters per side"
 
 scale3:
   id: 3
-  level: "Large (>100 meters per side)"
+  level: "Large"
+  tooltip: ">100 meters per side"
 
 uncontrolled:
   id: 4

@@ -1,43 +1,54 @@
 category1:
   task_category: "Passive experience of the VE"
   validated: true
+  tooltip: "Viewing or experiencing the environment without interaction"
 
 category2:
   task_category: "Interactive experience of the VE"
   validated: true
+  tooltip: "Viewing or experiencing the environment interactively (e.g., choosing the viewpoint)"
 
 category3:
   task_category: "Comprehension of spatial information"
   validated: true
+  tooltip: "Understanding the environment’s or objects’ layout, shape, size, location, etc."
 
 category4:
   task_category: "Comprehension of non-spatial information"
   validated: true
+  tooltip: "Understanding properties of the environment or objects not related to space, such as text labels, color, texture, etc."
 
 category5:
-  task_category: "Visual search (without travel)"
+  task_category: "Visual search"
   validated: true
+  tooltip: "Visually scanning the environment to find one or more targets, or to count the number of target objects"
 
 category6:
   task_category: "Travel - exploration"
   validated: true
+  tooltip: "Moving through the environment to obtain general information about the objects and locations within the world, and to build up knowledge of the space"
 
 category7:
   task_category: "Travel - search"
   validated: true
+  tooltip: "Moving through the environment to reach a specific goal or target location"
 
 category8:
   task_category: "Travel - maneuvering"
   validated: true
+  tooltip: "Making small movements to position the viewpoint more precisely within a limited local area"
 
 category9:
   task_category: "Object selection"
   validated: true
+  tooltip: "Picking one or more objects from the set of objects in the environment"
 
 category10:
   task_category: "Object manipulation"
   validated: true
+  tooltip: "Modifying object properties, typically their position and/or orientation"
 
 category11:
   task_category: "Learning/memorization"
   validated: true
+  tooltip: "Obtaining knowledge from the environment for later use in the real world"

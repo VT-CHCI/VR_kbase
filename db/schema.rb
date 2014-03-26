@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140326135706) do
+ActiveRecord::Schema.define(:version => 20140326144124) do
 
   create_table "aural_fidelities", :force => true do |t|
     t.string   "component"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "author_papers", :force => true do |t|
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "categories", :force => true do |t|
@@ -51,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.boolean  "validated",     :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "control_symmetries", :force => true do |t|
@@ -58,18 +61,21 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "densities", :force => true do |t|
     t.string   "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tooltip"
   end
 
   create_table "dimensions", :force => true do |t|
     t.string   "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tooltip"
   end
 
   create_table "displays", :force => true do |t|
@@ -77,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "experiment_aurals", :force => true do |t|
@@ -240,6 +247,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.string   "gender"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tooltip"
   end
 
   create_table "haptic_fidelities", :force => true do |t|
@@ -247,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "hardwares", :force => true do |t|
@@ -254,6 +263,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "indy_variables", :force => true do |t|
@@ -261,6 +271,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "metrics", :force => true do |t|
@@ -268,6 +279,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "paper_venues", :force => true do |t|
@@ -300,18 +312,21 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.string   "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tooltip"
   end
 
   create_table "relationships", :force => true do |t|
     t.string   "relationship"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "tooltip"
   end
 
   create_table "scales", :force => true do |t|
     t.string   "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tooltip"
   end
 
   create_table "softwares", :force => true do |t|
@@ -319,12 +334,14 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "specificities", :force => true do |t|
     t.string   "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "tooltip"
   end
 
   create_table "system_appropriatenesses", :force => true do |t|
@@ -332,6 +349,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
   create_table "task_categories", :force => true do |t|
@@ -422,6 +440,7 @@ ActiveRecord::Schema.define(:version => 20140326135706) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "validated",  :default => false, :null => false
+    t.string   "tooltip"
   end
 
 end
