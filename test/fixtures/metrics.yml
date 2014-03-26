@@ -47,3 +47,8 @@ metric11:
   metric: "Training transfer"
   validated: true
   tooltip: "The degree to which skills/knowledge learned in the virtual environment can be demonstrated in the real world"
+
+metric12:
+  metric: "Learning"
+  validated: true
+  tooltip: "Difference in demonstrated knowledge from before the VR experience to after the VR experience"

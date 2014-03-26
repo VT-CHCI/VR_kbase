@@ -1,44 +1,44 @@
 display1:
-  display: "Monitors"
+  display: "Monitor"
   validated: true
-  tooltip: ""
+  tooltip: "A relatively small (i.e., less than 36-inch diagonal), flat, non-stereoscopic display such as those typically used with desktop computers or small televisions."
 
 display2:
-  display: "3D monitors"
+  display: "3D monitor"
   validated: true
-  tooltip: ""
+  tooltip: "A relatively small (i.e., less than 36-inch diagonal), flat, stereoscopic display"
 
 display3:
   display: "Tabletop"
   validated: true
-  tooltip: ""
+  tooltip: "A horizontal (i.e., parallel to the ground) flat display"
 
 display4:
   display: "Single large screen"
   validated: true
-  tooltip: ""
+  tooltip: "A relatively large (i.e., greater than 36-inch diagonal), flat display such as a large-screen television or projection screen"
 
 display5:
   display: "Multi-monitor tiled display"
   validated: true
-  tooltip: ""
+  tooltip: "A single display surface created by tiling multiple smaller, flat displays"
 
 display6:
   display: "Head-mounted display"
   validated: true
-  tooltip: ""
+  tooltip: "A display in which one or two screens are attached to a head-worn apparatus such that the user sees the displays no matter where he/she looks"
 
 display7:
   display: "Surround screen display"
   validated: true
-  tooltip: ""
+  tooltip: "A non-flat display in which the display surface fully or partially wraps around the user in space (i.e., the user stands “inside” the display)"
 
 display8:
-  display: "Domes"
+  display: "Dome"
   validated: true
-  tooltip: ""
+  tooltip: "A large curved display surface, usually illuminated with one or more projectors"
 
 display9:
   display: "Tablet display"
   validated: true
-  tooltip: ""
+  tooltip: "A small handheld display"
