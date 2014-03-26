@@ -3,15 +3,19 @@
 comp1:
   component: "Input accuracy"
   validated: true
+  tooltip: "How close an input device's readings are to the ground truth values it measures"
 
 comp2:
   component: "Input precision"
   validated: true
+  tooltip: "The degree to which repeated measurements by an input device in static conditions yield the same results"
 
 comp3:
   component: "Latency"
   validated: true
+  tooltip: "The delay between the time the user provides input with an input device and the time the input data is available to the VR application"
 
 comp4:
   component: "Form factor"
   validated: true
+  tooltip: "The objective degree of similarity between the “shape and size” of the input device used and the shape and size of the real-world input mechanism"

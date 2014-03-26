@@ -1,31 +1,49 @@
 metric1:
   metric: "Time"
   validated: true
+  tooltip: "The amount of time taken to complete a task or part of a task"
 
 metric3:
   metric: "Strategy"
   validated: true
+  tooltip: "The methods, actions, and strategies chosen by the user to complete a task"
 
 metric4:
   metric: "Accuracy"
   validated: true
+  tooltip: "How close a task result is to the ideal result"
 
 metric5:
   metric: "Errors"
   validated: true
+  tooltip: "The number of mistakes made in completing a task"
 
 metric6:
   metric: "Presence"
   validated: true
+  tooltip: "The psychological sense of “being there” experienced by the user during task completion"
 
 metric7:
   metric: "Heart rate"
   validated: true
+  tooltip: "The number of user heartbeats per unit time (e.g., beats per minute), or the variability in heart rate, during task completion"
 
 metric8:
   metric: "Cybersickness"
   validated: true
+  tooltip: "The degree of discomfort experienced by the user during or after task completion"
 
 metric9:
   metric: "User preference"
   validated: true
+  tooltip: "Subjective opinions of the user related to the system or the interface"
+
+metric10:
+  metric: "User task perception"
+  validated: true
+  tooltip: "Subjective opinions of the user related to task performance (e.g., perceived difficulty)"
+
+metric11:
+  metric: "Training transfer"
+  validated: true
+  tooltip: "The degree to which skills/knowledge learned in the virtual environment can be demonstrated in the real world"

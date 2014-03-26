@@ -3,11 +3,14 @@
 comp1:
   component: "Kinematic"
   validated: true
+  tooltip: "The objective degree of exactness with which a _real-world body motion_ for a task (regardless of its causing forces) can be reproduced through interaction to successfully complete the task"
 
 comp2:
   component: "Kinetic"
   validated: true
+  tooltip: "The objective degree of exactness with which a _force_ involved in a real-world movement can be reproduced through interaction to successfully complete the task"
 
 comp3:
   component: "Anthropometric"
   validated: true
+  tooltip: "The objective degree of exactness with which the _body segments_ involved in a real-world action can be matched by the body segments involved in an interaction that successfully completes the task"

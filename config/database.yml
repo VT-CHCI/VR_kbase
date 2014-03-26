@@ -30,9 +30,9 @@ test:
 
 production:
   adapter: mysql2
-  database: vr_knowledge_base_production
-  host: localhost
-  username: onr
-  password: onr_pwd
+  database: kbase
+  host: database.cs.vt.edu
+  username: kbase
+  password: pC2V8UHv
   pool: 5
   timeout: 5000

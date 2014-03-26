@@ -1,10 +1,12 @@
 dimension1:
   id: 1
-  level: "2.5D (3D environment constrained to a ground plane or terrain)"
+  level: "2.5D"
+  tooltip: "3D environment constrained to a ground plane or terrain"
 
 dimension2:
   id: 2
-  level: "3D (Environment and user's movements are in all three dimensions)"
+  level: "3D"
+  tooltip: "Environment and user's movements are in all three dimensions"
 
 uncontrolled:
   id: 3

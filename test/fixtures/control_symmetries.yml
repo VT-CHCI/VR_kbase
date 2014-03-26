@@ -3,7 +3,9 @@
 comp1:
   component: "Dimensional"
   validated: true
+  tooltip: "The objective degree of exactness with which control dimensions (e.g., x-y-z translation, yaw-pitch-roll rotation) in a real-world task are provided through interaction"
 
 comp2:
   component: "Transfer function"
   validated: true
+  tooltip: "The objective degree of exactness with which a real-world transfer function (a function that interprets input data and transforms it into an output effect) is reproduced through interaction"

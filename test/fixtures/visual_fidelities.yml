@@ -3,56 +3,70 @@
 comp1:
   component: "Latency"
   validated: true
+  tooltip: "Delay between an action/event and the visual display of the results of that action/event"
 
 comp2:
   component: "Frame rate"
   validated: true
+  tooltip: "The rate at which new views of the scene are rendered by the graphics system"
 
-comp3:
-  component: "Head tracking"
-  validated: true
+#comp3:
+#  component: "Head tracking"
+#  validated: true
+#  tooltip: ""
 
 comp4:
   component: "Display size"
   validated: true
+  tooltip: "The physical height, width, and/or depth of the display screen, surface, or volume"
 
 comp5:
   component: "Form factor"
   validated: true
+  tooltip: "The shape of the display"
 
 comp6:
   component: "Refresh rate"
   validated: true
+  tooltip: "The rate at which the display hardware is updated with the contents of the frame buffer"
 
 comp7:
   component: "Stereoscopy"
   validated: true
+  tooltip: "Whether or not the user is presented with different views for the two eyes to produce a 3D stereo depth cue"
 
 comp8:
   component: "Resolution (number of pixels)"
   validated: true
+  tooltip: "The total number of pixels displayed"
 
 comp9:
   component: "Resolution (pixel density)"
   validated: true
+  tooltip: "The number of pixels per unit length (e.g., pixels per inch)"
 
 comp10:
   component: "Field of view (FOV)"
   validated: true
+  tooltip: "The size of the visual field (in degrees of visual angle) that can be viewed instantaneously by the user"
 
 comp11:
   component: "Jitter"
   validated: true
+  tooltip: "The amount of noise or variance (e.g., shakiness) in what should ideally be a static image"
 
 comp12:
   component: "Field of regard (FOR)"
-  validated: false
+  validated: true
+  tooltip: "The total size of the visual field (in degrees of visual angle) surrounding the user that can be viewed with physical rotation"
 
 comp13:
   component: "Software field of view (SFOV)"
-  validated: false
+  validated: true
+  tooltip: "The size of the field (in degrees of visual angle) seen by the virtual camera used to render the user’s view"
 
-comp14:
-  component: "Visual realism"
-  validated: false
+#comp14:
+#  component: "Visual realism"
+#  validated: true
+#  tooltip: ""
 
