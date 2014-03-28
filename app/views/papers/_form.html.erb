@@ -36,7 +36,7 @@
 
           <h1>Publication Information</h1>
 
-          <p><small>The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</small></p>
+          <!--<p><small>The first step in the entry process is to provide the publications details. All entries in the knowledgebase must be based on peer-reviewed, published research. Please begin by providing the DOI to automate the process, or enter the information manually.</small></p>-->
           <br>
 
           <div class="well doi-well">
@@ -51,8 +51,8 @@
             <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
           </div>
 
-          <legend class="with-helper-text">Manual Entry</legend>
-          <p class="after-legend"><small>This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the wizard to move onto adding an experiment.</small></p>
+          <legend class="with-helper-text">Paper Details</legend>
+          <p class="after-legend"><small>This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the page to move onto adding an experiment.</small></p>
 
           <div class="field">
             <%= f.label :title, 'Publication Title' %>
@@ -61,8 +61,8 @@
 
           <div class="well">
             <div class="attribute_block">
-              <legend class="with-helper-text">Adding Authors</legend>
-              <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add authors link.</small></p>
+              <legend class="with-helper-text">Authors</legend>
+              <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add author button.</small></p>
 
               <div class="authors">
                 <% if @paper.new_record? %>  
@@ -89,7 +89,6 @@
           <div class="inline-group range">
             <div class="field">
               <%= f.label :year %>
-
               <%= f.date_select :year, {:start_year => Time.now.year, :end_year => 1950, :discard_day => true, :discard_month => true}, :class => 'input-small' %>
             </div>
             <div class="field">
@@ -115,7 +114,7 @@
 
           <div class="field clear .field-title">
             <%= f.label :paper_url %>
-            <%= f.text_field :paper_url, :class => 'span12' %>
+            <%= f.text_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
           </div>
 
           <%= f.fields_for :experiments do |builder| %>
@@ -123,7 +122,7 @@
           <% end %>
 
           <p class="new_experiment">
-            <%= button_to_add_elements "Autosave and Continue", f, :experiments %>
+            <%= button_to_add_elements "Save and Continue", f, :experiments %>
           </p>
 
         </div>
