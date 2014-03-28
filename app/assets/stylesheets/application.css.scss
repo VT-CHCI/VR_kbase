@@ -274,3 +274,20 @@ form input[type='number']::-webkit-inner-spin-button {
     }
   }
 }
+
+.tooltip-inner {
+  z-index: 1031;
+  max-width: 120px;
+}
+
+#paper-doi {
+  .tooltip-inner {
+    z-index: 1031;
+    max-width: 220px;
+  }
+}
+
+.tooltip.left {
+  margin-left: -10px;  
+  #left: 10px !important;
+}
