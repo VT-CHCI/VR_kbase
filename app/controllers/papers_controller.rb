@@ -40,7 +40,18 @@ class PapersController < ApplicationController
                 :include => [
                   {:task_categories => {:include => [:category]}},
                   {:task_metrics => {:include => [:metric]}},
-                  :findings
+                  {:findings => {
+                    :include => [
+                      {:finding_categories=> {:include => [:category]}},
+                      {:finding_visuals => {:include => [:visual_fidelity]}},
+                      {:finding_aurals => {:include => [:aural_fidelity]}},
+                      {:finding_haptics => {:include => [:haptic_fidelity]}},
+                      {:finding_biomechanicals => {:include => [:biomechanical_symmetry]}},
+                      {:finding_controls => {:include => [:control_symmetry]}},
+                      {:finding_system_apps => {:include => [:system_appropriateness]}},
+                      {:finding_indy_variables => {:include => [:indy_variable]}}
+                    ]
+                  }}
                 ]
               }}
             ]
@@ -103,12 +114,23 @@ class PapersController < ApplicationController
                 {:experiment_system_apps => {:include => [:system_appropriateness]}},
                 {:experiment_indy_variables => {:include => [:indy_variable]}},
                 {:tasks => { 
-                  :include => [
-                    {:task_categories => {:include => [:category]}},
-                    {:task_metrics => {:include => [:metric]}},
-                    :findings
-                  ]
-                }}
+                :include => [
+                  {:task_categories => {:include => [:category]}},
+                  {:task_metrics => {:include => [:metric]}},
+                  {:findings => {
+                    :include => [
+                      {:finding_categories=> {:include => [:category]}},
+                      {:finding_visuals => {:include => [:visual_fidelity]}},
+                      {:finding_aurals => {:include => [:aural_fidelity]}},
+                      {:finding_haptics => {:include => [:haptic_fidelity]}},
+                      {:finding_biomechanicals => {:include => [:biomechanical_symmetry]}},
+                      {:finding_controls => {:include => [:control_symmetry]}},
+                      {:finding_system_apps => {:include => [:system_appropriateness]}},
+                      {:finding_indy_variables => {:include => [:indy_variable]}}
+                    ]
+                  }}
+                ]
+              }}
               ]
             }}
           ]
@@ -145,12 +167,23 @@ class PapersController < ApplicationController
                 {:experiment_system_apps => {:include => [:system_appropriateness]}},
                 {:experiment_indy_variables => {:include => [:indy_variable]}},
                 {:tasks => { 
-                  :include => [
-                    {:task_categories => {:include => [:category]}},
-                    {:task_metrics => {:include => [:metric]}},
-                    :findings
-                  ]
-                }}
+                :include => [
+                  {:task_categories => {:include => [:category]}},
+                  {:task_metrics => {:include => [:metric]}},
+                  {:findings => {
+                    :include => [
+                      {:finding_categories=> {:include => [:category]}},
+                      {:finding_visuals => {:include => [:visual_fidelity]}},
+                      {:finding_aurals => {:include => [:aural_fidelity]}},
+                      {:finding_haptics => {:include => [:haptic_fidelity]}},
+                      {:finding_biomechanicals => {:include => [:biomechanical_symmetry]}},
+                      {:finding_controls => {:include => [:control_symmetry]}},
+                      {:finding_system_apps => {:include => [:system_appropriateness]}},
+                      {:finding_indy_variables => {:include => [:indy_variable]}}
+                    ]
+                  }}
+                ]
+              }}
               ]
             }}
           ]

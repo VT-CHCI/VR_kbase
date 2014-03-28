@@ -41,12 +41,10 @@
   <div class="field">
     <%= f.label nil, 'Gender Balance' %>
     <% Gender.all.each do |gender| %>
-
       <div class="radio inline pill gender">
         <%= f.radio_button :gender_id, gender.id, :'data-attribute' => 'gender_id' %>
         <%= f.label :gender_id, gender.gender, :value => gender.id, :'data-attribute' => 'gender_id' %>
       </div>
-
     <% end %>
   </div>
 

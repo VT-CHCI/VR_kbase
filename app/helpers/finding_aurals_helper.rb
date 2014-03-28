@@ -1,0 +1,2 @@
+module FindingAuralsHelper
+end

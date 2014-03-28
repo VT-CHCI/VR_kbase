@@ -144,8 +144,7 @@ $.ajax({
 EDITING
 ##########################################################################
 
-//splits all the components out so that they can be hidden properly
-
+//Splits all the components out so that they can be hidden properly
 paperComponents = ['.experiment','.task','.finding'];
 
 $.each ($(paperComponents.join(", ")), function() {
@@ -156,8 +155,7 @@ $.each ($(paperComponents.join(", ")), function() {
 	});
 });
 
-//makes all the token input work again - needs to be called once when entering edit mode
-
+//Makes all the token input work again - needs to be called once when entering edit mode
 $.each($('.token-input input'), function() {
 	createSingleTokenInput(this);
 });

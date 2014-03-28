@@ -1,0 +1,25 @@
+<h1>Listing finding_aurals</h1>
+
+<table>
+  <tr>
+    <th>Finding</th>
+    <th>Aural fidelity</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @finding_aurals.each do |finding_aural| %>
+  <tr>
+    <td><%= finding_aural.finding %></td>
+    <td><%= finding_aural.aural_fidelity %></td>
+    <td><%= link_to 'Show', finding_aural %></td>
+    <td><%= link_to 'Edit', edit_finding_aural_path(finding_aural) %></td>
+    <td><%= link_to 'Destroy', finding_aural, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Finding aural', new_finding_aural_path %>

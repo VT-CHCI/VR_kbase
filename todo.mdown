@@ -26,8 +26,12 @@ work on findings
 make sure editing all field values are being populated correctly
 
 other:
-have state manager rename other form ids
 - work on multiple other fields
+have state manager rename other form ids
+each click on a pill causes the counter to go up needs to be only "new items" or renamed after each click?
+
+Edit
+Remake display needs to also add pills that are missing
 
 $.ajax({
   type: "POST",

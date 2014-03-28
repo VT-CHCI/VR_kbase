@@ -1,0 +1,25 @@
+<%= form_for(@finding_system_app) do |f| %>
+  <% if @finding_system_app.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding_system_app.errors.count, "error") %> prohibited this finding_system_app from being saved:</h2>
+
+      <ul>
+      <% @finding_system_app.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :finding %><br />
+    <%= f.text_field :finding %>
+  </div>
+  <div class="field">
+    <%= f.label :system_appropriateness %><br />
+    <%= f.text_field :system_appropriateness %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

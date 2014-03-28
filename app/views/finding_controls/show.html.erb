@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_control.finding %>
+</p>
+
+<p>
+  <b>Control symmetry:</b>
+  <%= @finding_control.control_symmetry %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_control_path(@finding_control) %> |
+<%= link_to 'Back', finding_controls_path %>

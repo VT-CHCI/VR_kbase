@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_biomechanical.finding %>
+</p>
+
+<p>
+  <b>Biomechanical symmetry:</b>
+  <%= @finding_biomechanical.biomechanical_symmetry %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_biomechanical_path(@finding_biomechanical) %> |
+<%= link_to 'Back', finding_biomechanicals_path %>

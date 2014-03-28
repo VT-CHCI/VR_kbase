@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_system_app.finding %>
+</p>
+
+<p>
+  <b>System appropriateness:</b>
+  <%= @finding_system_app.system_appropriateness %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_system_app_path(@finding_system_app) %> |
+<%= link_to 'Back', finding_system_apps_path %>
