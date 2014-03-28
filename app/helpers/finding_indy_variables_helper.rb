@@ -1,0 +1,2 @@
+module FindingIndyVariablesHelper
+end

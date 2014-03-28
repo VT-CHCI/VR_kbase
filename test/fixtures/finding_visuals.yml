@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  finding: 
+  visual_fidelity: 
+
+two:
+  finding: 
+  visual_fidelity: 

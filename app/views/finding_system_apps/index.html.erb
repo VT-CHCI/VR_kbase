@@ -1,0 +1,25 @@
+<h1>Listing finding_system_apps</h1>
+
+<table>
+  <tr>
+    <th>Finding</th>
+    <th>System appropriateness</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @finding_system_apps.each do |finding_system_app| %>
+  <tr>
+    <td><%= finding_system_app.finding %></td>
+    <td><%= finding_system_app.system_appropriateness %></td>
+    <td><%= link_to 'Show', finding_system_app %></td>
+    <td><%= link_to 'Edit', edit_finding_system_app_path(finding_system_app) %></td>
+    <td><%= link_to 'Destroy', finding_system_app, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Finding system app', new_finding_system_app_path %>

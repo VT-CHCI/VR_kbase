@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140326144124) do
+ActiveRecord::Schema.define(:version => 20140327193039) do
 
   create_table "aural_fidelities", :force => true do |t|
     t.string   "component"
@@ -215,6 +215,36 @@ ActiveRecord::Schema.define(:version => 20140326144124) do
 
   add_index "experiments", ["paper_id"], :name => "index_experiments_on_paper_id"
 
+  create_table "finding_aurals", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "aural_fidelity_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "finding_aurals", ["aural_fidelity_id"], :name => "index_finding_aurals_on_aural_fidelity_id"
+  add_index "finding_aurals", ["finding_id"], :name => "index_finding_aurals_on_finding_id"
+
+  create_table "finding_biomechanicals", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "biomechanical_symmetry_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "finding_biomechanicals", ["biomechanical_symmetry_id"], :name => "index_finding_biomechanicals_on_biomechanical_symmetry_id"
+  add_index "finding_biomechanicals", ["finding_id"], :name => "index_finding_biomechanicals_on_finding_id"
+
+  create_table "finding_categories", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "finding_categories", ["category_id"], :name => "index_finding_categories_on_category_id"
+  add_index "finding_categories", ["finding_id"], :name => "index_finding_categories_on_finding_id"
+
   create_table "finding_components", :force => true do |t|
     t.integer  "finding_id"
     t.integer  "component_id"
@@ -225,10 +255,59 @@ ActiveRecord::Schema.define(:version => 20140326144124) do
   add_index "finding_components", ["component_id"], :name => "index_finding_components_on_component_id"
   add_index "finding_components", ["finding_id"], :name => "index_finding_components_on_finding_id"
 
+  create_table "finding_controls", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "control_symmetry_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "finding_controls", ["control_symmetry_id"], :name => "index_finding_controls_on_control_symmetry_id"
+  add_index "finding_controls", ["finding_id"], :name => "index_finding_controls_on_finding_id"
+
+  create_table "finding_haptics", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "haptic_fidelity_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "finding_haptics", ["finding_id"], :name => "index_finding_haptics_on_finding_id"
+  add_index "finding_haptics", ["haptic_fidelity_id"], :name => "index_finding_haptics_on_haptic_fidelity_id"
+
+  create_table "finding_indy_variables", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "indy_variable_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "finding_indy_variables", ["finding_id"], :name => "index_finding_indy_variables_on_finding_id"
+  add_index "finding_indy_variables", ["indy_variable_id"], :name => "index_finding_indy_variables_on_indy_variable_id"
+
+  create_table "finding_system_apps", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "system_appropriateness_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "finding_system_apps", ["finding_id"], :name => "index_finding_system_apps_on_finding_id"
+  add_index "finding_system_apps", ["system_appropriateness_id"], :name => "index_finding_system_apps_on_system_appropriateness_id"
+
+  create_table "finding_visuals", :force => true do |t|
+    t.integer  "finding_id"
+    t.integer  "visual_fidelity_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "finding_visuals", ["finding_id"], :name => "index_finding_visuals_on_finding_id"
+  add_index "finding_visuals", ["visual_fidelity_id"], :name => "index_finding_visuals_on_visual_fidelity_id"
+
   create_table "findings", :force => true do |t|
     t.integer  "task_id"
     t.integer  "metric_id"
-    t.integer  "category_id"
     t.string   "title"
     t.string   "summary"
     t.text     "issue"
@@ -239,7 +318,6 @@ ActiveRecord::Schema.define(:version => 20140326144124) do
     t.string   "finding_note"
   end
 
-  add_index "findings", ["category_id"], :name => "index_findings_on_category_id"
   add_index "findings", ["metric_id"], :name => "index_findings_on_metric_id"
   add_index "findings", ["task_id"], :name => "index_findings_on_task_id"
 

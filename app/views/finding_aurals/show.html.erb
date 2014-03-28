@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_aural.finding %>
+</p>
+
+<p>
+  <b>Aural fidelity:</b>
+  <%= @finding_aural.aural_fidelity %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_aural_path(@finding_aural) %> |
+<%= link_to 'Back', finding_aurals_path %>

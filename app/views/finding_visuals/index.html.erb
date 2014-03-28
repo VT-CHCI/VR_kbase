@@ -1,0 +1,25 @@
+<h1>Listing finding_visuals</h1>
+
+<table>
+  <tr>
+    <th>Finding</th>
+    <th>Visual fidelity</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @finding_visuals.each do |finding_visual| %>
+  <tr>
+    <td><%= finding_visual.finding %></td>
+    <td><%= finding_visual.visual_fidelity %></td>
+    <td><%= link_to 'Show', finding_visual %></td>
+    <td><%= link_to 'Edit', edit_finding_visual_path(finding_visual) %></td>
+    <td><%= link_to 'Destroy', finding_visual, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Finding visual', new_finding_visual_path %>

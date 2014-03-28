@@ -1,0 +1,25 @@
+<h1>Listing finding_indy_variables</h1>
+
+<table>
+  <tr>
+    <th>Finding</th>
+    <th>Indy variable</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @finding_indy_variables.each do |finding_indy_variable| %>
+  <tr>
+    <td><%= finding_indy_variable.finding %></td>
+    <td><%= finding_indy_variable.indy_variable %></td>
+    <td><%= link_to 'Show', finding_indy_variable %></td>
+    <td><%= link_to 'Edit', edit_finding_indy_variable_path(finding_indy_variable) %></td>
+    <td><%= link_to 'Destroy', finding_indy_variable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Finding indy variable', new_finding_indy_variable_path %>

@@ -249,7 +249,7 @@ form input[type='number']::-webkit-inner-spin-button {
     }
 
     .title-field {
-      width: 90%;
+      width: 91%;
       padding-left: 4px;
     }
   }
@@ -260,7 +260,7 @@ form input[type='number']::-webkit-inner-spin-button {
     }
 
     .title-field {
-      width: 85%;
+      width: 86%;
     }
   }
   .finding-heading {
@@ -273,4 +273,21 @@ form input[type='number']::-webkit-inner-spin-button {
       width: 81%;
     }
   }
+}
+
+.tooltip-inner {
+  z-index: 1031;
+  max-width: 120px;
+}
+
+#paper-doi {
+  .tooltip-inner {
+    z-index: 1031;
+    max-width: 220px;
+  }
+}
+
+.tooltip.left {
+  margin-left: -10px;  
+  #left: 10px !important;
 }

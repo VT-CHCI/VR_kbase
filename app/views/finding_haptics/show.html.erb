@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_haptic.finding %>
+</p>
+
+<p>
+  <b>Haptic fidelity:</b>
+  <%= @finding_haptic.haptic_fidelity %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_haptic_path(@finding_haptic) %> |
+<%= link_to 'Back', finding_haptics_path %>
