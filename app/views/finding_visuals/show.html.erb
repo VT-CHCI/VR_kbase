@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_visual.finding %>
+</p>
+
+<p>
+  <b>Visual fidelity:</b>
+  <%= @finding_visual.visual_fidelity %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_visual_path(@finding_visual) %> |
+<%= link_to 'Back', finding_visuals_path %>

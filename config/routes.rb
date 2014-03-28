@@ -1,5 +1,21 @@
 Kbase::Application.routes.draw do
 
+  resources :finding_indy_variables
+
+  resources :finding_categories
+
+  resources :finding_system_apps
+
+  resources :finding_controls
+
+  resources :finding_biomechanicals
+
+  resources :finding_aurals
+
+  resources :finding_haptics
+
+  resources :finding_visuals
+
   get "browse/index"
 
   mount Judge::Engine => '/judge'

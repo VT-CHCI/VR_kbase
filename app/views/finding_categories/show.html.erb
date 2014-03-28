@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Finding:</b>
+  <%= @finding_category.finding %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @finding_category.category %>
+</p>
+
+
+<%= link_to 'Edit', edit_finding_category_path(@finding_category) %> |
+<%= link_to 'Back', finding_categories_path %>

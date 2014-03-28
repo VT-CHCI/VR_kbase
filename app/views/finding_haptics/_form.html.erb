@@ -1,0 +1,25 @@
+<%= form_for(@finding_haptic) do |f| %>
+  <% if @finding_haptic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding_haptic.errors.count, "error") %> prohibited this finding_haptic from being saved:</h2>
+
+      <ul>
+      <% @finding_haptic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :finding %><br />
+    <%= f.text_field :finding %>
+  </div>
+  <div class="field">
+    <%= f.label :haptic_fidelity %><br />
+    <%= f.text_field :haptic_fidelity %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

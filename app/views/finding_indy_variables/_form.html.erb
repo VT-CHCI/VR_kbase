@@ -1,0 +1,25 @@
+<%= form_for(@finding_indy_variable) do |f| %>
+  <% if @finding_indy_variable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@finding_indy_variable.errors.count, "error") %> prohibited this finding_indy_variable from being saved:</h2>
+
+      <ul>
+      <% @finding_indy_variable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :finding %><br />
+    <%= f.text_field :finding %>
+  </div>
+  <div class="field">
+    <%= f.label :indy_variable %><br />
+    <%= f.text_field :indy_variable %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

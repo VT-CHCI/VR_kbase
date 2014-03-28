@@ -111,3 +111,23 @@ rails g scaffold ExperimentIndyVariable experiment:belongs_to indy_variable:belo
 rails g scaffold UserPaper user:belongs_to paper:belongs_to
 
 rails g scaffold UserAuthor user:belongs_to author:belongs_to
+
+-----------------------------------------------
+
+rails g scaffold FindingVisual finding:belongs_to visual_fidelity:belongs_to
+
+rails g scaffold FindingHaptic finding:belongs_to haptic_fidelity:belongs_to
+
+rails g scaffold FindingAural finding:belongs_to aural_fidelity:belongs_to
+
+rails g scaffold FindingBiomechanical finding:belongs_to biomechanical_symmetry:belongs_to
+
+rails g scaffold FindingControl finding:belongs_to control_symmetry:belongs_to
+
+rails g scaffold FindingSystemApp finding:belongs_to system_appropriateness:belongs_to
+
+rails g scaffold FindingCategory finding:belongs_to category:belongs_to
+
+rails g scaffold FindingIndyVariable finding:belongs_to indy_variable:belongs_to
+
+-----------------------------------------------
