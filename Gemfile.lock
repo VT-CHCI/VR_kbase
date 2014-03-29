@@ -73,7 +73,6 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     multi_json (1.9.2)
-    mysql2 (0.3.15)
     orm_adapter (0.5.0)
     polyamorous (0.6.4)
       activerecord (>= 3.0)
@@ -132,6 +131,8 @@ GEM
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    validate_url (0.2.0)
+      activemodel (>= 3.0.0)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -146,10 +147,10 @@ DEPENDENCIES
   jquery-rails
   json
   judge
-  mysql2
   rails (= 3.2.8.rc2)
   ransack
   sass-rails (~> 3.2.3)
   sqlite3
   squeel
   uglifier (>= 1.0.3)
+  validate_url
