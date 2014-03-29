@@ -336,14 +336,16 @@ function add_progress_heading(association, focus, repopulate) {
     headingIndex.push(findingId+1);
   }
 
+
+
   headingIndex = [''];
   //Create heading
   if (association == 'experiments') {
     var heading = 'experiment-block-'+experimentId;
-    var link = '<a class="btn add-core-element-nav" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Task</a>';
+    var link = '<a class="btn nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Task</a>';
 
     $('#progress-headings').append(
-      '<div class="'+heading+'">\
+      '<div id="'+heading+'" class="nav-core-element-block">\
         <a class="experiment-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
           <div class="number-field">'+headingIndex.join('.')+'</div>\
           <div class="title-field">Unnamed Experiment</div>\
@@ -353,15 +355,15 @@ function add_progress_heading(association, focus, repopulate) {
         </a>'+link+'\
       </div>'
     );
-    heading = '.'+heading+' .experiment-heading';
+    heading = '#'+heading+' .experiment-heading';
     
   }
   else if (association == 'tasks') {
     var heading = 'task-block-'+taskId;
-    var link = '<a class="btn add-core-element-nav" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Finding</a>';
+    var link = '<a class="btn nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Finding</a>';
 
-    $('.experiment-block-'+experimentId).append(
-      '<div class="'+heading+'">\
+    $('#experiment-block-'+experimentId).append(
+      '<div id="'+heading+'" class="nav-core-element-block">\
         <a class="task-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
           <div class="number-field">'+headingIndex.join('.')+'</div>\
           <div class="title-field">Unnamed Task</div>\
@@ -372,14 +374,14 @@ function add_progress_heading(association, focus, repopulate) {
         <div class="finding-block"></div>\
       </div>'
     );
-    heading = '.experiment-block-'+experimentId+' .'+heading+' .task-heading';
+    heading = '#experiment-block-'+experimentId+' #'+heading+' .task-heading';
 
   } 
   else if (association == 'findings') {
     var heading = 'finding-block-'+findingId;
 
-    $('.experiment-block-'+experimentId+' .task-block-'+taskId).append(
-      '<div class="'+heading+'">\
+    $('#experiment-block-'+experimentId+' #task-block-'+taskId).append(
+      '<div id="'+heading+'" class="nav-core-element-block">\
         <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
           <div class="number-field">'+headingIndex.join('.')+'</div>\
           <div class="title-field">Unnamed Finding</div>\
@@ -389,7 +391,7 @@ function add_progress_heading(association, focus, repopulate) {
         </a>\
       </div>'
     );
-    heading = '.experiment-block-'+experimentId+' .task-block-'+taskId+' .'+heading+' .finding-heading';
+    heading = '#experiment-block-'+experimentId+' #task-block-'+taskId+' #'+heading+' .finding-heading';
   
   }
 
@@ -407,22 +409,22 @@ function add_progress_heading(association, focus, repopulate) {
   //Remove element when close is clicked and prevent the show_element functionality
   $('#progress-headings '+heading+' .close').click( function(e) {
     console.log('clicking!!', e, $(this));
-    var type = $(this).parent().parent().prop('class').split('-')[0];
+    var type = $(this).parent().parent().prop('id').split('-')[0];
     var target = $(this).parent().parent().data('target').split('_');
     var navTarget;
     var targetDestroyId = '#paper_';  
 
     for (var i = 0; i< target.length; i++) {
       if (i == 1) {
-        navTarget = '.experiment-block-'+target[i];
+        navTarget = '#experiment-block-'+target[i];
         targetDestroyId = targetDestroyId+'experiments_attributes_'+target[i];
       } 
       else if (i == 3) {
-        navTarget = navTarget+' .task-block-'+target[i];
+        navTarget = navTarget+' #task-block-'+target[i];
         targetDestroyId = targetDestroyId+'_tasks_attributes_'+target[i];
       } 
       else if (i == 5) {
-        navTarget = navTarget+' .finding-block-'+target[i];
+        navTarget = navTarget+' #finding-block-'+target[i];
         targetDestroyId = targetDestroyId+'_findings_attributes_'+target[i];
       }
     };
@@ -1118,6 +1120,14 @@ $(document).ready( function() {
   } else {
     handle_one_times();
   }
+
+  $('.experiment-block').width($('#progress-headings').width()*.9+3);
+  $('.task-block').width($('#progress-headings').width()*.9*.9+5);
+
+  $(window).resize( function() {
+    $('.experiment-block').width($('#progress-headings').width()*.9+3);
+    $('.task-block').width($('#progress-headings').width()*.9*.9+5);
+  });
 
   //Prevents users from accidentally leaving the page
   // window.onbeforeunload = function() { 

@@ -242,59 +242,45 @@ form input[type='number']::-webkit-inner-spin-button {
       width: 100%;
     } 
   }
-  .experiment-heading {
-    .number-field {
-      width: 5%;
-      padding-right: 5px;
-    }
-
+/*  .experiment-heading {
     .title-field {
       width: 91%;
       padding-left: 4px;
     }
   }
   .task-heading {
-    .number-field {
-      width: 10%;
-      padding-right: 9px;
-    }
-
     .title-field {
       width: 86%;
     }
   }
   .finding-heading {
-    .number-field {
-      width: 15%;
-      padding-right: 10px;
-    }
-
     .title-field {
       width: 81%;
     }
+  }*/
+
+  .nav-core-element-add {
+    -webkit-border-radius: 0; 
+    -moz-border-radius: 0;
+    border-radius: 0;
+
+    text-align: right;
+    margin-top: 3px;
   }
 
-  .publication-heading-input {
-    /*width: 93%;*/
-    width: 100%;
-    float: right;
+  .nav-core-element-add:hover {
+    background: #08C;
   }
 
-  .experiment-heading-input {
-    /*width: 89%;*/
-    width: 100%;
-    float: right;
-  }
-
-  .task-heading-input {
-    /*width: 84%;*/
-    width: 100%;
-    float: right;
+  .nav-core-element-block {
+    width: 90%;
+    border-left: 5px solid #e6e6e6;
+    padding-left: 7%;
   }
 }
 
-#submit-button {
-  padding-top: 20px;
+#submit-button, #save-button {
+  padding-top: 10px;
   clear: both;
 
   button {
@@ -314,7 +300,7 @@ label.error:after {
 
 .field-url {
   label.error:after {
-    content:  " Not a valid url";
+    content:  "\00a0\00a0\00a0 Not a valid url";
     color: red;
   }
 }
