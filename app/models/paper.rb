@@ -16,6 +16,9 @@ class Paper < ActiveRecord::Base
     :year, :issue, :venues_attributes, :experiments_attributes, :author_papers_attributes, 
     :tasks_attributes, :findings_attributes, :users_attributes, :category_ids
 
+  validates :title, :presence => true
+  validates :paper_url, :url => {:allow_blank => true}
+
   # If you need to validate the associated record, you can add a method like this:
   #     validate_associated_record_for_venue
   def autosave_associated_records_for_venues

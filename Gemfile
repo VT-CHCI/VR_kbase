@@ -16,6 +16,8 @@ gem 'devise' # authentication
 gem 'ransack' # advanced search filter
 gem 'squeel' # ruby-like sql statements
 
+gem 'validate_url' # for validating urls
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

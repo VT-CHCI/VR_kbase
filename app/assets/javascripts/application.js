@@ -18,24 +18,58 @@
 //= require json2
 //= require judge
 
+// ##########################################################################
+// Validation
+// ##########################################################################
 
-function validate_all_fields() {
+var paperValid = false;
+
+function validate_all_fields (selector) {
   $('.field').each( function() {
     validate_field(this);
   });
 }
 
-function validate_field(focus) {
-  //console.log(focus);
+function validate_field (focus) {
   judge.validate(focus, {
     valid: function(element) {
-      element.style.border = '1px solid green';
+      $(element).parent().addClass('success');
+      $(element).parent().removeClass('error');
+      $(element).prev().removeClass('error');
+
+      paperValid = true;
     },
     invalid: function(element, messages) {
-      element.style.border = '1px solid red';
+      $(element).parent().addClass('error');
+      $(element).parent().removeClass('success');
+      $(element).prev().addClass('error');
+
+      paperValid = false;
+      
       alert(messages.join(','));
     }
   });
+}
+
+function setUrlClasses (focus, valid) {
+  if (valid) {
+    $(focus).parent().addClass('success');
+    $(focus).parent().removeClass('error');
+    $(focus).prev().removeClass('error');
+  }
+  else {
+    $(focus).parent().addClass('error');
+    $(focus).parent().removeClass('success');
+    $(focus).prev().addClass('error');
+  } 
+}
+
+function checkAuthorsCount () {
+  if ($('.authors input:visible').length/3 > 0 ) {
+    return true;
+  }
+
+  return false;
 }
 
 // ##########################################################################
@@ -219,14 +253,14 @@ function generateUniqueId(inputs, size) {
 // ##########################################################################
 
 function remove_auto_gen_field(link, parentLevel) {
-  $(link).prev("input[type=hidden]").val("true");
+  $(link).prev('input[type=hidden]').val('true');
 
   if (parentLevel == 4) {
     var focus = $(link).parent().parent().parent().parent();
     var coreParentId = $(link).parents('.experiment').data('experiment');
   } else {
     var focus = $(link).parent().parent().parent();
-    var coreParentId = "";
+    var coreParentId = '';
   }
 
   focus.hide();
@@ -297,9 +331,11 @@ function add_progress_heading(association, focus, repopulate) {
     headingIndex.push(findingId+1);
   }
 
+  headingIndex = [''];
   //Create heading
   if (association == 'experiments') {
     var heading = 'experiment-block-'+experimentId;
+    var link = '<a class="btn add-core-element-nav" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Task</a>';
 
     $('#progress-headings').append(
       '<div class="'+heading+'">\
@@ -309,7 +345,7 @@ function add_progress_heading(association, focus, repopulate) {
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
-        </a>\
+        </a>'+link+'\
       </div>'
     );
     heading = '.'+heading+' .experiment-heading';
@@ -317,6 +353,7 @@ function add_progress_heading(association, focus, repopulate) {
   }
   else if (association == 'tasks') {
     var heading = 'task-block-'+taskId;
+    var link = '<a class="btn add-core-element-nav" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Finding</a>';
 
     $('.experiment-block-'+experimentId).append(
       '<div class="'+heading+'">\
@@ -326,12 +363,12 @@ function add_progress_heading(association, focus, repopulate) {
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
-        </a>\
+        </a>'+link+'\
         <div class="finding-block"></div>\
       </div>'
     );
     heading = '.experiment-block-'+experimentId+' .'+heading+' .task-heading';
-    
+
   } 
   else if (association == 'findings') {
     var heading = 'finding-block-'+findingId;
@@ -349,8 +386,6 @@ function add_progress_heading(association, focus, repopulate) {
     );
     heading = '.experiment-block-'+experimentId+' .task-block-'+taskId+' .'+heading+' .finding-heading';
   
-    //repopulate buttons of findings
-    repopulate_buttons($(focus.selector));
   }
 
   //Bind element title to heading title
@@ -364,11 +399,62 @@ function add_progress_heading(association, focus, repopulate) {
     $('#progress-headings '+heading+' .title-field').text(newTitle);
   });
 
+  //Remove element when close is clicked and prevent the show_element functionality
+  $('#progress-headings '+heading+' .close').click( function(e) {
+    console.log('clicking!!', e, $(this));
+    var type = $(this).parent().parent().prop('class').split('-')[0];
+    var target = $(this).parent().parent().data('target').split('_');
+    var navTarget;
+    var targetDestroyId = '#paper_';  
+
+    for (var i = 0; i< target.length; i++) {
+      if (i == 1) {
+        navTarget = '.experiment-block-'+target[i];
+        targetDestroyId = targetDestroyId+'experiments_attributes_'+target[i];
+      } 
+      else if (i == 3) {
+        navTarget = navTarget+' .task-block-'+target[i];
+        targetDestroyId = targetDestroyId+'_tasks_attributes_'+target[i];
+      } 
+      else if (i == 5) {
+        navTarget = navTarget+' .finding-block-'+target[i];
+        targetDestroyId = targetDestroyId+'_findings_attributes_'+target[i];
+      }
+    };
+
+    $('#element-title-to-delete').html($(this).parent().parent().children('.title-field').html());
+    $('.element-type-to-delete').each( function () {
+      $(this).html(type);
+    });
+
+    if (type == 'finding') {
+      $('.element-dependants').each( function () {
+        $(this).html('');
+      });
+    } else {
+      $('.element-dependants').each( function () {
+        $(this).html(' and its dependants');
+      });
+    }
+
+    $('#element-nav-id-to-delete').html(navTarget);
+    $('#element-destroy-id-to-delete').html(targetDestroyId+'__destroy');
+
+    $('#delete-core-element-modal').modal('show');
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
   if (repopulate) {
     //Keep publicaiton info visible and rename if title is present
     $($('#progress-headings '+heading).data('target')).hide();
     $(focus.selector + ' .field-title input').keyup();
 
+    if (association == 'findings') {
+      //repopulate buttons of findings
+      repopulate_buttons($(focus.selector));
+    }
   } else {
     //Set newely created heading to current and show it
     show_element($('#progress-headings '+heading), true);
@@ -414,8 +500,14 @@ function show_element (focus, slide) {
   }   
 }
 
-function delete_element (focus) {
+function delete_element () {
+  $($('#element-nav-id-to-delete').html()).hide();
+  $($('#element-nav-id-to-delete').html()).addClass('_destroy');
 
+  $($('#element-destroy-id-to-delete').html()).val('true');
+  $($('#element-destroy-id-to-delete').html()).addClass('_destroy');
+
+  $('#delete-core-element-modal').modal('hide');
 }
 
 // ##########################################################################
@@ -716,6 +808,12 @@ function add_fields_after (link, association, content) {
   add_progress_heading(association, focus, false);
 }
 
+function add_core_element (focus) {
+  console.log('target', $(focus).prev().data('target'));
+
+  $($(focus).prev().data('target')).find('.add-core-element').click();
+}
+
 // ##########################################################################
 // Add Nested Attributes
 // ##########################################################################
@@ -747,31 +845,35 @@ function add_fields_before (link, association, content) {
 // ##########################################################################
 
 function add_author_ids (data) {
-  var idsFound = $('[id *=author_papers_attributes][id $=_id]').length/2;
+  if (data.author_papers != undefined) {
+    var idsFound = $('[id *=author_papers_attributes][id $=_id]').length/2;
 
-  if ($(data.author_papers).length != idsFound) {
-    $(data.author_papers).each( function(a_index) {
-      var index = this.order;
+    if (data.author_papers.length != idsFound) {
+      $(data.author_papers).each( function(a_index) {
+        // var index = this.order;
 
-      if (index > idsFound-1) {
-        console.log('Adding author id ', index);
-        $('.author_paper').eq(index).append('<input id="paper_author_papers_attributes_'+index+'_id" name="paper[author_papers_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
-        $('.author_paper').eq(index).children().find('.author').append('<input id="paper_author_papers_attributes_'+index+'_author_attributes_id" name="paper[author_papers_attributes]['+index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
-      }
-    });
+        if (a_index > idsFound-1) {
+          console.log('Adding author id ', a_index);
+          $('.author_paper').eq(a_index).append('<input id="paper_author_papers_attributes_'+a_index+'_id" name="paper[author_papers_attributes]['+a_index+'][id]" type="hidden" value="'+this.id+'">');
+          $('.author_paper').eq(a_index).children().find('.author').append('<input id="paper_author_papers_attributes_'+a_index+'_author_attributes_id" name="paper[author_papers_attributes]['+a_index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
+        }
+      });
+    }
   }
 }
 
 function add_experiment_ids (data) {
-  var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]').length;
+  if (data.experiments != undefined) {
+    var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]').length;
 
-  if ($(data.experiments).length != idsFound) {
-    $(data.experiments).each( function(e_index) {
-      if (e_index > idsFound-1) {
-        console.log('Adding experiment id ', e_index);
-        $('.paper').append('<input id="paper_experiments_attributes_'+e_index+'_id" name="paper[experiments_attributes]['+e_index+'][id]" type="hidden" value="'+this.id+'">');
-      }
-    });
+    if (data.experiments.length != idsFound) {
+      $(data.experiments).each( function(e_index) {
+        if (e_index > idsFound-1) {
+          console.log('Adding experiment id ', e_index);
+          $('.paper').append('<input id="paper_experiments_attributes_'+e_index+'_id" name="paper[experiments_attributes]['+e_index+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
   }
 }
 
@@ -779,19 +881,21 @@ function add_experiment_nested_ids (data, throughTable) {
   $('.experiment').each( function(e_index) {
     var idsFound = 0;
     
-    $('#experiment_'+e_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
-      if ($(this).data('attribute') == undefined) {
-        idsFound = idsFound+1;
-      }
-    });
-
-    if (eval('$(data.experiments['+e_index+'].'+throughTable+'s)').length != idsFound) {
-      eval('$(data.experiments['+e_index+'].'+throughTable+'s)').each( function(i) {
-        if (i > idsFound-1) {
-          console.log('Adding ', throughTable, ' id ', i, 'for experiment', e_index);
-          $('#experiment_'+e_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+    if (eval('data.experiments['+e_index+']') != undefined) {
+      $('#experiment_'+e_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+        if ($(this).data('attribute') == undefined) {
+          idsFound = idsFound+1;
         }
       });
+
+      if (eval('data.experiments['+e_index+'].'+throughTable+'s.length') != idsFound) {
+        eval('$(data.experiments['+e_index+'].'+throughTable+'s)').each( function(i) {
+          if (i > idsFound-1) {
+            console.log('Adding ', throughTable, ' id ', i, 'for experiment', e_index);
+            $('#experiment_'+e_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+          }
+        });
+      }
     }
 
     add_task_ids (data, e_index);
@@ -800,15 +904,17 @@ function add_experiment_nested_ids (data, throughTable) {
 }
 
 function add_task_ids (data, e_index) {
-  var idsFound = $('#experiment_'+e_index+' [id *=tasks_attributes_][id $=_id]').length;
+  if (eval('data.experiments['+e_index+']') != undefined) {
+    var idsFound = $('#experiment_'+e_index+' [id *=tasks_attributes_][id $=_id]').length;
 
-  if (eval('$(data.experiments['+e_index+'].tasks)').length != idsFound) {
-    eval('$(data.experiments['+e_index+'].tasks)').each( function(t_index) {
-      if (t_index > idsFound-1) {
-        console.log('Adding task id ', t_index, 'for experiment', e_index);
-        $('#experiment_'+e_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][id]" type="hidden" value="'+this.id+'">');
-      }
-    });
+    if (eval('data.experiments['+e_index+'].tasks.length') != idsFound) {
+      eval('$(data.experiments['+e_index+'].tasks)').each( function(t_index) {
+        if (t_index > idsFound-1) {
+          console.log('Adding task id ', t_index, 'for experiment', e_index);
+          $('#experiment_'+e_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
   }
 }
 
@@ -816,24 +922,26 @@ function add_task_nested_ids (data, e_index, throughTable) {
   $('.task').each( function(r_index) {
     var t_index = 0;
     
-    if ($(this).data('experiment') == e_index) {
-      var idsFound = 0;
-    
-      $('#experiment_'+e_index+'_task_'+t_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
-        if ($(this).data('attribute') == undefined) {
-          idsFound = idsFound+1;
-        }
-      });
-
-      if (eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').length != idsFound) {
-        eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').each( function(i) {
-          if (i > idsFound-1) {
-            console.log('Adding ', throughTable, 'id ', i, 'for task', t_index, 'in experiment', e_index);
-            $('#experiment_'+e_index+'_task_'+t_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_task_'+t_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+    if (eval('data.experiments['+e_index+'].tasks['+t_index+']') != undefined) {
+      if ($(this).data('experiment') == e_index) {
+        var idsFound = 0;
+      
+        $('#experiment_'+e_index+'_task_'+t_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+          if ($(this).data('attribute') == undefined) {
+            idsFound = idsFound+1;
           }
         });
+
+        if (eval('data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s.length') != idsFound) {
+          eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').each( function(i) {
+            if (i > idsFound-1) {
+              console.log('Adding ', throughTable, 'id ', i, 'for task', t_index, 'in experiment', e_index);
+              $('#experiment_'+e_index+'_task_'+t_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_task_'+t_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+            }
+          });
+        }
+        t_index = t_index + 1;
       }
-      t_index = t_index + 1;
     }
 
     add_finding_ids (data, e_index, r_index);
@@ -841,15 +949,17 @@ function add_task_nested_ids (data, e_index, throughTable) {
 }
 
 function add_finding_ids (data, e_index, t_index) {
-  var idsFound = $('#experiment_'+e_index+'_task_'+t_index+' [id *=findings_attributes_][id $=_id]').length;
-  
-  if (eval('$(data.experiments['+e_index+'].tasks['+t_index+'].findings)').length != idsFound) {
-    eval('$(data.experiments['+e_index+'].tasks['+t_index+'].findings)').each( function(f_index) {
-      if (f_index > idsFound-1) {
-        console.log('Adding finding id', f_index, ' of task id ', t_index, 'for experiment', e_index);
-        $('#experiment_'+e_index+'_task_'+t_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][findings_attributes]['+f_index+'][id]" type="hidden" value="'+this.id+'">');
-      }
-    });
+  if (eval('data.experiments['+e_index+'].tasks['+t_index+']') != undefined) {
+    var idsFound = $('#experiment_'+e_index+'_task_'+t_index+' [id *=findings_attributes_][id $=_id]').length;
+    
+    if (eval('data.experiments['+e_index+'].tasks['+t_index+'].findings.length') != idsFound) {
+      eval('$(data.experiments['+e_index+'].tasks['+t_index+'].findings)').each( function(f_index) {
+        if (f_index > idsFound-1) {
+          console.log('Adding finding id', f_index, ' of task id ', t_index, 'for experiment', e_index);
+          $('#experiment_'+e_index+'_task_'+t_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][findings_attributes]['+f_index+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
   }
 }
 
@@ -860,96 +970,103 @@ function add_finding_ids (data, e_index, t_index) {
 var paperId = null;
 var paperJSON;
 
-function save_paper (focus, association, content) {
-  update_author_order();
-  add_fields_after (focus, association, content);
-  $('[ref=tooltip]').tooltip();
-}
+var paperError;
 
 function save_other_fields () {
 
 }
 
-function add_test (focus) {
+function save_paper (focus, association, content) {
   if (paperId == null) {
+    var url = '/papers';
     console.log('first post');
-    $(focus).button('loading');
-    
-    $.ajax({
-      type: 'POST',
-      url: '/papers',
-      data: $('form.paper-form').serialize(),
-      dataType: 'json',
-      success: function(data, status) {
-        console.log(status, data); //whether successful or not
+  } else {
+    var url = '/papers/'+paperId
+    console.log('updating');
+  }
 
+  $(focus).button('loading');
+  
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: $('form.paper-form').serialize(),
+    dataType: 'json',
+    success: function(data, status) {
+      console.log(status, data); //whether successful or not
+
+      if (paperId == null) {
         //Get information and add put method for updating paper
         paperId = data.id;
         $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
-
-        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-        paperManager.cleanUp();
-
-        //Add new nested attributes ids to form
-        paperJSON = data;
-        add_author_ids(data);
-        add_experiment_ids(data);
-        add_experiment_nested_ids (data, 'experiment_display');
-        add_experiment_nested_ids (data, 'experiment_hardware');
-        add_experiment_nested_ids (data, 'experiment_visual');
-        add_experiment_nested_ids (data, 'experiment_aural');
-        add_experiment_nested_ids (data, 'experiment_haptic');
-        add_experiment_nested_ids (data, 'experiment_biomechanical');
-        add_experiment_nested_ids (data, 'experiment_control');
-        add_experiment_nested_ids (data, 'experiment_system_app');
-        add_experiment_nested_ids (data, 'experiment_indy_variable');
-
-        //Reset the button and add element
-        $(focus).button('reset');
-        // add_fields_after (focus, association, content)
-      },
-      error: function (error) {
-        alert('There was an error when saving! Please notify an admin.');
-        $(focus).button('reset');
       }
-    });
+
+      //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+      paperManager.cleanUp();
+      update_author_order();
+
+      //Add new nested attributes ids to form
+      paperJSON = data;
+      add_author_ids(data);
+      add_experiment_ids(data);
+      add_experiment_nested_ids (data, 'experiment_display');
+      add_experiment_nested_ids (data, 'experiment_hardware');
+      add_experiment_nested_ids (data, 'experiment_visual');
+      add_experiment_nested_ids (data, 'experiment_aural');
+      add_experiment_nested_ids (data, 'experiment_haptic');
+      add_experiment_nested_ids (data, 'experiment_biomechanical');
+      add_experiment_nested_ids (data, 'experiment_control');
+      add_experiment_nested_ids (data, 'experiment_system_app');
+      add_experiment_nested_ids (data, 'experiment_indy_variable');
+
+      if (association != undefined) {
+        //Add element and reset stuff
+        add_fields_after (focus, association, content)
+        handle_one_times();
+
+        $('[ref=tooltip]').tooltip();
+      }
+
+      $(focus).button('reset');
+    },
+    error: function (error) {
+      console.log('error:', error);
+      paperError = error;
+      alert('There was an error when saving! Please notify an admin.');
+      $(focus).button('reset');
+    }
+  });
+}
+
+function handle_one_times () {
+  var keepHidden = true;
+
+  if (paperJSON != undefined) {
+    $('.new_experiment').hide();
+    keepHidden = false;
+
+    if (paperJSON.experiments[0] != undefined) {
+      $('.new_task').hide();
+      keepHidden = false;
+
+      if (paperJSON.experiments[0].tasks[0] != undefined) {
+        $('.new_finding').hide();
+        keepHidden = false;
+
+      } else {
+        keepHidden = true;
+      }
+    } else {
+      keepHidden = true;
+    }
   } else {
-    console.log('updating');
+    keepHidden = true;
+  }
 
-    $.ajax({
-      type: 'POST',
-      url: '/papers/'+paperId,
-      data: $('form.paper-form').serialize(),
-      dataType: 'json',
-      success: function(data, status) {
-        console.log(status, data);
-
-        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-        paperManager.cleanUp();
-
-        //Add new nested attributes ids to form
-        paperJSON = data;
-        add_author_ids(data);
-        add_experiment_ids(data);
-        add_experiment_nested_ids (data, 'experiment_display');
-        add_experiment_nested_ids (data, 'experiment_hardware');
-        add_experiment_nested_ids (data, 'experiment_visual');
-        add_experiment_nested_ids (data, 'experiment_aural');
-        add_experiment_nested_ids (data, 'experiment_haptic');
-        add_experiment_nested_ids (data, 'experiment_biomechanical');
-        add_experiment_nested_ids (data, 'experiment_control');
-        add_experiment_nested_ids (data, 'experiment_system_app');
-        add_experiment_nested_ids (data, 'experiment_indy_variable');
-
-        //Reset the button and add element
-        $(focus).button('reset');
-        // add_fields_after (focus, association, content)
-      },
-      error: function (error) {
-        alert('There was an error when saving! Please notify an admin.');
-        $(focus).button('reset');
-      }
-    });
+  if (keepHidden) {
+    $('#progress-headings .add-core-element-nav').addClass('hidden');
+  } else {
+    $('#progress-headings .add-core-element-nav').removeClass('hidden');
   }
 }
 
@@ -979,8 +1096,11 @@ $(document).ready( function() {
         paperJSON = data;
 
         paperManager.setCounts();
+        handle_one_times();
       }
     });
+  } else {
+    handle_one_times();
   }
 
   //Prevents users from accidentally leaving the page
@@ -989,13 +1109,13 @@ $(document).ready( function() {
   // };
 
   //Prevents form from being submitted by enter key
-  $('#new_paper').bind("keyup keypress", function(e) {
-    var code = e.keyCode || e.which; 
-    if (code  == 13) {               
-      e.preventDefault();
-      return false;
-    }
-  });
+  // $('#new_paper').bind("keyup keypress", function(e) {
+  //   var code = e.keyCode || e.which; 
+  //   if (code  == 13) {               
+  //     e.preventDefault();
+  //     return false;
+  //   }
+  // });
 
   $('[ref=tooltip]').tooltip();
 

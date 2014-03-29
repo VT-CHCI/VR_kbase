@@ -11,9 +11,15 @@
               <div class="title-field">Publication Information</div>
             </div>
           </a>
+          <a class="btn add-core-element-nav" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Experiment</a>
 
         </div>
-        <button class="btn btn-primary" data-loading-text="Autosaving..." onclick="add_test(this); return false;">Save</button>
+        <div id="save-button">
+          <button class="btn btn-primary" data-loading-text="Saving..." onclick="save_paper(this); return false;">Save</button>
+        </div>
+        <div id="submit-button">
+          <button class="btn btn-primary" data-loading-text="Saving..." onclick="submit_paper(this); return false;">Save and Submit Publication</button>
+        </div>
       </div>
     </div>
 
@@ -54,9 +60,9 @@
           <legend class="with-helper-text">Paper Details</legend>
           <p class="after-legend"><small>This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the page to move onto adding an experiment.</small></p>
 
-          <div class="field">
-            <%= f.label :title, 'Publication Title' %>
-            <%= f.text_field :title, :class => 'span12' %>
+          <div class="field control-group">
+            <%= f.label :title, 'Publication Title', :class=> 'required' %>
+            <%= f.text_field :title, :class => 'span12 validated-field', :required => true, :validate => true, :onchange => "validate_field(this)" %>
           </div>
 
           <div class="well">
@@ -112,9 +118,9 @@
             </div>
           </div>
 
-          <div class="field clear .field-title">
+          <div class="field clear field-url control-group">
             <%= f.label :paper_url %>
-            <%= f.text_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
+            <%= f.url_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
           </div>
 
           <%= f.fields_for :experiments do |builder| %>
@@ -124,7 +130,6 @@
           <p class="new_experiment">
             <%= button_to_add_elements "Save and Continue", f, :experiments %>
           </p>
-
         </div>
       </div>
 
@@ -133,6 +138,20 @@
       </div> -->
     </div>
   </div>
-
-
 <% end %>
+
+<div id="delete-core-element-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-core-element-modal" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete "<span id="element-title-to-delete"></span>"<span class="element-dependants"></span>?</h3>
+  </div>
+  <div class="modal-body">
+    <p>This will permenently erase all information for this <span class="element-type-to-delete"></span><span class="element-dependants"></span>. This action cannot be undone. Are you sure you want to continue?</p>
+    <p id="element-nav-id-to-delete" class="hidden"></p>
+    <p id="element-destroy-id-to-delete" class="hidden"></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-danger" onclick="delete_element()">Erase <span class="element-type-to-delete"></span>!</button>
+  </div>
+</div>

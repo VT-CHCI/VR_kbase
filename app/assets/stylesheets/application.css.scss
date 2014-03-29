@@ -273,4 +273,48 @@ form input[type='number']::-webkit-inner-spin-button {
       width: 81%;
     }
   }
+
+  .publication-heading-input {
+    /*width: 93%;*/
+    width: 100%;
+    float: right;
+  }
+
+  .experiment-heading-input {
+    /*width: 89%;*/
+    width: 100%;
+    float: right;
+  }
+
+  .task-heading-input {
+    /*width: 84%;*/
+    width: 100%;
+    float: right;
+  }
+}
+
+#submit-button {
+  padding-top: 20px;
+  clear: both;
+
+  button {
+    width: 100%;
+  }
+}
+
+label.required:after {
+  content:  "  *";
+  color: red;
+}
+
+label.error:after {
+  content:  " * Required field";
+  color: red;
+}
+
+.field-url {
+  label.error:after {
+    content:  " Not a valid url";
+    color: red;
+  }
 }

@@ -126,9 +126,9 @@ var paperManager = {
       $(this.experiments).each( function(i) {
         this.recount();
         $(this.tasks).each( function() {
-          this.recout();
+          this.recount();
           $(this.findings).each( function() {
-            this.recout();
+            this.recount();
           });
         });
       });
@@ -448,7 +448,6 @@ function finding(count, e_index, t_index) {
 // Counter Functionality
 // ##########################################################################
 
-
 function counter(type, throughTable) {
   this.count = null;
   this.type = type;
@@ -473,8 +472,6 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
   $(type).each( function(index) {
     $(this).data(throughTable.split('_').join('-'), index);
   });
-  // console.log('We are setting counts: ', e_index, t_index, f_index, focus);
-
 
   $(focus).each( function(index) {
     a_index = index;
