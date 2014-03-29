@@ -132,6 +132,8 @@ GEM
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    validate_url (0.2.0)
+      activemodel (>= 3.0.0)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -153,3 +155,4 @@ DEPENDENCIES
   sqlite3
   squeel
   uglifier (>= 1.0.3)
+  validate_url

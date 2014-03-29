@@ -5,4 +5,6 @@ class ExperimentSystemApp < ActiveRecord::Base
   accepts_nested_attributes_for :system_appropriateness
 
   attr_accessible :desc, :system_appropriateness_attributes, :system_appropriateness_id
+
+  validates :desc, :presence => true
 end

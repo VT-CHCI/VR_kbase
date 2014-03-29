@@ -77,6 +77,15 @@ function checkAuthorsCount () {
   return false;
 }
 
+function checkIndyDescritions (element) {
+  $('.indy_variable_desc_label').each(function() { 
+    if($(element).prev().children().length > 1) 
+      $(this).addClass('required');
+    else
+      $(this).removeClass('required');
+  });
+}
+
 // ##########################################################################
 // Auto Generation of Detail Fields
 // ##########################################################################
