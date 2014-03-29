@@ -17,6 +17,9 @@ class Experiment < ActiveRecord::Base
     :experiment_system_apps_attributes
 
 
+  validates :title, :presence => true
+  validates :exp_desc, :presence => true
+
   has_many :experiment_displays, :dependent => :destroy
   has_many :displays, :through => :experiment_displays
 

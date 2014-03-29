@@ -8,13 +8,13 @@
   <legend class="with-helper-text">General Information</legend>
   <!-- <p class="after-legend"><small>Create a title / nickname for the experiment so that it can be referred back to easily in the entry progress list. Also provide the research questions and goals that motivate the experiment.</small></p> -->
   </br>
-  <div class="field field-title exp-field">
-    <%= f.label :title, 'Experiment Title', :'data-attribute' => 'title' %>
-    <%= f.text_field :title, :class => 'span12', :'data-attribute' => 'title', :title => 'Provide a title for the experiment to be used for your own reference', :'ref' => 'tooltip', :'data-placement' => 'left' %>
+  <div class="field field-title exp-field control-group">
+    <%= f.label :title, 'Experiment Title', :'data-attribute' => 'title', :class=> 'required' %>
+    <%= f.text_field :title, :class => 'span12 validated-field', :required => true, :validate => true, :onchange => "validate_field(this)", :'data-attribute' => 'title', :title => 'Provide a title for the experiment to be used for your own reference', :'ref' => 'tooltip', :'data-placement' => 'left' %>
   </div>
-  <div class="field field-exp-desc exp-field">
-    <%= f.label :exp_desc, 'Research Questions and Goals', :'data-attribute' => 'exp_desc' %>
-    <%= f.text_area :exp_desc, :class => 'span12', :rows => 5, :'data-attribute' => 'exp_desc', :title => 'Provide the research questions and goals that motivate the experiment', :'ref' => 'tooltip', :'data-placement' => 'left' %>
+  <div class="field field-exp-desc exp-field control-group">
+    <%= f.label :exp_desc, 'Research Questions and Goals', :'data-attribute' => 'exp_desc', :class=> 'required' %>
+    <%= f.text_area :exp_desc, :class => 'span12 validated-field', :required => true, :validate => true, :onchange => "validate_field(this)", :rows => 5, :'data-attribute' => 'exp_desc', :title => 'Provide the research questions and goals that motivate the experiment', :'ref' => 'tooltip', :'data-placement' => 'left' %>
   </div>
 
   <legend class="with-helper-text">Participant Information</legend>
@@ -38,11 +38,11 @@
     </div>
   </div>
 
-  <div class="field">
-    <%= f.label nil, 'Gender Balance' %>
+  <div class="field control-group">
+    <%= f.label nil, 'Gender Balance', :class=> 'required' %>
     <% Gender.all.each do |gender| %>
       <div class="radio inline pill gender">
-        <%= f.radio_button :gender_id, gender.id, :'data-attribute' => 'gender_id' %>
+        <%= f.radio_button :gender_id, gender.id, :'data-attribute' => 'gender_id', :class => 'gender_group' %>
         <%= f.label :gender_id, gender.gender, :value => gender.id, :'data-attribute' => 'gender_id' %>
       </div>
     <% end %>
@@ -132,7 +132,7 @@
             <legend>Visual Fidelity</legend>
             <% VisualFidelity.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, f.object.visual_fidelities.include?(component), :id => "experiments_attributes_new_experiments_visual_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_visual', 'visual_fidelity', 'levels')", :class => "fidelity-component", :'data-experiment' => 'new_experiments', :'data-attribute' => 'visual_id' %>
+                <%= check_box_tag nil, component.id, f.object.visual_fidelities.include?(component), :id => "experiments_attributes_new_experiments_visual_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_visual', 'visual_fidelity', 'levels')", :class => "fidelity-component components_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'visual_id' %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_visual_id_#{component.id}", :'data-attribute' => 'visual_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 
@@ -162,7 +162,7 @@
             <legend>Auditory Fidelity</legend>
             <% AuralFidelity.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, f.object.aural_fidelities.include?(component), :id => "experiments_attributes_new_experiments_auditory_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_aural', 'aural_fidelity', 'levels')", :class => "fidelity-component", :'data-experiment' => 'new_experiments', :'data-attribute' => 'auditory_id' %>
+                <%= check_box_tag nil, component.id, f.object.aural_fidelities.include?(component), :id => "experiments_attributes_new_experiments_auditory_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_aural', 'aural_fidelity', 'levels')", :class => "fidelity-component components_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'auditory_id' %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_auditory_id_#{component.id}", :'data-attribute' => 'auditory_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 
@@ -192,7 +192,7 @@
             <legend>Haptic Fidelity</legend>
             <% HapticFidelity.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, f.object.haptic_fidelities.include?(component), :id => "experiments_attributes_new_experiments_haptic_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_haptic', 'haptic_fidelity', 'levels')", :class => "fidelity-component", :'data-experiment' => 'new_experiments', :'data-attribute' => 'haptic_id' %>
+                <%= check_box_tag nil, component.id, f.object.haptic_fidelities.include?(component), :id => "experiments_attributes_new_experiments_haptic_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_haptic', 'haptic_fidelity', 'levels')", :class => "fidelity-component components_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'haptic_id' %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_haptic_id_#{component.id}", :'data-attribute' => 'haptic_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 
@@ -233,7 +233,7 @@
             <legend>Biomechanical Symmetry</legend>
             <% BiomechanicalSymmetry.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, f.object.biomechanical_symmetries.include?(component), :id => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_biomechanical', 'biomechanical_symmetry', 'levels')", :class => "fidelity-component", :'data-experiment' => 'new_experiments', :'data-attribute' => 'biomechanical_id' %>
+                <%= check_box_tag nil, component.id, f.object.biomechanical_symmetries.include?(component), :id => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_biomechanical', 'biomechanical_symmetry', 'levels')", :class => "fidelity-component components_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'biomechanical_id' %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_biomechanical_id_#{component.id}", :'data-attribute' => 'biomechanical_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 
@@ -263,7 +263,7 @@
             <legend>Control Symmetry</legend>
             <% ControlSymmetry.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, f.object.control_symmetries.include?(component), :id => "experiments_attributes_new_experiments_control_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_control', 'control_symmetry', 'levels')", :class => "fidelity-component", :'data-experiment' => 'new_experiments', :'data-attribute' => 'control_id' %>
+                <%= check_box_tag nil, component.id, f.object.control_symmetries.include?(component), :id => "experiments_attributes_new_experiments_control_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_control', 'control_symmetry', 'levels')", :class => "fidelity-component components_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'control_id' %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_control_id_#{component.id}", :'data-attribute' => 'control_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 
@@ -293,7 +293,7 @@
             <legend>System Appropriateness</legend>
             <% SystemAppropriateness.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
-                <%= check_box_tag nil, component.id, f.object.system_appropriatenesses.include?(component), :id => "experiments_attributes_new_experiments_system_app_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_system_app', 'system_appropriateness', 'levels')", :class => "fidelity-component", :'data-experiment' => 'new_experiments', :'data-attribute' => 'system_app_id' %>
+                <%= check_box_tag nil, component.id, f.object.system_appropriatenesses.include?(component), :id => "experiments_attributes_new_experiments_system_app_id_#{component.id}", :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_system_app', 'system_appropriateness', 'levels')", :class => "fidelity-component components_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'system_app_id' %>
                 <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_system_app_id_#{component.id}", :'data-attribute' => 'system_app_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 

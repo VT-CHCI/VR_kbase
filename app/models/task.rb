@@ -29,4 +29,7 @@ class Task < ActiveRecord::Base
   attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
     :density_id, :realism_id, :category_tokens, :findings, :findings_attributes, :category_ids, 
     :task_metrics_attributes
+
+  validates :title, :presence => true
+  validates :task_desc, :presence => true
 end
