@@ -32,6 +32,15 @@ function validate_all_fields () {
   });
 
   paperValid = paperValid && checkAuthorsCount ();
+  //paperValid = paperValid && $('.gender_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.components_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.category_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.dimension_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.scale_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.density_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.realism_group:checked input:visible').length > 0;
+  //paperValid = paperValid && $('.metrics_group:checked input:visible').length > 0;
+
 }
 
 function validate_field (focus) {
