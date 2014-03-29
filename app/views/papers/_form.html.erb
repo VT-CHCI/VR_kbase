@@ -48,13 +48,13 @@
           <div class="well doi-well">
             <legend class="with-helper-text">Using a DOI (Digital Object Identifier)</legend>
             <p class="after-legend"><small>If you know the DOI for this entry, simply type it in the field below and click 'Lookup DOI' to automatically populate the paper details. Please be sure to review the data to make sure it is correct.</small></p>
-            <div class="field doi-field">
+            <div class="field doi-field" id="paper-doi">
              <!--  <%= f.label :doi, 'DOI' %> -->
               <div class="input-append">
-                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'bottom' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
+                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'left' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
               </div>
             </div>
-            <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span>
+            <!-- <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span> -->
           </div>
 
           <legend class="with-helper-text">Paper Details</legend>
