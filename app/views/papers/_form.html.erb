@@ -18,7 +18,7 @@
           <button class="btn btn-primary" data-loading-text="Saving..." onclick="save_paper(this); return false;">Save</button>
         </div>
         <div id="submit-button">
-          <button class="btn btn-primary" data-loading-text="Saving..." onclick="submit_paper(this); return false;">Save and Submit Publication</button>
+          <button class="btn btn-primary" data-loading-text="Saving..." onclick="submit_paper(this); return false;">Submit Publication</button>
         </div>
       </div>
     </div>
@@ -120,7 +120,7 @@
 
           <div class="field clear field-url control-group">
             <%= f.label :paper_url %>
-            <%= f.url_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'bottom' %>
+            <%= f.url_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'left' %>
           </div>
 
           <%= f.fields_for :experiments do |builder| %>

@@ -22,12 +22,16 @@
 // Validation
 // ##########################################################################
 
-var paperValid = false;
+var paperValid = true;
 
-function validate_all_fields (selector) {
-  $('.field').each( function() {
+function validate_all_fields () {
+  paperValid = true;
+
+  $($('.core-element:visible .validated-field:visible')).each( function() {
     validate_field(this);
   });
+
+  paperValid = paperValid && checkAuthorsCount ();
 }
 
 function validate_field (focus) {
@@ -37,21 +41,22 @@ function validate_field (focus) {
       $(element).parent().removeClass('error');
       $(element).prev().removeClass('error');
 
-      paperValid = true;
+      paperValid = paperValid && true;
     },
     invalid: function(element, messages) {
       $(element).parent().addClass('error');
       $(element).parent().removeClass('success');
       $(element).prev().addClass('error');
-
-      paperValid = false;
       
-      alert(messages.join(','));
+      console.log('not valid!', messages.join(','));
+      paperValid = paperValid && false;
     }
   });
 }
 
-function setUrlClasses (focus, valid) {
+function setUrlClasses (valid) {
+  var focus = $('#paper .field-url input');
+
   if (valid) {
     $(focus).parent().addClass('success');
     $(focus).parent().removeClass('error');
@@ -603,7 +608,7 @@ function repopulate_buttons(focus) {
   create_inputs('hidden', '', target, '', 'indy_variable', 'variable', [], true);
 
   if(eval('paperJSON.experiments['+e_index+'].experiment_indy_variables.length') > 0) {
-    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').append('<label>Independant Variables</label><div class="indy-variables"></div>');
+    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').append('<label>Independent Variables</label><div class="indy-variables"></div>');
   
     var preData = new Array;
     if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+']')) {
@@ -986,56 +991,67 @@ function save_paper (focus, association, content) {
   }
 
   $(focus).button('loading');
-  
-  $.ajax({
-    type: 'POST',
-    url: url,
-    data: $('form.paper-form').serialize(),
-    dataType: 'json',
-    success: function(data, status) {
-      console.log(status, data); //whether successful or not
 
-      if (paperId == null) {
-        //Get information and add put method for updating paper
-        paperId = data.id;
-        $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+  validate_all_fields ();
+
+  if (paperValid) {
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: $('form.paper-form').serialize(),
+      dataType: 'json',
+      success: function(data, status) {
+        console.log(status, data); //whether successful or not
+
+        if (paperId == null) {
+          //Get information and add put method for updating paper
+          paperId = data.id;
+          $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+        }
+
+        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+        paperManager.cleanUp();
+        update_author_order();
+        setUrlClasses(true);
+
+        //Add new nested attributes ids to form
+        paperJSON = data;
+        add_author_ids(data);
+        add_experiment_ids(data);
+        add_experiment_nested_ids (data, 'experiment_display');
+        add_experiment_nested_ids (data, 'experiment_hardware');
+        add_experiment_nested_ids (data, 'experiment_visual');
+        add_experiment_nested_ids (data, 'experiment_aural');
+        add_experiment_nested_ids (data, 'experiment_haptic');
+        add_experiment_nested_ids (data, 'experiment_biomechanical');
+        add_experiment_nested_ids (data, 'experiment_control');
+        add_experiment_nested_ids (data, 'experiment_system_app');
+        add_experiment_nested_ids (data, 'experiment_indy_variable');
+
+        if (association != undefined) {
+          //Add element and reset stuff
+          add_fields_after (focus, association, content)
+          handle_one_times();
+
+          $('[ref=tooltip]').tooltip();
+        }
+      },
+      error: function (error) {
+        console.log('error:', error);
+        paperError = error;
+
+        if (error.responseJSON.paper_url == "is not a valid URL") {
+          setUrlClasses(false);
+        } else {
+          setUrlClasses(true);
+
+          alert('There was an error when saving! Please notify an admin.');
+        }
       }
+    });
+  }
 
-      //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-      paperManager.cleanUp();
-      update_author_order();
-
-      //Add new nested attributes ids to form
-      paperJSON = data;
-      add_author_ids(data);
-      add_experiment_ids(data);
-      add_experiment_nested_ids (data, 'experiment_display');
-      add_experiment_nested_ids (data, 'experiment_hardware');
-      add_experiment_nested_ids (data, 'experiment_visual');
-      add_experiment_nested_ids (data, 'experiment_aural');
-      add_experiment_nested_ids (data, 'experiment_haptic');
-      add_experiment_nested_ids (data, 'experiment_biomechanical');
-      add_experiment_nested_ids (data, 'experiment_control');
-      add_experiment_nested_ids (data, 'experiment_system_app');
-      add_experiment_nested_ids (data, 'experiment_indy_variable');
-
-      if (association != undefined) {
-        //Add element and reset stuff
-        add_fields_after (focus, association, content)
-        handle_one_times();
-
-        $('[ref=tooltip]').tooltip();
-      }
-
-      $(focus).button('reset');
-    },
-    error: function (error) {
-      console.log('error:', error);
-      paperError = error;
-      alert('There was an error when saving! Please notify an admin.');
-      $(focus).button('reset');
-    }
-  });
+  $(focus).button('reset');
 }
 
 function handle_one_times () {
