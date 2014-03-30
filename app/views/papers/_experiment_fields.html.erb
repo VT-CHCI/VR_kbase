@@ -77,10 +77,10 @@
       <% if !@paper.new_record? %>  
         <%= f.fields_for :experiment_displays do |experiment_display| %>
           <div data-id="" id="experiment_new_experiments_display_<%= experiment_display.object.display_id %>" class="display">
-            <div class="field">
+            <div class="field control-group">
               <%= experiment_display.hidden_field :display_id, :'data-attribute' => "display_id" %>
-              <%= experiment_display.label :desc, "#{experiment_display.object.display.display} description", :'data-attribute' => "desc" %>
-              <%= experiment_display.text_field :desc, :class => "span12", :'data-attribute' => "desc" %>
+              <%= experiment_display.label :desc, "#{experiment_display.object.display.display} description", :'data-attribute' => "desc", :class => "required" %>
+              <%= experiment_display.text_field :desc, :class => "span12 validated-field", :'data-attribute' => "desc", :required => true, :validate => true, :onchange => "validate_field(this)" %>
               <%= link_to_remove_fields "x", experiment_display %>
             </div>
           </div>

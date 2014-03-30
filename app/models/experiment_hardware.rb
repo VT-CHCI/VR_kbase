@@ -6,6 +6,8 @@ class ExperimentHardware < ActiveRecord::Base
 
   attr_accessible :desc, :hardware_attributes, :hardware_tokens
 
+  validates :desc, presence: true, if: "!hardware_tokens.nil?"
+
   attr_reader :hardware_tokens
 
   def hardware_tokens=(id)

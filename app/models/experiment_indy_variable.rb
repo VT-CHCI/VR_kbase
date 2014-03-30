@@ -6,6 +6,8 @@ class ExperimentIndyVariable < ActiveRecord::Base
 
   attr_accessible :desc, :indy_variable_attributes, :indy_variable_tokens
 
+  validates :desc, presence: true, if: "!indy_variable_tokens.nil?"
+
   attr_reader :indy_variable_tokens
 
   def indy_variable_tokens=(id)

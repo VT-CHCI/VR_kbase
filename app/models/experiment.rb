@@ -16,7 +16,6 @@ class Experiment < ActiveRecord::Base
     :experiment_haptics_attributes, :experiment_biomechanicals_attributes, :experiment_controls_attributes, 
     :experiment_system_apps_attributes
 
-
   validates :title, :presence => true
   validates :exp_desc, :presence => true
 

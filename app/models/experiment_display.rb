@@ -6,6 +6,8 @@ class ExperimentDisplay < ActiveRecord::Base
 
   attr_accessible :desc, :display_attributes, :display_tokens, :display_id
 
+  validates :desc, :presence => true
+
   attr_reader :display_tokens
 
   def display_tokens=(id)

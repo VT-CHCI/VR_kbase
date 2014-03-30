@@ -11,14 +11,14 @@
               <div class="title-field">Publication Information</div>
             </div>
           </a>
-
+          <div class="nav-experiments"></div>
           <a class="label nav-core-element-add" data-loading-text="Saving...">save and add experiment</a>
         </div>
         <div id="save-button">
-          <button class="btn btn-primary" data-loading-text="Saving..." onclick="save_paper(this); return false;">Save</button>
+          <button class="btn btn-primary" data-loading-text="Saving..." onclick="save_button_clicked(this); return false;">Save and Continue</button>
         </div>
         <div id="submit-button">
-          <button class="btn btn-primary" data-loading-text="Saving..." onclick="submit_paper(this); return false;">Submit Publication</button>
+          <button class="btn" data-loading-text="Saving..." onclick="submit_paper(this); return false;">Submit Publication</button>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
             <div class="field doi-field" id="paper-doi">
              <!--  <%= f.label :doi, 'DOI' %> -->
               <div class="input-append">
-                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'left' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
+                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'bottom' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
               </div>
             </div>
             <!-- <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span> -->
@@ -66,8 +66,8 @@
           </div>
 
           <div class="well">
-            <div class="attribute_block">
-              <legend class="with-helper-text">Authors</legend>
+            <div class="authors-title attribute_block">
+              <legend class="with-helper-text">Authors<span class="nested-validation-text hidden"> There must be at least one author</span></legend>
               <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add author button.</small></p>
 
               <div class="authors">
@@ -120,7 +120,7 @@
 
           <div class="field clear field-url control-group">
             <%= f.label :paper_url %>
-            <%= f.url_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'left' %>
+            <%= f.url_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'left', :onchange => "clear_validation_text(this)" %>
           </div>
 
           <%= f.fields_for :experiments do |builder| %>

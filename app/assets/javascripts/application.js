@@ -23,15 +23,24 @@
 // ##########################################################################
 
 var paperValid = true;
+var scrolledTo = false;
 
 function validate_all_fields () {
   paperValid = true;
+  scrolledTo = false;  
 
   $($('.core-element:visible .validated-field:visible')).each( function() {
     validate_field(this);
+    scrollToErrorField(this);
   });
 
-  paperValid = paperValid && checkAuthorsCount ();
+  if ($('.core-element:visible').hasClass('paper')) {
+    checkAuthorsCount();
+  }
+  
+  if ($('.core-element:visible').hasClass('experiment')) {
+    
+  }
   //paperValid = paperValid && $('.gender_group:checked input:visible').length > 0;
   //paperValid = paperValid && $('.components_group:checked input:visible').length > 0;
   //paperValid = paperValid && $('.category_group:checked input:visible').length > 0;
@@ -41,6 +50,11 @@ function validate_all_fields () {
   //paperValid = paperValid && $('.realism_group:checked input:visible').length > 0;
   //paperValid = paperValid && $('.metrics_group:checked input:visible').length > 0;
 
+  if ($('.finding').length > 0 && paperValid) {
+    $('#submit-button').show();
+  } else {
+    $('#submit-button').hide();
+  }
 }
 
 function validate_field (focus) {
@@ -75,24 +89,50 @@ function setUrlClasses (valid) {
     $(focus).parent().addClass('error');
     $(focus).parent().removeClass('success');
     $(focus).prev().addClass('error');
+
+    scrollToErrorField($('#paper .field-url input'));
   } 
 }
 
-function checkAuthorsCount () {
+function checkAuthorsCount (scrolled) {
   if ($('.authors input:visible').length/3 > 0 ) {
-    return true;
+    paperValid = paperValid && true;
+    
+    $('.authors-title .nested-validation-text').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.authors-title .nested-validation-text').removeClass('hidden');
+    scrollToErrorField($('.authors-title'), 120);
   }
-
-  return false;
 }
 
-function checkIndyDescritions (element) {
-  $('.indy_variable_desc_label').each(function() { 
-    if($(element).prev().children().length > 1) 
-      $(this).addClass('required');
-    else
-      $(this).removeClass('required');
-  });
+function checkAutoComplete (focus) {
+  if ($(focus).val().length > 0) {
+    $(focus).parent().next().find('label').addClass('required');
+  } else {
+    $(focus).parent().next().find('label').removeClass('required');
+  }
+}
+
+function scrollToErrorField (focus, offset) {
+  if (offset == undefined) {
+    offset = 225
+  }
+
+  if (!scrolledTo && !paperValid) {
+    console.log('scrolling!', focus);
+    $('html, body').animate({
+        scrollTop: $(focus).offset().top - offset
+    }, 1000);
+
+    scrolledTo = true;
+  }
+}
+
+function clear_validation_text (focus) {
+  $(focus).parent().removeClass('error');
+  $(focus).prev().removeClass('error');
 }
 
 // ##########################################################################
@@ -155,10 +195,10 @@ function create_component_description(focus, name, componentId, throughTable, co
     else {
       //the detail doesn't exist, so we need to create it
       $(container).append(
-        '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field">\
+        '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field control-group">\
         <input data-attribute="'+component+'_id" id="'+componentIdId+'" name="'+componentIdName+'" type="hidden" value="'+componentId+'">\
-        <label data-attribute="desc" for="'+componentDescId+'">'+name+' '+descriptor+'</label>\
-        <input data-attribute="desc" class="span12" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text">\
+        <label data-attribute="desc" for="'+componentDescId+'" class="required">'+name+' '+descriptor+'</label>\
+        <input data-attribute="desc" data-validate="[{"kind":"presence","options":{},"messages":{"blank":"can\'t be blank"}}]" class="span12 validated-field" onchange="validate_field(this)" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text" required>\
         <input data-attribute="_destroy" class="destroy" id="'+componentDestroyId+'" name="'+componentDestroyName+'" type="hidden" value="false">\
         </div></div>'
       );
@@ -308,34 +348,6 @@ function update_author_order() {
   });
 }
 
-// function click_add_finding(task_id) {
-//   //console.log(task_id);
-//   $('p.new_finding').each( function() {
-//     //console.log($(this).parent().attr('id').indexOf(String(task_id)));
-//     if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
-//       $(this).children().click();
-//   });
-//   //$('p.new_finding').children().click();
-
-//   $('[ref=tooltip]').tooltip();
-// }
-
-// function click_add_task(experiment_id) {
-//   //console.log(experiment_id);
-//   $('p.new_task').each( function() {
-//     //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
-//     if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
-//       $(this).children().click();
-//   });
-//   //$('p.new_task').children().click();
-
-//   $('[ref=tooltip]').tooltip();
-// }
-
-// function click_add_experiment() {
-//   $('p.new_experiment').children().click();
-// }
-
 // ##########################################################################
 // Progress Heading
 // ##########################################################################
@@ -345,32 +357,20 @@ function add_progress_heading(association, focus, repopulate) {
   var taskId = $(focus).data('task');
   var findingId = $(focus).data('finding');
 
-  var headingIndex = [experimentId+1];
-
-  if (taskId != undefined) {
-    headingIndex.push(taskId+1);
-  }
-  if (findingId != undefined) {
-    headingIndex.push(findingId+1);
-  }
-
-
-
-  headingIndex = [''];
   //Create heading
   if (association == 'experiments') {
     var heading = 'experiment-block-'+experimentId;
-    var link = '<a class="btn nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Task</a>';
+    var link = '<a class="label nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Task</a>';
 
-    $('#progress-headings').append(
-      '<div id="'+heading+'" class="nav-core-element-block">\
+    $('#progress-headings .nav-experiments').append(
+      '<div id="'+heading+'" class="nav-core-element-block experiment-block">\
         <a class="experiment-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
-          <div class="number-field">'+headingIndex.join('.')+'</div>\
           <div class="title-field">Unnamed Experiment</div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
-        </a>'+link+'\
+        </a>\
+        <div class="nav-tasks"></div>'+link+'\
       </div>'
     );
     heading = '#'+heading+' .experiment-heading';
@@ -378,18 +378,17 @@ function add_progress_heading(association, focus, repopulate) {
   }
   else if (association == 'tasks') {
     var heading = 'task-block-'+taskId;
-    var link = '<a class="btn nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Finding</a>';
+    var link = '<a class="label nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Finding</a>';
 
-    $('#experiment-block-'+experimentId).append(
-      '<div id="'+heading+'" class="nav-core-element-block">\
+    $('#experiment-block-'+experimentId+' .nav-tasks').append(
+      '<div id="'+heading+'" class="nav-core-element-block task-block">\
         <a class="task-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
-          <div class="number-field">'+headingIndex.join('.')+'</div>\
           <div class="title-field">Unnamed Task</div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
-        </a>'+link+'\
-        <div class="finding-block"></div>\
+        </a>\
+        <div class="nav-findings"></div>'+link+'\
       </div>'
     );
     heading = '#experiment-block-'+experimentId+' #'+heading+' .task-heading';
@@ -398,10 +397,9 @@ function add_progress_heading(association, focus, repopulate) {
   else if (association == 'findings') {
     var heading = 'finding-block-'+findingId;
 
-    $('#experiment-block-'+experimentId+' #task-block-'+taskId).append(
+    $('#experiment-block-'+experimentId+' #task-block-'+taskId+' .nav-findings').append(
       '<div id="'+heading+'" class="nav-core-element-block">\
         <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
-          <div class="number-field">'+headingIndex.join('.')+'</div>\
           <div class="title-field">Unnamed Finding</div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
@@ -412,6 +410,9 @@ function add_progress_heading(association, focus, repopulate) {
     heading = '#experiment-block-'+experimentId+' #task-block-'+taskId+' #'+heading+' .finding-heading';
   
   }
+
+  $('#progress-headings .experiment-block').css('padding-left', (6 - 500/$('#progress-headings').width())+'%');
+  $('#progress-headings .task-block').css('padding-left', (6.5 - 500/Math.floor($('#progress-headings .experiment-block').width()))+'%');
 
   //Bind element title to heading title
   $(focus.selector + ' .field-title input').eq(0).keyup( function() {
@@ -426,7 +427,6 @@ function add_progress_heading(association, focus, repopulate) {
 
   //Remove element when close is clicked and prevent the show_element functionality
   $('#progress-headings '+heading+' .close').click( function(e) {
-    console.log('clicking!!', e, $(this));
     var type = $(this).parent().parent().prop('id').split('-')[0];
     var target = $(this).parent().parent().data('target').split('_');
     var navTarget;
@@ -834,8 +834,6 @@ function add_fields_after (link, association, content) {
 }
 
 function add_core_element (focus) {
-  console.log('target', $(focus).prev().data('target'));
-
   $($(focus).prev().data('target')).find('.add-core-element').click();
 }
 
@@ -996,9 +994,24 @@ var paperId = null;
 var paperJSON;
 
 var paperError;
+var keepHidden;
 
-function save_other_fields () {
+function save_button_clicked (focus) {
+  if (keepHidden) {
+    if (paperJSON != undefined) {
+      $('#experiment_0 .add-core-element').click();
 
+      if (paperJSON.experiments[0] != undefined) {
+        $('#experiment_0_task_0 .add-core-element').click();
+
+        if (paperJSON.experiments[0].tasks[0] != undefined) {
+          $('#experiment_0_task_0_finding_0 .add-core-element').click();
+        }
+      } 
+    }
+  } else {
+    save_paper(focus);
+  }
 }
 
 function save_paper (focus, association, content) {
@@ -1061,8 +1074,10 @@ function save_paper (focus, association, content) {
         paperError = error;
 
         if (error.responseJSON.paper_url == "is not a valid URL") {
+          paperValid = paperValid && false;
           setUrlClasses(false);
         } else {
+          paperValid = paperValid && true;
           setUrlClasses(true);
 
           alert('There was an error when saving! Please notify an admin.');
@@ -1075,7 +1090,7 @@ function save_paper (focus, association, content) {
 }
 
 function handle_one_times () {
-  var keepHidden = true;
+  keepHidden = true;
 
   if (paperJSON != undefined) {
     $('.new_experiment').hide();
@@ -1100,9 +1115,11 @@ function handle_one_times () {
   }
 
   if (keepHidden) {
-    $('#progress-headings .add-core-element-nav').addClass('hidden');
+    $('#progress-headings .nav-core-element-add').hide();
+    $('#save-button button').html('Save and Continue');
   } else {
-    $('#progress-headings .add-core-element-nav').removeClass('hidden');
+    $('#progress-headings nav-core-element-add').show();
+    $('#save-button button').html('Save');
   }
 }
 
@@ -1139,13 +1156,12 @@ $(document).ready( function() {
     handle_one_times();
   }
 
-  $('.experiment-block').width($('#progress-headings').width()*.9+3);
-  $('.task-block').width($('#progress-headings').width()*.9*.9+5);
-
   $(window).resize( function() {
-    $('.experiment-block').width($('#progress-headings').width()*.9+3);
-    $('.task-block').width($('#progress-headings').width()*.9*.9+5);
+    $('#progress-headings .experiment-block').css('padding-left', (6 - 500/$('#progress-headings').width())+'%');
+    $('#progress-headings .task-block').css('padding-left', (6.5 - 500/Math.floor($('#progress-headings .experiment-block').width()))+'%');
   });
+
+  $('#submit-button').hide();
 
   //Prevents users from accidentally leaving the page
   // window.onbeforeunload = function() { 
@@ -1249,7 +1265,6 @@ $(document).ready( function() {
           }
         },
         error: function(tmp) {
-          console.log("doi error");
           $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
           $('#submit-doi').button('reset');
           $(paper_doi).removeClass('uneditable-input');
