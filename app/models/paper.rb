@@ -14,7 +14,7 @@ class Paper < ActiveRecord::Base
 
   attr_accessible :doi, :end_page, :num_views, :paper_url, :start_page, :title, :volume,
     :year, :issue, :venues_attributes, :experiments_attributes, :author_papers_attributes, 
-    :tasks_attributes, :findings_attributes, :users_attributes, :category_ids
+    :tasks_attributes, :findings_attributes, :users_attributes, :category_ids, :published
 
   validates :title, :presence => true
   validates :paper_url, :url => {:allow_blank => true}

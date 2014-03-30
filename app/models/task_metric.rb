@@ -5,4 +5,6 @@ class TaskMetric < ActiveRecord::Base
   accepts_nested_attributes_for :metric
 
   attr_accessible :desc, :metric_attributes, :metric_id
+
+  validates :desc, :presence => true
 end

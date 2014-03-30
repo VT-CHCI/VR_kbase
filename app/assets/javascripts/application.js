@@ -44,13 +44,15 @@ function validate_all_fields () {
     checkBlanks();
   }
 
-  //paperValid = paperValid && $('.components_group:checked input:visible').length > 0;
-  //paperValid = paperValid && $('.category_group:checked input:visible').length > 0;
-  //paperValid = paperValid && $('.dimension_group:checked input:visible').length > 0;
-  //paperValid = paperValid && $('.scale_group:checked input:visible').length > 0;
-  //paperValid = paperValid && $('.density_group:checked input:visible').length > 0;
-  //paperValid = paperValid && $('.realism_group:checked input:visible').length > 0;
-  //paperValid = paperValid && $('.metrics_group:checked input:visible').length > 0;
+  if ($('.core-element:visible').hasClass('task')) {
+    checkCategories();
+    checkEnvironmentVariables();
+    checkMetrics();
+  }
+
+  if ($('.core-element:visible').hasClass('finding')) {
+
+  }
 
   if ($('.finding').length > 0 && paperValid) {
     $('#submit-button').show();
@@ -123,7 +125,16 @@ function checkGenderBalance () {
 }
 
 function checkVariables () {
-  if ($('.core-element:visible .variables_group:checked').length > 0) {
+  var empty = true;
+
+  $('.core-element:visible .variables_group[data-attribute=indy_variable_tokens]').each( function() {
+    if ($(this).val().length > 0) {
+      console.log()
+      empty = false;
+    }
+   });
+
+  if ($('.core-element:visible .variables_group:checked').length > 0 || !empty) {
     paperValid = paperValid && true;
 
     $('.core-element:visible .variables-validation-text span').addClass('hidden');
@@ -148,6 +159,47 @@ function checkBlanks () {
         $(this).children().find('button').click();
       }
     });
+  }
+}
+
+function checkCategories () {
+  if ($('.core-element:visible .task-categories input:checked').length > 0) {
+    paperValid = paperValid && true;
+
+    $('.core-element:visible .categories-validation-text span').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .categories-validation-text span').removeClass('hidden');
+    scrollToErrorField($('.core-element:visible .categories-validation-text').eq(0), 120);
+  }
+}
+
+function checkEnvironmentVariables () {
+  $('.core-element:visible .environment-group').each(function() {
+    if ($(this).find('input:checked').length > 0) {
+      paperValid = paperValid && true;
+
+      $(this).find('label').eq(0).removeClass('error');
+    } else {
+      paperValid = paperValid && false;
+    
+      $(this).find('label').eq(0).addClass('error');
+      scrollToErrorField($(this).find('label').eq(0));
+    }
+  });
+}
+
+function checkMetrics () {
+  if ($('.core-element:visible .metrics input:checked').length > 0) {
+    paperValid = paperValid && true;
+
+    $('.core-element:visible .metrics-validation-text span').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .metrics-validation-text span').removeClass('hidden');
+    scrollToErrorField($('.core-element:visible .metrics-validation-text').eq(0), 120);
   }
 }
 
@@ -424,11 +476,12 @@ function add_progress_heading(association, focus, repopulate) {
             <button type="button" class="close">×</button>\
           </div>\
         </a>\
-        <div class="nav-tasks"></div>'+link+'\
+        <div class="nav-tasks"></div><div class="new-add-links">'+link+'</div>\
       </div>'
     );
+    var collapse = '#'+heading+' .nav-tasks';
     heading = '#'+heading+' .experiment-heading';
-    
+
   }
   else if (association == 'tasks') {
     var heading = 'task-block-'+taskId;
@@ -436,15 +489,23 @@ function add_progress_heading(association, focus, repopulate) {
 
     $('#experiment-block-'+experimentId+' .nav-tasks').append(
       '<div id="'+heading+'" class="nav-core-element-block task-block">\
-        <a class="task-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
+        <a class="task-heading open" data-target="'+focus.selector+'" onclick="show_element(this)">\
+          <div class="collapse-field">\
+            <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
+            <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
+          </div>\
           <div class="title-field">Unnamed Task</div>\
+          <div class="badge-field hidden">\
+            <span class="badge badge-info">8</span>\
+          </div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
         </a>\
-        <div class="nav-findings"></div>'+link+'\
+        <div class="nav-findings collapse in"></div><div class="new-add-links">'+link+'</div>\
       </div>'
     );
+    var collapse = '#experiment-block-'+experimentId+' #'+heading+' .nav-findings';
     heading = '#experiment-block-'+experimentId+' #'+heading+' .task-heading';
 
   } 
@@ -452,7 +513,7 @@ function add_progress_heading(association, focus, repopulate) {
     var heading = 'finding-block-'+findingId;
 
     $('#experiment-block-'+experimentId+' #task-block-'+taskId+' .nav-findings').append(
-      '<div id="'+heading+'" class="nav-core-element-block">\
+      '<div id="'+heading+'" class="nav-core-element-block finding-block">\
         <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
           <div class="title-field">Unnamed Finding</div>\
           <div class="close-field">\
@@ -461,12 +522,16 @@ function add_progress_heading(association, focus, repopulate) {
         </a>\
       </div>'
     );
+    var collapse = undefined;
     heading = '#experiment-block-'+experimentId+' #task-block-'+taskId+' #'+heading+' .finding-heading';
   
   }
 
-  $('#progress-headings .experiment-block').css('padding-left', (6 - 500/$('#progress-headings').width())+'%');
-  $('#progress-headings .task-block').css('padding-left', (6.5 - 500/Math.floor($('#progress-headings .experiment-block').width()))+'%');
+  $('#progress-headings .task-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+  $('#progress-headings .experiment-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+
+  $('#progress-headings .finding-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
+  $('#progress-headings .task-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
 
   //Bind element title to heading title
   $(focus.selector + ' .field-title input').eq(0).keyup( function() {
@@ -524,6 +589,27 @@ function add_progress_heading(association, focus, repopulate) {
     e.preventDefault();
     e.stopPropagation();
   });
+
+  $('#progress-headings '+heading+' i').click( function(e) {
+    $($(this).data('target')).collapse('toggle');
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  if (collapse != undefined) {
+    $(collapse).on('hidden', function (e) {
+      $(e.target).addClass('closed');
+      $(e.target).removeClass('open');
+    });
+
+    $(collapse).on('shown', function (e) {
+      console.log($(e));
+
+      $(e.target).removeClass('closed');
+      $(e.target).addClass('open');
+    })
+  }
 
   if (repopulate) {
     //Keep publicaiton info visible and rename if title is present
@@ -768,7 +854,7 @@ function create_finding_summary (focus) {
   var findingFields = $(focus).parents('.finding');
 
   var replaceSentence = 4;
-  var autoGenSentence = '_component_ had a _relationship_ relationship on _metric_ for _task_';
+  var autoGenSentence = 'There was a significant _relationship_ effect of _component_ on _metric_ for a _task_ task.';
 
   var componentText = new Array;
   var taskText = new Array;
@@ -789,7 +875,7 @@ function create_finding_summary (focus) {
   var relationshipText = $(findingFields).children().find('.relationships input:checked').data('text');
   var metricText = $(findingFields).children().find('.metrics input:checked').data('text');
 
-  if (componentText != '') {
+  if (componentText != '' || indyVariableText != '') {
     var mergedText = componentText.concat(indyVariableText);
     
     if (mergedText.length > 2) {
@@ -827,9 +913,7 @@ function create_finding_summary (focus) {
 
   if (relationshipText != '') {
     if (relationshipText == 'Interaction') {
-      autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_ relationship on','g'), 'an ' + relationshipText + ' with');
-    } else if (relationshipText == 'Inverse') {
-      autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_','g'), 'an ' + relationshipText);
+      autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_ effect of','g'), relationshipText + ' between');
     } else {
       autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_','g'), relationshipText);
     }
@@ -888,7 +972,7 @@ function add_fields_after (link, association, content) {
 }
 
 function add_core_element (focus) {
-  $($(focus).prev().data('target')).find('.add-core-element').click();
+  $($(focus).parent().prevAll('a').data('target')).find('.add-core-element').click();
 }
 
 // ##########################################################################
@@ -973,9 +1057,11 @@ function add_experiment_nested_ids (data, throughTable) {
             
             if (throughTable == 'experiment_hardware') {
               $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_hardware_tokens').val(this.hardware_id);
+              $('#experiment_'+e_index+'_'+throughTable+'s)').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
             }
             else if (throughTable == 'experiment_indy_variable') {
               $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_indy_variable_tokens').val(this.indy_variable_id);
+              $('#experiment_'+e_index+'_'+throughTable+'s)').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
             }
           }
         });
@@ -1065,11 +1151,19 @@ function save_button_clicked (focus) {
     }
     else if (paperJSON.experiments[0] == undefined) {
       console.log('trying to click add task');
-      $('#experiment_0 .add-core-element').click();
+      if ($('#experiment_0 .add-core-element') > 0) {
+        $('#experiment_0 .add-core-element').click();
+      } else {
+        $('#paper .add-core-element').click();
+      }
     }
     else if (paperJSON.experiments[0].tasks[0] == undefined) {
       console.log('trying to click add finding');
-      $('#experiment_0_task_0 .add-core-element').click();
+      if ($('#experiment_0_task_0 .add-core-element') > 0) {
+        $('#experiment_0_task_0 .add-core-element').click();
+      } else {
+        $('#experiment_0 .add-core-element').click();
+      }
     } 
   } else {
     save_paper(focus);
@@ -1194,7 +1288,6 @@ $(document).ready( function() {
 
   if($('form.paper-form').length > 0) {
     var paperState = $('form.paper-form').prop('id').split('_');
-    paperManager.setCounts();
 
     if (paperState[0] == 'edit') {
       paperId = paperState[2];
@@ -1215,12 +1308,17 @@ $(document).ready( function() {
         }
       });
     } else {
+
+      paperManager.setCounts();
       handle_one_times();
     }
 
     $(window).resize( function() {
-      $('#progress-headings .experiment-block').css('padding-left', (6 - 500/$('#progress-headings').width())+'%');
-      $('#progress-headings .task-block').css('padding-left', (6.5 - 500/Math.floor($('#progress-headings .experiment-block').width()))+'%');
+      $('#progress-headings .task-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+      $('#progress-headings .experiment-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+
+      $('#progress-headings .finding-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
+      $('#progress-headings .task-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
     });
 
     //Prevents form from being submitted by enter key
@@ -1235,7 +1333,7 @@ $(document).ready( function() {
     $('body').tooltip({
       selector: '[ref=tooltip]'
     });
-    
+
     $('#submit-button').hide();
 
     //Prevents users from accidentally leaving the page

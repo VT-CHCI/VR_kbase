@@ -197,7 +197,9 @@ form input[type='number']::-webkit-inner-spin-button {
 
 #progress-headings {
   margin-top: -5px;
-
+  font-size: 12px;
+  line-height: 12px;
+  
   a {
     text-decoration: none;
     display: block;
@@ -213,21 +215,19 @@ form input[type='number']::-webkit-inner-spin-button {
 
   .publication-heading, .experiment-heading, .task-heading, .finding-heading {
     display: table;
+    width: 96.5%;
   }
 
-  .title-field, .number-field, .close-field {
+  .title-field, .close-field {
     display: table-cell; 
     float: none;
+    vertical-align: middle;
   }
   .title-field {
     padding-right: 5px;
-  }
-  .number-field {
-    text-align: right;
-    font-size: 11px;
+    width: 100%
   }
   .close-field {
-    vertical-align: middle;
     text-align: center;
     width: 5%;
 
@@ -241,6 +241,10 @@ form input[type='number']::-webkit-inner-spin-button {
     .title-field {
       width: 100%;
     } 
+  }
+
+  .experiment-heading {
+    padding-left: 5px;
   }
 /*  .experiment-heading {
     .title-field {
@@ -266,22 +270,75 @@ form input[type='number']::-webkit-inner-spin-button {
 
     text-align: right;
     margin-top: 3px;
+    font-weight: 400;
   }
 
   .nav-core-element-add:hover {
     background: #08C;
   }
 
-  .experiment-block {
+  .nav-core-element-block .collapse-field {
+    line-height: 18px;
+    padding-right: 5px;
+  }
+
+  .publiation-block {
+    line-height: 18px;
+  }
+
+  .experiment-block, .task-block {
+    margin-top: 3px;
+  }
+
+  .task-block .finding-block:first-of-type {
+    margin-top: 3px;
+  }
+
+  .task-block, .finding-block {
     width: 94%;
     border-left: 5px solid #e6e6e6;
     padding-left: 7%;
   }
 
-  .task-block {
-    width: 93.5%;
+  .new-add-links {
     border-left: 5px solid #e6e6e6;
-    padding-left: 7%;
+    padding-left: 6%;
+  }
+
+  .open {
+    .icon-chevron-down {
+      display: none;
+    }
+
+    .icon-chevron-right {
+      display: block;
+    }
+
+    .task-heading {
+      padding-right: 5px;
+    }
+
+    .badge-field {
+      display: none;
+    }
+  }
+
+  .closed {
+    .icon-chevron-down {
+      display: block;
+    }
+
+    .icon-chevron-right {
+      display: none;
+    }
+
+    .task-heading {
+      padding-right: 30px;
+    }
+
+    .badge-field {
+      display: block;
+    }
   }
 }
 

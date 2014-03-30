@@ -214,6 +214,11 @@ function experiment(count) {
       });
     });
 
+    //recount divs for welled items
+    $(focus).find('.well').each( function() { 
+      $(this).prop('id', 'experiment_'+e_index+'_experiment_'+$(this).prop('class').split(' ')[0]);
+    });
+
     //recount gender
     $(focus).find('.gender input').each( function() { 
       var label = $('label[for="'+$(this).prop('id')+'"]');

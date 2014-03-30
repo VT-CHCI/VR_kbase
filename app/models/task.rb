@@ -10,15 +10,6 @@ class Task < ActiveRecord::Base
   has_many :task_categories, :dependent => :destroy
   has_many :categories, :through => :task_categories
 
-  attr_reader :category_tokens
-
-  def category_tokens=(ids)
-    ids.gsub!(/CREATE_(.+?)_END/) do
-      Category.create!(:task_category => $1).id
-    end
-    self.category_ids = ids.split(",")
-  end
-
   has_many :task_metrics, :dependent => :destroy
   has_many :metrics, :through => :task_metrics
 
@@ -27,8 +18,7 @@ class Task < ActiveRecord::Base
   accepts_nested_attributes_for :findings, :allow_destroy => true
   
   attr_accessible :env_desc, :interface_desc, :task_desc, :title, :dimension_id, :scale_id, 
-    :density_id, :realism_id, :category_tokens, :findings, :findings_attributes, :category_ids, 
-    :task_metrics_attributes
+    :density_id, :realism_id, :findings, :findings_attributes, :category_ids, :task_metrics_attributes
 
   validates :title, :presence => true
   validates :task_desc, :presence => true
