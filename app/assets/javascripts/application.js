@@ -1057,11 +1057,11 @@ function add_experiment_nested_ids (data, throughTable) {
             
             if (throughTable == 'experiment_hardware') {
               $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_hardware_tokens').val(this.hardware_id);
-              $('#experiment_'+e_index+'_'+throughTable+'s)').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+              $('#experiment_'+e_index+'_'+throughTable+'s').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
             }
             else if (throughTable == 'experiment_indy_variable') {
               $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_indy_variable_tokens').val(this.indy_variable_id);
-              $('#experiment_'+e_index+'_'+throughTable+'s)').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+              $('#experiment_'+e_index+'_'+throughTable+'s').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
             }
           }
         });
