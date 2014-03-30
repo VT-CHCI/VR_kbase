@@ -9,7 +9,7 @@
           <ul class="authors">
             <% for author in @paper.authors %>
               <li class="author"><a href="#"><%= author.first_name %> 
-                <% if author.middle_initial != "" %>
+                <% if author.middle_initial && author.middle_initial != "" %>
                   <%= author.middle_initial + '.' %>
                 <% end %>
                 <%= author.last_name %></a></li>
@@ -19,8 +19,13 @@
           <% if @paper.start_page && @paper.start_page != "" && @paper.end_page && @paper.start_page != "" %>
             pp. <%= @paper.start_page %>-<%= @paper.end_page %>, 
           <% end %>
-          <% if @paper.doi != "" && @paper.doi %>
-            doi: <a href="<%= @paper.paper_url %>"><%= @paper.doi %></a>
+          <% if @paper.doi && @paper.doi != "" %>
+            doi: 
+            <% if @paper.paper_url && @paper.paper_url != "" %>
+              <a href="<%= @paper.paper_url %>"><%= @paper.doi %></a>
+            <% else %>
+              <%= @paper.doi %>
+            <% end %>
           <% end %>
         </blockquote>
         <div class="paper-modify">
@@ -41,103 +46,129 @@
           <div class="exp-desc span4">
             <p><%= experiment.exp_desc %></p>
 
-            <div class="title well">
-              <h6 class="inline">Components of fidelity & desc - </h6>
-              <ul class="list inline">
-                <% if experiment.visual_fidelities.count > 0 %>
-                  <% for component in experiment.visual_fidelities %>
-                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+            <div>
+              <% if experiment.constants && experiment.constants != "" %>
+                <h5 class="title">Variables and Constants</h5>
+              <% else %>
+                <h5 class="title">Variables</h5>
+              <% end %>
+              <hr style="margin: 8px 0;"/>
+              <% if experiment.experiment_visuals.count > 0 %>
+                <ul class="list">
+                  <h6 class="title">Visual Fidelity</h6>
+                  <% for component_through in experiment.experiment_visuals %>
+                    <li><a href="#"><%= component_through.visual_fidelity.component.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
-                <% end %>
-
-                <% if experiment.aural_fidelities.count > 0 %>
-                  <% for component in experiment.aural_fidelities %>
-                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                </ul>
+              <% end %>
+              <% if experiment.experiment_aurals.count > 0 %>
+                <ul class="list">
+                  <h6 class="title">Auditory Fidelity</h6>
+                  <% for component_through in experiment.experiment_aurals %>
+                    <li><a href="#"><%= component_through.aural_fidelity.component.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
-                <% end %>
-
-                <% if experiment.haptic_fidelities.count > 0 %>
-                  <% for component in experiment.haptic_fidelities %>
-                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                </ul>
+              <% end %>
+              <% if experiment.experiment_haptics.count > 0 %>
+                <ul class="list">
+                  <h6 class="title">Haptic Fidelity</h6>
+                  <% for component_through in experiment.experiment_haptics %>
+                    <li><a href="#"><%= component_through.haptic_fidelity.component.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
-                <% end %>
-
-                <% if experiment.biomechanical_symmetries.count > 0 %>
-                  <% for component in experiment.biomechanical_symmetries %>
-                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                </ul>
+              <% end %>
+              <% if experiment.experiment_biomechanicals.count > 0 %>
+                <ul class="list">
+                  <h6 class="title">Biomechanical Symmetry</h6>
+                  <% for component_through in experiment.experiment_biomechanicals %>
+                    <li><a href="#"><%= component_through.biomechanical_symmetry.component.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
-                <% end %>
-
-                <% if experiment.control_symmetries.count > 0 %>
-                  <% for component in experiment.control_symmetries %>
-                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
-                  <% end %>
-                <% end %>
-
-                <% if experiment.system_appropriatenesses.count > 0 %>
-                  <% for component in experiment.system_appropriatenesses %>
-                    <li class="object"><a href="#"><%= component.component.downcase %></a></li>
+                </ul>
+              <% end %>
+              <% if experiment.experiment_controls.count > 0 %>
+                <ul class="list">
+                  <h6 class="title">Control Symmetry</h6>
+                  <% for component_through in experiment.experiment_controls %>
+                    <li><a href="#"><%= component_through.control_symmetry.component.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
                 <% end %>
               </ul>
-            </div>
-
-            <p><%= experiment.comp_desc %></p>
-
-            <div class="title">
-              <h6>System Info</h6>
-            </div>
-
-            <div class="title">
-              <h6 class="inline">Displays - </h6>
-              <ul class="list inline">
-                <% for display in experiment.displays %>
-                  <li class="object"><a href="#"><%= display.display.downcase %></a></li>
-                <% end %>
-              </ul>
-            </div>
-            <p><%= experiment.display_desc %></p>
-
-            <div class="title">
-              <h6 class="inline">Hardware - </h6>
-              <ul class="list inline">
-                <% if experiment.hardwares.count > 0 %>
-                  <% for hardware in experiment.hardwares %>
-                    <li class="object"><a href="#"><%= hardware.hardware.downcase %></a></li>
+              <% if experiment.experiment_system_apps.count > 0 %>
+                <ul class="list">
+                  <h6 class="title">System Appropriateness</h6>
+                  <% for component_through in experiment.experiment_system_apps %>
+                    <li><a href="#"><%= component_through.system_appropriateness.component.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
-                <% else %>
-                  not reported
-                <% end %>
-              </ul>
+                </ul>
+              <% end %>
             </div>
-            <div class="title">
-              <h6 class="inline">Software - </h6>
-              <ul class="list inline">
-                <% if experiment.softwares.count > 0 %>
-                  <% for software in experiment.softwares %>
-                    <li class="object"><a href="#"><%= software.software.downcase %></a></li>
+
+            <div>
+              <% if experiment.experiment_indy_variables.count > 0 %>
+                <h6 class="title">Independent Variables</h6>
+                <ul class="list">
+                  <% for component_through in experiment.experiment_indy_variables %>
+                    <li><a href="#"><%= component_through.indy_variable.variable.downcase %></a> - <%= component_through.desc.downcase %></li>
                   <% end %>
-                <% else %>
-                  not reported
-                <% end %>
-              </ul>
+                </ul>
+              <% end %>
             </div>
+
+            <% if experiment.constants && experiment.constants != "" %>
+              <div class="title">
+                <h6>Constants</h6>
+              </div>
+              <p><%= experiment.constants %></p>
+            <% end %>
+
+            <h5 class="title">System Info</h5>
+            <hr style="margin: 8px 0;"/>
+            <div>
+              <h6 class="title">Displays</h6>
+              <% if experiment.experiment_displays.count > 0 %>
+                <ul class="list">
+                  <% for component_through in experiment.experiment_displays %>
+                    <li><a href="#"><%= component_through.display.display.downcase %></a> - <%= component_through.desc.downcase %></li>
+                  <% end %>
+                </ul>
+              <% else %>
+                None
+              <% end %>
+            </div>
+
+            <div>
+              <h6 class="title">Input Hardware</h6>
+              <% if experiment.experiment_hardwares.count > 0 %>
+                <ul class="list">
+                  <% for component_through in experiment.experiment_hardwares %>
+                    <li><a href="#"><%= component_through.hardware.hardware.downcase %></a> - <%= component_through.desc.downcase %></li>
+                  <% end %>
+                </ul>
+              <% else %>
+                None
+              <% end %>
+            </div>
+
+            <div>
+              <h6 class="title">Software</h6>
+              <% if experiment.experiment_softwares.count > 0 %>
+                <ul class="list">
+                  <% for component_through in experiment.experiment_softwares %>
+                    <li><a href="#"><%= component_through.software.software.downcase %></a> - <%= component_through.desc.downcase %></li>
+                  <% end %>
+                </ul>
+              <% else %>
+                None
+              <% end %>
+            </div>
+
             <p><%= experiment.system_desc %></p>
 
-            <div class="title">
-              <h6>Other Variables</h6>
-            </div>
-            <p><%= experiment.other_vars %></p>
-
-            <div class="title">
-              <h6>Constants</h6>
-            </div>
-            <p><%= experiment.constants %></p>
-
-            <div class="title">
-              <h6>Participant Info</h6>
-            </div>
+            <h5 class="title">Participant Info</h5>
+            <hr style="margin: 8px 0;"/>
+            
             <p><%= experiment.part_background %></p>
+            
             <table class="table part-table">
               <thead>
                 <tr>
@@ -160,22 +191,28 @@
             <% for task in experiment.tasks %>
               <div class="row-fluid task">
                 <div class="task-desc span6">
+                  <p><%= task.task_desc %></p>
                   <ul class="task-categories">
                     <% for category in task.categories %>
                       <li class="category"><h6><a href="#"><%= category.task_category %></a></h6></li>
                     <% end %>
                   </ul>
-                  <p><%= task.task_desc %></p>
 
-                  <div class="title">
-                    <h6>Interface</h6>
-                  </div>
-                  <p><%= task.interface_desc %></p>
 
-                  <div class="title">
-                    <h6>Environment</h6>
-                  </div>
+                  <% if task.interface_desc && task.interface_desc != "" %>
+                    <h5 class="title">Interaction and Environment</h5>
+                    <hr style="margin: 8px 0;"/>
+                    <div class="title">
+                      <h6>Interface</h6>
+                    </div>
+                    <p><%= task.interface_desc %></p>
+                  <% else %>
+                    <h5 class="title">Environment</h5>
+                    <hr style="margin: 8px 0;"/>  
+                  <% end %>
+                  
                   <p><%= task.env_desc %></p>
+                  
                   <table class="table env-table">
                     <thead>
                       <tr>
@@ -195,11 +232,12 @@
                     </tbody>
                   </table>
 
-                  <div class="title">
-                    <h6 class="inline">Metrics - </h6>
-                    <ul class="task-metrics inline">
-                      <% for metric in task.metrics %>
-                        <li class="metric"><a href="#"><%= metric.metric.downcase %></a></li>
+                  <h5 class="title">Metrics</h5>
+                  <hr style="margin: 8px 0;"/>  
+                  <div>
+                    <ul style="list-style: none; margin-left: 0px;">
+                      <% for component_through in task.task_metrics %>
+                        <li><a href="#"><%= component_through.metric.metric.downcase %></a> - <%= component_through.desc.downcase %></li>
                       <% end %>
                     </ul>
                   </div>
@@ -219,6 +257,8 @@
                         <% end %> -->
                         
                         <h5><%= p.html_safe %></h5>
+
+                        <p><%= finding.finding_note %></p>
 
                         <% if finding.specificity_id || finding.issue != "" %>
                           <p class="divider">
