@@ -133,7 +133,7 @@
             <% VisualFidelity.find(:all, :order => "component ASC").each do |component| %>
               <div class="checkbox inline pill">
                 <%= check_box_tag nil, component.id, f.object.visual_fidelities.include?(component), :id => "experiments_attributes_new_experiments_visual_id_#{component.id}" , :onchange => "create_component_description(this, '#{component.component}', #{component.id}, 'experiment_visual', 'visual_fidelity', 'levels', true)", :class => "fidelity-component variables_group", :'data-experiment' => 'new_experiments', :'data-attribute' => 'visual_id' %>
-                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_visual_id_#{component.id}", :'data-attribute' => 'visual_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'bottom', :'data-container' => 'body', :'data-html' => 'true' %>
+                <%= label_tag nil, component.component, :for => "experiments_attributes_new_experiments_visual_id_#{component.id}", :'data-attribute' => 'visual_id', :title => component.tooltip, :'ref' => 'tooltip', :'data-placement' => 'left', :'data-container' => 'body', :'data-html' => 'true' %>
               </div>
 
             <% end %>

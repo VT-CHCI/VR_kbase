@@ -1192,155 +1192,166 @@ $(document).ready( function() {
       $.getScript(location.href);
     });
 
-  var paperState = $('form.paper-form').prop('id').split('_');
-  paperManager.setCounts();
+  if($('form.paper-form').length > 0) {
+    var paperState = $('form.paper-form').prop('id').split('_');
+    paperManager.setCounts();
 
-  if (paperState[0] == 'edit') {
-    paperId = paperState[2];
-    
-    //Set readonly inputs to uneditable if they have values in them
-    $('.author_paper .readonly').prop('readonly', true);
-
-    $.ajax({
-      type: 'GET',
-      url: '/papers/'+paperId,
-      dataType: 'json',
-      success: function(data, status) {
-        console.log(status, data);
-        paperJSON = data;
-
-        paperManager.setCounts();
-        handle_one_times();
-      }
-    });
-  } else {
-    handle_one_times();
-  }
-
-  $(window).resize( function() {
-    $('#progress-headings .experiment-block').css('padding-left', (6 - 500/$('#progress-headings').width())+'%');
-    $('#progress-headings .task-block').css('padding-left', (6.5 - 500/Math.floor($('#progress-headings .experiment-block').width()))+'%');
-  });
-
-  $('#submit-button').hide();
-
-  //Prevents users from accidentally leaving the page
-  // window.onbeforeunload = function() { 
-  //   return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
-  // };
-
-  //Prevents form from being submitted by enter key
-  $('.paper-form').on('keyup keypress', 'input', function(e) {
-    var code = e.keyCode || e.which; 
-    if (code  == 13) {               
-      e.preventDefault();
-      return false;
-    }
-  });
-
-  $('body').tooltip({
-    selector: '[ref=tooltip]'
-  });
-
-// ##########################################################################
-// Getting DOI Information
-// ##########################################################################
-  var timer;
-
-  $('#submit-doi').click( function() {
-    $('.doi-field').removeClass('control-group error');
-    $('.doi-field span').remove(); //this removes error message
-
-    window.clearTimeout(timer);
-    $('.alert').alert('close');
-
-    if ($('#paper_doi').val()) {
-      $('#submit-doi').button('loading');
-      $('#paper_doi').addClass('uneditable-input');
-      $('#paper_doi').prop('readonly', true);
-
-      //Clear all author fields
-      $('.destroy-author:visible button').trigger('click');
-      $('.alert').alert('close');
-
-      $('.paper input[type=text]:visible').not(':eq(0)').val('');
-      $('.paper input[type=number]').val('');
-
-      // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
-      var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
+    if (paperState[0] == 'edit') {
+      paperId = paperState[2];
+      
+      //Set readonly inputs to uneditable if they have values in them
+      $('.author_paper .readonly').prop('readonly', true);
 
       $.ajax({
-        type: "GET",
-        url: surl,
-        dataType: "jsonp",
-        success: function(data) {
-          $('#submit-doi').button('reset');
-          $(paper_doi).removeClass('uneditable-input');
-          $('#paper_doi').prop('readonly', false);
+        type: 'GET',
+        url: '/papers/'+paperId,
+        dataType: 'json',
+        success: function(data, status) {
+          console.log(status, data);
+          paperJSON = data;
 
-          xmlDoc = $.parseXML( data );
-          $xml = $( xmlDoc );
-
-          // console.log($xml.find('error').length);
-
-          if ($xml.find('error').length != 0) {
-            $('.doi-well').after('<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
-          } else {
-            $('.doi-well').after('<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
-
-            function autofill(selector,xmlString) {
-              if (xmlString.length > 1) {
-                $(selector).val($xml.find(xmlString).first().text());
-              } else {
-                $(selector).val($xml.find(xmlString).text());
-              }
-            }
-
-            autofill('#paper_title',"title");
-
-            if ($xml.find("journal").length) {
-              autofill('#paper_venues_attributes_0_name',"full_title");
-            } else if ($xml.find("conference").length) {
-              autofill('#paper_venues_attributes_0_name',"proceedings_title");
-            }
-
-            autofill('#paper_year_1i',"year");
-            autofill('#paper_volume',"volume");
-            autofill('#paper_issue',"issue");
-            autofill('#paper_start_page',"first_page");
-            autofill('#paper_end_page',"last_page");
-            autofill('#paper_paper_url',"resource");
-
-            var authors = new Array();
-
-            var len = $xml.find('person_name').length;
-            var a_index = 0;
-
-            $xml.find('person_name').each( function(index) {
-              if ($(this).attr('contributor_role') == "author") {
-                $('.author-generator a').trigger('click');
-                $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
-                $('.author:visible').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
-                //$('.author:visible').eq(a_index).children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
-                a_index++;
-              }
-            });
-          }
-        },
-        error: function(tmp) {
-          $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
-          $('#submit-doi').button('reset');
-          $(paper_doi).removeClass('uneditable-input');
-          $('#paper_doi').prop('readonly', true);
+          paperManager.setCounts();
+          handle_one_times();
         }
       });
-
-      timer = window.setTimeout( function() { 
-        $('.alert').alert('close'); 
-      }, 10000);
     } else {
-      $('.doi-field').addClass('control-group error');
-      $('.doi-field').append('<span class="help-inline">Field cannot be blank</span>');
+      handle_one_times();
     }
-  });
+
+    $(window).resize( function() {
+      $('#progress-headings .experiment-block').css('padding-left', (6 - 500/$('#progress-headings').width())+'%');
+      $('#progress-headings .task-block').css('padding-left', (6.5 - 500/Math.floor($('#progress-headings .experiment-block').width()))+'%');
+    });
+
+    //Prevents form from being submitted by enter key
+    $('.paper-form').on('keyup keypress', 'input', function(e) {
+      var code = e.keyCode || e.which; 
+      if (code  == 13) {               
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    $('body').tooltip({
+      selector: '[ref=tooltip]'
+    });
+    
+    $('#submit-button').hide();
+
+    //Prevents users from accidentally leaving the page
+    // window.onbeforeunload = function() { 
+    //   return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
+    // };
+
+    //Prevents form from being submitted by enter key
+    // $('#new_paper').bind("keyup keypress", function(e) {
+    //   var code = e.keyCode || e.which; 
+    //   if (code  == 13) {               
+    //     e.preventDefault();
+    //     return false;
+    //   }
+    // });
+
+  // ##########################################################################
+  // Getting DOI Information
+  // ##########################################################################
+    var timer;
+
+    $('#submit-doi').click( function() {
+      $('.doi-field').removeClass('control-group error');
+      $('.doi-field span').remove(); //this removes error message
+
+      window.clearTimeout(timer);
+      $('.alert').alert('close');
+
+      if ($('#paper_doi').val()) {
+        $('#submit-doi').button('loading');
+        $('#paper_doi').addClass('uneditable-input');
+        $('#paper_doi').prop('readonly', true);
+
+        //Clear all author fields
+        $('.destroy-author:visible button').trigger('click');
+        $('.alert').alert('close');
+
+        $('.paper input[type=text]:visible').not(':eq(0)').val('');
+        $('.paper input[type=number]').val('');
+
+        // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
+        var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
+
+        $.ajax({
+          type: "GET",
+          url: surl,
+          dataType: "jsonp",
+          success: function(data) {
+            $('#submit-doi').button('reset');
+            $(paper_doi).removeClass('uneditable-input');
+            $('#paper_doi').prop('readonly', false);
+
+            xmlDoc = $.parseXML( data );
+            $xml = $( xmlDoc );
+
+            // console.log($xml.find('error').length);
+
+            if ($xml.find('error').length != 0) {
+              $('.doi-well').after('<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
+            } else {
+              $('.doi-well').after('<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
+
+              function autofill(selector,xmlString) {
+                if (xmlString.length > 1) {
+                  $(selector).val($xml.find(xmlString).first().text());
+                } else {
+                  $(selector).val($xml.find(xmlString).text());
+                }
+              }
+
+              autofill('#paper_title',"title");
+
+              if ($xml.find("journal").length) {
+                autofill('#paper_venues_attributes_0_name',"full_title");
+              } else if ($xml.find("conference").length) {
+                autofill('#paper_venues_attributes_0_name',"proceedings_title");
+              }
+
+              autofill('#paper_year_1i',"year");
+              autofill('#paper_volume',"volume");
+              autofill('#paper_issue',"issue");
+              autofill('#paper_start_page',"first_page");
+              autofill('#paper_end_page',"last_page");
+              autofill('#paper_paper_url',"resource");
+
+              var authors = new Array();
+
+              var len = $xml.find('person_name').length;
+              var a_index = 0;
+
+              $xml.find('person_name').each( function(index) {
+                if ($(this).attr('contributor_role') == "author") {
+                  $('.author-generator a').trigger('click');
+                  $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
+                  $('.author:visible').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
+                  //$('.author:visible').eq(a_index).children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
+                  a_index++;
+                }
+              });
+            }
+          },
+          error: function(tmp) {
+            $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
+            $('#submit-doi').button('reset');
+            $(paper_doi).removeClass('uneditable-input');
+            $('#paper_doi').prop('readonly', true);
+          }
+        });
+
+        timer = window.setTimeout( function() { 
+          $('.alert').alert('close'); 
+        }, 10000);
+      } else {
+        $('.doi-field').addClass('control-group error');
+        $('.doi-field').append('<span class="help-inline">Field cannot be blank</span>');
+      }
+    });
+  }
 });
