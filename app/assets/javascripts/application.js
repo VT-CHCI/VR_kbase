@@ -39,9 +39,11 @@ function validate_all_fields () {
   }
   
   if ($('.core-element:visible').hasClass('experiment')) {
-    
+    checkGenderBalance();
+    checkVariables();
+    checkBlanks();
   }
-  //paperValid = paperValid && $('.gender_group:checked input:visible').length > 0;
+
   //paperValid = paperValid && $('.components_group:checked input:visible').length > 0;
   //paperValid = paperValid && $('.category_group:checked input:visible').length > 0;
   //paperValid = paperValid && $('.dimension_group:checked input:visible').length > 0;
@@ -94,7 +96,7 @@ function setUrlClasses (valid) {
   } 
 }
 
-function checkAuthorsCount (scrolled) {
+function checkAuthorsCount () {
   if ($('.authors input:visible').length/3 > 0 ) {
     paperValid = paperValid && true;
     
@@ -107,11 +109,57 @@ function checkAuthorsCount (scrolled) {
   }
 }
 
+function checkGenderBalance () {
+  if ($('.core-element:visible .gender input:checked').length > 0 ) {
+    paperValid = paperValid && true;
+    
+    $('.core-element:visible .field-gender label').eq(0).removeClass('error');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .field-gender label').eq(0).addClass('error');
+    scrollToErrorField($('.core-element:visible .field-gender'));
+  }
+}
+
+function checkVariables () {
+  if ($('.core-element:visible .variables_group:checked').length > 0) {
+    paperValid = paperValid && true;
+
+    $('.core-element:visible .variables-validation-text span').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .variables-validation-text span').removeClass('hidden');
+    scrollToErrorField($('.core-element:visible .variables-validation-text').eq(0), 120);
+  }
+}
+
+function checkBlanks () {
+  if (paperValid) {
+    $('.core-element:visible .hardwares .generated:visible').each( function () {
+      if ($(this).children().find('.token-input input[data-type=hardware]').val() == '') {
+        $(this).children().find('button').click();
+      }
+    });
+
+    $('.core-element:visible .indy-variables .generated:visible').each( function () {
+      if ($(this).children().find('.token-input input[data-type=variable]').val() == '') {
+        $(this).children().find('button').click();
+      }
+    });
+  }
+}
+
 function checkAutoComplete (focus) {
   if ($(focus).val().length > 0) {
     $(focus).parent().next().find('label').addClass('required');
+    $(focus).parent().next().find('input:text').addClass('validated-field');
+    $(focus).parent().next().find('input:text').change(function() { validate_field(this) });
   } else {
     $(focus).parent().next().find('label').removeClass('required');
+    $(focus).parent().next().find('input:text').removeClass('validated-field');
+    $(focus).parent().next().find('input:text').onchange = undefined;
   }
 }
 
@@ -139,7 +187,7 @@ function clear_validation_text (focus) {
 // Auto Generation of Detail Fields
 // ##########################################################################
 
-function create_component_description(focus, name, componentId, throughTable, component, descriptor) {
+function create_component_description(focus, name, componentId, throughTable, component, descriptor, tooltip) {
   var new_id = new Date().getTime(); //this isn't the being used it is a backup in case the id isn't set
   var experimentId = $(focus).data('experiment');
   var taskId = $(focus).data('task');
@@ -182,6 +230,12 @@ function create_component_description(focus, name, componentId, throughTable, co
   
   }
 
+  if (tooltip) {
+    var tooltipText = ' ref="tooltip" data-original-title="Enter the different levels or conditions of this component varied in this experiment" data-container="body" data-placement="left"';
+  } else {
+    var tooltipText = '';
+  }
+
   if (focus.checked) {
     //fires when component of immersion is checked
     //checks to see if there is a detail that already exists for that component
@@ -198,7 +252,7 @@ function create_component_description(focus, name, componentId, throughTable, co
         '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field control-group">\
         <input data-attribute="'+component+'_id" id="'+componentIdId+'" name="'+componentIdName+'" type="hidden" value="'+componentId+'">\
         <label data-attribute="desc" for="'+componentDescId+'" class="required">'+name+' '+descriptor+'</label>\
-        <input data-attribute="desc" data-validate="[{&quot;kind&quot;:&quot;presence&quot;,&quot;options&quot;:{},&quot;messages&quot;:{&quot;blank&quot;:&quot;can\'t be blank&quot;}}]" class="span12 validated-field" onchange="validate_field(this)" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text" required="required">\
+        <input data-attribute="desc" data-validate="[{&quot;kind&quot;:&quot;presence&quot;,&quot;options&quot;:{},&quot;messages&quot;:{&quot;blank&quot;:&quot;can\'t be blank&quot;}}]" class="span12 validated-field" onchange="validate_field(this)" id="'+componentDescId+'" name="'+componentDescName+'"'+tooltipText+' size="30" type="text" required="required">\
         <input data-attribute="_destroy" class="destroy" id="'+componentDestroyId+'" name="'+componentDestroyName+'" type="hidden" value="false">\
         </div></div>'
       );
@@ -916,6 +970,13 @@ function add_experiment_nested_ids (data, throughTable) {
           if (i > idsFound-1) {
             console.log('Adding ', throughTable, ' id ', i, 'for experiment', e_index);
             $('#experiment_'+e_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+            
+            if (throughTable == 'experiment_hardware') {
+              $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_hardware_tokens').val(this.hardware_id);
+            }
+            else if (throughTable == 'experiment_indy_variable') {
+              $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_indy_variable_tokens').val(this.indy_variable_id);
+            }
           }
         });
       }
@@ -998,17 +1059,18 @@ var keepHidden;
 
 function save_button_clicked (focus) {
   if (keepHidden) {
-    if (paperJSON != undefined) {
-      $('#experiment_0 .add-core-element').click();
-
-      if (paperJSON.experiments[0] != undefined) {
-        $('#experiment_0_task_0 .add-core-element').click();
-
-        if (paperJSON.experiments[0].tasks[0] != undefined) {
-          $('#experiment_0_task_0_finding_0 .add-core-element').click();
-        }
-      } 
+    if (paperJSON == undefined) {
+      console.log('trying to click add experiment');
+      $('#paper .add-core-element').click();
     }
+    else if (paperJSON.experiments[0] == undefined) {
+      console.log('trying to click add task');
+      $('#experiment_0 .add-core-element').click();
+    }
+    else if (paperJSON.experiments[0].tasks[0] == undefined) {
+      console.log('trying to click add finding');
+      $('#experiment_0_task_0 .add-core-element').click();
+    } 
   } else {
     save_paper(focus);
   }
@@ -1065,8 +1127,6 @@ function save_paper (focus, association, content) {
           //Add element and reset stuff
           add_fields_after (focus, association, content)
           handle_one_times();
-
-          $('[ref=tooltip]').tooltip();
         }
       },
       error: function (error) {
@@ -1093,15 +1153,15 @@ function handle_one_times () {
   keepHidden = true;
 
   if (paperJSON != undefined) {
-    $('.new_experiment').hide();
+    // $('.new_experiment').hide();
     keepHidden = false;
 
     if (paperJSON.experiments[0] != undefined) {
-      $('.new_task').hide();
+      // $('.new_task').hide();
       keepHidden = false;
 
       if (paperJSON.experiments[0].tasks[0] != undefined) {
-        $('.new_finding').hide();
+        // $('.new_finding').hide();
         keepHidden = false;
 
       } else {
@@ -1133,6 +1193,7 @@ $(document).ready( function() {
     });
 
   var paperState = $('form.paper-form').prop('id').split('_');
+  paperManager.setCounts();
 
   if (paperState[0] == 'edit') {
     paperId = paperState[2];
@@ -1169,15 +1230,17 @@ $(document).ready( function() {
   // };
 
   //Prevents form from being submitted by enter key
-  // $('#new_paper').bind("keyup keypress", function(e) {
-  //   var code = e.keyCode || e.which; 
-  //   if (code  == 13) {               
-  //     e.preventDefault();
-  //     return false;
-  //   }
-  // });
+  $('.paper-form').on('keyup keypress', 'input', function(e) {
+    var code = e.keyCode || e.which; 
+    if (code  == 13) {               
+      e.preventDefault();
+      return false;
+    }
+  });
 
-  $('[ref=tooltip]').tooltip();
+  $('body').tooltip({
+    selector: '[ref=tooltip]'
+  });
 
 // ##########################################################################
 // Getting DOI Information

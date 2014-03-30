@@ -339,3 +339,8 @@ legend .nested-validation-text {
   line-height: 10PX;
   color: red;
 }
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}

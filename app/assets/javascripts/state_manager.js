@@ -6,6 +6,7 @@ var paperManager = {
   authors: new counter('.author_paper', 'author_paper'),
   experiments: [],
   addExperiment: function(link, association, content) {
+    console.log('adding experiment from', $(link).parent());
     //create experiment and add it to the list of experiments
     var exp = new experiment(this.experiments.length);
     this.experiments.push(exp);
@@ -23,6 +24,8 @@ var paperManager = {
 
   },
   addTask: function(link, association, content) {
+    console.log('adding task from', $(link).parent());
+
     var regexp = new RegExp("new_" + association, "g");
     var e_index = $(link).parent().data('experiment');
 
@@ -462,6 +465,8 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
   var type = this.type;
   var throughTable = this.throughTable;
 
+  var focus = type;
+
   if (e_index != undefined) {
     var focus = '#experiment_'+e_index+' '+this.type;
   } 
@@ -469,7 +474,7 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
     var focus = '#experiment_'+e_index+'_task_'+t_index+' '+this.type;
   } 
   if (f_index != undefined) {
-    var focus = this.type;
+    var focus = '#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' '+this.type;
   }
 
   $(type).each( function(index) {
