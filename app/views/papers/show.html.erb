@@ -149,12 +149,12 @@
               <% end %>
             </div>
 
-            <div>
-              <h6 class="title">Software</h6>
+            <div class="title">
+              <h6>Software</h6>
               <% if experiment.experiment_softwares.count > 0 %>
-                <ul class="list">
+                <ul class="list inline">
                   <% for component_through in experiment.experiment_softwares %>
-                    <li><a href="#"><%= component_through.software.software.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li class="inline"><a href="#"><%= component_through.software.software.downcase %></a></li>
                   <% end %>
                 </ul>
               <% else %>

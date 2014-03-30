@@ -1,21 +1,5 @@
 Kbase::Application.routes.draw do
 
-  resources :finding_indy_variables
-
-  resources :finding_categories
-
-  resources :finding_system_apps
-
-  resources :finding_controls
-
-  resources :finding_biomechanicals
-
-  resources :finding_aurals
-
-  resources :finding_haptics
-
-  resources :finding_visuals
-
   get "browse/index"
 
   mount Judge::Engine => '/judge'
@@ -26,96 +10,21 @@ Kbase::Application.routes.draw do
   get "validate/indy_variables"
   get "validate/metrics"
   get "validate/systems"
-
-  resources :user_authors
-
-  resources :user_papers
+  get "validate/index"
 
   devise_for :users
 
-  resources :experiment_indy_variables
-
   resources :indy_variables
-
-  resources :experiment_system_apps
-
-  resources :system_appropriatenesses
-
-  resources :experiment_controls
-
-  resources :control_symmetries
-
-  resources :experiment_biomechanicals
-
-  resources :biomechanical_symmetries
-
-  resources :experiment_aurals
-
-  resources :aural_fidelities
-
-  resources :experiment_haptics
-
-  resources :haptic_fidelities
-
-  resources :experiment_visuals
-
-  resources :visual_fidelities
-
-  resources :finding_specificities
-
-  resources :specificities
-
-  resources :finding_components
-
-  resources :finding_relationships
-
-  resources :relationships
 
   resources :findings
 
-  resources :task_metrics
-
-  resources :metrics
-
-  resources :task_realisms
-
-  resources :realisms
-
-  resources :task_densities
-
-  resources :densities
-
-  resources :task_scales
-
-  resources :scales
-
-  resources :task_dimensions
-
-  resources :dimensions
-
-  resources :task_categories
-
-  resources :categories
-
-  resources :experiment_softwares
-
   resources :softwares
-
-  resources :experiment_hardwares
 
   resources :hardwares
 
-  resources :experiment_displays
-
   resources :displays
 
-  resources :experiment_genders
-
-  resources :genders
-
   resources :venues
-
-  resources :author_papers
 
   resources :authors
 
@@ -125,11 +34,103 @@ Kbase::Application.routes.draw do
 
   resources :papers
 
-  resources :paper_venues
-
   resources :users
 
-  resources :landing
+  get '/landing', to: 'landing#index'
+
+  #resources :finding_indy_variables
+
+  #resources :finding_categories
+
+  #resources :finding_system_apps
+
+  #resources :finding_controls
+
+  #resources :finding_biomechanicals
+
+  #resources :finding_aurals
+
+  #resources :finding_haptics
+
+  #resources :finding_visuals
+
+  #resources :user_authors
+
+  #resources :user_papers
+
+  #resources :experiment_indy_variables
+
+  #resources :experiment_system_apps
+
+  #resources :system_appropriatenesses
+
+  #resources :experiment_controls
+
+  #resources :control_symmetries
+
+  #resources :experiment_biomechanicals
+
+  #resources :biomechanical_symmetries
+
+  #resources :experiment_aurals
+
+  #resources :aural_fidelities
+
+  #resources :experiment_haptics
+
+  #resources :haptic_fidelities
+
+  #resources :experiment_visuals
+
+  #resources :visual_fidelities
+
+  #resources :finding_specificities
+
+  #resources :specificities
+
+  #resources :finding_components
+
+  #resources :finding_relationships
+
+  #resources :relationships
+
+  #resources :task_metrics
+
+  #resources :metrics
+
+  #resources :task_realisms
+
+  #resources :realisms
+
+  #resources :task_densities
+
+  #resources :densities
+
+  #resources :task_scales
+
+  #resources :scales
+
+  #resources :task_dimensions
+
+  #resources :dimensions
+
+  #resources :task_categories
+
+  #resources :categories
+
+  #resources :experiment_softwares
+
+  #resources :experiment_hardwares
+
+  #resources :experiment_displays
+
+  #resources :experiment_genders
+
+  #resources :genders
+
+  #resources :author_papers
+
+  #resources :paper_venues
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
