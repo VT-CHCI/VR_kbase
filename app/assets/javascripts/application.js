@@ -198,7 +198,7 @@ function create_component_description(focus, name, componentId, throughTable, co
         '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field control-group">\
         <input data-attribute="'+component+'_id" id="'+componentIdId+'" name="'+componentIdName+'" type="hidden" value="'+componentId+'">\
         <label data-attribute="desc" for="'+componentDescId+'" class="required">'+name+' '+descriptor+'</label>\
-        <input data-attribute="desc" data-validate="[{"kind":"presence","options":{},"messages":{"blank":"can\'t be blank"}}]" class="span12 validated-field" onchange="validate_field(this)" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text" required>\
+        <input data-attribute="desc" data-validate="[{&quot;kind&quot;:&quot;presence&quot;,&quot;options&quot;:{},&quot;messages&quot;:{&quot;blank&quot;:&quot;can\'t be blank&quot;}}]" class="span12 validated-field" onchange="validate_field(this)" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text" required="required">\
         <input data-attribute="_destroy" class="destroy" id="'+componentDestroyId+'" name="'+componentDestroyName+'" type="hidden" value="false">\
         </div></div>'
       );
