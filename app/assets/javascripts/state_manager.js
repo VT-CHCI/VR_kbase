@@ -26,6 +26,7 @@ var paperManager = {
     var regexp = new RegExp("new_" + association, "g");
     var e_index = $(link).parent().data('experiment');
 
+    console.log('Adding task', e_index, $(link), $(link).parent());
     //create task for the proper experiment
     var task = this.experiments[e_index].addTask();
 
@@ -95,21 +96,19 @@ var paperManager = {
   },
   cleanUp: function () {
     $('.readonly').prop('readonly', true);
-
-    if ($('._destroy').remove().length > 0) {
-      console.log('Stuff was destroyed so we are going to recount!');
-
-      this.authors.setCounts();
-      $(this.experiments).each( function(i) {
+    $('._destroy').remove();
+  }, 
+  recount: function () {
+    this.authors.setCounts();
+    $(this.experiments).each( function(i) {
+      this.recount();
+      $(this.tasks).each( function() {
         this.recount();
-        $(this.tasks).each( function() {
+        $(this.findings).each( function() {
           this.recount();
-          $(this.findings).each( function() {
-            this.recount();
-          });
         });
       });
-    }
+    });
   }
 }
 
@@ -164,6 +163,10 @@ function experiment(count) {
 
     $(focus).find('.new_task').data('experiment', e_index);
 
+    //change text in create new buttons to add the right experiment number for children
+    var regexp = new RegExp("new_experiments", "g");
+    $(focus).find('.new_task').html($(focus).find('.new_task').html().replace(regexp, e_index));
+
     //recount general fields
     $(focus).find('.exp-field').each( function(index) { 
       $(this).find('label').each( function() {
@@ -184,8 +187,14 @@ function experiment(count) {
     });
 
     //recount divs for welled items
-    $(focus).find('.well').each( function() { 
-      $(this).prop('id', 'experiment_'+e_index+'_experiment_'+$(this).prop('class').split(' ')[0]);
+    $(focus).find('.well').each( function() {
+      var name = $(this).prop('class').split(' ')[0];
+      
+      if (name == 'indy-variables') {
+        var name = $(this).prop('class').split(' ')[0].split('-').join('_');
+      }
+
+      $(this).prop('id', 'experiment_'+e_index+'_experiment_'+name);
     });
 
     //recount gender
@@ -293,6 +302,13 @@ function task(count, e_index) {
     $(focus).find('.new_finding').data('experiment', e_index);
     $(focus).find('.new_finding').data('task', t_index);
 
+    var regexp = new RegExp("new_tasks", "g");
+    $(focus).find('.new_finding').html($(focus).find('.new_finding').html().replace(regexp, t_index));
+
+    var regexp = new RegExp("new_experiments", "g");
+    $(focus).find('.new_finding').html($(focus).find('.new_finding').html().replace(regexp, e_index));
+
+    //recount general fields
     $(focus).find('.task-field').each( function(index) { 
       $(this).find('label').each( function() {
         $(this).prop('for', 'paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute'));
