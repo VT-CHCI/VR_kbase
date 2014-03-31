@@ -237,7 +237,7 @@
                   <div>
                     <ul style="list-style: none; margin-left: 0px;">
                       <% for component_through in task.task_metrics %>
-                        <li><a href="#"><%= component_through.metric.metric.downcase %></a> - <%= component_through.desc.downcase %></li>
+                        <li><a href="#"><%= component_through.metric ? component_through.metric.metric.downcase : "none" %></a> - <%= component_through.desc ? component_through.desc.downcase : "none" %></li>
                       <% end %>
                     </ul>
                   </div>
