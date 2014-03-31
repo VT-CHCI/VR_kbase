@@ -42,9 +42,9 @@
             <li><a href="/browse/index">Browse</a></li>
             <li><a href="/papers/new">Add New Paper</a></li>
           </ul>
-          <form class="navbar-form pull-left" role="search">
-            <input type="text" class="search-query" placeholder="Search">
-          </form>
+          <%= form_tag browse_index_path, :method => :get, :html => { :class => "navbar-form pull-left", :role => "search" } do %>
+            <%= text_field_tag :search, params[:search], :class => "search-query", :placeholder => "Search" %>
+          <% end %>
           <ul class="nav navbar-nav pull-right">
             <li class="dropdown">
               <% if user_signed_in? %>

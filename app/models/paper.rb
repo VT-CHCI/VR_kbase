@@ -41,4 +41,50 @@ class Paper < ActiveRecord::Base
     # append two lists to use one new venue or one existing venue
     #self.venues = new_venues + existing_venues
   end
+
+  searchable do
+    text :title#, :as => :title_textp
+
+    text :experiments do
+      experiments.map { |experiment| [ \
+        experiment.title, \
+        experiment.exp_desc, \
+        experiment.system_desc, \
+        experiment.other_vars, \
+        experiment.constants, \
+        experiment.comp_desc, \
+        experiment.display_desc, \
+        experiment.tasks.map { |task| [ \
+          task.title, \
+          task.task_desc, \
+          task.interface_desc, \
+          task.env_desc, \
+          task.findings.map { |finding| [ \
+            finding.title, \
+            finding.summary, \
+            finding.issue, \
+            finding.finding_note, \
+            finding.specificity ? finding.specificity.level : nil \
+          ]}, \
+          task.task_categories.map { |task_category| [ \
+            task_category.category ? task_category.category.task_category : nil \
+          ]}, \
+          task.task_metrics.map { |task_metric| [ \
+            task_metric.metric ? task_metric.metric.metric : nil \
+          ]} \
+        ]}, \
+      ]} 
+
+      # {:experiment_displays => {:include => [:display]}},
+      # {:experiment_hardwares => {:include => [:hardware]}},
+      # {:experiment_softwares=> {:include => [:software]}},
+      # {:experiment_visuals => {:include => [:visual_fidelity]}},
+      # {:experiment_aurals => {:include => [:aural_fidelity]}},
+      # {:experiment_haptics => {:include => [:haptic_fidelity]}},
+      # {:experiment_biomechanicals => {:include => [:biomechanical_symmetry]}},
+      # {:experiment_controls => {:include => [:control_symmetry]}},
+      # {:experiment_system_apps => {:include => [:system_appropriateness]}},
+      # {:experiment_indy_variables => {:include => [:indy_variable]}},
+    end
+  end
 end
