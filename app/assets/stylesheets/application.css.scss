@@ -15,8 +15,16 @@
 @import "compass_twitter_bootstrap_awesome";
 @import "compass_twitter_bootstrap_responsive";
 
+body {
+  padding-bottom: 40px;
+}
+
 .navbar-fixed-top .container {
   width: 95%;
+}
+
+.main-content {
+  padding-top: 60px;
 }
 
 .field {
@@ -196,222 +204,25 @@ form input[type='number']::-webkit-inner-spin-button {
   border-bottom-color: white !important;
 }
 
-#progress-headings {
-  margin-top: -5px;
-  font-size: 12px;
-  line-height: 12px;
-  
-  a {
-    text-decoration: none;
-    display: block;
-    padding: 5px;
-  }
-  a:hover {
-    background: #e6e6e6;
-  }
-  a.current {
-    color: white;
-    background: #08C;
-  }
 
-  .publication-heading, .experiment-heading, .task-heading, .finding-heading {
-    display: table;
-    width: 96.5%;
-  }
-
-  .title-field, .close-field {
-    display: table-cell; 
-    float: none;
-    vertical-align: middle;
-  }
-  .title-field {
-    padding-right: 5px;
-    width: 100%
-  }
-  .close-field {
-    text-align: center;
-    width: 5%;
-
-    .close {
-      line-height: 15px;
-      padding-bottom: 3px;
-    }
-  }
-
-  .publication-heading {
-    .title-field {
-      width: 100%;
-    } 
-  }
-
-  .experiment-heading {
-    padding-left: 5px;
-  }
-/*  .experiment-heading {
-    .title-field {
-      width: 91%;
-      padding-left: 4px;
-    }
-  }
-  .task-heading {
-    .title-field {
-      width: 86%;
-    }
-  }
-  .finding-heading {
-    .title-field {
-      width: 81%;
-    }
-  }*/
-
-  .nav-core-element-add {
-    -webkit-border-radius: 0; 
-    -moz-border-radius: 0;
-    border-radius: 0;
-
-    text-align: right;
-    margin-top: 3px;
-    font-weight: 400;
-  }
-
-  .nav-core-element-add:hover {
-    background: #08C;
-  }
-
-  .nav-core-element-block .collapse-field {
-    line-height: 18px;
-    padding-right: 5px;
-
-    .icon-chevron-right {
-      padding-top: 3px;
-    }
-
-    .icon-chevron-down {
-      padding-top: 0;
-    }
-  }
-
-  .nav-core-element-block .badge-field {
-    padding-right: 7px;
-    padding-top: 3px;
-  }
-
-  .publication-block {
-    line-height: 18px;
-  }
-
-  .experiment-block, .task-block {
-    margin-top: 3px;
-  }
-
-  .task-block .finding-block:first-of-type {
-    margin-top: 3px;
-  }
-
-  .task-block, .finding-block {
-    width: 94%;
-    border-left: 5px solid #e6e6e6;
-    padding-left: 7%;
-  }
-
-  .new-add-links {
-    border-left: 5px solid #e6e6e6;
-    padding-left: 6%;
-  }
-
-  .open {
-    .icon-chevron-down {
-      display: none;
-    }
-
-    .icon-chevron-right {
-      display: block;
-    }
-
-    .badge-field {
-      display: none;
-    }
-  }
-
-  .closed {
-    .icon-chevron-down {
-      display: block;
-    }
-
-    .icon-chevron-right {
-      display: none;
-    }
-
-    .badge-field {
-      display: block;
-    }
-  }
-}
-
-#submit-button, #save-button {
-  padding-top: 10px;
-  clear: both;
-
-  button {
-    width: 100%;
-  }
-}
-
-#save-button {
-  padding-top: 20px;
-}
-
-label.required:after {
-  content:  "  *";
-  color: red;
-}
-
-label.error:after {
-  content:  " * Required field";
-  color: red;
-}
-
-.field-url {
-  label.error:after {
-    content:  "\00a0\00a0\00a0 Not a valid url";
-    color: red;
-  }
-}
 
 .tooltip-inner {
   z-index: 1031;
   max-width: 120px;
 }
 
-#paper-doi {
-  .tooltip-inner {
-    z-index: 1031;
-    max-width: 220px;
-  }
-}
+
 
 .tooltip.left {
   margin-left: -10px;  
   #left: 10px !important;
 }
 
-legend .nested-validation-text {
-  display: inline-block;
-  margin-left: 20px;
-  font-size: 14px;
-  line-height: 10PX;
-  color: red;
-}
+
 
 .hidden {
   display: none !important;
   visibility: hidden;
 }
 
-.first-time-form {
-  margin: 0;
-  padding: 0px 5px;
-  display: inline;
-  text-align: left;
-  float: left;
-}
+
