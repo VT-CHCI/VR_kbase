@@ -57,7 +57,7 @@
                 <ul class="list">
                   <h6 class="title">Visual Fidelity</h6>
                   <% for component_through in experiment.experiment_visuals %>
-                    <li><a href="#"><%= component_through.visual_fidelity.component.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.visual_fidelity.component.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -65,7 +65,7 @@
                 <ul class="list">
                   <h6 class="title">Auditory Fidelity</h6>
                   <% for component_through in experiment.experiment_aurals %>
-                    <li><a href="#"><%= component_through.aural_fidelity.component.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.aural_fidelity.component.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -73,7 +73,7 @@
                 <ul class="list">
                   <h6 class="title">Haptic Fidelity</h6>
                   <% for component_through in experiment.experiment_haptics %>
-                    <li><a href="#"><%= component_through.haptic_fidelity.component.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.haptic_fidelity.component.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -81,7 +81,7 @@
                 <ul class="list">
                   <h6 class="title">Biomechanical Symmetry</h6>
                   <% for component_through in experiment.experiment_biomechanicals %>
-                    <li><a href="#"><%= component_through.biomechanical_symmetry.component.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.biomechanical_symmetry.component.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -89,7 +89,7 @@
                 <ul class="list">
                   <h6 class="title">Control Symmetry</h6>
                   <% for component_through in experiment.experiment_controls %>
-                    <li><a href="#"><%= component_through.control_symmetry.component.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.control_symmetry.component.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 <% end %>
               </ul>
@@ -97,7 +97,7 @@
                 <ul class="list">
                   <h6 class="title">System Appropriateness</h6>
                   <% for component_through in experiment.experiment_system_apps %>
-                    <li><a href="#"><%= component_through.system_appropriateness.component.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.system_appropriateness.component.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -108,7 +108,7 @@
                 <h6 class="title">Independent Variables</h6>
                 <ul class="list">
                   <% for component_through in experiment.experiment_indy_variables %>
-                    <li><a href="#"><%= component_through.indy_variable.variable.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.indy_variable.variable.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
@@ -128,7 +128,7 @@
               <% if experiment.experiment_displays.count > 0 %>
                 <ul class="list">
                   <% for component_through in experiment.experiment_displays %>
-                    <li><a href="#"><%= component_through.display.display.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.display.display.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% else %>
@@ -141,7 +141,7 @@
               <% if experiment.experiment_hardwares.count > 0 %>
                 <ul class="list">
                   <% for component_through in experiment.experiment_hardwares %>
-                    <li><a href="#"><%= component_through.hardware.hardware.downcase %></a> - <%= component_through.desc.downcase %></li>
+                    <li><a href="#"><%= component_through.hardware.hardware.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% else %>
@@ -154,7 +154,7 @@
               <% if experiment.experiment_softwares.count > 0 %>
                 <ul class="list inline">
                   <% for component_through in experiment.experiment_softwares %>
-                    <li class="inline"><a href="#"><%= component_through.software.software.downcase %></a></li>
+                    <li class="inline"><a href="#"><%= component_through.software ? component_through.software.software.downcase : "no description provided" %></a></li>
                   <% end %>
                 </ul>
               <% else %>
