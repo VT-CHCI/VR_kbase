@@ -108,7 +108,7 @@
                 <h6 class="title">Independent Variables</h6>
                 <ul class="list">
                   <% for component_through in experiment.experiment_indy_variables %>
-                    <li><a href="#"><%= component_through.indy_variable.variable.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
+                    <li><a href="#"><%= component_through.indy_variable ? component_through.indy_variable.variable.downcase : "" %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% end %>
