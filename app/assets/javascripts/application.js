@@ -129,7 +129,6 @@ function checkVariables () {
 
   $('.core-element:visible .variables_group[data-attribute=indy_variable_tokens]').each( function() {
     if ($(this).val().length > 0) {
-      console.log()
       empty = false;
     }
    });
@@ -221,7 +220,6 @@ function scrollToErrorField (focus, offset) {
   }
 
   if (!scrolledTo && !paperValid) {
-    console.log('scrolling!', focus);
     $('html, body').animate({
         scrollTop: $(focus).offset().top - offset
     }, 1000);
@@ -448,7 +446,6 @@ function remove_auto_gen_field(link, parentLevel) {
 // ##########################################################################
 
 function update_author_order() {
-  //console.log('Update author order');
   $('.author_paper:visible').each( function(index) {
     $(this).children('.inline-group').children('.order').children('input').eq(0).val(index);
   });
@@ -470,13 +467,20 @@ function add_progress_heading(association, focus, repopulate) {
 
     $('#progress-headings .nav-experiments').append(
       '<div id="'+heading+'" class="nav-core-element-block experiment-block">\
-        <a class="experiment-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
+        <a class="experiment-heading open" data-target="'+focus.selector+'" onclick="show_element(this)">\
+          <div class="collapse-field">\
+            <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
+            <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
+          </div>\
           <div class="title-field">Unnamed Experiment</div>\
+          <div class="badge-field">\
+            <span class="badge badge-info">8</span>\
+          </div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
         </a>\
-        <div class="nav-tasks"></div><div class="new-add-links">'+link+'</div>\
+        <div class="nav-tasks collapse in"></div><div class="new-add-links">'+link+'</div>\
       </div>'
     );
     var collapse = '#'+heading+' .nav-tasks';
@@ -495,7 +499,7 @@ function add_progress_heading(association, focus, repopulate) {
             <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
           </div>\
           <div class="title-field">Unnamed Task</div>\
-          <div class="badge-field hidden">\
+          <div class="badge-field">\
             <span class="badge badge-info">8</span>\
           </div>\
           <div class="close-field">\
@@ -599,16 +603,24 @@ function add_progress_heading(association, focus, repopulate) {
 
   if (collapse != undefined) {
     $(collapse).on('hidden', function (e) {
-      $(e.target).addClass('closed');
-      $(e.target).removeClass('open');
+      if ($(this).hasClass(e.target.className)) {
+        $(this).prev().children('.badge-field').find('.badge').html($(this).children().length);
+
+        $(this).prev().addClass('closed');
+        $(this).prev().removeClass('open');
+
+        if ($(this).parent().find('.current').length > 0) {
+          show_element($(this).prev());
+        }
+      }
     });
 
     $(collapse).on('shown', function (e) {
-      console.log($(e));
-
-      $(e.target).removeClass('closed');
-      $(e.target).addClass('open');
-    })
+      if ($(this).hasClass(e.target.className)) {
+        $(this).prev().removeClass('closed');
+        $(this).prev().addClass('open');
+      }
+    });
   }
 
   if (repopulate) {
@@ -621,6 +633,14 @@ function add_progress_heading(association, focus, repopulate) {
       repopulate_buttons($(focus.selector));
     }
   } else {
+    //If this is hidden in a closed nav element we need to open the element
+    if ($(heading).parent().parent().prev().hasClass('closed')) {
+      $(heading).parent().parent().prev().removeClass('closed');
+      $(heading).parent().parent().prev().addClass('open');
+
+      $($(heading).parent().parent().prev().children().find('i').data('target')).collapse('toggle');
+    }
+
     //Set newely created heading to current and show it
     show_element($('#progress-headings '+heading), true);
   }
@@ -1146,20 +1166,18 @@ var keepHidden;
 function save_button_clicked (focus) {
   if (keepHidden) {
     if (paperJSON == undefined) {
-      console.log('trying to click add experiment');
       $('#paper .add-core-element').click();
     }
     else if (paperJSON.experiments[0] == undefined) {
-      console.log('trying to click add task');
-      if ($('#experiment_0 .add-core-element') > 0) {
+      
+      if ($('#experiment_0 .add-core-element').length > 0) {
         $('#experiment_0 .add-core-element').click();
       } else {
         $('#paper .add-core-element').click();
       }
     }
     else if (paperJSON.experiments[0].tasks[0] == undefined) {
-      console.log('trying to click add finding');
-      if ($('#experiment_0_task_0 .add-core-element') > 0) {
+      if ($('#experiment_0_task_0 .add-core-element').length > 0) {
         $('#experiment_0_task_0 .add-core-element').click();
       } else {
         $('#experiment_0 .add-core-element').click();
@@ -1219,7 +1237,7 @@ function save_paper (focus, association, content) {
 
         if (association != undefined) {
           //Add element and reset stuff
-          add_fields_after (focus, association, content)
+          add_fields_after (focus, association, content);
           handle_one_times();
         }
       },

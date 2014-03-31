@@ -280,9 +280,22 @@ form input[type='number']::-webkit-inner-spin-button {
   .nav-core-element-block .collapse-field {
     line-height: 18px;
     padding-right: 5px;
+
+    .icon-chevron-right {
+      padding-top: 3px;
+    }
+
+    .icon-chevron-down {
+      padding-top: 0;
+    }
   }
 
-  .publiation-block {
+  .nav-core-element-block .badge-field {
+    padding-right: 7px;
+    padding-top: 3px;
+  }
+
+  .publication-block {
     line-height: 18px;
   }
 
@@ -314,10 +327,6 @@ form input[type='number']::-webkit-inner-spin-button {
       display: block;
     }
 
-    .task-heading {
-      padding-right: 5px;
-    }
-
     .badge-field {
       display: none;
     }
@@ -330,10 +339,6 @@ form input[type='number']::-webkit-inner-spin-button {
 
     .icon-chevron-right {
       display: none;
-    }
-
-    .task-heading {
-      padding-right: 30px;
     }
 
     .badge-field {
