@@ -712,6 +712,8 @@ function delete_element () {
 
   $('#delete-core-element-modal').modal('hide');
   save_paper();
+  
+  window.onbeforeunload = null;
   location.reload();
 }
 
@@ -1251,6 +1253,7 @@ function save_paper (focus, association, content) {
         }
 
         if (paperSubmit) {
+          window.onbeforeunload = null;
           window.location.assign('/papers/'+paperId);
         }
 
@@ -1421,10 +1424,10 @@ $(document).ready( function() {
 
     $('#submit-button').hide();
 
-    //Prevents users from accidentally leaving the page
-    // window.onbeforeunload = function() { 
-    //   return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
-    // };
+    // Prevents users from accidentally leaving the page
+    window.onbeforeunload = function() { 
+      return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
+    };
 
     //Prevents form from being submitted by enter key
     // $('#new_paper').bind("keyup keypress", function(e) {

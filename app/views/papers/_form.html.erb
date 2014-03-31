@@ -1,7 +1,7 @@
 <%= form_for(@paper, remote: true, :html => { :class => "paper-form"}, :builder => Judge::FormBuilder) do |f| %>
   <div class="row-fluid">
     <div class="span3">
-      <div id="entry_progress" class="well span3">
+      <div id="entry_progress" class="well span12">
         <legend class="with-helper-text">Entry Navigation</legend>
         <p class="after-legend"><small>This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</small></p>
         <div id="progress-headings">

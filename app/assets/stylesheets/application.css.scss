@@ -47,7 +47,8 @@ p.after-legend {
 }
 
 #entry_progress {
-  position: fixed;
+  /* position: fixed; */
+  position: relative;
 
   h3:not(.current) i, h5:not(.current) i {
     display: none;
