@@ -2,13 +2,13 @@
 	<div class="inline-group">
 		<div class="field token-input span3">
 		  <%= f.label :indy_variable_tokens, "Independent Variable", :'data-attribute' => 'indy_variable_tokens' %>
-		  <%= f.text_field :indy_variable_tokens, "data-pre" => f.object.indy_variable.to_json, "data-type" => "variable", "data-limit" => 1, "data-database" => "indy_variable", :class => 'span3', :'data-attribute' => 'indy_variable_tokens' %>
+		  <%= f.text_field :indy_variable_tokens, "data-pre" => f.object.indy_variable.to_json, "data-type" => "variable", "data-limit" => 1, "data-database" => "indy_variable", :class => 'span3 variables_group', :'data-attribute' => 'indy_variable_tokens', :onchange => "checkAutoComplete(this);" %>
 		</div>
 
 		<div class="span9">
-			<div class="field field-indy-variable-desc span11">
+			<div class="field field-indy-variable-desc span11 control-group">
 			  <%= f.label :desc, 'Independent Variable Description and Levels', :'data-attribute' => 'desc' %>
-			  <%= f.text_field :desc, :class => 'span12', :'data-attribute' => 'desc', :title => 'Enter the different levels or conditions of this component varied in this experiment and, if needed, describe what the variable is ', :'ref' => 'tooltip', :'data-placement' => 'left' %>
+			  <%= f.text_field :desc, :class => 'span12', :'data-attribute' => 'desc', :title => 'Enter the different levels or conditions of this component varied in this experiment and, if needed, describe what the variable is ', :'ref' => 'tooltip', :'data-placement' => 'left', :required => true, :validate => true %>
 			</div>
 
 			<div class="field destroy-indy-variable span1">

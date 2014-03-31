@@ -5,4 +5,6 @@ class ExperimentAural < ActiveRecord::Base
   accepts_nested_attributes_for :aural_fidelity
 
   attr_accessible :desc, :aural_fidelity_attributes, :aural_fidelity_id
+
+  validates :desc, :presence => true
 end

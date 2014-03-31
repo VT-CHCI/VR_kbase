@@ -2,13 +2,13 @@
     <div class="inline-group">
 		<div class="field token-input span3">
 		  <%= f.label :hardware_tokens, "Input Device", :'data-attribute' => 'hardware_tokens' %>
-		  <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardware.to_json, "data-type" => "hardware", "data-limit" => 1, :class => 'span3', :'data-attribute' => 'hardware_tokens' %>
+		  <%= f.text_field :hardware_tokens, "data-pre" => f.object.hardware.to_json, "data-type" => "hardware", "data-limit" => 1, :class => 'span3', :'data-attribute' => 'hardware_tokens', :onchange => "checkAutoComplete(this);" %>
 		</div>
 
 		<div class="span9">
-			<div class="field field-hardware-desc span11">
+			<div class="field field-hardware-desc span11 control-group">
 			  <%= f.label :desc, 'Input Device Description', :'data-attribute' => 'desc' %>
-			  <%= f.text_field :desc, :class => 'span12', :'data-attribute' => 'desc' %>
+			  <%= f.text_field :desc, :class => 'span12', :'data-attribute' => 'desc', :required => true, :validate => true %>
 			</div>
 
 			<div class="field destroy-display span1">

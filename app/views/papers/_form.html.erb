@@ -1,7 +1,7 @@
 <%= form_for(@paper, remote: true, :html => { :class => "paper-form"}, :builder => Judge::FormBuilder) do |f| %>
   <div class="row-fluid">
     <div class="span3">
-      <div id="entry_progress" class="well span3">
+      <div id="entry_progress" class="well span12">
         <legend class="with-helper-text">Entry Navigation</legend>
         <p class="after-legend"><small>This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</small></p>
         <div id="progress-headings">
@@ -11,9 +11,15 @@
               <div class="title-field">Publication Information</div>
             </div>
           </a>
-
+          <div class="nav-experiments"></div>
+          <a class="label nav-core-element-add" data-loading-text="Saving...">Save and Add Experiment</a>
         </div>
-        <button class="btn btn-primary" data-loading-text="Autosaving..." onclick="add_test(this); return false;">Save</button>
+        <div id="save-button">
+          <button class="btn btn-primary" data-loading-text="Saving..." onclick="save_button_clicked(this); return false;">Save and Continue</button>
+        </div>
+        <div id="submit-button">
+          <button class="btn" data-loading-text="Saving..." onclick="submit_paper(this); return false;">Submit Publication</button>
+        </div>
       </div>
     </div>
 
@@ -45,7 +51,7 @@
             <div class="field doi-field" id="paper-doi">
              <!--  <%= f.label :doi, 'DOI' %> -->
               <div class="input-append">
-                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'left' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
+                <%= f.text_field :doi, :class => 'input-large', :title => 'Format: 10.1016/j.ijhcs.2008.10.003)', :'ref' => 'tooltip', :'data-placement' => 'bottom' %><button id="submit-doi" class="btn btn-primary" data-loading-text="Loading..." type="button">Lookup DOI</button>
               </div>
             </div>
             <!-- <span class="help-block">(Format: 10.1016/j.ijhcs.2008.10.003)</span> -->
@@ -54,14 +60,14 @@
           <legend class="with-helper-text">Paper Details</legend>
           <p class="after-legend"><small>This section is for manually entering the publication information or reviewing/editing information populated by the DOI. Once you are finished click the next button at the bottom of the page to move onto adding an experiment.</small></p>
 
-          <div class="field">
-            <%= f.label :title, 'Publication Title' %>
-            <%= f.text_field :title, :class => 'span12' %>
+          <div class="field control-group">
+            <%= f.label :title, 'Publication Title', :class=> 'required' %>
+            <%= f.text_field :title, :class => 'span12 validated-field', :required => true, :validate => true, :onchange => "validate_field(this)" %>
           </div>
 
           <div class="well">
-            <div class="attribute_block">
-              <legend class="with-helper-text">Authors</legend>
+            <div class="authors-title attribute_block">
+              <legend class="with-helper-text">Authors<span class="nested-validation-text hidden"> There must be at least one author</span></legend>
               <p class="after-legend"><small>Add authors in the proper order below. If you need to add more than one author use the add author button.</small></p>
 
               <div class="authors">
@@ -112,19 +118,18 @@
             </div>
           </div>
 
-          <div class="field clear .field-title">
+          <div class="field clear field-url control-group">
             <%= f.label :paper_url %>
-            <%= f.text_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'left' %>
+            <%= f.url_field :paper_url, :class => 'span12', :title => 'Link to the official publisher page for this paper, if available', :'ref' => 'tooltip', :'data-placement' => 'left', :onchange => "clear_validation_text(this)" %>
           </div>
 
           <%= f.fields_for :experiments do |builder| %>
             <%= render 'experiment_fields', :f => builder %>
           <% end %>
 
-          <p class="new_experiment">
+          <p class="new_experiment hidden">
             <%= button_to_add_elements "Save and Continue", f, :experiments %>
           </p>
-
         </div>
       </div>
 
@@ -133,6 +138,44 @@
       </div> -->
     </div>
   </div>
-
-
 <% end %>
+
+<div id="delete-core-element-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-core-element-modal" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete "<span id="element-title-to-delete"></span>"<span class="element-dependants"></span>?</h3>
+  </div>
+  <div class="modal-body">
+    <p>This will permenently erase all information for this <span class="element-type-to-delete"></span><span class="element-dependants"></span>. This action cannot be undone. Are you sure you want to continue?</p>
+    <p id="element-nav-id-to-delete" class="hidden"></p>
+    <p id="element-destroy-id-to-delete" class="hidden"></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-danger" onclick="delete_element()">Erase <span class="element-type-to-delete"></span>!</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="disclaimer-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="disable_disclaimer_modal(<%= current_user.id.to_s %>);">×</button>
+    <h3 id="myModalLabel">Before you begin</h3>
+  </div>
+  <div class="modal-body container-fluid">
+    Thank you for your interest in contributing to the VR Knowledgebase! Before you continue, please make sure that your entry meets all the criteria below:
+    <ul class="list">
+      <li class="list">It is a peer-reviewed publication;</li>
+      <li class="list">It includes statistically significant findings;</li>
+      <li class="list">It includes an evaluation of components of fidelity.</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <%= form_for current_user, :url => '/users/'+current_user.id.to_s, :html=>{:id=>'first_time_form', :class => "first-time-form"}, :method => :put do |f| %>
+      <%= f.check_box :first_time, :selected => current_user.first_time, :id => current_user.id.to_s, :class => "first-time-form first-time-cb" %>
+      <%= f.label :first_time, "Show this again", :class => "first-time-form" %>
+    <% end %>
+    <a class="btn" data-dismiss="modal" aria-hidden="true" onclick="window.history.back()">Cancel</a>
+    <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="disable_disclaimer_modal(<%= current_user.id.to_s %>);">Continue</a>
+  </div>
+</div>

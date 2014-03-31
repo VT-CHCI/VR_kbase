@@ -1,11 +1,11 @@
 <div class="author">
-  <div class="field span5">
-    <%= f.label :last_name, 'Last/Family Name', :'data-attribute' => 'last_name'%>
-    <%= f.text_field :last_name, :class => 'span12 readonly', :'data-attribute' => 'last_name' %>
+  <div class="field span5 control-group">
+    <%= f.label :last_name, 'Last/Family Name', :'data-attribute' => 'last_name', :class=> 'required' %>
+    <%= f.text_field :last_name, :class => 'span12 readonly validated-field', :'data-attribute' => 'last_name', :required => true, :validate => true, :onchange => "validate_field(this)" %>
   </div>
-  <div class="field span5">
-    <%= f.label :first_name, 'First/Given Name', :'data-attribute' => 'first_name'%>
-    <%= f.text_field :first_name, :class => 'span12 readonly', :'data-attribute' => 'first_name' %>
+  <div class="field span5 control-group">
+    <%= f.label :first_name, 'First/Given Name', :'data-attribute' => 'first_name', :class=> 'required' %>
+    <%= f.text_field :first_name, :class => 'span12 readonly validated-field', :'data-attribute' => 'first_name', :required => true, :validate => true, :onchange => "validate_field(this)" %>
   </div>
   <div class="field span1">
     <%= f.label :middle_initial, 'M.I.', :'data-attribute' => 'middle_initial' %>

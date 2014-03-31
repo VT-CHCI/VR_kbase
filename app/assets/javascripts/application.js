@@ -18,31 +18,226 @@
 //= require json2
 //= require judge
 
+// ##########################################################################
+// Validation
+// ##########################################################################
 
-function validate_all_fields() {
-  $('.field').each( function() {
+var paperValid = true;
+var scrolledTo = false;
+
+function validate_all_fields () {
+  paperValid = true;
+  scrolledTo = false;  
+
+  $($('.core-element:visible .validated-field:visible')).each( function() {
     validate_field(this);
+    scrollToErrorField(this);
+  });
+
+  if ($('.core-element:visible').hasClass('paper')) {
+    checkAuthorsCount();
+  }
+  
+  if ($('.core-element:visible').hasClass('experiment')) {
+    checkGenderBalance();
+    checkVariables();
+    checkBlanks();
+  }
+
+  if ($('.core-element:visible').hasClass('task')) {
+    checkCategories();
+    checkEnvironmentVariables();
+    checkMetrics();
+  }
+
+  if ($('.core-element:visible').hasClass('finding')) {
+
+  }
+
+  if ($('.finding').length > 0 && paperValid) {
+    $('#submit-button').show();
+  } else {
+    $('#submit-button').hide();
+  }
+}
+
+function validate_field (focus) {
+  judge.validate(focus, {
+    valid: function(element) {
+      $(element).parent().addClass('success');
+      $(element).parent().removeClass('error');
+      $(element).prev().removeClass('error');
+
+      paperValid = paperValid && true;
+    },
+    invalid: function(element, messages) {
+      $(element).parent().addClass('error');
+      $(element).parent().removeClass('success');
+      $(element).prev().addClass('error');
+      
+      console.log('not valid!', messages.join(','));
+      paperValid = paperValid && false;
+    }
   });
 }
 
-function validate_field(focus) {
-  //console.log(focus);
-  judge.validate(focus, {
-    valid: function(element) {
-      element.style.border = '1px solid green';
-    },
-    invalid: function(element, messages) {
-      element.style.border = '1px solid red';
-      alert(messages.join(','));
+function setUrlClasses (valid) {
+  var focus = $('#paper .field-url input');
+
+  if (valid) {
+    $(focus).parent().addClass('success');
+    $(focus).parent().removeClass('error');
+    $(focus).prev().removeClass('error');
+  }
+  else {
+    $(focus).parent().addClass('error');
+    $(focus).parent().removeClass('success');
+    $(focus).prev().addClass('error');
+
+    scrollToErrorField($('#paper .field-url input'));
+  } 
+}
+
+function checkAuthorsCount () {
+  if ($('.authors input:visible').length/3 > 0 ) {
+    paperValid = paperValid && true;
+    
+    $('.authors-title .nested-validation-text').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.authors-title .nested-validation-text').removeClass('hidden');
+    scrollToErrorField($('.authors-title'), 120);
+  }
+}
+
+function checkGenderBalance () {
+  if ($('.core-element:visible .gender input:checked').length > 0 ) {
+    paperValid = paperValid && true;
+    
+    $('.core-element:visible .field-gender label').eq(0).removeClass('error');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .field-gender label').eq(0).addClass('error');
+    scrollToErrorField($('.core-element:visible .field-gender'));
+  }
+}
+
+function checkVariables () {
+  var empty = true;
+
+  $('.core-element:visible .variables_group[data-attribute=indy_variable_tokens]').each( function() {
+    if ($(this).val().length > 0) {
+      empty = false;
+    }
+   });
+
+  if ($('.core-element:visible .variables_group:checked').length > 0 || !empty) {
+    paperValid = paperValid && true;
+
+    $('.core-element:visible .variables-validation-text span').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .variables-validation-text span').removeClass('hidden');
+    scrollToErrorField($('.core-element:visible .variables-validation-text').eq(0), 120);
+  }
+}
+
+function checkBlanks () {
+  if (paperValid) {
+    $('.core-element:visible .hardwares .generated:visible').each( function () {
+      if ($(this).children().find('.token-input input[data-type=hardware]').val() == '') {
+        $(this).children().find('button').click();
+      }
+    });
+
+    $('.core-element:visible .indy-variables .generated:visible').each( function () {
+      if ($(this).children().find('.token-input input[data-type=variable]').val() == '') {
+        $(this).children().find('button').click();
+      }
+    });
+  }
+}
+
+function checkCategories () {
+  if ($('.core-element:visible .task-categories input:checked').length > 0) {
+    paperValid = paperValid && true;
+
+    $('.core-element:visible .categories-validation-text span').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .categories-validation-text span').removeClass('hidden');
+    scrollToErrorField($('.core-element:visible .categories-validation-text').eq(0), 120);
+  }
+}
+
+function checkEnvironmentVariables () {
+  $('.core-element:visible .environment-group').each(function() {
+    if ($(this).find('input:checked').length > 0) {
+      paperValid = paperValid && true;
+
+      $(this).find('label').eq(0).removeClass('error');
+    } else {
+      paperValid = paperValid && false;
+    
+      $(this).find('label').eq(0).addClass('error');
+      scrollToErrorField($(this).find('label').eq(0));
     }
   });
+}
+
+function checkMetrics () {
+  if ($('.core-element:visible .metrics input:checked').length > 0) {
+    paperValid = paperValid && true;
+
+    $('.core-element:visible .metrics-validation-text span').addClass('hidden');
+  } else {
+    paperValid = paperValid && false;
+    
+    $('.core-element:visible .metrics-validation-text span').removeClass('hidden');
+    scrollToErrorField($('.core-element:visible .metrics-validation-text').eq(0), 120);
+  }
+}
+
+function checkAutoComplete (focus) {
+  if ($(focus).val().length > 0) {
+    $(focus).parent().next().find('label').addClass('required');
+    $(focus).parent().next().find('input:text').addClass('validated-field');
+    $(focus).parent().next().find('input:text').change(function() { validate_field(this) });
+  } else {
+    $(focus).parent().next().find('label').removeClass('required');
+    $(focus).parent().next().find('input:text').removeClass('validated-field');
+    $(focus).parent().next().find('input:text').onchange = undefined;
+  }
+}
+
+function scrollToErrorField (focus, offset) {
+  if (offset == undefined) {
+    offset = 225
+  }
+
+  if (!scrolledTo && !paperValid) {
+    $('html, body').animate({
+        scrollTop: $(focus).offset().top - offset
+    }, 1000);
+
+    scrolledTo = true;
+  }
+}
+
+function clear_validation_text (focus) {
+  $(focus).parent().removeClass('error');
+  $(focus).prev().removeClass('error');
 }
 
 // ##########################################################################
 // Auto Generation of Detail Fields
 // ##########################################################################
 
-function create_component_description(focus, name, componentId, throughTable, component, descriptor) {
+function create_component_description(focus, name, componentId, throughTable, component, descriptor, tooltip) {
   var new_id = new Date().getTime(); //this isn't the being used it is a backup in case the id isn't set
   var experimentId = $(focus).data('experiment');
   var taskId = $(focus).data('task');
@@ -85,6 +280,12 @@ function create_component_description(focus, name, componentId, throughTable, co
   
   }
 
+  if (tooltip) {
+    var tooltipText = ' ref="tooltip" data-original-title="Enter the different levels or conditions of this component varied in this experiment" data-container="body" data-placement="left"';
+  } else {
+    var tooltipText = '';
+  }
+
   if (focus.checked) {
     //fires when component of immersion is checked
     //checks to see if there is a detail that already exists for that component
@@ -98,10 +299,10 @@ function create_component_description(focus, name, componentId, throughTable, co
     else {
       //the detail doesn't exist, so we need to create it
       $(container).append(
-        '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field">\
+        '<div data-id="'+new_id+'" id="'+divId+'" class="'+component+'"><div class="field control-group">\
         <input data-attribute="'+component+'_id" id="'+componentIdId+'" name="'+componentIdName+'" type="hidden" value="'+componentId+'">\
-        <label data-attribute="desc" for="'+componentDescId+'">'+name+' '+descriptor+'</label>\
-        <input data-attribute="desc" class="span12" id="'+componentDescId+'" name="'+componentDescName+'" size="30" type="text">\
+        <label data-attribute="desc" for="'+componentDescId+'" class="required">'+name+' '+descriptor+'</label>\
+        <input data-attribute="desc" data-validate="[{&quot;kind&quot;:&quot;presence&quot;,&quot;options&quot;:{},&quot;messages&quot;:{&quot;blank&quot;:&quot;can\'t be blank&quot;}}]" class="span12 validated-field" onchange="validate_field(this)" id="'+componentDescId+'" name="'+componentDescName+'"'+tooltipText+' size="30" type="text" required="required">\
         <input data-attribute="_destroy" class="destroy" id="'+componentDestroyId+'" name="'+componentDestroyName+'" type="hidden" value="false">\
         </div></div>'
       );
@@ -219,14 +420,14 @@ function generateUniqueId(inputs, size) {
 // ##########################################################################
 
 function remove_auto_gen_field(link, parentLevel) {
-  $(link).prev("input[type=hidden]").val("true");
+  $(link).prev('input[type=hidden]').val('true');
 
   if (parentLevel == 4) {
     var focus = $(link).parent().parent().parent().parent();
     var coreParentId = $(link).parents('.experiment').data('experiment');
   } else {
     var focus = $(link).parent().parent().parent();
-    var coreParentId = "";
+    var coreParentId = '';
   }
 
   focus.hide();
@@ -245,39 +446,10 @@ function remove_auto_gen_field(link, parentLevel) {
 // ##########################################################################
 
 function update_author_order() {
-  //console.log('Update author order');
   $('.author_paper:visible').each( function(index) {
     $(this).children('.inline-group').children('.order').children('input').eq(0).val(index);
   });
 }
-
-// function click_add_finding(task_id) {
-//   //console.log(task_id);
-//   $('p.new_finding').each( function() {
-//     //console.log($(this).parent().attr('id').indexOf(String(task_id)));
-//     if($(this).parent().attr('id').indexOf(String(task_id)) > 0)
-//       $(this).children().click();
-//   });
-//   //$('p.new_finding').children().click();
-
-//   $('[ref=tooltip]').tooltip();
-// }
-
-// function click_add_task(experiment_id) {
-//   //console.log(experiment_id);
-//   $('p.new_task').each( function() {
-//     //console.log($(this).parent().attr('id').indexOf(String(experiment_id)));
-//     if($(this).parent().attr('id').indexOf(String(experiment_id)) > 0)
-//       $(this).children().click();
-//   });
-//   //$('p.new_task').children().click();
-
-//   $('[ref=tooltip]').tooltip();
-// }
-
-// function click_add_experiment() {
-//   $('p.new_experiment').children().click();
-// }
 
 // ##########################################################################
 // Progress Heading
@@ -288,58 +460,65 @@ function add_progress_heading(association, focus, repopulate) {
   var taskId = $(focus).data('task');
   var findingId = $(focus).data('finding');
 
-  var headingIndex = [experimentId+1];
-
-  if (taskId != undefined) {
-    headingIndex.push(taskId+1);
-  }
-  if (findingId != undefined) {
-    headingIndex.push(findingId+1);
-  }
-
   //Create heading
   if (association == 'experiments') {
     var heading = 'experiment-block-'+experimentId;
+    var link = '<a class="label nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Task</a>';
 
-    $('#progress-headings').append(
-      '<div class="'+heading+'">\
-        <a class="experiment-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
-          <div class="number-field">'+headingIndex.join('.')+'</div>\
+    $('#progress-headings .nav-experiments').append(
+      '<div id="'+heading+'" class="nav-core-element-block experiment-block">\
+        <a class="experiment-heading open" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
+          <div class="collapse-field">\
+            <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
+            <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
+          </div>\
           <div class="title-field">Unnamed Experiment</div>\
+          <div class="badge-field">\
+            <span class="badge badge-info">8</span>\
+          </div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
         </a>\
+        <div class="nav-tasks collapse in"></div><div class="new-add-links">'+link+'</div>\
       </div>'
     );
-    heading = '.'+heading+' .experiment-heading';
-    
+    var collapse = '#'+heading+' .nav-tasks';
+    heading = '#'+heading+' .experiment-heading';
+
   }
   else if (association == 'tasks') {
     var heading = 'task-block-'+taskId;
+    var link = '<a class="label nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Finding</a>';
 
-    $('.experiment-block-'+experimentId).append(
-      '<div class="'+heading+'">\
-        <a class="task-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
-          <div class="number-field">'+headingIndex.join('.')+'</div>\
+    $('#experiment-block-'+experimentId+' .nav-tasks').append(
+      '<div id="'+heading+'" class="nav-core-element-block task-block">\
+        <a class="task-heading open" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
+          <div class="collapse-field">\
+            <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
+            <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
+          </div>\
           <div class="title-field">Unnamed Task</div>\
+          <div class="badge-field">\
+            <span class="badge badge-info">8</span>\
+          </div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
           </div>\
         </a>\
-        <div class="finding-block"></div>\
+        <div class="nav-findings collapse in"></div><div class="new-add-links">'+link+'</div>\
       </div>'
     );
-    heading = '.experiment-block-'+experimentId+' .'+heading+' .task-heading';
-    
+    var collapse = '#experiment-block-'+experimentId+' #'+heading+' .nav-findings';
+    heading = '#experiment-block-'+experimentId+' #'+heading+' .task-heading';
+
   } 
   else if (association == 'findings') {
     var heading = 'finding-block-'+findingId;
 
-    $('.experiment-block-'+experimentId+' .task-block-'+taskId).append(
-      '<div class="'+heading+'">\
-        <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
-          <div class="number-field">'+headingIndex.join('.')+'</div>\
+    $('#experiment-block-'+experimentId+' #task-block-'+taskId+' .nav-findings').append(
+      '<div id="'+heading+'" class="nav-core-element-block finding-block">\
+        <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
           <div class="title-field">Unnamed Finding</div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
@@ -347,11 +526,16 @@ function add_progress_heading(association, focus, repopulate) {
         </a>\
       </div>'
     );
-    heading = '.experiment-block-'+experimentId+' .task-block-'+taskId+' .'+heading+' .finding-heading';
+    var collapse = undefined;
+    heading = '#experiment-block-'+experimentId+' #task-block-'+taskId+' #'+heading+' .finding-heading';
   
-    //repopulate buttons of findings
-    repopulate_buttons($(focus.selector));
   }
+
+  $('#progress-headings .task-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+  $('#progress-headings .experiment-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+
+  $('#progress-headings .finding-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
+  $('#progress-headings .task-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
 
   //Bind element title to heading title
   $(focus.selector + ' .field-title input').eq(0).keyup( function() {
@@ -364,58 +548,173 @@ function add_progress_heading(association, focus, repopulate) {
     $('#progress-headings '+heading+' .title-field').text(newTitle);
   });
 
+  //Remove element when close is clicked and prevent the show_element functionality
+  $('#progress-headings '+heading+' .close').click( function(e) {
+    var type = $(this).parent().parent().prop('id').split('-')[0];
+    var target = $(this).parent().parent().data('target').split('_');
+    var navTarget;
+    var targetDestroyId = '#paper_';  
+
+    for (var i = 0; i< target.length; i++) {
+      if (i == 1) {
+        navTarget = '#experiment-block-'+target[i];
+        targetDestroyId = targetDestroyId+'experiments_attributes_'+target[i];
+      } 
+      else if (i == 3) {
+        navTarget = navTarget+' #task-block-'+target[i];
+        targetDestroyId = targetDestroyId+'_tasks_attributes_'+target[i];
+      } 
+      else if (i == 5) {
+        navTarget = navTarget+' #finding-block-'+target[i];
+        targetDestroyId = targetDestroyId+'_findings_attributes_'+target[i];
+      }
+    };
+
+    $('#element-title-to-delete').html($(this).parent().parent().children('.title-field').html());
+    $('.element-type-to-delete').each( function () {
+      $(this).html(type);
+    });
+
+    if (type == 'finding') {
+      $('.element-dependants').each( function () {
+        $(this).html('');
+      });
+    } else {
+      $('.element-dependants').each( function () {
+        $(this).html(' and its dependants');
+      });
+    }
+
+    $('#element-nav-id-to-delete').html(navTarget);
+    $('#element-destroy-id-to-delete').html(targetDestroyId);
+
+    $('#delete-core-element-modal').modal('show');
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  $('#progress-headings '+heading+' i').click( function(e) {
+    $($(this).data('target')).collapse('toggle');
+
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  if (collapse != undefined) {
+    $(collapse).on('hidden', function (e) {
+      if ($(this).hasClass(e.target.className)) {
+        $(this).prev().children('.badge-field').find('.badge').html($(this).children().length);
+
+        $(this).prev().addClass('closed');
+        $(this).prev().removeClass('open');
+
+        if ($(this).parent().find('.current').length > 0) {
+          show_element($(this).prev(), false, true);
+        }
+      }
+    });
+
+    $(collapse).on('shown', function (e) {
+      if ($(this).hasClass(e.target.className)) {
+        $(this).prev().removeClass('closed');
+        $(this).prev().addClass('open');
+      }
+    });
+  }
+
   if (repopulate) {
     //Keep publicaiton info visible and rename if title is present
     $($('#progress-headings '+heading).data('target')).hide();
     $(focus.selector + ' .field-title input').keyup();
 
+    if (association == 'findings') {
+      //repopulate buttons of findings
+      repopulate_buttons($(focus.selector));
+    }
   } else {
+    //If this is hidden in a closed nav element we need to open the element
+    if ($(heading).parent().parent().prev().hasClass('closed')) {
+      $(heading).parent().parent().prev().removeClass('closed');
+      $(heading).parent().parent().prev().addClass('open');
+
+      $($(heading).parent().parent().prev().children().find('i').data('target')).collapse('toggle');
+    }
+
     //Set newely created heading to current and show it
     show_element($('#progress-headings '+heading), true);
   }
 }
 
-function show_element (focus, slide) {
+function show_element (focus, slide, save) {
   var scrolled = false;
   var scrollTimeout;
 
   if (!$(focus).hasClass('current')) {
-    //Set click heading to current
-    $('#progress-headings a.current').removeClass('current');
-    $(focus).addClass('current');
-
-    //Hide currently visible element and show new element
-    if (slide) {
-      $('.core-element:visible').fadeOut()
-      $($(focus).data('target')).slideDown()
-    } else {
-      $('.core-element:visible').fadeOut()
-      $($(focus).data('target')).fadeIn()
+    if (save) {
+      save_paper();
     }
 
-    //If this is a finding, we need to populate buttons
-    if ($(focus).data('target').search('finding') > -1) {
-      repopulate_buttons($(focus).data('target'));
+    if (paperValid) { 
+      //Set click heading to current
+      $('#progress-headings a.current').removeClass('current');
+      $(focus).addClass('current');
+
+      //Hide currently visible element and show new element
+      if (slide) {
+        $('.core-element:visible').fadeOut()
+        $($(focus).data('target')).slideDown()
+      } else {
+        $('.core-element:visible').fadeOut()
+        $($(focus).data('target')).fadeIn()
+      }
+
+      //If this is a finding, we need to populate buttons
+      if ($($(focus).data('target')).hasClass('finding')) {
+        repopulate_buttons($(focus).data('target'));
+      }
+
+      //The rest of the code is to prevent over scrolling 
+      if (($("html, body").scrollTop() < 10) && !scrolled) {
+        $("html, body").animate({ scrollTop: 0 }, 500);
+        scrolled = true;
+      }
+
+      //Reset the timer
+      clearTimeout(scrollTimeout);
+
+      //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
+      scrollTimeout = setTimeout( function(){
+          scrolled = false;
+      }, 500);
     }
-
-    //The rest of the code is to prevent over scrolling 
-    if (($("html, body").scrollTop() < 10) && !scrolled) {
-      $("html, body").animate({ scrollTop: 0 }, 500);
-      scrolled = true;
-    }
-
-    //Reset the timer
-    clearTimeout(scrollTimeout);
-
-    //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
-    scrollTimeout = setTimeout( function(){
-        scrolled = false;
-    }, 500);
   }   
 }
 
-function delete_element (focus) {
+function delete_element () {
+  $($('#element-nav-id-to-delete').html()).hide();
+  $($('#element-nav-id-to-delete').html()).addClass('_destroy');
+  $($($('#element-nav-id-to-delete').html()).children('a').data('target')).addClass('_destroy');
 
+
+  if ($('.core-element:visible')[0] == $($($('#element-nav-id-to-delete').html()).children('a').data('target'))[0]) {
+    if ($($('#element-nav-id-to-delete').html()).prev().length > 0) {
+      show_element($($('#element-nav-id-to-delete').html()).prev().children('a'));
+    } else {
+      show_element($($('#element-nav-id-to-delete').html()).parent().prev());
+    }
+  }
+
+  $($('#element-destroy-id-to-delete').html()+'__destroy').val('true');
+  $($('#element-destroy-id-to-delete').html()+'__destroy').addClass('_destroy');
+
+  $($('#element-destroy-id-to-delete').html()+'_id').addClass('_destroy');
+
+  $('#delete-core-element-modal').modal('hide');
+  save_paper();
+  
+  window.onbeforeunload = null;
+  location.reload();
 }
 
 // ##########################################################################
@@ -511,7 +810,7 @@ function repopulate_buttons(focus) {
   create_inputs('hidden', '', target, '', 'indy_variable', 'variable', [], true);
 
   if(eval('paperJSON.experiments['+e_index+'].experiment_indy_variables.length') > 0) {
-    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').append('<label>Independant Variables</label><div class="indy-variables"></div>');
+    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').append('<label>Independent Variables</label><div class="indy-variables"></div>');
   
     var preData = new Array;
     if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+']')) {
@@ -594,10 +893,11 @@ function repopulate_buttons(focus) {
 }
 
 function create_finding_summary (focus) {
+
   var findingFields = $(focus).parents('.finding');
 
   var replaceSentence = 4;
-  var autoGenSentence = '_component_ had a _relationship_ relationship on _metric_ for _task_';
+  var autoGenSentence = 'There was a significant _relationship_ effect of _component_ on _metric_ for a _task_ task.';
 
   var componentText = new Array;
   var taskText = new Array;
@@ -618,7 +918,7 @@ function create_finding_summary (focus) {
   var relationshipText = $(findingFields).children().find('.relationships input:checked').data('text');
   var metricText = $(findingFields).children().find('.metrics input:checked').data('text');
 
-  if (componentText != '') {
+  if (componentText != '' || indyVariableText != '') {
     var mergedText = componentText.concat(indyVariableText);
     
     if (mergedText.length > 2) {
@@ -654,18 +954,18 @@ function create_finding_summary (focus) {
     replaceSentence = replaceSentence - 1;
   }
 
-  if (relationshipText != '') {
+  console.log(relationshipText);
+  if (relationshipText != '' && relationshipText != undefined) {
     if (relationshipText == 'Interaction') {
-      autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_ relationship on','g'), 'an ' + relationshipText + ' with');
-    } else if (relationshipText == 'Inverse') {
-      autoGenSentence = autoGenSentence.replace(new RegExp('a _relationship_','g'), 'an ' + relationshipText);
+      autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_ effect of','g'), relationshipText + ' between');
     } else {
       autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_','g'), relationshipText);
     }
     replaceSentence = replaceSentence - 1;
   }
 
-  if (metricText != '' || metricText != undefined) {
+  console.log(metricText);
+  if (metricText != '' && metricText != undefined) {
     autoGenSentence = autoGenSentence.replace(new RegExp('_metric_','g'), metricText);
     replaceSentence = replaceSentence - 1;
   }
@@ -687,6 +987,7 @@ function create_finding_summary (focus) {
 
   if (replaceSentence == 0) {
     $(findingFields).find('.field-summary input').val(autoGenSentence.charAt(0) + autoGenSentence.slice(1).toLowerCase());
+    validate_all_fields();
   } else {
     $(findingFields).find('.field-summary input').val('');
   }
@@ -714,6 +1015,10 @@ function add_fields_after (link, association, content) {
   }
 
   add_progress_heading(association, focus, false);
+}
+
+function add_core_element (focus) {
+  $($(focus).parent().prevAll('a').data('target')).find('.add-core-element').click();
 }
 
 // ##########################################################################
@@ -747,31 +1052,35 @@ function add_fields_before (link, association, content) {
 // ##########################################################################
 
 function add_author_ids (data) {
-  var idsFound = $('[id *=author_papers_attributes][id $=_id]').length/2;
+  if (data.author_papers != undefined) {
+    var idsFound = $('[id *=author_papers_attributes][id $=_id]').length/2;
 
-  if ($(data.author_papers).length != idsFound) {
-    $(data.author_papers).each( function(a_index) {
-      var index = this.order;
+    if (data.author_papers.length != idsFound) {
+      $(data.author_papers).each( function(a_index) {
+        // var index = this.order;
 
-      if (index > idsFound-1) {
-        console.log('Adding author id ', index);
-        $('.author_paper').eq(index).append('<input id="paper_author_papers_attributes_'+index+'_id" name="paper[author_papers_attributes]['+index+'][id]" type="hidden" value="'+this.id+'">');
-        $('.author_paper').eq(index).children().find('.author').append('<input id="paper_author_papers_attributes_'+index+'_author_attributes_id" name="paper[author_papers_attributes]['+index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
-      }
-    });
+        if (a_index > idsFound-1) {
+          console.log('Adding author id ', a_index);
+          $('.author_paper').eq(a_index).append('<input id="paper_author_papers_attributes_'+a_index+'_id" name="paper[author_papers_attributes]['+a_index+'][id]" type="hidden" value="'+this.id+'">');
+          $('.author_paper').eq(a_index).children().find('.author').append('<input id="paper_author_papers_attributes_'+a_index+'_author_attributes_id" name="paper[author_papers_attributes]['+a_index+'][author_attributes][id]" type="hidden" value="'+this.author_id+'">');
+        }
+      });
+    }
   }
 }
 
 function add_experiment_ids (data) {
-  var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]').length;
+  if (data.experiments != undefined) {
+    var idsFound = $('.paper [id *=experiments_attributes_][id $=_id]').length;
 
-  if ($(data.experiments).length != idsFound) {
-    $(data.experiments).each( function(e_index) {
-      if (e_index > idsFound-1) {
-        console.log('Adding experiment id ', e_index);
-        $('.paper').append('<input id="paper_experiments_attributes_'+e_index+'_id" name="paper[experiments_attributes]['+e_index+'][id]" type="hidden" value="'+this.id+'">');
-      }
-    });
+    if (data.experiments.length != idsFound) {
+      $(data.experiments).each( function(e_index) {
+        if (e_index > idsFound-1) {
+          console.log('Adding experiment id ', e_index);
+          $('.paper').append('<input id="paper_experiments_attributes_'+e_index+'_id" name="paper[experiments_attributes]['+e_index+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
   }
 }
 
@@ -779,19 +1088,32 @@ function add_experiment_nested_ids (data, throughTable) {
   $('.experiment').each( function(e_index) {
     var idsFound = 0;
     
-    $('#experiment_'+e_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
-      if ($(this).data('attribute') == undefined) {
-        idsFound = idsFound+1;
-      }
-    });
-
-    if (eval('$(data.experiments['+e_index+'].'+throughTable+'s)').length != idsFound) {
-      eval('$(data.experiments['+e_index+'].'+throughTable+'s)').each( function(i) {
-        if (i > idsFound-1) {
-          console.log('Adding ', throughTable, ' id ', i, 'for experiment', e_index);
-          $('#experiment_'+e_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+    if (eval('data.experiments['+e_index+']') != undefined) {
+      $('#experiment_'+e_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+        if ($(this).data('attribute') == undefined) {
+          idsFound = idsFound+1;
         }
       });
+
+      if (eval('data.experiments['+e_index+'].'+throughTable+'s.length') != idsFound) {
+        eval('$(data.experiments['+e_index+'].'+throughTable+'s)').each( function(i) {
+          if (i > idsFound-1) {
+            console.log('Adding ', throughTable, ' id ', i, 'for experiment', e_index);
+            $('#experiment_'+e_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+            
+            if (throughTable == 'experiment_hardware') {
+              $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_hardware_tokens').val(this.hardware_id);
+              $('#experiment_'+e_index+'_'+throughTable+'s').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+            }
+            else if (throughTable == 'experiment_indy_variable') {
+              console.log('#experiment_'+e_index+'_'+throughTable+'s');
+
+              $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_indy_variable_tokens').val(this.indy_variable_id);
+              $('#experiment_'+e_index+'_'+throughTable+'s').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+            }
+          }
+        });
+      }
     }
 
     add_task_ids (data, e_index);
@@ -800,15 +1122,17 @@ function add_experiment_nested_ids (data, throughTable) {
 }
 
 function add_task_ids (data, e_index) {
-  var idsFound = $('#experiment_'+e_index+' [id *=tasks_attributes_][id $=_id]').length;
+  if (eval('data.experiments['+e_index+']') != undefined) {
+    var idsFound = $('#experiment_'+e_index+' [id *=tasks_attributes_][id $=_id]').length;
 
-  if (eval('$(data.experiments['+e_index+'].tasks)').length != idsFound) {
-    eval('$(data.experiments['+e_index+'].tasks)').each( function(t_index) {
-      if (t_index > idsFound-1) {
-        console.log('Adding task id ', t_index, 'for experiment', e_index);
-        $('#experiment_'+e_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][id]" type="hidden" value="'+this.id+'">');
-      }
-    });
+    if (eval('data.experiments['+e_index+'].tasks.length') != idsFound) {
+      eval('$(data.experiments['+e_index+'].tasks)').each( function(t_index) {
+        if (t_index > idsFound-1) {
+          console.log('Adding task id ', t_index, 'for experiment', e_index);
+          $('#experiment_'+e_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
   }
 }
 
@@ -816,24 +1140,26 @@ function add_task_nested_ids (data, e_index, throughTable) {
   $('.task').each( function(r_index) {
     var t_index = 0;
     
-    if ($(this).data('experiment') == e_index) {
-      var idsFound = 0;
-    
-      $('#experiment_'+e_index+'_task_'+t_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
-        if ($(this).data('attribute') == undefined) {
-          idsFound = idsFound+1;
-        }
-      });
-
-      if (eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').length != idsFound) {
-        eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').each( function(i) {
-          if (i > idsFound-1) {
-            console.log('Adding ', throughTable, 'id ', i, 'for task', t_index, 'in experiment', e_index);
-            $('#experiment_'+e_index+'_task_'+t_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_task_'+t_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+    if (eval('data.experiments['+e_index+'].tasks['+t_index+']') != undefined) {
+      if ($(this).data('experiment') == e_index) {
+        var idsFound = 0;
+      
+        $('#experiment_'+e_index+'_task_'+t_index+' [id *='+throughTable+'s_attributes_][id $=_id]').each( function() {
+          if ($(this).data('attribute') == undefined) {
+            idsFound = idsFound+1;
           }
         });
+
+        if (eval('data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s.length') != idsFound) {
+          eval('$(data.experiments['+e_index+'].tasks['+t_index+'].'+throughTable+'s)').each( function(i) {
+            if (i > idsFound-1) {
+              console.log('Adding ', throughTable, 'id ', i, 'for task', t_index, 'in experiment', e_index);
+              $('#experiment_'+e_index+'_task_'+t_index+'_'+throughTable).append('<input id="paper_experiments_attributes_'+e_index+'_task_'+t_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
+            }
+          });
+        }
+        t_index = t_index + 1;
       }
-      t_index = t_index + 1;
     }
 
     add_finding_ids (data, e_index, r_index);
@@ -841,15 +1167,17 @@ function add_task_nested_ids (data, e_index, throughTable) {
 }
 
 function add_finding_ids (data, e_index, t_index) {
-  var idsFound = $('#experiment_'+e_index+'_task_'+t_index+' [id *=findings_attributes_][id $=_id]').length;
-  
-  if (eval('$(data.experiments['+e_index+'].tasks['+t_index+'].findings)').length != idsFound) {
-    eval('$(data.experiments['+e_index+'].tasks['+t_index+'].findings)').each( function(f_index) {
-      if (f_index > idsFound-1) {
-        console.log('Adding finding id', f_index, ' of task id ', t_index, 'for experiment', e_index);
-        $('#experiment_'+e_index+'_task_'+t_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][findings_attributes]['+f_index+'][id]" type="hidden" value="'+this.id+'">');
-      }
-    });
+  if (eval('data.experiments['+e_index+'].tasks['+t_index+']') != undefined) {
+    var idsFound = $('#experiment_'+e_index+'_task_'+t_index+' [id *=findings_attributes_][id $=_id]').length;
+    
+    if (eval('data.experiments['+e_index+'].tasks['+t_index+'].findings.length') != idsFound) {
+      eval('$(data.experiments['+e_index+'].tasks['+t_index+'].findings)').each( function(f_index) {
+        if (f_index > idsFound-1) {
+          console.log('Adding finding id', f_index, ' of task id ', t_index, 'for experiment', e_index);
+          $('#experiment_'+e_index+'_task_'+t_index).append('<input id="paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'_id" name="paper[experiments_attributes]['+e_index+'][tasks_attributes]['+t_index+'][findings_attributes]['+f_index+'][id]" type="hidden" value="'+this.id+'">');
+        }
+      });
+    }
   }
 }
 
@@ -860,35 +1188,79 @@ function add_finding_ids (data, e_index, t_index) {
 var paperId = null;
 var paperJSON;
 
+var paperError;
+var keepHidden;
+
+var paperSubmit = false;
+
+function save_button_clicked (focus) {
+  if (keepHidden) {
+    if (paperJSON == undefined) {
+      $('#paper .add-core-element').click();
+    }
+    else if (paperJSON.experiments[0] == undefined) {
+      
+      if ($('#experiment_0 .add-core-element').length > 0) {
+        $('#experiment_0 .add-core-element').click();
+      } else {
+        $('#paper .add-core-element').click();
+      }
+    }
+    else if (paperJSON.experiments[0].tasks[0] == undefined) {
+      if ($('#experiment_0_task_0 .add-core-element').length > 0) {
+        $('#experiment_0_task_0 .add-core-element').click();
+      } else {
+        $('#experiment_0 .add-core-element').click();
+      }
+    } 
+  } else {
+    save_paper(focus);
+  }
+}
+
+function submit_paper () {
+  $('form.paper-form').prepend('<input name="paper[published]" type="hidden" value="true">');
+  paperSubmit = true;
+  save_paper();
+}
+
 function save_paper (focus, association, content) {
-  update_author_order();
-  add_fields_after (focus, association, content);
-  $('[ref=tooltip]').tooltip();
-}
-
-function save_other_fields () {
-
-}
-
-function add_test (focus) {
   if (paperId == null) {
+    var url = '/papers';
     console.log('first post');
-    $(focus).button('loading');
-    
+  } else {
+    var url = '/papers/'+paperId
+    console.log('updating');
+  }
+
+  $(focus).button('loading');
+
+  validate_all_fields ();
+
+  if (paperValid) {
     $.ajax({
       type: 'POST',
-      url: '/papers',
+      url: url,
       data: $('form.paper-form').serialize(),
       dataType: 'json',
       success: function(data, status) {
         console.log(status, data); //whether successful or not
 
-        //Get information and add put method for updating paper
-        paperId = data.id;
-        $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+        if (paperId == null) {
+          //Get information and add put method for updating paper
+          paperId = data.id;
+          $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+        }
+
+        if (paperSubmit) {
+          window.onbeforeunload = null;
+          window.location.assign('/papers/'+paperId);
+        }
 
         //Set readonly inputs to readonly and remove destroyed objects and recount if needed
         paperManager.cleanUp();
+        update_author_order();
+        setUrlClasses(true);
 
         //Add new nested attributes ids to form
         paperJSON = data;
@@ -904,53 +1276,78 @@ function add_test (focus) {
         add_experiment_nested_ids (data, 'experiment_system_app');
         add_experiment_nested_ids (data, 'experiment_indy_variable');
 
-        //Reset the button and add element
-        $(focus).button('reset');
-        // add_fields_after (focus, association, content)
+        if (association != undefined) {
+          //Add element and reset stuff
+          add_fields_after (focus, association, content);
+          paperManager.recount();
+          handle_one_times();
+        }
       },
       error: function (error) {
-        alert('There was an error when saving! Please notify an admin.');
-        $(focus).button('reset');
-      }
-    });
-  } else {
-    console.log('updating');
+        console.log('error:', error);
+        paperError = error;
 
-    $.ajax({
-      type: 'POST',
-      url: '/papers/'+paperId,
-      data: $('form.paper-form').serialize(),
-      dataType: 'json',
-      success: function(data, status) {
-        console.log(status, data);
+        if (error.responseJSON.paper_url == "is not a valid URL") {
+          paperValid = paperValid && false;
+          setUrlClasses(false);
+        } else {
+          paperValid = paperValid && true;
+          setUrlClasses(true);
 
-        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-        paperManager.cleanUp();
-
-        //Add new nested attributes ids to form
-        paperJSON = data;
-        add_author_ids(data);
-        add_experiment_ids(data);
-        add_experiment_nested_ids (data, 'experiment_display');
-        add_experiment_nested_ids (data, 'experiment_hardware');
-        add_experiment_nested_ids (data, 'experiment_visual');
-        add_experiment_nested_ids (data, 'experiment_aural');
-        add_experiment_nested_ids (data, 'experiment_haptic');
-        add_experiment_nested_ids (data, 'experiment_biomechanical');
-        add_experiment_nested_ids (data, 'experiment_control');
-        add_experiment_nested_ids (data, 'experiment_system_app');
-        add_experiment_nested_ids (data, 'experiment_indy_variable');
-
-        //Reset the button and add element
-        $(focus).button('reset');
-        // add_fields_after (focus, association, content)
-      },
-      error: function (error) {
-        alert('There was an error when saving! Please notify an admin.');
-        $(focus).button('reset');
+          alert('There was an error when saving! Please notify an admin.');
+        }
       }
     });
   }
+
+  $(focus).button('reset');
+}
+
+function handle_one_times () {
+  keepHidden = true;
+
+  if (paperJSON != undefined) {
+    // $('.new_experiment').hide();
+    keepHidden = false;
+
+    if (paperJSON.experiments[0] != undefined) {
+      // $('.new_task').hide();
+      keepHidden = false;
+
+      if (paperJSON.experiments[0].tasks[0] != undefined) {
+        // $('.new_finding').hide();
+        keepHidden = false;
+
+      } else {
+        keepHidden = true;
+      }
+    } else {
+      keepHidden = true;
+    }
+  } else {
+    keepHidden = true;
+  }
+
+  if (keepHidden) {
+    $('#progress-headings .nav-core-element-add').hide();
+    $('#save-button button').html('Save and Continue');
+  } else {
+    $('#progress-headings .nav-core-element-add').show();
+    $('#save-button button').html('Save');
+  }
+}
+
+function disable_disclaimer_modal (user_id) {
+  console.log($('#first_time_form'));
+  $.ajax({
+    type: 'PUT',
+    url: '/users/'+user_id,
+    data: $('#first_time_form').serialize(),
+    dataType: 'json',
+    success: function(data, status) {
+      console.log(status, data);
+    }
+  });
 }
 
 // ##########################################################################
@@ -962,143 +1359,185 @@ $(document).ready( function() {
       $.getScript(location.href);
     });
 
-  var paperState = $('form.paper-form').prop('id').split('_');
+  if($('form.paper-form').length > 0) {
 
-  if (paperState[0] == 'edit') {
-    paperId = paperState[2];
-    
-    //Set readonly inputs to uneditable if they have values in them
-    $('.author_paper .readonly').prop('readonly', true);
+    var paperState = $('form.paper-form').prop('id').split('_');
 
-    $.ajax({
-      type: 'GET',
-      url: '/papers/'+paperId,
-      dataType: 'json',
-      success: function(data, status) {
-        console.log(status, data);
-        paperJSON = data;
+    if (paperState[0] == 'edit') {
+      paperId = paperState[2];
+      
+      //Set readonly inputs to uneditable if they have values in them
+      $('.author_paper .readonly').prop('readonly', true);
 
-        paperManager.setCounts();
+      $.ajax({
+        type: 'GET',
+        url: '/papers/'+paperId,
+        dataType: 'json',
+        success: function(data, status) {
+          console.log(status, data);
+          paperJSON = data;
+
+          paperManager.setCounts();
+          handle_one_times();
+          validate_all_fields();
+        }
+      });    
+    } else {
+      paperManager.setCounts();
+      handle_one_times();
+
+      user_id = parseInt($('.first-time-cb').attr("id"));
+
+      $.ajax({
+        type: 'GET',
+        url: '/users/'+user_id,
+        dataType: 'json',
+        success: function(data, status) {
+          console.log(status, data);
+          
+          if(data.first_time)
+            $('#disclaimer-modal').modal();
+        }
+      });
+    }
+
+    $(window).resize( function() {
+      $('#progress-headings .task-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+      $('#progress-headings .experiment-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
+
+      $('#progress-headings .finding-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
+      $('#progress-headings .task-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
+    });
+
+    //Prevents form from being submitted by enter key
+    $('.paper-form').on('keyup keypress', 'input', function(e) {
+      var code = e.keyCode || e.which; 
+      if (code  == 13) {               
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    $('body').tooltip({
+      selector: '[ref=tooltip]'
+    });
+
+    $('#submit-button').hide();
+
+    // Prevents users from accidentally leaving the page
+    window.onbeforeunload = function() { 
+      return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
+    };
+
+    //Prevents form from being submitted by enter key
+    // $('#new_paper').bind("keyup keypress", function(e) {
+    //   var code = e.keyCode || e.which; 
+    //   if (code  == 13) {               
+    //     e.preventDefault();
+    //     return false;
+    //   }
+    // });
+
+  // ##########################################################################
+  // Getting DOI Information
+  // ##########################################################################
+    var timer;
+
+    $('#submit-doi').click( function() {
+      $('.doi-field').removeClass('control-group error');
+      $('.doi-field span').remove(); //this removes error message
+
+      window.clearTimeout(timer);
+      $('.alert').alert('close');
+
+      if ($('#paper_doi').val()) {
+        $('#submit-doi').button('loading');
+        $('#paper_doi').addClass('uneditable-input');
+        $('#paper_doi').prop('readonly', true);
+
+        //Clear all author fields
+        $('.destroy-author:visible button').trigger('click');
+        $('.alert').alert('close');
+
+        $('.paper input[type=text]:visible').not(':eq(0)').val('');
+        $('.paper input[type=number]').val('');
+
+        // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
+        var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
+
+        $.ajax({
+          type: "GET",
+          url: surl,
+          dataType: "jsonp",
+          success: function(data) {
+            $('#submit-doi').button('reset');
+            $(paper_doi).removeClass('uneditable-input');
+            $('#paper_doi').prop('readonly', false);
+
+            xmlDoc = $.parseXML( data );
+            $xml = $( xmlDoc );
+
+            // console.log($xml.find('error').length);
+
+            if ($xml.find('error').length != 0) {
+              $('.doi-well').after('<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
+            } else {
+              $('.doi-well').after('<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
+
+              function autofill(selector,xmlString) {
+                if (xmlString.length > 1) {
+                  $(selector).val($xml.find(xmlString).first().text());
+                } else {
+                  $(selector).val($xml.find(xmlString).text());
+                }
+              }
+
+              autofill('#paper_title',"title");
+
+              if ($xml.find("journal").length) {
+                autofill('#paper_venues_attributes_0_name',"full_title");
+              } else if ($xml.find("conference").length) {
+                autofill('#paper_venues_attributes_0_name',"proceedings_title");
+              }
+
+              autofill('#paper_year_1i',"year");
+              autofill('#paper_volume',"volume");
+              autofill('#paper_issue',"issue");
+              autofill('#paper_start_page',"first_page");
+              autofill('#paper_end_page',"last_page");
+              autofill('#paper_paper_url',"resource");
+
+              var authors = new Array();
+
+              var len = $xml.find('person_name').length;
+              var a_index = 0;
+
+              $xml.find('person_name').each( function(index) {
+                if ($(this).attr('contributor_role') == "author") {
+                  $('.author-generator a').trigger('click');
+                  $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
+                  $('.author:visible').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
+                  //$('.author:visible').eq(a_index).children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
+                  a_index++;
+                }
+              });
+            }
+          },
+          error: function(tmp) {
+            $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
+            $('#submit-doi').button('reset');
+            $(paper_doi).removeClass('uneditable-input');
+            $('#paper_doi').prop('readonly', true);
+          }
+        });
+
+        timer = window.setTimeout( function() { 
+          $('.alert').alert('close'); 
+        }, 10000);
+      } else {
+        $('.doi-field').addClass('control-group error');
+        $('.doi-field').append('<span class="help-inline">Field cannot be blank</span>');
       }
     });
   }
-
-  //Prevents users from accidentally leaving the page
-  // window.onbeforeunload = function() { 
-  //   return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
-  // };
-
-  //Prevents form from being submitted by enter key
-  $('#new_paper').bind("keyup keypress", function(e) {
-    var code = e.keyCode || e.which; 
-    if (code  == 13) {               
-      e.preventDefault();
-      return false;
-    }
-  });
-
-  $('[ref=tooltip]').tooltip();
-
-// ##########################################################################
-// Getting DOI Information
-// ##########################################################################
-  var timer;
-
-  $('#submit-doi').click( function() {
-    $('.doi-field').removeClass('control-group error');
-    $('.doi-field span').remove(); //this removes error message
-
-    window.clearTimeout(timer);
-    $('.alert').alert('close');
-
-    if ($('#paper_doi').val()) {
-      $('#submit-doi').button('loading');
-      $('#paper_doi').addClass('uneditable-input');
-      $('#paper_doi').prop('readonly', true);
-
-      //Clear all author fields
-      $('.destroy-author:visible button').trigger('click');
-      $('.alert').alert('close');
-
-      $('.paper input[type=text]:visible').not(':eq(0)').val('');
-      $('.paper input[type=number]').val('');
-
-      // var surl = "http://www.crossref.org/openurl/?id=doi:" + $('#paper_doi').val() + "&noredirect=true&pid=scerbo@vt.edu&format=unixref";
-      var surl = "http://people.cs.vt.edu/scerbo/doi-lookup.php?doi=" + $('#paper_doi').val();
-
-      $.ajax({
-        type: "GET",
-        url: surl,
-        dataType: "jsonp",
-        success: function(data) {
-          $('#submit-doi').button('reset');
-          $(paper_doi).removeClass('uneditable-input');
-          $('#paper_doi').prop('readonly', false);
-
-          xmlDoc = $.parseXML( data );
-          $xml = $( xmlDoc );
-
-          // console.log($xml.find('error').length);
-
-          if ($xml.find('error').length != 0) {
-            $('.doi-well').after('<div class="alert alert-error fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>DOI Error!</strong> There seems to be an error retrieving the DOI. Please re-enter the DOI and try again, or input the publication details manually.</div>');
-          } else {
-            $('.doi-well').after('<div class="alert alert-success fade in"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Paper has been populated with available information, please review before proceeding.</div>');
-
-            function autofill(selector,xmlString) {
-              if (xmlString.length > 1) {
-                $(selector).val($xml.find(xmlString).first().text());
-              } else {
-                $(selector).val($xml.find(xmlString).text());
-              }
-            }
-
-            autofill('#paper_title',"title");
-
-            if ($xml.find("journal").length) {
-              autofill('#paper_venues_attributes_0_name',"full_title");
-            } else if ($xml.find("conference").length) {
-              autofill('#paper_venues_attributes_0_name',"proceedings_title");
-            }
-
-            autofill('#paper_year_1i',"year");
-            autofill('#paper_volume',"volume");
-            autofill('#paper_issue',"issue");
-            autofill('#paper_start_page',"first_page");
-            autofill('#paper_end_page',"last_page");
-            autofill('#paper_paper_url',"resource");
-
-            var authors = new Array();
-
-            var len = $xml.find('person_name').length;
-            var a_index = 0;
-
-            $xml.find('person_name').each( function(index) {
-              if ($(this).attr('contributor_role') == "author") {
-                $('.author-generator a').trigger('click');
-                $('.author:visible').eq(a_index).children('.field').children('input').eq(0).val($(this).find('surname').text());
-                $('.author:visible').eq(a_index).children('.field').children('input').eq(1).val($(this).find('given_name').text());
-                //$('.author:visible').eq(a_index).children('.field').children('input').eq(2).val($(this).find('middle_initial').text()); // need to get middle initial from somewhere
-                a_index++;
-              }
-            });
-          }
-        },
-        error: function(tmp) {
-          console.log("doi error");
-          $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
-          $('#submit-doi').button('reset');
-          $(paper_doi).removeClass('uneditable-input');
-          $('#paper_doi').prop('readonly', true);
-        }
-      });
-
-      timer = window.setTimeout( function() { 
-        $('.alert').alert('close'); 
-      }, 10000);
-    } else {
-      $('.doi-field').addClass('control-group error');
-      $('.doi-field').append('<span class="help-inline">Field cannot be blank</span>');
-    }
-  });
 });

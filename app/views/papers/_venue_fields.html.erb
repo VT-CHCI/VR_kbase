@@ -1,4 +1,4 @@
-<div class="field .field-title">
-  <%= f.label :name, "Publication Venue" %>
-  <%= f.text_field :name, :class => 'span12', :validate => true, :onchange => "validate_field(this)", :title => 'Official name of the journal, conference or other peer-reviewed publication venue', :'ref' => 'tooltip', :'data-placement' => 'left' %>
+<div class="field .field-venue control-group">
+  <%= f.label :name, "Publication Venue", :class => 'required' %>
+  <%= f.text_field :name, :class => 'span12 validated-field', :validate => true, :onchange => "validate_field(this)", :title => 'Official name of the journal, conference or other peer-reviewed publication venue', :'ref' => 'tooltip', :'data-placement' => 'left', :required => true %>
 </div>

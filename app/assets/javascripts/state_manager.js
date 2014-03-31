@@ -26,6 +26,7 @@ var paperManager = {
     var regexp = new RegExp("new_" + association, "g");
     var e_index = $(link).parent().data('experiment');
 
+    console.log('Adding task', e_index, $(link), $(link).parent());
     //create task for the proper experiment
     var task = this.experiments[e_index].addTask();
 
@@ -63,7 +64,6 @@ var paperManager = {
 
     //Splits all the components out so that they can be hidden properly
     $('.experiment').each( function(e) {
-      // console.log('e', e, this);
       $(this).prop('id', 'experiment_'+e);
       $(this).data('experiment', e);
 
@@ -72,7 +72,6 @@ var paperManager = {
       
 
       $(this).find('.task').each( function(t) {
-        // console.log('t', e, t, this);
         $(this).prop('id', 'experiment_'+e+'_task_'+t);
         $(this).data('experiment', e);
         $(this).data('task', t);
@@ -82,7 +81,6 @@ var paperManager = {
         
 
         $(this).find('.finding').each( function(f) {
-          // console.log('f', e, t, f, this);
           $(this).prop('id', 'experiment_'+e+'_task_'+t+'_finding_'+f);
           $(this).data('experiment', e);
           $(this).data('task', t);
@@ -95,44 +93,22 @@ var paperManager = {
         });
       });
     });
-
-    // var e_array = this.experiments;
-
-    // $('.experiment').each( function() {
-    //   //create experiment and add it to the list of experiments
-    //   var exp = new experiment(e_array.length);
-    //   e_array.push(exp);
-      
-    //   add_progress_heading('experiments', exp.setup($(this)), true);
-
-    //   e_array
-    // });
   },
   cleanUp: function () {
     $('.readonly').prop('readonly', true);
-
-    // $('.generated._destroy').each(function () {
-    //   var type = $(this).data('type');
-    //   var instance = $(this).data(type);
-
-    //   //[id*=author_papers_attributes_3_id]
-    //   $('[id*='+type.split('-').join('_')+'s_attributes_'+instance+'_id]').remove();
-    // });
-
-    if ($('._destroy').remove().length > 0) {
-      console.log('Stuff was destroyed so we are going to recount!');
-
-      this.authors.setCounts();
-      $(this.experiments).each( function(i) {
+    $('._destroy').remove();
+  }, 
+  recount: function () {
+    this.authors.setCounts();
+    $(this.experiments).each( function(i) {
+      this.recount();
+      $(this.tasks).each( function() {
         this.recount();
-        $(this.tasks).each( function() {
-          this.recout();
-          $(this.findings).each( function() {
-            this.recout();
-          });
+        $(this.findings).each( function() {
+          this.recount();
         });
       });
-    }
+    });
   }
 }
 
@@ -160,14 +136,17 @@ function experiment(count) {
     this.focus = $('#experiment_'+this.count);
     this.recount();
 
-    //createTokenInput();
-    $(this.focus).find('.accordion-group').on('hidden', function () {
-      $(this).find('.icon-chevron-right').show();
-      $(this).find('.icon-chevron-down').hide();
+    $(this.focus).find('.accordion-group').on('hidden', function (e) {
+      if (e.target.nodeName != 'LABEL' && e.target.nodeName != 'INPUT') {
+        $(this).find('.icon-chevron-right').show();
+        $(this).find('.icon-chevron-down').hide();
+      }
     });
-    $(this.focus).find('.accordion-group').on('shown', function () {
-      $(this).find('.icon-chevron-right').hide();
-      $(this).find('.icon-chevron-down').show();
+    $(this.focus).find('.accordion-group').on('shown', function (e) {
+      if (e.target.nodeName != 'LABEL' && e.target.nodeName != 'INPUT') {
+        $(this).find('.icon-chevron-right').hide();
+        $(this).find('.icon-chevron-down').show();
+      }
     });
 
     createTokenInput(this.focus);
@@ -176,7 +155,6 @@ function experiment(count) {
   };
 
   this.recount = function() {
-    // console.log('recounting experiment '+this.count+'!');
     var e_index = this.count;
     var focus = this.focus;
 
@@ -206,6 +184,17 @@ function experiment(count) {
         $(this).prop('id', 'paper_experiments_attributes_'+e_index+'_'+$(this).data('attribute'));
         $(this).prop('name', 'paper[experiments_attributes]['+e_index+']['+$(this).data('attribute')+']');
       });
+    });
+
+    //recount divs for welled items
+    $(focus).find('.well').each( function() {
+      var name = $(this).prop('class').split(' ')[0];
+      
+      if (name == 'indy-variables') {
+        var name = $(this).prop('class').split(' ')[0].split('-').join('_');
+      }
+
+      $(this).prop('id', 'experiment_'+e_index+'_experiment_'+name);
     });
 
     //recount gender
@@ -302,7 +291,6 @@ function task(count, e_index) {
   };
 
   this.recount = function() {
-    // console.log('recounting task '+this.count+'!');
     var e_index = this.e_index;
     var t_index = this.count;
     var focus = this.focus;
@@ -320,6 +308,7 @@ function task(count, e_index) {
     var regexp = new RegExp("new_experiments", "g");
     $(focus).find('.new_finding').html($(focus).find('.new_finding').html().replace(regexp, e_index));
 
+    //recount general fields
     $(focus).find('.task-field').each( function(index) { 
       $(this).find('label').each( function() {
         $(this).prop('for', 'paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_'+$(this).data('attribute'));
@@ -404,7 +393,6 @@ function finding(count, e_index, t_index) {
   };
 
   this.recount = function() {
-    // console.log('recounting finding '+this.count+'!');
     var e_index = this.e_index;
     var t_index = this.t_index;
     var f_index = this.count;
@@ -448,7 +436,6 @@ function finding(count, e_index, t_index) {
 // Counter Functionality
 // ##########################################################################
 
-
 function counter(type, throughTable) {
   this.count = null;
   this.type = type;
@@ -460,6 +447,8 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
   var type = this.type;
   var throughTable = this.throughTable;
 
+  var focus = type;
+
   if (e_index != undefined) {
     var focus = '#experiment_'+e_index+' '+this.type;
   } 
@@ -467,14 +456,12 @@ counter.prototype.setCounts = function(e_index, t_index, f_index) { //experiment
     var focus = '#experiment_'+e_index+'_task_'+t_index+' '+this.type;
   } 
   if (f_index != undefined) {
-    var focus = this.type;
+    var focus = '#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' '+this.type;
   }
 
   $(type).each( function(index) {
     $(this).data(throughTable.split('_').join('-'), index);
   });
-  // console.log('We are setting counts: ', e_index, t_index, f_index, focus);
-
 
   $(focus).each( function(index) {
     a_index = index;
@@ -618,7 +605,6 @@ counter.prototype.getCounts = function() {
 
   if ($(focus).length > 0) {
     this.count = $(focus).length-1;
-    console.log(focus, this.count);
   }
 };
 

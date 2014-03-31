@@ -33,4 +33,7 @@ class Finding < ActiveRecord::Base
     :relationship_id, :specificity_id, :metric_id, :finding_note, :category_ids, :aural_fidelity_ids,
     :visual_fidelity_ids, :haptic_fidelity_ids, :biomechanical_symmetry_ids, :control_symmetry_ids,
     :system_appropriateness_ids, :indy_variable_ids
+
+  validates :title, :presence => true
+  validates :summary, :presence => true
 end

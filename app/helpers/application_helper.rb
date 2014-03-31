@@ -17,12 +17,12 @@ module ApplicationHelper
     
   end
 
-  def button_to_add_elements(name, f, association, css_class = 'btn btn-primary', loading_text = 'Autosaving...')
+  def button_to_add_elements(name, f, association, css_class = 'btn btn-primary add-core-element', loading_text = 'Autosaving...')
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", :f => builder)
     end
-       button_to_function(name, "save_paper(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class => css_class, :'data-loading-text' => loading_text)
+       button_to_function(name, "save_paper(this, \"#{association}\", \"#{escape_javascript(fields)}\"); return false;", :class => css_class, :'data-loading-text' => loading_text)
   end
 
   def add_fields(f, association)
