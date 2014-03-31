@@ -128,7 +128,7 @@
               <% if experiment.experiment_displays.count > 0 %>
                 <ul class="list">
                   <% for component_through in experiment.experiment_displays %>
-                    <li><a href="#"><%= component_through.display.display.downcase %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
+                    <li><a href="#"><%= component_through.display ? component_through.display.display.downcase : "" %></a> - <%= component_through.desc ? component_through.desc.downcase : "no description provided" %></li>
                   <% end %>
                 </ul>
               <% else %>
