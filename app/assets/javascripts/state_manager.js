@@ -6,7 +6,6 @@ var paperManager = {
   authors: new counter('.author_paper', 'author_paper'),
   experiments: [],
   addExperiment: function(link, association, content) {
-    console.log('adding experiment from', $(link).parent());
     //create experiment and add it to the list of experiments
     var exp = new experiment(this.experiments.length);
     this.experiments.push(exp);
@@ -24,8 +23,6 @@ var paperManager = {
 
   },
   addTask: function(link, association, content) {
-    console.log('adding task from', $(link).parent());
-
     var regexp = new RegExp("new_" + association, "g");
     var e_index = $(link).parent().data('experiment');
 
@@ -66,7 +63,6 @@ var paperManager = {
 
     //Splits all the components out so that they can be hidden properly
     $('.experiment').each( function(e) {
-      // console.log('e', e, this);
       $(this).prop('id', 'experiment_'+e);
       $(this).data('experiment', e);
 
@@ -75,7 +71,6 @@ var paperManager = {
       
 
       $(this).find('.task').each( function(t) {
-        // console.log('t', e, t, this);
         $(this).prop('id', 'experiment_'+e+'_task_'+t);
         $(this).data('experiment', e);
         $(this).data('task', t);
@@ -85,7 +80,6 @@ var paperManager = {
         
 
         $(this).find('.finding').each( function(f) {
-          // console.log('f', e, t, f, this);
           $(this).prop('id', 'experiment_'+e+'_task_'+t+'_finding_'+f);
           $(this).data('experiment', e);
           $(this).data('task', t);
@@ -98,29 +92,9 @@ var paperManager = {
         });
       });
     });
-
-    // var e_array = this.experiments;
-
-    // $('.experiment').each( function() {
-    //   //create experiment and add it to the list of experiments
-    //   var exp = new experiment(e_array.length);
-    //   e_array.push(exp);
-      
-    //   add_progress_heading('experiments', exp.setup($(this)), true);
-
-    //   e_array
-    // });
   },
   cleanUp: function () {
     $('.readonly').prop('readonly', true);
-
-    // $('.generated._destroy').each(function () {
-    //   var type = $(this).data('type');
-    //   var instance = $(this).data(type);
-
-    //   //[id*=author_papers_attributes_3_id]
-    //   $('[id*='+type.split('-').join('_')+'s_attributes_'+instance+'_id]').remove();
-    // });
 
     if ($('._destroy').remove().length > 0) {
       console.log('Stuff was destroyed so we are going to recount!');
@@ -182,7 +156,6 @@ function experiment(count) {
   };
 
   this.recount = function() {
-    // console.log('recounting experiment '+this.count+'!');
     var e_index = this.count;
     var focus = this.focus;
 
@@ -190,10 +163,6 @@ function experiment(count) {
     $(focus).data('experiment', e_index);
 
     $(focus).find('.new_task').data('experiment', e_index);
-
-    //change text in create new buttons to add the right experiment number for children
-    var regexp = new RegExp("new_experiments", "g");
-    $(focus).find('.new_task').html($(focus).find('.new_task').html().replace(regexp, e_index));
 
     //recount general fields
     $(focus).find('.exp-field').each( function(index) { 
@@ -313,7 +282,6 @@ function task(count, e_index) {
   };
 
   this.recount = function() {
-    // console.log('recounting task '+this.count+'!');
     var e_index = this.e_index;
     var t_index = this.count;
     var focus = this.focus;
@@ -324,12 +292,6 @@ function task(count, e_index) {
 
     $(focus).find('.new_finding').data('experiment', e_index);
     $(focus).find('.new_finding').data('task', t_index);
-
-    var regexp = new RegExp("new_tasks", "g");
-    $(focus).find('.new_finding').html($(focus).find('.new_finding').html().replace(regexp, t_index));
-
-    var regexp = new RegExp("new_experiments", "g");
-    $(focus).find('.new_finding').html($(focus).find('.new_finding').html().replace(regexp, e_index));
 
     $(focus).find('.task-field').each( function(index) { 
       $(this).find('label').each( function() {
@@ -415,7 +377,6 @@ function finding(count, e_index, t_index) {
   };
 
   this.recount = function() {
-    // console.log('recounting finding '+this.count+'!');
     var e_index = this.e_index;
     var t_index = this.t_index;
     var f_index = this.count;
@@ -628,7 +589,6 @@ counter.prototype.getCounts = function() {
 
   if ($(focus).length > 0) {
     this.count = $(focus).length-1;
-    console.log(focus, this.count);
   }
 };
 
