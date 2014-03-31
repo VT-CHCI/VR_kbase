@@ -688,6 +688,15 @@ function show_element (focus, slide) {
 function delete_element () {
   $($('#element-nav-id-to-delete').html()).hide();
   $($('#element-nav-id-to-delete').html()).addClass('_destroy');
+  $($($('#element-nav-id-to-delete').html()).children('a').data('target')).addClass('_destroy');
+
+  if ($('.core-element:visible')[0] == $($($('#element-nav-id-to-delete').html()).children('a').data('target'))[0]) {
+    if ($($('#element-nav-id-to-delete').html()).prev().length > 0) {
+      show_element($($('#element-nav-id-to-delete').html()).prev().children('a'));
+    } else {
+      show_element($($('#element-nav-id-to-delete').html()).parent().prev());
+    }
+  }
 
   $($('#element-destroy-id-to-delete').html()).val('true');
   $($('#element-destroy-id-to-delete').html()).addClass('_destroy');
