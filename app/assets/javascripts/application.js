@@ -1334,6 +1334,19 @@ function handle_one_times () {
   }
 }
 
+function disable_disclaimer_modal (user_id) {
+  console.log($('#first_time_form'));
+  $.ajax({
+    type: 'PUT',
+    url: '/users/'+user_id,
+    data: $('#first_time_form').serialize(),
+    dataType: 'json',
+    success: function(data, status) {
+      console.log(status, data);
+    }
+  });
+}
+
 // ##########################################################################
 // Document Ready
 // ##########################################################################
@@ -1344,6 +1357,7 @@ $(document).ready( function() {
     });
 
   if($('form.paper-form').length > 0) {
+
     var paperState = $('form.paper-form').prop('id').split('_');
 
     if (paperState[0] == 'edit') {
@@ -1364,11 +1378,24 @@ $(document).ready( function() {
           handle_one_times();
           validate_all_fields();
         }
-      });
+      });    
     } else {
-
       paperManager.setCounts();
       handle_one_times();
+
+      user_id = parseInt($('.first-time-cb').attr("id"));
+
+      $.ajax({
+        type: 'GET',
+        url: '/users/'+user_id,
+        dataType: 'json',
+        success: function(data, status) {
+          console.log(status, data);
+          
+          if(data.first_time)
+            $('#disclaimer-modal').modal();
+        }
+      });
     }
 
     $(window).resize( function() {

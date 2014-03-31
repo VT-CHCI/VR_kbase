@@ -155,3 +155,27 @@
     <button class="btn btn-danger" onclick="delete_element()">Erase <span class="element-type-to-delete"></span>!</button>
   </div>
 </div>
+
+<!-- Modal -->
+<div id="disclaimer-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="disable_disclaimer_modal(<%= current_user.id.to_s %>);">×</button>
+    <h3 id="myModalLabel">Before you begin</h3>
+  </div>
+  <div class="modal-body container-fluid">
+    Thank you for your interest in contributing to the VR Knowledgebase! Before you continue, please make sure that your entry meets all the criteria below:
+    <ul class="list">
+      <li class="list">It is a peer-reviewed publication;</li>
+      <li class="list">It includes statistically significant findings;</li>
+      <li class="list">It includes an evaluation of components of fidelity.</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <%= form_for current_user, :url => '/users/'+current_user.id.to_s, :html=>{:id=>'first_time_form', :class => "first-time-form"}, :method => :put do |f| %>
+      <%= f.check_box :first_time, :selected => current_user.first_time, :id => current_user.id.to_s, :class => "first-time-form first-time-cb" %>
+      <%= f.label :first_time, "Show this again", :class => "first-time-form" %>
+    <% end %>
+    <a class="btn" data-dismiss="modal" aria-hidden="true" onclick="window.history.back()">Cancel</a>
+    <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="disable_disclaimer_modal(<%= current_user.id.to_s %>);">Continue</a>
+  </div>
+</div>

@@ -15,6 +15,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :authors
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin, :first_time
   # attr_accessible :title, :body
 end
