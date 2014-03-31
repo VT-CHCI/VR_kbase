@@ -1334,13 +1334,11 @@ $(document).ready( function() {
         success: function(data, status) {
           console.log(status, data);
           
-          //if(data.first_time)
-          //  $('#disclaimer-modal').modal();
+          if(data.first_time)
+            $('#disclaimer-modal').modal();
         }
       });
     }
-    
-    $('#disclaimer-modal').modal();
 
     $(window).resize( function() {
       $('#progress-headings .task-block').css('padding-left', (6 - 500/Math.round($('#progress-headings .experiment-block').width()))+'%');
