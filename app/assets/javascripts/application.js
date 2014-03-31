@@ -1299,7 +1299,7 @@ function handle_one_times () {
     $('#progress-headings .nav-core-element-add').hide();
     $('#save-button button').html('Save and Continue');
   } else {
-    $('#progress-headings nav-core-element-add').show();
+    $('#progress-headings .nav-core-element-add').show();
     $('#save-button button').html('Save');
   }
 }
