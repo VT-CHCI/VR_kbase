@@ -785,10 +785,13 @@ function repopulate_buttons(focus) {
     
     $(target).html('');
     create_inputs('hidden', '', target, '', this.table, 'component', [], true);
+    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .components-of-fidelity-container').hide();
 
     if (eval('paperJSON.experiments['+e_index+'].'+this.throughTable+'.length') > 0) {
       var fidelity = this;
       var preData = new Array;
+
+      $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .components-of-fidelity-container').show();
 
       if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+']')) {
         if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+'].'+fidelity.preDataTable+'.length') > 0) {
@@ -804,13 +807,14 @@ function repopulate_buttons(focus) {
     }
   });
 
-  var target = $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container');
+  var target = $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container .indy-variables');
   
   $(target).html('');
   create_inputs('hidden', '', target, '', 'indy_variable', 'variable', [], true);
+  $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').hide();
 
   if(eval('paperJSON.experiments['+e_index+'].experiment_indy_variables.length') > 0) {
-    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').append('<label>Independent Variables</label><div class="indy-variables"></div>');
+    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').show();
   
     var preData = new Array;
     if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+']')) {
