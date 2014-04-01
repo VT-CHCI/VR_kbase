@@ -204,6 +204,14 @@ legend .nested-validation-text {
   }
 }
 
+.save-success, .save-error {
+  position: fixed;
+  width: 80%;
+  left: 50%;
+  margin-left: -40%;
+  z-index: 1000;
+  margin-top: -60px;
+}
 
 //Paper View
 

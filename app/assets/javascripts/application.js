@@ -1225,6 +1225,8 @@ function submit_paper () {
 }
 
 function save_paper (focus, association, content) {
+  var timer;
+
   if (paperId == null) {
     var url = '/papers';
     console.log('first post');
@@ -1238,6 +1240,9 @@ function save_paper (focus, association, content) {
   validate_all_fields ();
 
   if (paperValid) {
+    window.clearTimeout(timer);
+    $('.alert').alert('close');
+
     $.ajax({
       type: 'POST',
       url: url,
@@ -1282,6 +1287,9 @@ function save_paper (focus, association, content) {
           paperManager.recount();
           handle_one_times();
         }
+
+        $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
+        $(".alert").animate({top:"100px"},'slow');
       },
       error: function (error) {
         console.log('error:', error);
@@ -1294,10 +1302,16 @@ function save_paper (focus, association, content) {
           paperValid = paperValid && true;
           setUrlClasses(true);
 
-          alert('There was an error when saving! Please notify an admin.');
+          // alert('There was an error when saving! Please notify an admin.');
+          $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
+          $(".alert").animate({top:"100px"},'slow');
         }
       }
     });
+
+    timer = window.setTimeout( function() { 
+      $('.alert').alert('close'); 
+    }, 5000);
   }
 
   $(focus).button('reset');
@@ -1452,7 +1466,6 @@ $(document).ready( function() {
 
       if ($('#paper_doi').val()) {
         $('#submit-doi').button('loading');
-        $('#paper_doi').addClass('uneditable-input');
         $('#paper_doi').prop('readonly', true);
 
         //Clear all author fields
@@ -1471,7 +1484,6 @@ $(document).ready( function() {
           dataType: "jsonp",
           success: function(data) {
             $('#submit-doi').button('reset');
-            $(paper_doi).removeClass('uneditable-input');
             $('#paper_doi').prop('readonly', false);
 
             xmlDoc = $.parseXML( data );
@@ -1526,7 +1538,6 @@ $(document).ready( function() {
           error: function(tmp) {
             $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
             $('#submit-doi').button('reset');
-            $(paper_doi).removeClass('uneditable-input');
             $('#paper_doi').prop('readonly', true);
           }
         });
