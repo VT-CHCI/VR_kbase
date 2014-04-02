@@ -20,10 +20,10 @@
           </div> 
           <div class="btn-group">
             <% if user.admin %>
-              <a class="btn btn-danger " href="/users/<%= user.id %>"><i class="icon-user icon-white"></i> admin: <%= user.email %></a>
+              <a class="btn btn-danger " href="/users/<%= user.id %>"><i class="glyphicon glyphicon-user icon-white"></i> admin: <%= user.email %></a>
               <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret white-caret" ></span></a>
             <% else %> 
-              <a class="btn btn-default" href="/users/<%= user.id %>"><i class="icon-user icon-white"></i> <%= user.email %></a>
+              <a class="btn btn-default" href="/users/<%= user.id %>"><i class="glyphicon-user glyphicon-white"></i> <%= user.email %></a>
               <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret black-caret" ></span></a>
             <% end %>
             <ul class="dropdown-menu">

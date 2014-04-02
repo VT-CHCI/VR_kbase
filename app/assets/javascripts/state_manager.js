@@ -195,14 +195,14 @@ function experiment(count) {
 
     $(this.focus).find('.accordion-group').on('hidden', function (e) {
       if (e.target.nodeName != 'LABEL' && e.target.nodeName != 'INPUT') {
-        $(this).find('.icon-chevron-right').show();
-        $(this).find('.icon-chevron-down').hide();
+        $(this).find('.glyphicon-chevron-right').show();
+        $(this).find('.glyphicon-chevron-down').hide();
       }
     });
     $(this.focus).find('.accordion-group').on('shown', function (e) {
       if (e.target.nodeName != 'LABEL' && e.target.nodeName != 'INPUT') {
-        $(this).find('.icon-chevron-right').hide();
-        $(this).find('.icon-chevron-down').show();
+        $(this).find('.glyphicon-chevron-right').hide();
+        $(this).find('.glyphicon-chevron-down').show();
       }
     });
 

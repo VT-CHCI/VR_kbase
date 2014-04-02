@@ -73,18 +73,18 @@
     line-height: 18px;
     padding-right: 5px;
 
-    .icon-chevron-right {
-      padding-top: 3px;
+    .glyphicon-chevron-right {
+      padding-top: 1px;
     }
 
-    .icon-chevron-down {
+    .glyphicon-chevron-down {
       padding-top: 0;
     }
   }
 
   .nav-core-element-block .badge-field {
     padding-right: 7px;
-    padding-top: 3px;
+    padding-top: 0;
   }
 
   .publication-block {
@@ -111,11 +111,11 @@
   }
 
   .open {
-    .icon-chevron-down {
+    .glyphicon-chevron-down {
       display: none;
     }
 
-    .icon-chevron-right {
+    .glyphicon-chevron-right {
       display: block;
     }
 
@@ -125,11 +125,11 @@
   }
 
   .closed {
-    .icon-chevron-down {
+    .glyphicon-chevron-down {
       display: block;
     }
 
-    .icon-chevron-right {
+    .glyphicon-chevron-right {
       display: none;
     }
 
