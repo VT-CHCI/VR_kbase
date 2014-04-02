@@ -12,7 +12,9 @@
             </div>
           </a>
           <div class="nav-experiments"></div>
-          <a class="label nav-core-element-add" data-loading-text="Saving...">Save and Add Experiment</a>
+          <div>
+            <a class="label nav-core-element-add" data-loading-text="Saving..." onclick="add_core_element(this); return false;">Save and Add Experiment</a>
+          </div>
         </div>
         <div id="save-button">
           <button class="btn btn-primary" data-loading-text="Saving..." onclick="save_button_clicked(this); return false;">Save and Continue</button>
