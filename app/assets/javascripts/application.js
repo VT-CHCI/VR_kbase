@@ -666,6 +666,7 @@ function show_element (focus, slide, save) {
       //If this is a finding, we need to populate buttons
       if ($($(focus).data('target')).hasClass('finding')) {
         repopulate_buttons($(focus).data('target'));
+        create_finding_summary($(focus).data('target'));
       }
 
       //The rest of the code is to prevent over scrolling 
@@ -893,9 +894,12 @@ function repopulate_buttons(focus) {
 }
 
 function create_finding_summary (focus) {
-
-  var findingFields = $(focus).parents('.finding');
-
+  if ($(focus).hasClass('finding')) {
+    var findingFields = $(focus);
+  } else {
+    var findingFields = $(focus).parents('.finding');
+  }
+  
   var replaceSentence = 4;
   var autoGenSentence = 'There was a significant _relationship_ effect of _component_ on _metric_ for a _task_ task.';
 
@@ -918,7 +922,7 @@ function create_finding_summary (focus) {
   var relationshipText = $(findingFields).children().find('.relationships input:checked').data('text');
   var metricText = $(findingFields).children().find('.metrics input:checked').data('text');
 
-  if (componentText != '' || indyVariableText != '') {
+  if (componentText.length > 0 || indyVariableText.length > 0) {
     var mergedText = componentText.concat(indyVariableText);
     
     if (mergedText.length > 2) {
