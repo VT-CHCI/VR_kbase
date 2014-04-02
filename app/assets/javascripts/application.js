@@ -552,21 +552,17 @@ function add_progress_heading(association, focus, repopulate) {
   $('#progress-headings '+heading+' .close').click( function(e) {
     var type = $(this).parent().parent().prop('id').split('-')[0];
     var target = $(this).parent().parent().data('target').split('_');
-    var navTarget;
-    var targetDestroyId = '#paper_';  
+    var navTarget; 
 
     for (var i = 0; i< target.length; i++) {
       if (i == 1) {
         navTarget = '#experiment-block-'+target[i];
-        targetDestroyId = targetDestroyId+'experiments_attributes_'+target[i];
       } 
       else if (i == 3) {
         navTarget = navTarget+' #task-block-'+target[i];
-        targetDestroyId = targetDestroyId+'_tasks_attributes_'+target[i];
       } 
       else if (i == 5) {
         navTarget = navTarget+' #finding-block-'+target[i];
-        targetDestroyId = targetDestroyId+'_findings_attributes_'+target[i];
       }
     };
 
@@ -586,8 +582,6 @@ function add_progress_heading(association, focus, repopulate) {
     }
 
     $('#element-nav-id-to-delete').html(navTarget);
-    $('#element-destroy-id-to-delete').html(targetDestroyId);
-
     $('#delete-core-element-modal').modal('show');
 
     e.preventDefault();
@@ -692,10 +686,10 @@ function show_element (focus, slide, save) {
 }
 
 function delete_element () {
+  var target = $($($('#element-nav-id-to-delete').html()).children('a').data('target'));
+
   $($('#element-nav-id-to-delete').html()).hide();
   $($('#element-nav-id-to-delete').html()).addClass('_destroy');
-  $($($('#element-nav-id-to-delete').html()).children('a').data('target')).addClass('_destroy');
-
 
   if ($('.core-element:visible')[0] == $($($('#element-nav-id-to-delete').html()).children('a').data('target'))[0]) {
     if ($($('#element-nav-id-to-delete').html()).prev().length > 0) {
@@ -705,16 +699,18 @@ function delete_element () {
     }
   }
 
-  $($('#element-destroy-id-to-delete').html()+'__destroy').val('true');
-  $($('#element-destroy-id-to-delete').html()+'__destroy').addClass('_destroy');
-
-  $($('#element-destroy-id-to-delete').html()+'_id').addClass('_destroy');
+  if (target.hasClass('finding')) {
+    paperManager.removeFinding(target);
+  } 
+  else if (target.hasClass('task')) {
+    paperManager.removeTask(target);
+  }
+  else {
+    paperManager.removeExperiment(target);
+  }
 
   $('#delete-core-element-modal').modal('hide');
   save_paper();
-  
-  window.onbeforeunload = null;
-  location.reload();
 }
 
 // ##########################################################################
@@ -958,7 +954,6 @@ function create_finding_summary (focus) {
     replaceSentence = replaceSentence - 1;
   }
 
-  console.log(relationshipText);
   if (relationshipText != '' && relationshipText != undefined) {
     if (relationshipText == 'Interaction') {
       autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_ effect of','g'), relationshipText + ' between');
@@ -968,7 +963,6 @@ function create_finding_summary (focus) {
     replaceSentence = replaceSentence - 1;
   }
 
-  console.log(metricText);
   if (metricText != '' && metricText != undefined) {
     autoGenSentence = autoGenSentence.replace(new RegExp('_metric_','g'), metricText);
     replaceSentence = replaceSentence - 1;
@@ -1141,8 +1135,7 @@ function add_task_ids (data, e_index) {
 }
 
 function add_task_nested_ids (data, e_index, throughTable) {
-  $('.task').each( function(r_index) {
-    var t_index = 0;
+  $('.task').each( function(t_index) {
     
     if (eval('data.experiments['+e_index+'].tasks['+t_index+']') != undefined) {
       if ($(this).data('experiment') == e_index) {
@@ -1162,11 +1155,10 @@ function add_task_nested_ids (data, e_index, throughTable) {
             }
           });
         }
-        t_index = t_index + 1;
       }
     }
 
-    add_finding_ids (data, e_index, r_index);
+    add_finding_ids (data, e_index, t_index);
   });
 }
 
@@ -1286,11 +1278,11 @@ function save_paper (focus, association, content) {
         add_experiment_nested_ids (data, 'experiment_indy_variable');
 
         if (association != undefined) {
-          //Add element and reset stuff
+          //Add elements if there are elements to add
           add_fields_after (focus, association, content);
-          paperManager.recount();
-          handle_one_times();
         }
+        paperManager.recount();
+        handle_one_times();
 
         $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
         $(".alert").animate({top:"100px"},'slow');
