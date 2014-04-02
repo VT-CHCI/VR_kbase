@@ -3,31 +3,194 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 //Paper create/edit
-/*#progress_headings {
-  i {
-    float: left;
+#progress-headings {
+  margin-top: -5px;
+  font-size: 12px;
+  line-height: 12px;
+  
+  a {
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+  }
+  a:hover {
+    background: #e6e6e6;
+  }
+  a.current {
+    color: white;
+    background: #08C;
   }
 
-  h3 {
-    i {
-      margin-right: 5px;
+  .publication-heading, .experiment-heading, .task-heading, .finding-heading {
+    display: table;
+    width: 96.5%;
+  }
+
+  .title-field, .close-field {
+    display: table-cell; 
+    float: none;
+    vertical-align: middle;
+  }
+  .title-field {
+    padding-right: 5px;
+    width: 100%
+  }
+  .close-field {
+    text-align: center;
+    width: 5%;
+
+    .close {
+      line-height: 15px;
+      padding-bottom: 3px;
     }
   }
 
-  h3:not(.current) {
-    margin-left: 13px;
+  .publication-heading {
+    .title-field {
+      width: 100%;
+    } 
   }
 
-  h5 {
-    clear: both;
+  .experiment-heading {
+    padding-left: 5px;
+  }
+
+  .nav-core-element-add {
+    -webkit-border-radius: 0; 
+    -moz-border-radius: 0;
+    border-radius: 0;
+
     text-align: right;
+    margin-top: 3px;
+    font-weight: 400;
   }
 
-  a {
-    float: right;
-    margin-bottom: 10px;
+  .nav-core-element-add:hover {
+    background: #08C;
   }
-}*/
+
+  .nav-core-element-block .collapse-field {
+    line-height: 18px;
+    padding-right: 5px;
+
+    .icon-chevron-right {
+      padding-top: 3px;
+    }
+
+    .icon-chevron-down {
+      padding-top: 0;
+    }
+  }
+
+  .nav-core-element-block .badge-field {
+    padding-right: 7px;
+    padding-top: 3px;
+  }
+
+  .publication-block {
+    line-height: 18px;
+  }
+
+  .experiment-block, .task-block {
+    margin-top: 3px;
+  }
+
+  .task-block .finding-block:first-of-type {
+    margin-top: 3px;
+  }
+
+  .task-block, .finding-block {
+    width: 94%;
+    border-left: 5px solid #e6e6e6;
+    padding-left: 7%;
+  }
+
+  .new-add-links {
+    border-left: 5px solid #e6e6e6;
+    padding-left: 6%;
+  }
+
+  .open {
+    .icon-chevron-down {
+      display: none;
+    }
+
+    .icon-chevron-right {
+      display: block;
+    }
+
+    .badge-field {
+      display: none;
+    }
+  }
+
+  .closed {
+    .icon-chevron-down {
+      display: block;
+    }
+
+    .icon-chevron-right {
+      display: none;
+    }
+
+    .badge-field {
+      display: block;
+    }
+  }
+}
+
+#submit-button, #save-button {
+  padding-top: 10px;
+  clear: both;
+
+  button {
+    width: 100%;
+  }
+}
+
+#save-button {
+  padding-top: 20px;
+}
+
+label.required:after {
+  content:  "  *";
+  color: red;
+}
+
+label.error:after {
+  content:  " * Required field";
+  color: red;
+}
+
+.field-url {
+  label.error:after {
+    content:  "\00a0\00a0\00a0 Not a valid url";
+    color: red;
+  }
+}
+
+#paper-doi {
+  .tooltip-inner {
+    z-index: 1031;
+    max-width: 220px;
+  }
+}
+
+legend .nested-validation-text {
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 10PX;
+  color: red;
+}
+
+.first-time-form {
+  margin: 0;
+  padding: 0px 5px;
+  display: inline;
+  text-align: left;
+  float: left;
+}
 
 .new_paper {
   #paper {
@@ -41,6 +204,14 @@
   }
 }
 
+.save-success, .save-error {
+  position: fixed;
+  width: 80%;
+  left: 50%;
+  margin-left: -40%;
+  z-index: 1000;
+  margin-top: -60px;
+}
 
 //Paper View
 

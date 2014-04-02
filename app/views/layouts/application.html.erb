@@ -5,18 +5,17 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  
-  <style>
-      body {
-        <% if user_signed_in? and current_user.admin %>
-          padding-top: 100px;
-        <% else %>
-          padding-top: 60px;
-        <% end %>
-        padding-bottom: 40px;
-      }
 
-  </style>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-49570855-1', 'vt.edu');
+    ga('send', 'pageview');
+
+  </script>
 </head>
 <body>
   <!--[if lt IE 7]>
@@ -28,53 +27,58 @@
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <div class="navbar-header">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/">VR Knowledgebase</a>
-        </div>
-        <div class=" collapsenavbar-collapse">
-          <ul class="nav navbar-nav">
-            <!-- <li class="active"><a href="/">Home</a></li> -->
-            <li><a href="/browse/index">Browse</a></li>
-            <li><a href="/papers/new">Add New Paper</a></li>
-          </ul>
-          <%= form_tag browse_index_path, :method => :get, :html => { :class => "navbar-form pull-left", :role => "search" } do %>
-            <%= text_field_tag :search, params[:search], :class => "search-query", :placeholder => "Search" %>
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/">VR Knowledgebase</a>
+        <div class="nav-collapse collapse navbar-inverse-collapse">
+
+          <%= form_tag browse_index_path, :method => :get, :html => { :class => "navbar-search pull-left", :role => "search" } do %>
+            <%= text_field_tag :search, params[:search], :class => "search-query span4", :placeholder => "Search" %>
           <% end %>
-          <ul class="nav navbar-nav pull-right">
-            <li class="dropdown">
-              <% if user_signed_in? %>
-                <div class="btn-group">
+          
+          <ul class="nav">
+            <li><a href="/browse/index">Browse</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+          
+          <% if user_signed_in? %>
+            <ul class="nav pull-right">
+              <li><a href="/papers/new">Add New Paper</a></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> <%= current_user.email %> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/users/<%= current_user.id %>">Profile</a></li>
+                  <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
                   <% if current_user.admin %>
-                    <a class="btn btn-danger" href="/users/<%= current_user.id %>"><i class="icon-user icon-white"></i> <%= current_user.email %></a>
-                    <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret white-caret" ></span></a>
-                  <% else %> 
-                    <a class="btn btn-default" href="/users/<%= current_user.id %>"><i class="icon-user icon-white"></i> <%= current_user.email %></a>
-                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret black-caret" ></span></a>
+                    <li class="divider"></li>
+                    <li class="nav-header">Admin</li>
+                    <li><a href="#">Manage Users</a></li>
+                    <li><a href="#">Latest</a></li>
                   <% end %>
-                  <ul class="dropdown-menu">
-                    <li><%= link_to "Sign out", destroy_user_session_path, :class => "i", :method => :delete %></li>
-                  </ul>
-                </div>
-              <% else %>
-                <div class="btn-group">
-                  <a class="btn btn-inverted" href="#"><i class="icon-user icon-white"></i> Not signed in</a>
-                  <a class="btn btn-inverted dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret black-caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#signinModal" data-toggle="modal" ><i class="i"></i> Sign in</a></li>
-                    <li><a href="#signupModal" data-toggle="modal" ><i class="i"></i> Register</a></li>
-                  </ul>
-                </div>
-              <% end %>
-            </li> 
-          </ul> 
-        </div><!--/.nav-collapse -->
+                </ul>
+              </li>
+            </ul>
+          <% else %>
+            <ul class="nav pull-right">
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i>Not signed in <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#signinModal" data-toggle="modal" >Sign In</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#signupModal" data-toggle="modal" >Register</a></li>
+                </ul>
+              </li>
+            </ul>
+          <% end %>
+        </div><!-- /.nav-collapse -->
       </div>
-    </div>
+    </div><!-- /navbar-inner -->
   </div>
 
   <!-- Modal -->
@@ -110,36 +114,9 @@
       <div class="row-fluid"><%= link_to('Forgot password?', new_user_password_path) %></div>
     </div>
   </div>
-
-  <% if user_signed_in? and current_user.admin %>
-    <div class="navbar navbar second-navbar">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Admin</a>
-          
-        <div class="nav-collapse collapse">
-            <ul class="nav">
-            <li><a href="/users">Manage Users</a></li>
-            <li><a href="/validate/index">Latest Submissions</a></li>
-            </ul>
-        </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
   
-  <div class="container-fluid">
+  <div class="container-fluid main-content">
     <%= yield %>
-    <!--<hr>
-
-    <footer>
-      <p>&copy; VR Knowledgebase 2014</p>
-    </footer>-->
   </div>
 
 </body>

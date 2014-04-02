@@ -467,7 +467,7 @@ function add_progress_heading(association, focus, repopulate) {
 
     $('#progress-headings .nav-experiments').append(
       '<div id="'+heading+'" class="nav-core-element-block experiment-block">\
-        <a class="experiment-heading open" data-target="'+focus.selector+'" onclick="show_element(this)">\
+        <a class="experiment-heading open" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
           <div class="collapse-field">\
             <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
             <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
@@ -493,7 +493,7 @@ function add_progress_heading(association, focus, repopulate) {
 
     $('#experiment-block-'+experimentId+' .nav-tasks').append(
       '<div id="'+heading+'" class="nav-core-element-block task-block">\
-        <a class="task-heading open" data-target="'+focus.selector+'" onclick="show_element(this)">\
+        <a class="task-heading open" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
           <div class="collapse-field">\
             <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
             <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
@@ -518,7 +518,7 @@ function add_progress_heading(association, focus, repopulate) {
 
     $('#experiment-block-'+experimentId+' #task-block-'+taskId+' .nav-findings').append(
       '<div id="'+heading+'" class="nav-core-element-block finding-block">\
-        <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this)">\
+        <a class="finding-heading" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
           <div class="title-field">Unnamed Finding</div>\
           <div class="close-field">\
             <button type="button" class="close">×</button>\
@@ -552,21 +552,17 @@ function add_progress_heading(association, focus, repopulate) {
   $('#progress-headings '+heading+' .close').click( function(e) {
     var type = $(this).parent().parent().prop('id').split('-')[0];
     var target = $(this).parent().parent().data('target').split('_');
-    var navTarget;
-    var targetDestroyId = '#paper_';  
+    var navTarget; 
 
     for (var i = 0; i< target.length; i++) {
       if (i == 1) {
         navTarget = '#experiment-block-'+target[i];
-        targetDestroyId = targetDestroyId+'experiments_attributes_'+target[i];
       } 
       else if (i == 3) {
         navTarget = navTarget+' #task-block-'+target[i];
-        targetDestroyId = targetDestroyId+'_tasks_attributes_'+target[i];
       } 
       else if (i == 5) {
         navTarget = navTarget+' #finding-block-'+target[i];
-        targetDestroyId = targetDestroyId+'_findings_attributes_'+target[i];
       }
     };
 
@@ -586,8 +582,6 @@ function add_progress_heading(association, focus, repopulate) {
     }
 
     $('#element-nav-id-to-delete').html(navTarget);
-    $('#element-destroy-id-to-delete').html(targetDestroyId+'__destroy');
-
     $('#delete-core-element-modal').modal('show');
 
     e.preventDefault();
@@ -610,7 +604,7 @@ function add_progress_heading(association, focus, repopulate) {
         $(this).prev().removeClass('open');
 
         if ($(this).parent().find('.current').length > 0) {
-          show_element($(this).prev());
+          show_element($(this).prev(), false, true);
         }
       }
     });
@@ -646,49 +640,57 @@ function add_progress_heading(association, focus, repopulate) {
   }
 }
 
-function show_element (focus, slide) {
+function show_element (focus, slide, save) {
   var scrolled = false;
   var scrollTimeout;
 
   if (!$(focus).hasClass('current')) {
-    //Set click heading to current
-    $('#progress-headings a.current').removeClass('current');
-    $(focus).addClass('current');
-
-    //Hide currently visible element and show new element
-    if (slide) {
-      $('.core-element:visible').fadeOut()
-      $($(focus).data('target')).slideDown()
-    } else {
-      $('.core-element:visible').fadeOut()
-      $($(focus).data('target')).fadeIn()
+    if (save) {
+      save_paper(false);
     }
 
-    //If this is a finding, we need to populate buttons
-    if ($(focus).data('target').search('finding') > -1) {
-      repopulate_buttons($(focus).data('target'));
+    if (paperValid) { 
+      //Set click heading to current
+      $('#progress-headings a.current').removeClass('current');
+      $(focus).addClass('current');
+
+      //Hide currently visible element and show new element
+      if (slide) {
+        $('.core-element:visible').fadeOut()
+        $($(focus).data('target')).slideDown()
+      } else {
+        $('.core-element:visible').fadeOut()
+        $($(focus).data('target')).fadeIn()
+      }
+
+      //If this is a finding, we need to populate buttons
+      if ($($(focus).data('target')).hasClass('finding')) {
+        repopulate_buttons($(focus).data('target'));
+        create_finding_summary($(focus).data('target'));
+      }
+
+      //The rest of the code is to prevent over scrolling 
+      if (($("html, body").scrollTop() < 10) && !scrolled) {
+        $("html, body").animate({ scrollTop: 0 }, 500);
+        scrolled = true;
+      }
+
+      //Reset the timer
+      clearTimeout(scrollTimeout);
+
+      //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
+      scrollTimeout = setTimeout( function(){
+          scrolled = false;
+      }, 500);
     }
-
-    //The rest of the code is to prevent over scrolling 
-    if (($("html, body").scrollTop() < 10) && !scrolled) {
-      $("html, body").animate({ scrollTop: 0 }, 500);
-      scrolled = true;
-    }
-
-    //Reset the timer
-    clearTimeout(scrollTimeout);
-
-    //If the user stops scrolling for 500 millis, they can trigger click w/ next scroll
-    scrollTimeout = setTimeout( function(){
-        scrolled = false;
-    }, 500);
   }   
 }
 
 function delete_element () {
+  var target = $($($('#element-nav-id-to-delete').html()).children('a').data('target'));
+
   $($('#element-nav-id-to-delete').html()).hide();
   $($('#element-nav-id-to-delete').html()).addClass('_destroy');
-  $($($('#element-nav-id-to-delete').html()).children('a').data('target')).addClass('_destroy');
 
   if ($('.core-element:visible')[0] == $($($('#element-nav-id-to-delete').html()).children('a').data('target'))[0]) {
     if ($($('#element-nav-id-to-delete').html()).prev().length > 0) {
@@ -698,10 +700,18 @@ function delete_element () {
     }
   }
 
-  $($('#element-destroy-id-to-delete').html()).val('true');
-  $($('#element-destroy-id-to-delete').html()).addClass('_destroy');
+  if (target.hasClass('finding')) {
+    paperManager.removeFinding(target);
+  } 
+  else if (target.hasClass('task')) {
+    paperManager.removeTask(target);
+  }
+  else {
+    paperManager.removeExperiment(target);
+  }
 
   $('#delete-core-element-modal').modal('hide');
+  save_paper(true);
 }
 
 // ##########################################################################
@@ -767,15 +777,18 @@ function repopulate_buttons(focus) {
     ]
   }
 
+  $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .components-of-fidelity-container').hide();
   $(displayFidelities.displayFidelity).each( function(i) {
     var target = $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .'+this.table);
     
     $(target).html('');
     create_inputs('hidden', '', target, '', this.table, 'component', [], true);
-
+    
     if (eval('paperJSON.experiments['+e_index+'].'+this.throughTable+'.length') > 0) {
       var fidelity = this;
       var preData = new Array;
+
+      $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .components-of-fidelity-container').show();
 
       if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+']')) {
         if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+'].'+fidelity.preDataTable+'.length') > 0) {
@@ -791,13 +804,14 @@ function repopulate_buttons(focus) {
     }
   });
 
-  var target = $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container');
+  var target = $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container .indy-variables');
   
   $(target).html('');
   create_inputs('hidden', '', target, '', 'indy_variable', 'variable', [], true);
+  $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').hide();
 
   if(eval('paperJSON.experiments['+e_index+'].experiment_indy_variables.length') > 0) {
-    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').append('<label>Independent Variables</label><div class="indy-variables"></div>');
+    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .indy-variables-container').show();
   
     var preData = new Array;
     if (eval('paperJSON.experiments['+e_index+'].tasks['+t_index+'].findings['+f_index+']')) {
@@ -880,8 +894,12 @@ function repopulate_buttons(focus) {
 }
 
 function create_finding_summary (focus) {
-  var findingFields = $(focus).parents('.finding');
-
+  if ($(focus).hasClass('finding')) {
+    var findingFields = $(focus);
+  } else {
+    var findingFields = $(focus).parents('.finding');
+  }
+  
   var replaceSentence = 4;
   var autoGenSentence = 'There was a significant _relationship_ effect of _component_ on _metric_ for a _task_ task.';
 
@@ -904,7 +922,7 @@ function create_finding_summary (focus) {
   var relationshipText = $(findingFields).children().find('.relationships input:checked').data('text');
   var metricText = $(findingFields).children().find('.metrics input:checked').data('text');
 
-  if (componentText != '' || indyVariableText != '') {
+  if (componentText.length > 0 || indyVariableText.length > 0) {
     var mergedText = componentText.concat(indyVariableText);
     
     if (mergedText.length > 2) {
@@ -940,7 +958,7 @@ function create_finding_summary (focus) {
     replaceSentence = replaceSentence - 1;
   }
 
-  if (relationshipText != '') {
+  if (relationshipText != '' && relationshipText != undefined) {
     if (relationshipText == 'Interaction') {
       autoGenSentence = autoGenSentence.replace(new RegExp('_relationship_ effect of','g'), relationshipText + ' between');
     } else {
@@ -949,7 +967,7 @@ function create_finding_summary (focus) {
     replaceSentence = replaceSentence - 1;
   }
 
-  if (metricText != '' || metricText != undefined) {
+  if (metricText != '' && metricText != undefined) {
     autoGenSentence = autoGenSentence.replace(new RegExp('_metric_','g'), metricText);
     replaceSentence = replaceSentence - 1;
   }
@@ -971,6 +989,7 @@ function create_finding_summary (focus) {
 
   if (replaceSentence == 0) {
     $(findingFields).find('.field-summary input').val(autoGenSentence.charAt(0) + autoGenSentence.slice(1).toLowerCase());
+    validate_all_fields();
   } else {
     $(findingFields).find('.field-summary input').val('');
   }
@@ -1089,6 +1108,8 @@ function add_experiment_nested_ids (data, throughTable) {
               $('#experiment_'+e_index+'_'+throughTable+'s').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
             }
             else if (throughTable == 'experiment_indy_variable') {
+              console.log('#experiment_'+e_index+'_'+throughTable+'s');
+
               $('#paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_indy_variable_tokens').val(this.indy_variable_id);
               $('#experiment_'+e_index+'_'+throughTable+'s').append('<input id="paper_experiments_attributes_'+e_index+'_'+throughTable+'s_attributes_'+i+'_id" name="paper[experiments_attributes]['+e_index+']['+throughTable+'s_attributes]['+i+'][id]" type="hidden" value="'+this.id+'">');
             }
@@ -1118,8 +1139,7 @@ function add_task_ids (data, e_index) {
 }
 
 function add_task_nested_ids (data, e_index, throughTable) {
-  $('.task').each( function(r_index) {
-    var t_index = 0;
+  $('.task').each( function(t_index) {
     
     if (eval('data.experiments['+e_index+'].tasks['+t_index+']') != undefined) {
       if ($(this).data('experiment') == e_index) {
@@ -1139,11 +1159,10 @@ function add_task_nested_ids (data, e_index, throughTable) {
             }
           });
         }
-        t_index = t_index + 1;
       }
     }
 
-    add_finding_ids (data, e_index, r_index);
+    add_finding_ids (data, e_index, t_index);
   });
 }
 
@@ -1172,6 +1191,8 @@ var paperJSON;
 var paperError;
 var keepHidden;
 
+var paperSubmit = false;
+
 function save_button_clicked (focus) {
   if (keepHidden) {
     if (paperJSON == undefined) {
@@ -1193,11 +1214,28 @@ function save_button_clicked (focus) {
       }
     } 
   } else {
-    save_paper(focus);
+    save_paper(true, focus);
   }
 }
 
-function save_paper (focus, association, content) {
+function submit_paper () {
+  if ($('.experiment').length > 0 && $('.task').length > 0 && $('.finding').length > 0) {
+    $('form.paper-form').prepend('<input class="published" name="paper[published]" type="hidden" value="true">');
+    paperSubmit = true;
+    save_paper(true);
+  } else {
+    $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> A submission must contain at least one experiment with a task and a finding.</div>');
+    $(".alert").animate({top:"100px"},'slow');
+    
+    window.setTimeout( function() { 
+      $('.alert').alert('close'); 
+    }, 5000);
+  }
+}
+
+function save_paper (autosave, focus, association, content) {
+  var timer;
+
   if (paperId == null) {
     var url = '/papers';
     console.log('first post');
@@ -1211,6 +1249,9 @@ function save_paper (focus, association, content) {
   validate_all_fields ();
 
   if (paperValid) {
+    window.clearTimeout(timer);
+    $('.alert').alert('close');
+
     $.ajax({
       type: 'POST',
       url: url,
@@ -1223,6 +1264,11 @@ function save_paper (focus, association, content) {
           //Get information and add put method for updating paper
           paperId = data.id;
           $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+        }
+
+        if (paperSubmit) {
+          window.onbeforeunload = null;
+          window.location.assign('/papers/'+paperId);
         }
 
         //Set readonly inputs to readonly and remove destroyed objects and recount if needed
@@ -1245,9 +1291,15 @@ function save_paper (focus, association, content) {
         add_experiment_nested_ids (data, 'experiment_indy_variable');
 
         if (association != undefined) {
-          //Add element and reset stuff
+          //Add elements if there are elements to add
           add_fields_after (focus, association, content);
-          handle_one_times();
+        }
+        paperManager.recount();
+        handle_one_times();
+
+        if (autosave) {
+          $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
+          $(".alert").animate({top:"100px"},'slow');
         }
       },
       error: function (error) {
@@ -1261,10 +1313,20 @@ function save_paper (focus, association, content) {
           paperValid = paperValid && true;
           setUrlClasses(true);
 
-          alert('There was an error when saving! Please notify an admin.');
+          if (autosave) {
+            $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
+            $(".alert").animate({top:"100px"},'slow');
+          }
         }
+
+        $('input.published').remove();
+        paperSubmit = false;
       }
     });
+
+    timer = window.setTimeout( function() { 
+      $('.alert').alert('close'); 
+    }, 5000);
   }
 
   $(focus).button('reset');
@@ -1346,6 +1408,7 @@ $(document).ready( function() {
 
           paperManager.setCounts();
           handle_one_times();
+          validate_all_fields();
         }
       });    
     } else {
@@ -1390,10 +1453,10 @@ $(document).ready( function() {
 
     $('#submit-button').hide();
 
-    //Prevents users from accidentally leaving the page
-    // window.onbeforeunload = function() { 
-    //   return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
-    // };
+    // Prevents users from accidentally leaving the page
+    window.onbeforeunload = function() { 
+      return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
+    };
 
     //Prevents form from being submitted by enter key
     // $('#new_paper').bind("keyup keypress", function(e) {
@@ -1418,7 +1481,6 @@ $(document).ready( function() {
 
       if ($('#paper_doi').val()) {
         $('#submit-doi').button('loading');
-        $('#paper_doi').addClass('uneditable-input');
         $('#paper_doi').prop('readonly', true);
 
         //Clear all author fields
@@ -1437,7 +1499,6 @@ $(document).ready( function() {
           dataType: "jsonp",
           success: function(data) {
             $('#submit-doi').button('reset');
-            $(paper_doi).removeClass('uneditable-input');
             $('#paper_doi').prop('readonly', false);
 
             xmlDoc = $.parseXML( data );
@@ -1492,7 +1553,6 @@ $(document).ready( function() {
           error: function(tmp) {
             $('.doi-well').after('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Server Error!</strong> There was trouble communicating with the lookup server, we are sorry for the inconvenience. Please try again later or input the publication details manually.</div>');
             $('#submit-doi').button('reset');
-            $(paper_doi).removeClass('uneditable-input');
             $('#paper_doi').prop('readonly', true);
           }
         });

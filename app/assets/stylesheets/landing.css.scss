@@ -4,8 +4,16 @@
 
 .center {
 	width: 1000px;
-	margin: 150px auto;
+	margin: 50px auto;
 	text-align: center;
+
+	.title {
+		margin-bottom: 100px;
+
+		h1 {
+			font-size: 80px;
+		}
+	}
 }
 
 .left {
@@ -15,6 +23,8 @@
 #search-container {
 	float: left;
 	width: 45%;
+
+	color: lightgrey;
 }
 
 #full_text_search {
@@ -56,4 +66,12 @@
 	border-bottom: 1px dashed;
 	width: 165px;
 	margin: 30px auto;
+}
+
+.disabled {
+	margin-top: -150px;
+
+	img {
+		width: 50%;
+	}
 }
