@@ -1388,6 +1388,20 @@ $(document).ready( function() {
       $.getScript(location.href);
     });
 
+  $('.pin-sidebar').click( function() {
+    if (!$('.pin-sidebar').hasClass('active')) {
+      $('.pin-sidebar').parent().removeClass('span12');
+      $('.pin-sidebar').parent().addClass('span3');
+
+      $('.pin-sidebar').parent().css('position', 'fixed');
+    } else {
+      $('.pin-sidebar').parent().removeClass('span3');
+      $('.pin-sidebar').parent().addClass('span12');
+
+      $('.pin-sidebar').parent().css('position', 'relative');
+    }
+  });
+
   if($('form.paper-form').length > 0) {
 
     var paperState = $('form.paper-form').prop('id').split('_');
