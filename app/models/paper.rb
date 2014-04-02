@@ -73,18 +73,46 @@ class Paper < ActiveRecord::Base
             task_metric.metric ? task_metric.metric.metric : nil \
           ]} \
         ]}, \
+        experiment.experiment_displays.map { |experiment_display| [ \
+          experiment_display.desc, \
+          experiment_display.display ? experiment_display.display.display : nil \
+        ]}, \
+        experiment.experiment_hardwares.map { |experiment_hardware| [ \
+          experiment_hardware.desc, \
+          experiment_hardware.hardware ? experiment_hardware.hardware.hardware : nil \
+        ]}, \
+        experiment.experiment_softwares.map { |experiment_software| [ \
+          experiment_software.software ? experiment_software.software.software : nil \
+        ]}, \
+        experiment.experiment_visuals.map { |experiment_visual| [ \
+          experiment_visual.desc, \
+          experiment_visual.visual_fidelity ? experiment_visual.visual_fidelity.component : nil \
+        ]}, \
+        experiment.experiment_aurals.map { |experiment_aural| [ \
+          experiment_aural.desc, \
+          experiment_aural.aural_fidelity ? experiment_aural.aural_fidelity.component : nil \
+        ]}, \
+        experiment.experiment_haptics.map { |experiment_haptic| [ \
+          experiment_haptic.desc, \
+          experiment_haptic.haptic_fidelity ? experiment_haptic.haptic_fidelity.component : nil \
+        ]}, \
+        experiment.experiment_biomechanicals.map { |experiment_biomechanical| [ \
+          experiment_biomechanical.desc, \
+          experiment_biomechanical.biomechanical_symmetry ? experiment_biomechanical.biomechanical_symmetry.component : nil \
+        ]}, \
+        experiment.experiment_controls.map { |experiment_control| [ \
+          experiment_control.desc, \
+          experiment_control.control_symmetry ? experiment_control.control_symmetry.component : nil \
+        ]}, \
+        experiment.experiment_system_apps.map { |experiment_system_app| [ \
+          experiment_system_app.desc, \
+          experiment_system_app.system_appropriateness ? experiment_system_app.system_appropriateness.component : nil \
+        ]}, \
+        experiment.experiment_indy_variables.map { |experiment_indy_variable| [ \
+          experiment_indy_variable.desc, \
+          experiment_indy_variable.indy_variable ? experiment_indy_variable.indy_variable.variable : nil \
+        ]} \
       ]} 
-
-      # {:experiment_displays => {:include => [:display]}},
-      # {:experiment_hardwares => {:include => [:hardware]}},
-      # {:experiment_softwares=> {:include => [:software]}},
-      # {:experiment_visuals => {:include => [:visual_fidelity]}},
-      # {:experiment_aurals => {:include => [:aural_fidelity]}},
-      # {:experiment_haptics => {:include => [:haptic_fidelity]}},
-      # {:experiment_biomechanicals => {:include => [:biomechanical_symmetry]}},
-      # {:experiment_controls => {:include => [:control_symmetry]}},
-      # {:experiment_system_apps => {:include => [:system_appropriateness]}},
-      # {:experiment_indy_variables => {:include => [:indy_variable]}},
     end
   end
 end
