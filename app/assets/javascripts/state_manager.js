@@ -20,13 +20,34 @@ var paperManager = {
     return exp.setup();
   },
   removeExperiment: function(focus) {
+    var e_index = $(focus).data('experiment');
+    var pManager = this;
+  
+    $(focus).addClass('_destroy');
+    $('#paper_experiments_attributes_'+e_index+'__destroy').val('true');
+    $('#paper_experiments_attributes_'+e_index+'__destroy').addClass('_destroy');
+    $('#paper_experiments_attributes_'+e_index+'_id').addClass('_destroy');
+    
+    if (pManager.experiments[e_index] != undefined) {
+      if (pManager.experiments[e_index].tasks.length > 0) {
+        $(pManager.experiments[e_index].tasks).each( function () {
+          pManager.removeTask(this.focus);
+        });
+      }
+    }
 
+    pManager.experiments.splice(e_index,1);
+
+    if (pManager.experiments.length > 0) {
+      $(pManager.experiments).each( function (index) {
+        this.setup(index);
+      });
+    }
   },
   addTask: function(link, association, content) {
     var regexp = new RegExp("new_" + association, "g");
     var e_index = $(link).parent().data('experiment');
 
-    console.log('Adding task', e_index, $(link), $(link).parent());
     //create task for the proper experiment
     var task = this.experiments[e_index].addTask();
 
@@ -37,7 +58,30 @@ var paperManager = {
     return task.setup();
   },
   removeTask: function(focus) {
+    var e_index = $(focus).data('experiment');
+    var t_index = $(focus).data('task');
+    var pManager = this;
+  
+    $(focus).addClass('_destroy');
+    $('#paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'__destroy').val('true');
+    $('#paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'__destroy').addClass('_destroy');
+    $('#paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_id').addClass('_destroy');
 
+    if (pManager.experiments[e_index].tasks[t_index] != undefined) {
+      if (pManager.experiments[e_index].tasks[t_index].findings.length > 0) {
+        $(pManager.experiments[e_index].tasks[t_index].findings).each( function () {
+          pManager.removeFinding(this.focus);
+        });
+      }
+    }
+
+    pManager.experiments[e_index].tasks.splice(t_index,1);
+
+    if (pManager.experiments[e_index].tasks.length > 0) {
+      $(pManager.experiments[e_index].tasks).each( function (index) {
+        this.setup(index, e_index);
+      });
+    }
   },
   addFinding: function(link, association, content) {
     var regexp = new RegExp("new_" + association, "g");
@@ -54,7 +98,23 @@ var paperManager = {
     return finding.setup();
   },
   removeFinding: function(focus) {
+    var e_index = $(focus).data('experiment');
+    var t_index = $(focus).data('task');
+    var f_index = $(focus).data('finding');
+    var pManager = this;
+    
+    $(focus).addClass('_destroy');
+    $('#paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'__destroy').val('true');
+    $('#paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'__destroy').addClass('_destroy');
+    $('#paper_experiments_attributes_'+e_index+'_tasks_attributes_'+t_index+'_findings_attributes_'+f_index+'_id').addClass('_destroy');
 
+    this.experiments[e_index].tasks[t_index].findings.splice(f_index,1);
+
+    if (pManager.experiments[e_index].tasks[t_index].findings.length > 0) {
+      $(pManager.experiments[e_index].tasks[t_index].findings).each( function (index) {
+        this.setup(index, e_index, t_index);
+      });
+    }
   },
   setCounts: function() {
     var e_array = this.experiments;
@@ -69,7 +129,6 @@ var paperManager = {
 
       $(this).appendTo($('#paper_entry_form'));
       add_progress_heading('experiments', self.addExperiment(), true);
-      
 
       $(this).find('.task').each( function(t) {
         $(this).prop('id', 'experiment_'+e+'_task_'+t);
@@ -78,7 +137,6 @@ var paperManager = {
 
         $(this).appendTo($('#paper_entry_form'));
         add_progress_heading('tasks', self.experiments[e].addTask().setup(), true);
-        
 
         $(this).find('.finding').each( function(f) {
           $(this).prop('id', 'experiment_'+e+'_task_'+t+'_finding_'+f);
@@ -88,7 +146,6 @@ var paperManager = {
 
           $(this).appendTo($('#paper_entry_form'));
           add_progress_heading('findings', self.experiments[e].tasks[t].addFinding().setup(), true);
-          
 
         });
       });
@@ -138,14 +195,14 @@ function experiment(count) {
 
     $(this.focus).find('.accordion-group').on('hidden', function (e) {
       if (e.target.nodeName != 'LABEL' && e.target.nodeName != 'INPUT') {
-        $(this).find('.icon-chevron-right').show();
-        $(this).find('.icon-chevron-down').hide();
+        $(this).find('.glyphicon-chevron-right').show();
+        $(this).find('.glyphicon-chevron-down').hide();
       }
     });
     $(this.focus).find('.accordion-group').on('shown', function (e) {
       if (e.target.nodeName != 'LABEL' && e.target.nodeName != 'INPUT') {
-        $(this).find('.icon-chevron-right').hide();
-        $(this).find('.icon-chevron-down').show();
+        $(this).find('.glyphicon-chevron-right').hide();
+        $(this).find('.glyphicon-chevron-down').show();
       }
     });
 
