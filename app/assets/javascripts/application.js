@@ -776,13 +776,13 @@ function repopulate_buttons(focus) {
     ]
   }
 
+  $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .components-of-fidelity-container').hide();
   $(displayFidelities.displayFidelity).each( function(i) {
     var target = $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .'+this.table);
     
     $(target).html('');
     create_inputs('hidden', '', target, '', this.table, 'component', [], true);
-    $('#experiment_'+e_index+'_task_'+t_index+'_finding_'+f_index+' .components-of-fidelity-container').hide();
-
+    
     if (eval('paperJSON.experiments['+e_index+'].'+this.throughTable+'.length') > 0) {
       var fidelity = this;
       var preData = new Array;
