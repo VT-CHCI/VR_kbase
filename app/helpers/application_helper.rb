@@ -22,7 +22,7 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", :f => builder)
     end
-       button_to_function(name, "save_paper(this, \"#{association}\", \"#{escape_javascript(fields)}\"); return false;", :class => css_class, :'data-loading-text' => loading_text)
+       button_to_function(name, "save_paper(true, this, \"#{association}\", \"#{escape_javascript(fields)}\"); return false;", :class => css_class, :'data-loading-text' => loading_text)
   end
 
   def add_fields(f, association)

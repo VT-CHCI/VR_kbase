@@ -646,7 +646,7 @@ function show_element (focus, slide, save) {
 
   if (!$(focus).hasClass('current')) {
     if (save) {
-      save_paper();
+      save_paper(false);
     }
 
     if (paperValid) { 
@@ -710,7 +710,7 @@ function delete_element () {
   }
 
   $('#delete-core-element-modal').modal('hide');
-  save_paper();
+  save_paper(true);
 }
 
 // ##########################################################################
@@ -1210,7 +1210,7 @@ function save_button_clicked (focus) {
       }
     } 
   } else {
-    save_paper(focus);
+    save_paper(true, focus);
   }
 }
 
@@ -1218,7 +1218,7 @@ function submit_paper () {
   if ($('.experiment').length > 0 && $('.task').length > 0 && $('.finding').length > 0) {
     $('form.paper-form').prepend('<input class="published" name="paper[published]" type="hidden" value="true">');
     paperSubmit = true;
-    save_paper();
+    save_paper(true);
   } else {
     $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> A submission must contain at least one experiment with a task and a finding.</div>');
     $(".alert").animate({top:"100px"},'slow');
@@ -1229,7 +1229,7 @@ function submit_paper () {
   }
 }
 
-function save_paper (focus, association, content) {
+function save_paper (autosave, focus, association, content) {
   var timer;
 
   if (paperId == null) {
@@ -1293,8 +1293,10 @@ function save_paper (focus, association, content) {
         paperManager.recount();
         handle_one_times();
 
-        $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
-        $(".alert").animate({top:"100px"},'slow');
+        if (autosave) {
+          $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
+          $(".alert").animate({top:"100px"},'slow');
+        }
       },
       error: function (error) {
         console.log('error:', error);
@@ -1307,9 +1309,10 @@ function save_paper (focus, association, content) {
           paperValid = paperValid && true;
           setUrlClasses(true);
 
-          // alert('There was an error when saving! Please notify an admin.');
-          $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
-          $(".alert").animate({top:"100px"},'slow');
+          if (autosave) {
+            $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
+            $(".alert").animate({top:"100px"},'slow');
+          }
         }
 
         $('input.published').remove();
