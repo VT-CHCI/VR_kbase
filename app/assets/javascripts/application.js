@@ -1215,9 +1215,18 @@ function save_button_clicked (focus) {
 }
 
 function submit_paper () {
-  $('form.paper-form').prepend('<input name="paper[published]" type="hidden" value="true">');
-  paperSubmit = true;
-  save_paper();
+  if ($('.experiment').length > 0 && $('.task').length > 0 && $('.finding').length > 0) {
+    $('form.paper-form').prepend('<input class="published" name="paper[published]" type="hidden" value="true">');
+    paperSubmit = true;
+    save_paper();
+  } else {
+    $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> A submission must contain at least one experiment with a task and a finding.</div>');
+    $(".alert").animate({top:"100px"},'slow');
+    
+    window.setTimeout( function() { 
+      $('.alert').alert('close'); 
+    }, 5000);
+  }
 }
 
 function save_paper (focus, association, content) {
@@ -1302,6 +1311,9 @@ function save_paper (focus, association, content) {
           $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
           $(".alert").animate({top:"100px"},'slow');
         }
+
+        $('input.published').remove();
+        paperSubmit = false;
       }
     });
 
