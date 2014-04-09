@@ -43,7 +43,7 @@ class Paper < ActiveRecord::Base
   end
 
   searchable do
-    text :title#, :as => :title_textp
+    text :title
 
     text :experiments do
       experiments.map { |experiment| [ \

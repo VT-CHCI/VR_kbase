@@ -17,3 +17,9 @@
 # Ignore sublime files
 *.sublime-project
 *.sublime-workspace
+
+# Ignore sunspot/solr index files
+/solr/data/development/*
+/solr/default/data/*
+/solr/development/data/*
+/solr/test/data/*

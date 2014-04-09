@@ -15,8 +15,8 @@ gem 'judge' # exposing validation to json
 gem 'devise' # authentication
 gem 'sunspot_rails' # search
 gem 'sunspot_solr'
-gem 'ransack' # advanced search filter
-gem 'squeel' # ruby-like sql statements
+#gem 'ransack' # advanced search filter
+#gem 'squeel' # ruby-like sql statements
 
 gem 'validate_url' # for validating urls
 
