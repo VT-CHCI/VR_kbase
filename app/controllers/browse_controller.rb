@@ -2,7 +2,7 @@ class BrowseController < ApplicationController
   def index
   	@search_paper = Paper.solr_search do 
   		fulltext params[:search]
-      paginate :page => 1, :per_page => 200
+      paginate :page => 1, :per_page => 2000
   	end
     @papers = @search_paper.results
 
