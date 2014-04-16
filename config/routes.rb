@@ -37,6 +37,7 @@ Kbase::Application.routes.draw do
   resources :users
 
   get '/landing', to: 'landing#index'
+  get '/faq', to: 'landing#faq'
 
   #resources :finding_indy_variables
 

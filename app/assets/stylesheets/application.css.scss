@@ -23,6 +23,17 @@ body {
   width: 95%;
 }
 
+@media (max-width: 979px) {
+  .navbar .btn.btn-danger {
+    width: 100%
+  }
+}
+
+a.nav-btn {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .main-content {
   padding-top: 60px;
 }
