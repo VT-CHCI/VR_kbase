@@ -469,8 +469,8 @@ function add_progress_heading(association, focus, repopulate) {
       '<div id="'+heading+'" class="nav-core-element-block experiment-block">\
         <a class="experiment-heading open" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
           <div class="collapse-field">\
-            <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
-            <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
+            <i class="glyphicon glyphicon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
+            <i class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-tasks"></i>\
           </div>\
           <div class="title-field">Unnamed Experiment</div>\
           <div class="badge-field">\
@@ -495,8 +495,8 @@ function add_progress_heading(association, focus, repopulate) {
       '<div id="'+heading+'" class="nav-core-element-block task-block">\
         <a class="task-heading open" data-target="'+focus.selector+'" onclick="show_element(this, false, true)">\
           <div class="collapse-field">\
-            <i class="icon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
-            <i class="icon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
+            <i class="glyphicon glyphicon-chevron-right" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
+            <i class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#'+heading+' .nav-findings"></i>\
           </div>\
           <div class="title-field">Unnamed Task</div>\
           <div class="badge-field">\
@@ -1388,6 +1388,36 @@ $(document).ready( function() {
       $.getScript(location.href);
     });
 
+  $('.pin-sidebar').click( function() {
+    if (!$('.pin-sidebar').hasClass('active')) {
+      $('.pin-sidebar').parent().removeClass('span12');
+      $('.pin-sidebar').parent().addClass('span3');
+
+      $('.pin-sidebar').parent().css('position', 'fixed');
+    } else {
+      $('.pin-sidebar').parent().removeClass('span3');
+      $('.pin-sidebar').parent().addClass('span12');
+
+      $('.pin-sidebar').parent().css('position', 'relative');
+    }
+  });
+
+  if ($('#faq-questions')) {
+    $('#faq-nav').width($('#faq-nav-container').width());
+
+    $(window).resize( function() {
+      $('#faq-nav').width($('#faq-nav-container').width());
+    });
+
+    $(window).scroll( function() {
+      var divisor = ($('#faq-questions').height())/($('#faq-nav').height()+155-$(window).height());
+      
+      if ($(window).scrollTop()-$('#faq-nav').data('offset-top') > 0) {
+        $('#faq-nav').css('top', 40-1*($(window).scrollTop()-$('#faq-nav').data('offset-top'))/divisor);
+      }
+    });
+  }
+
   if($('form.paper-form').length > 0) {
 
     var paperState = $('form.paper-form').prop('id').split('_');
@@ -1438,6 +1468,19 @@ $(document).ready( function() {
       $('#progress-headings .task-block .new-add-links').css('padding-left', (6 - 500/Math.round($('#progress-headings .task-block').width()))+'%');
     });
 
+    $(window).scroll( function() {
+      if ($('#submit-button').position().top + 20 < $(window).scrollTop()) {
+        $('#back-to-top').stop(true, true).fadeIn();
+        $('#back-to-top').css('left', $('#entry_progress').position().left+$('#entry_progress').outerWidth(true) - $('#back-to-top span').outerWidth(true));
+      } else {
+        $('#back-to-top').stop(true, true).fadeOut();
+      }
+    });
+
+    $('#back-to-top').click( function() {
+      $("html, body").animate({ scrollTop: 0 }, 500);
+    });
+
     //Prevents form from being submitted by enter key
     $('.paper-form').on('keyup keypress', 'input', function(e) {
       var code = e.keyCode || e.which; 
@@ -1457,15 +1500,6 @@ $(document).ready( function() {
     window.onbeforeunload = function() { 
       return "Caution! All unsaved work will be lost. If you need to navigate to another section, please select the section in the Entry Navigation box on the left."; 
     };
-
-    //Prevents form from being submitted by enter key
-    // $('#new_paper').bind("keyup keypress", function(e) {
-    //   var code = e.keyCode || e.which; 
-    //   if (code  == 13) {               
-    //     e.preventDefault();
-    //     return false;
-    //   }
-    // });
 
   // ##########################################################################
   // Getting DOI Information

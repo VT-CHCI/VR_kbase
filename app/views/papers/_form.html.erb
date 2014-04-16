@@ -4,8 +4,8 @@
       <div id="entry_progress" class="well span12">
         <legend class="with-helper-text">Entry Navigation</legend>
         <p class="after-legend"><small>This shows your progress as you enter the paper. If you need to jump around please select a heading below to be moved to that section.</small></p>
+        <button type="button" class="btn pin-sidebar" data-toggle="button"><i class="glyphicon glyphicon-pushpin"></i></button>
         <div id="progress-headings">
-
           <a class="current publication-block" data-target="#paper" onclick="show_element(this)">
             <div class="publication-heading">
               <div class="title-field">Publication Information</div>
@@ -141,6 +141,10 @@
     </div>
   </div>
 <% end %>
+
+<div id="back-to-top">
+  <span class="label label-info">Back to top <i class="glyphicon glyphicon-arrow-up"></i></span>
+</div>
 
 <div id="delete-core-element-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-core-element-modal" aria-hidden="true">
   <div class="modal-header">

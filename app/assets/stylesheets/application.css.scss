@@ -23,6 +23,17 @@ body {
   width: 95%;
 }
 
+@media (max-width: 979px) {
+  .navbar .btn.btn-danger {
+    width: 100%
+  }
+}
+
+a.nav-btn {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .main-content {
   padding-top: 60px;
 }
@@ -37,6 +48,9 @@ legend.with-helper-text {
 
 p.after-legend {
   margin-bottom: 15px;
+  margin-top: 5px;
+  
+  line-height: 16px;
 }
 
 .input-append .btn, .input-prepend .add-on {
@@ -61,6 +75,15 @@ p.after-legend {
   h3:not(.current) i, h5:not(.current) i {
     display: none;
   }
+}
+
+.pin-sidebar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  padding: initial;
 }
 
 #title, #name {
