@@ -42,6 +42,10 @@ class Paper < ActiveRecord::Base
     #self.venues = new_venues + existing_venues
   end
 
+  #scope :filter_display, lambda { |display|
+  #  joins( :experiments => :experiment_displays ).where( :experiment_displays => { :component => display } )
+  #}
+
   searchable do
     text :title
 
