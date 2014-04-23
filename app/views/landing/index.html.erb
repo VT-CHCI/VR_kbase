@@ -6,16 +6,19 @@
   <div id="search-container">
     <h1>Search</h1>
     <div id="full_text_search">
-      <form accept-charset="UTF-8" action="/search_text" method="get">
+      <!-- <form accept-charset="UTF-8" action="/browse/index" method="get">
         <div style="margin:0;padding:0;display:inline">
           <input name="utf8" type="hidden" value="&#x2713;" />
         </div>
-        <input id="search_text" name="search_text" size="60" type="text" readonly/>
-        <input class="btn" type="submit" value="Search" disabled style="margin-bottom: 11px;"/>
-      </form>
+        <input id="search_text" name="search_text" size="60" type="text"/>
+      </form> -->
+      <%= form_tag browse_index_path, :method => :get, :role => "search" do %>
+        <%= text_field_tag :search, params[:search], :id => "search_text", :name => "search", :size => "60", :placeholder => "Search" %>
+        <input class="btn" type="submit" value="Search" style="margin-bottom: 11px;"/>
+      <% end %>
     </div>
     <span class="small">e.g., HMD, travel, FOV</span>
-    <div class="disabled"><img src="http://www.kvmpublicschoolhld.org/images/coming-soon-stamp-hi.png"></div>
+    <!-- <div class="disabled"><img src="http://www.kvmpublicschoolhld.org/images/coming-soon-stamp-hi.png"></div> -->
   </div>
   <div id="center-divider">
     <span class="vertical-divider"></span>
