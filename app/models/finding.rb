@@ -36,4 +36,56 @@ class Finding < ActiveRecord::Base
 
   validates :title, :presence => true
   validates :summary, :presence => true
+
+  # searchable do
+  #   text :title, :summary, :issue, :finding_note
+
+  #   text :aural_fidelities do
+  #     aural_fidelities.map { |finding| [ \
+  #       finding.component \
+  #     ]}
+  #   end
+
+  #   text :visual_fidelities do
+  #     visual_fidelities.map { |finding| [ \
+  #       finding.component \
+  #     ]}
+  #   end
+
+  #   text :haptic_fidelities do
+  #     haptic_fidelities.map { |finding| [ \
+  #       finding.component \
+  #     ]}
+  #   end
+
+  #   text :biomechanical_symmetries do
+  #     biomechanical_symmetries.map { |finding| [ \
+  #       finding.component \
+  #     ]}
+  #   end
+
+  #   text :control_symmetries do
+  #     control_symmetries.map { |finding| [ \
+  #       finding.component \
+  #     ]}
+  #   end
+
+  #   text :system_appropriatenesses do
+  #     system_appropriatenesses.map { |finding| [ \
+  #       finding.component \
+  #     ]}
+  #   end
+
+  #   text :categories do
+  #     categories.map { |finding| [ \
+  #       finding.task_category \
+  #     ]}
+  #   end
+
+  #   text :indy_variables do
+  #     indy_variables.map { |finding| [ \
+  #       finding.variable \
+  #     ]}
+  #   end
+  # end
 end

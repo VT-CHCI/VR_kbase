@@ -75,3 +75,38 @@
 		width: 50%;
 	}
 }
+
+#faq-nav.affix {
+	top: 40px;
+}
+
+#faq-questions {
+	.question {
+		margin-left:	25px;
+
+		blockquote p+p {
+			margin-top: 1em;
+		}
+
+		p.indent {
+			margin-left: 50px;
+		}
+	}
+
+	.question:before { 
+	  display: block; 
+	  content: " "; 
+	  margin-top: -50px; 
+	  height: 50px; 
+	  visibility: hidden; 
+	}
+
+	.page-header:first-child {
+		margin-top: -10px;
+	}
+
+	.page-header {
+		margin-top: 45px;
+		margin-bottom: 10px
+	}
+}

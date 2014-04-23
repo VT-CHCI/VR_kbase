@@ -1402,6 +1402,22 @@ $(document).ready( function() {
     }
   });
 
+  if ($('#faq-questions')) {
+    $('#faq-nav').width($('#faq-nav-container').width());
+
+    $(window).resize( function() {
+      $('#faq-nav').width($('#faq-nav-container').width());
+    });
+
+    $(window).scroll( function() {
+      var divisor = ($('#faq-questions').height())/($('#faq-nav').height()+155-$(window).height());
+      
+      if ($(window).scrollTop()-$('#faq-nav').data('offset-top') > 0) {
+        $('#faq-nav').css('top', 40-1*($(window).scrollTop()-$('#faq-nav').data('offset-top'))/divisor);
+      }
+    });
+  }
+
   if($('form.paper-form').length > 0) {
 
     var paperState = $('form.paper-form').prop('id').split('_');

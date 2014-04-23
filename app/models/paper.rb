@@ -41,4 +41,82 @@ class Paper < ActiveRecord::Base
     # append two lists to use one new venue or one existing venue
     #self.venues = new_venues + existing_venues
   end
+
+  #scope :filter_display, lambda { |display|
+  #  joins( :experiments => :experiment_displays ).where( :experiment_displays => { :component => display } )
+  #}
+
+  searchable do
+    text :title
+
+    text :experiments do
+      experiments.map { |experiment| [ \
+        experiment.title, \
+        experiment.exp_desc, \
+        experiment.system_desc, \
+        experiment.other_vars, \
+        experiment.constants, \
+        experiment.comp_desc, \
+        experiment.display_desc, \
+        experiment.tasks.map { |task| [ \
+          task.title, \
+          task.task_desc, \
+          task.interface_desc, \
+          task.env_desc, \
+          task.findings.map { |finding| [ \
+            finding.title, \
+            finding.summary, \
+            finding.issue, \
+            finding.finding_note, \
+            finding.specificity ? finding.specificity.level : nil \
+          ]}, \
+          task.task_categories.map { |task_category| [ \
+            task_category.category ? task_category.category.task_category : nil \
+          ]}, \
+          task.task_metrics.map { |task_metric| [ \
+            task_metric.metric ? task_metric.metric.metric : nil \
+          ]} \
+        ]}, \
+        experiment.experiment_displays.map { |experiment_display| [ \
+          experiment_display.desc, \
+          experiment_display.display ? experiment_display.display.display : nil \
+        ]}, \
+        experiment.experiment_hardwares.map { |experiment_hardware| [ \
+          experiment_hardware.desc, \
+          experiment_hardware.hardware ? experiment_hardware.hardware.hardware : nil \
+        ]}, \
+        experiment.experiment_softwares.map { |experiment_software| [ \
+          experiment_software.software ? experiment_software.software.software : nil \
+        ]}, \
+        experiment.experiment_visuals.map { |experiment_visual| [ \
+          experiment_visual.desc, \
+          experiment_visual.visual_fidelity ? experiment_visual.visual_fidelity.component : nil \
+        ]}, \
+        experiment.experiment_aurals.map { |experiment_aural| [ \
+          experiment_aural.desc, \
+          experiment_aural.aural_fidelity ? experiment_aural.aural_fidelity.component : nil \
+        ]}, \
+        experiment.experiment_haptics.map { |experiment_haptic| [ \
+          experiment_haptic.desc, \
+          experiment_haptic.haptic_fidelity ? experiment_haptic.haptic_fidelity.component : nil \
+        ]}, \
+        experiment.experiment_biomechanicals.map { |experiment_biomechanical| [ \
+          experiment_biomechanical.desc, \
+          experiment_biomechanical.biomechanical_symmetry ? experiment_biomechanical.biomechanical_symmetry.component : nil \
+        ]}, \
+        experiment.experiment_controls.map { |experiment_control| [ \
+          experiment_control.desc, \
+          experiment_control.control_symmetry ? experiment_control.control_symmetry.component : nil \
+        ]}, \
+        experiment.experiment_system_apps.map { |experiment_system_app| [ \
+          experiment_system_app.desc, \
+          experiment_system_app.system_appropriateness ? experiment_system_app.system_appropriateness.component : nil \
+        ]}, \
+        experiment.experiment_indy_variables.map { |experiment_indy_variable| [ \
+          experiment_indy_variable.desc, \
+          experiment_indy_variable.indy_variable ? experiment_indy_variable.indy_variable.variable : nil \
+        ]} \
+      ]} 
+    end
+  end
 end

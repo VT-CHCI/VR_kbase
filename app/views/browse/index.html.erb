@@ -14,11 +14,11 @@
           <li><a href="#findings" data-toggle="tab">Findings</a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="papers"><%= render "papers/browse", :@papers => Paper.all %></div>
+          <div class="tab-pane active" id="papers"><%= render "papers/browse" %></div>
           <% if false %>
-            <div class="tab-pane" id="experiments"><%= render "experiments/browse", :@experiments => Experiment.all %></div> 
+            <div class="tab-pane" id="experiments"><%= render "experiments/browse" %></div> 
           <% end %>
-          <div class="tab-pane" id="findings"><%= render "findings/browse", :@findings => Finding.all %></div>
+          <div class="tab-pane" id="findings"><%= render "findings/browse" %></div>
         </div>
       </div>
     </div>
