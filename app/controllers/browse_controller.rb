@@ -1,30 +1,101 @@
 class BrowseController < ApplicationController
   def index
-  	@search_paper = Paper.solr_search do 
+  	# search with sunspot
+    @search_paper = Paper.solr_search do 
   		fulltext params[:search]
       paginate :page => 1, :per_page => 2000
   	end
-    @papers = @search_paper.results
+    @search_results = @search_paper.results
 
-    if params[:displays].present?
-      @displays = params[:displays].split(/,/)
-      @displays.each do |display|
-        @papers = @papers.filter_display(display)
-      end
+    # copy search results to list so we can use set intersection 
+    @papers = []
+    @search_results.each do |paper|
+      @papers << paper
     end
 
-    # @papers_auditories     = Paper.joins( :experiments => :experiment_aurals ).where( :experiment_aurals => { :aural_fidelity_id => @auditories } )
-    # @papers_biomechanicals = Paper.joins( :experiments => :experiment_biomechanicals ).where( :experiment_biomechanicals => { :biomechanical_symmetry_id => @biomechanicals } )
-    # @papers_controls       = Paper.joins( :experiments => :experiment_controls ).where( :experiment_controls => { :control_symmetry_id => @controls } )
-    # @papers_haptics        = Paper.joins( :experiments => :experiment_haptics ).where( :experiment_haptics => { :haptic_fidelity_id => @haptics } )
-    # @papers_systemapps     = Paper.joins( :experiments => :experiment_system_apps ).where( :experiment_system_apps => { :system_appropriateness_id => @systemapps } )
-    # @papers_visuals        = Paper.joins( :experiments => :experiment_visuals ).where( :experiment_visuals => { :visual_fidelity_id => @visuals } )
-    # @papers_displays       = Paper.joins( :experiments => :experiment_displays ).where( :experiment_displays => { :display_id => @displays } )
-    # @papers_hardwares      = Paper.joins( :experiments => :experiment_hardwares ).where( :experiment_hardwares => { :hardware_id => @hardwares } )
-    # @papers_softwares      = Paper.joins( :experiments => :experiment_softwares ).where( :experiment_softwares => { :software_id => @softwares } )
-    # @papers_metrics        = Paper.joins( :experiments => :metrics ).joins( :experiments => { :metrics => :task_metrics } ).where( :task_metrics => { :metric_id => @metrics } )
-    # @papers_vars           = Paper.joins( :experiments => :experiment_indy_variables ).where( :experiment_indy_variables => { :indy_variable_id => @indy_variables } )
-    # @papers_categories     = Paper.joins( :experiments => :tasks ).joins( :experiments => { :tasks => :task_categories } ).where( :task_categories => { :category_id => @categories } )
+    @filtering = false
+
+    # apply component filter to all papers
+    @filtered_by_comps = []
+    if params[:auditories].present?
+      params[:auditories].split(/,/).each do |filter|
+        @filtered_by_comps = @filtered_by_comps + Paper.filter_auditory(filter)
+      end
+      @filtering = true
+    end
+    if params[:biomechanicals].present?
+      params[:biomechanicals].split(/,/).each do |filter|
+        @filtered_by_comps = @filtered_by_comps + Paper.filter_biomechanical(filter)
+      end
+      @filtering = true
+    end
+    if params[:controls].present?
+      params[:controls].split(/,/).each do |filter|
+        @filtered_by_comps = @filtered_by_comps + Paper.filter_control(filter)
+      end
+      @filtering = true
+    end
+    if params[:haptics].present?
+      params[:haptics].split(/,/).each do |filter|
+        @filtered_by_comps = @filtered_by_comps + Paper.filter_haptic(filter)
+      end
+      @filtering = true
+    end
+    if params[:system_apps].present?
+      params[:system_apps].split(/,/).each do |filter|
+        @filtered_by_comps = @filtered_by_comps + Paper.filter_system_app(filter)
+      end
+      @filtering = true
+    end
+    if params[:visuals].present?
+      params[:visuals].split(/,/).each do |filter|
+        @filtered_by_comps = @filtered_by_comps + Paper.filter_visual(filter)
+      end
+      @filtering = true
+    end
+    @filtered_by_comps = @filtered_by_comps.uniq
+
+    # apply task category filter to all papers
+    @filtered_by_cats = []
+    if params[:category].present?
+      params[:category].split(/,/).each do |filter|
+        @filtered_by_cats = @filtered_by_cats + Paper.filter_category(filter)
+      end
+      @filtering = true
+    end
+    @filtered_by_cats = @filtered_by_cats.uniq
+
+    # apply component filter to all papers
+    @filtered_by_disps = []
+    if params[:displays].present?
+      params[:displays].split(/,/).each do |filter|
+        @filtered_by_disps = @filtered_by_disps + Paper.filter_display(filter)
+      end
+      @filtering = true
+    end
+    @filtered_by_comps = @filtered_by_disps.uniq
+
+    # apply metric filter to all papers
+    @filtered_by_mets = []
+    if params[:metric].present?
+      params[:metric].split(/,/).each do |filter|
+        @filtered_by_mets = @filtered_by_mets + Paper.filter_metric(filter)
+      end
+      @filtering = true
+    end
+    @filtered_by_mets = @filtered_by_mets.uniq
+
+    if @filtering
+      @filter_combo = Paper.all
+      @filter_combo = @filter_combo & @filtered_by_comps if not @filtered_by_comps.empty?
+      @filter_combo = @filter_combo & @filtered_by_cats if not @filtered_by_cats.empty?
+      @filter_combo = @filter_combo & @filtered_by_disps if not @filtered_by_disps.empty?
+      @filter_combo = @filter_combo & @filtered_by_mets if not @filtered_by_mets.empty?
+      @papers = @papers & @filter_combo
+    end
+
+    # use set intersection to calculate which papers should be displayed
+     #( @filtered_by_comps | @filtered_by_cats | @filtered_by_disps | @filtered_by_mets )
 
     # if we wanted to perform search again with experiments and findings
     #@search_experiment = Experiment.solr_search do 
@@ -50,5 +121,23 @@ class BrowseController < ApplicationController
         end
       end
     end
+
+    # filter lists 
+    @filter_list_components = []
+    @filter_list_components << ['Auditory Fidelity',AuralFidelity.all]
+    @filter_list_components << ['Haptic Fidelity',HapticFidelity.all]
+    @filter_list_components << ['Visual Fidelity',HapticFidelity.all]
+    @filter_list_components << ['Biomechanical Simmetry',BiomechanicalSymmetry.all]
+    @filter_list_components << ['Control Simmetry',ControlSymmetry.all]
+    @filter_list_components << ['System Appropriateness',SystemAppropriateness.all]
+
+    @filter_list_categories = []
+    @filter_list_categories << [nil,Category.all]
+
+    @filter_list_displays = []
+    @filter_list_displays << [nil,Display.all]
+
+    @filter_list_metrics = []
+    @filter_list_metrics << [nil,Metric.all]
   end
 end
