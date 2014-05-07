@@ -42,12 +42,48 @@ class Paper < ActiveRecord::Base
     #self.venues = new_venues + existing_venues
   end
 
-  #scope :filter_display, lambda { |display|
-  #  joins( :experiments => :experiment_displays ).where( :experiment_displays => { :component => display } )
-  #}
-
+  # scope functions for components
+  scope :filter_auditory, lambda { |component|
+    joins( :experiments => :experiment_aurals ).joins( :experiments => { :experiment_aurals => :aural_fidelity } ).where( :aural_fidelities => { :component => component } )
+  }
+  scope :filter_biomechanical, lambda { |component|
+    joins( :experiments => :experiment_biomechanicals ).joins( :experiments => { :experiment_biomechanicals => :biomechanical_symmetry } ).where( :biomechanical_symmetries => { :component => component } )
+  }
+  scope :filter_control, lambda { |component|
+    joins( :experiments => :experiment_controls ).joins( :experiments => { :experiment_controls => :control_symmetry } ).where( :control_symmetries => { :component => component } )
+  }
+  scope :filter_haptic, lambda { |component|
+    joins( :experiments => :experiment_haptics ).joins( :experiments => { :experiment_haptics => :haptic_fidelity } ).where( :haptic_fidelities => { :component => component } )
+  }
+  scope :filter_system_app, lambda { |component|
+    joins( :experiments => :experiment_system_apps ).joins( :experiments => { :experiment_system_apps => :system_appropriateness } ).where( :system_appropriatenesses => { :component => component } )
+  }
+  scope :filter_visual, lambda { |component|
+    joins( :experiments => :experiment_visuals ).joins( :experiments => { :experiment_visuals => :visual_fidelity } ).where( :visual_fidelities => { :component => component } )
+  }
+  # scope function for task category
+  scope :filter_category, lambda { |category|
+   joins( :experiments => :tasks ).joins( :experiments => { :tasks => :categories } ).where( :categories => { :task_category => category } )
+  }
+  # scope function for display
+  scope :filter_display, lambda { |display|
+    joins( :experiments => :experiment_displays ).joins( :experiments => { :experiment_displays => :display } ).where( :displays => { :display => display } )
+  }
+  # scope function for metric
+  scope :filter_metric, lambda { |metric|
+    joins( :experiments => :metrics ).joins( :experiments => { :metrics => :task_metrics } ).where( :metrics => { :metric => metric } )
+  }
+  
   searchable do
     text :title
+
+    text :authors do
+      authors.map { |author| [ \
+        author.first_name, \
+        author.last_name, \
+        author.middle_initial \
+      ]}
+    end
 
     text :experiments do
       experiments.map { |experiment| [ \
