@@ -1,0 +1,16 @@
+<small class="filter-label">
+  <% if @active_filters.count > 0 %>
+    <p class="after-legend">Filtering by:</p>
+    <% @active_filters.each_with_index do |active_filter_category,cat_index| %>
+      <% if not active_filter_category.is_a? String %>
+        <p class="after-legend filter-label-list">
+          (
+          <% active_filter_category.each_with_index do |active_filter,index| %>
+            <b><%= (index > 0 ? " OR " : "") %></b> <%= active_filter %>
+          <% end %>  
+          ) <b><%= (@active_filters.count > 0 and cat_index < @active_filters.count-1 ? " AND" : "") %></b>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</small>

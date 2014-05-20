@@ -65,3 +65,28 @@ label {
 	bottom: -5px;
 	right: 0;
 }
+
+.filter-options {
+	margin-bottom: 0px !important;
+	padding-bottom: 0px !important;
+	min-height: 100%;
+	position: relative;
+}
+
+.filter-control {
+    box-sizing:border-box;
+	position: fixed;
+	bottom: 0px;
+	left: inherit !important;
+	margin: 0px !important;
+	#width: inherit !important;
+	padding: 5px !important;
+}
+
+.filter-label {
+	color: grey;
+}
+
+.filter-label-list {
+	margin-left: 15px;
+}

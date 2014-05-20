@@ -35,7 +35,7 @@
         <a class="brand" href="/">VR Knowledgebase</a>
         <div class="nav-collapse collapse navbar-inverse-collapse">
 
-          <%= form_tag browse_index_path, :method => :get, :class => "navbar-search pull-left", :role => "search" do %>
+          <%= form_tag browse_index_path, :id => "searchForm", :onsubmit => "if(!combine_filter_search('filterForm', 'searchForm')) { return false; }", :method => :get, :class => "navbar-search pull-left", :role => "search" do %>
             <%= text_field_tag :search, params[:search], :class => "search-query span4", :placeholder => "Search" %>
           <% end %>
           

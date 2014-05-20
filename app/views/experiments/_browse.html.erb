@@ -1,6 +1,7 @@
 <div class="span12">
+  <small><p class="after-legend">Showing <%= @experiments.count %> of <%= Experiment.all.count %> total experiments.</p></small>
   <div class="row-fluid">
-    <div class="span8"><legend>Experiment</legend></div>
+    <div class="span8"><legend>Experiments</legend></div>
     <div class="span4"><legend>Keywords</legend></div>
   </div>
   <% @experiments.each do |experiment| %>
