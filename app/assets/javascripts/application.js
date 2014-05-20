@@ -18,6 +18,56 @@
 //= require json2
 //= require judge
 
+
+function update_filter_badges () {
+  // look for all the badges
+  $('.accordion-group').each( function() { 
+    var inputs = $( this ).find( ':input:checked' ); 
+    var badges = $( this ).find( '.badge' ); 
+    while( badges[0].firstChild ) { 
+      badges[0].removeChild( badges[0].firstChild );
+    } 
+    badges[0].appendChild( document.createTextNode( inputs.size().toString() ) );
+  });
+}
+
+function clear_filters () {
+  $('input:checkbox').removeAttr('checked');
+  update_filter_badges();
+}
+
+function apply_filters () {
+  // var form1 = $('#search').serialize();
+  // var form2 = $('#filterForm').serialize();
+  // $.ajax(
+  // {
+  //   type: "GET",
+  //   url: "index",
+  //   data: form1 + "&" + form2,
+  //   cache: false,
+
+  //   error: function()
+  //   {
+  //     console.log('Request Error!!');
+  //   },
+  //   success: function(response)
+  //   {
+  //     console.log('Success!!');
+  //     console.log(response);
+  //   }
+  //  });
+  $('#filterForm').submit();
+}
+
+function combine_filter_search(form1,form2) {
+  $('#' + form1 + ' :input[isacopy]').remove();
+  $('#' + form2 + ' :input').not(':submit').not('textarea').not('select').each(function() { $(this).attr('value', $(this).val()); });
+  $('#' + form2 + ' textarea').each(function() { $(this).text($(this).val()); });
+  $('#' + form2 + ' select').each(function() { $('option[value!="' + $(this).val() + '"]', this).remove(); $('option[value="' + $(this).val() + '"]', this).attr('selected', 'selected'); });
+  $('#' + form2 + ' :input').not(':submit').clone().hide().attr('isacopy','y').appendTo('#' + form1);
+  return true;
+}
+
 // ##########################################################################
 // Validation
 // ##########################################################################
@@ -1415,6 +1465,15 @@ $(document).ready( function() {
       if ($(window).scrollTop()-$('#faq-nav').data('offset-top') > 0) {
         $('#faq-nav').css('top', 40-1*($(window).scrollTop()-$('#faq-nav').data('offset-top'))/divisor);
       }
+    });
+  }
+
+  if ($('.filter-label')) {
+    update_filter_badges();
+    // Make sure fixed position filter button stays the same size as the filter container - width: inherit; DOES NOT WORK PROPERLY AND ALWAYS HAS MORE PIXELS THAN THE CONTAINER
+    $(".filter-control").css("width", String($('#filterContainer').width())+"px");
+    $( window ).bind("resize", function(){
+      $(".filter-control").css("width", String($('#filterContainer').width())+"px");
     });
   }
 

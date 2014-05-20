@@ -1,91 +1,38 @@
-<div class="well">
+<div class="well filter-options">
   <legend class="with-helper-text">Filter Options</legend>
-  <!-- <button class="btn inline">Apply Filters</button><button class="btn inline">Clear Filters</button> -->
-  <small><p class="after-legend">This will be an area for filters.</p></small>
-<!--   <div class="accordion">
-    <div class="accordion-group accordion-caret">
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseComponents"> Components of Fidelity <span class="badge badge-info badge-right">0</span></a>
-      </div>
-      <div id="collapseComponents" class="accordion-body collapse in">
-        <div class="accordion-inner">
-          <% @filter_list_components.each do |filter_category| %>
-            <% if filter_category[0] != nil %>
-              <div class="accordion-group accordion-caret">
-                <div class="accordion-heading">
-                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=<%= "#collapseComponents"+filter_category[0] %> > <%= filter_category[0] %> <span class="badge badge-info badge-right">0</span></a>
-                </div>
-                <div id=<%= "collapseComponents"+filter_category[0] %>  class="accordion-body collapse in">
-                  <div class="accordion-inner">
-                    <% filter_category[1].each do |filter| %>
-                      <label class="checkbox-inline after-legend"> 
-                        <input type="checkbox" id="inlineCheckbox1" value="option1"> <small><%= ' '+filter.component %></small>
-                      </label>
-                    <% end %>
-                  </div>
-                </div>
+  <!-- <small><p class="after-legend">This will be an area for filters.</p></small> -->
+  <div class="accordion">
+    <form id="filterForm" onsubmit="if(!combine_filter_search('filterForm', 'searchForm')) { return false; }">
+      <% @filter_lists.each do |filter_list| %>
+        <% if filter_list.count > 1 %>
+          <div class="accordion-group accordion-caret">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=<%= "#collapse"+filter_list[0].gsub(/\s+/, "")%>> <%= filter_list[0] %> <span class="badge badge-info badge-right">0</span></a>
+            </div>
+            <div id=<%= "collapse"+filter_list[0].gsub(/\s+/, "")%> class="accordion-body collapse in">
+              <div class="accordion-inner">
+                <% filter_list.each_with_index do |filter_category, index| %>
+                  <% if index > 0 %>
+                    <%= render "filter_category", :filter_name => filter_category[0], :filter_category => filter_category[1] %>
+                  <% end %>
+                <% end %>
               </div>
-            <% end %>
+            </div>
+          </div>
+        <% else %>
+          <% filter_list.each do |filter_category| %>
+            <%= render "filter_category", :filter_name => filter_category[0], :filter_category => filter_category[1] %>
           <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="accordion-group accordion-caret">
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseCategories"> Task Categories <span class="badge badge-info badge-right">0</span></a>
-      </div>
-      <div id="collapseCategories" class="accordion-body collapse in">
-        <div class="accordion-inner">
-          <% @filter_list_categories.each do |filter_category| %>
-            <% if filter_category[0] != nil %>
-              <p class="after-legend"><small><%= filter_category[0] %></small></p>
-            <% end %>
-            <% filter_category[1].each do |filter| %>
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> <small><%= ' '+filter.task_category %></small>
-              </label>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="accordion-group accordion-caret">
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseDisplays"> Visual Displays <span class="badge badge-info badge-right">0</span></a>
-      </div>
-      <div id="collapseDisplays" class="accordion-body collapse in">
-        <div class="accordion-inner">
-          <% @filter_list_displays.each do |filter_category| %>
-            <% if filter_category[0] != nil %>
-              <p class="after-legend"><small><%= filter_category[0] %></small></p>
-            <% end %>
-            <% filter_category[1].each do |filter| %>
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> <small><%= ' '+filter.display %></small>
-              </label>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="accordion-group accordion-caret">
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseMetrics"> Metrics <span class="badge badge-info badge-right">0</span></a>
-      </div>
-      <div id="collapseMetrics" class="accordion-body collapse in">
-        <div class="accordion-inner">
-          <% @filter_list_metrics.each do |filter_category| %>
-            <% if filter_category[0] != nil %>
-              <p class="after-legend"><small><%= filter_category[0] %></small></p>
-            <% end %>
-            <% filter_category[1].each do |filter| %>
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> <small><%= ' '+filter.metric %></small>
-              </label>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div> -->
+        <% end %>
+      <% end %>
+    </form>
+  </div>
+</div>
+<div class="span12 well filter-control">
+  <div class="span6"> 
+    <button class="btn inline" style="display: block; width: 100%;" onclick="apply_filters();">Apply Filters</button>
+  </div>
+  <div class="span6"> 
+    <button class="btn inline" style="display: block; width: 100%;" onclick="clear_filters();">Clear Filters</button>
+  </div>
 </div>
