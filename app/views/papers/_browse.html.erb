@@ -1,6 +1,8 @@
 <div class="span12">
+  <p><b>Showing <%= @papers.count %> of <%= Paper.all.count %> total papers.</b></p>
+  <%= render "browse/filter_label" %>
   <div class="row-fluid">
-    <div class="span8"><legend>Publication</legend></div>
+    <div class="span8"><legend>Publications</legend></div>
     <div class="span4"><legend>Keywords</legend></div>
   </div>
   <% @papers.each do |paper| %>

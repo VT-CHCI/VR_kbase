@@ -71,7 +71,7 @@ class Paper < ActiveRecord::Base
   }
   # scope function for metric
   scope :filter_metric, lambda { |metric|
-    joins( :experiments => :metrics ).joins( :experiments => { :metrics => :task_metrics } ).where( :metrics => { :metric => metric } )
+    joins( :experiments => :tasks ).joins( :experiments => { :tasks => :metrics } ).where( :metrics => { :metric => metric } )
   }
   
   searchable do
