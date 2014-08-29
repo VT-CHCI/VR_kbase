@@ -37,55 +37,91 @@ class Finding < ActiveRecord::Base
   validates :title, :presence => true
   validates :summary, :presence => true
 
-  # searchable do
-  #   text :title, :summary, :issue, :finding_note
+  # scope functions for components
+  scope :filter_auditory, lambda { |component|
+    joins( :aural_fidelities ).where( :aural_fidelities => { :component => component } )
+  }
+  scope :filter_biomechanical, lambda { |component|
+    joins( :biomechanical_symmetries ).where( :biomechanical_symmetries => { :component => component } )
+  }
+  scope :filter_control, lambda { |component|
+    joins( :control_symmetries ).where( :control_symmetries => { :component => component } )
+  }
+  scope :filter_haptic, lambda { |component|
+    joins( :haptic_fidelities ).where( :haptic_fidelities => { :component => component } )
+  }
+  scope :filter_system_app, lambda { |component|
+    joins( :system_appropriatenesses ).where( :system_appropriatenesses => { :component => component } )
+  }
+  scope :filter_visual, lambda { |component|
+    joins( :visual_fidelities ).where( :visual_fidelities => { :component => component } )
+  }
+  # scope function for task category
+  scope :filter_category, lambda { |category|
+    joins( :categories ).where( :categories => { :task_category => category } )
+  }
+  # scope function for display
+  scope :filter_display, lambda { |display|
+    joins( :task => :experiment ).joins( :task => { :experiment => :experiment_displays } ).joins( :task => { :experiment => { :experiment_displays => :display } } ).where( :displays => { :display => display } )
+  }
+  # scope function for metric
+  scope :filter_metric, lambda { |metric|
+    joins( :metric ).where( :metrics => { :metric => metric } )
+  }
 
-  #   text :aural_fidelities do
-  #     aural_fidelities.map { |finding| [ \
-  #       finding.component \
-  #     ]}
-  #   end
+  searchable do
+    text :title, :summary, :issue, :finding_note
 
-  #   text :visual_fidelities do
-  #     visual_fidelities.map { |finding| [ \
-  #       finding.component \
-  #     ]}
-  #   end
+    text :aural_fidelities do
+      aural_fidelities.map { |finding| [ \
+        finding.component \
+      ]}
+    end
 
-  #   text :haptic_fidelities do
-  #     haptic_fidelities.map { |finding| [ \
-  #       finding.component \
-  #     ]}
-  #   end
+    text :visual_fidelities do
+      visual_fidelities.map { |finding| [ \
+        finding.component \
+      ]}
+    end
 
-  #   text :biomechanical_symmetries do
-  #     biomechanical_symmetries.map { |finding| [ \
-  #       finding.component \
-  #     ]}
-  #   end
+    text :haptic_fidelities do
+      haptic_fidelities.map { |finding| [ \
+        finding.component \
+      ]}
+    end
 
-  #   text :control_symmetries do
-  #     control_symmetries.map { |finding| [ \
-  #       finding.component \
-  #     ]}
-  #   end
+    text :biomechanical_symmetries do
+      biomechanical_symmetries.map { |finding| [ \
+        finding.component \
+      ]}
+    end
 
-  #   text :system_appropriatenesses do
-  #     system_appropriatenesses.map { |finding| [ \
-  #       finding.component \
-  #     ]}
-  #   end
+    text :control_symmetries do
+      control_symmetries.map { |finding| [ \
+        finding.component \
+      ]}
+    end
 
-  #   text :categories do
-  #     categories.map { |finding| [ \
-  #       finding.task_category \
-  #     ]}
-  #   end
+    text :system_appropriatenesses do
+      system_appropriatenesses.map { |finding| [ \
+        finding.component \
+      ]}
+    end
 
-  #   text :indy_variables do
-  #     indy_variables.map { |finding| [ \
-  #       finding.variable \
-  #     ]}
-  #   end
-  # end
+    text :categories do
+      categories.map { |finding| [ \
+        finding.task_category \
+      ]}
+    end
+
+    text :indy_variables do
+      indy_variables.map { |finding| [ \
+        finding.variable \
+      ]}
+    end
+
+    text :metric do
+      metric.metric if metric
+    end
+  end
 end
