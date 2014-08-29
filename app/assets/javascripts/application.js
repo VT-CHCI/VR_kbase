@@ -24,10 +24,13 @@ function update_filter_badges () {
   $('.accordion-group').each( function() { 
     var inputs = $( this ).find( ':input:checked' ); 
     var badges = $( this ).find( '.badge' ); 
-    while( badges[0].firstChild ) { 
-      badges[0].removeChild( badges[0].firstChild );
-    } 
-    badges[0].appendChild( document.createTextNode( inputs.size().toString() ) );
+
+    if ($.type(badges) !== "undefined" && badges.length > 0) { 
+      while( badges[0].firstChild ) { 
+        badges[0].removeChild( badges[0].firstChild );
+      } 
+      badges[0].appendChild( document.createTextNode( inputs.size().toString() ) );
+    }
   });
 }
 
@@ -292,6 +295,8 @@ function create_component_description(focus, name, componentId, throughTable, co
   var experimentId = $(focus).data('experiment');
   var taskId = $(focus).data('task');
 
+  console.log('create', focus, name, componentId, throughTable, component, descriptor, tooltip);
+
   if (taskId != undefined) {
     var selector = '#experiment_'+ experimentId+'_task_'+taskId+'_'+component+'_'+componentId;
     new_id = eval('paperManager.experiments['+experimentId+'].tasks['+taskId+'].'+component+'.addCount()');
@@ -407,13 +412,14 @@ function create_other(focus, name, componentId, throughTable, component, type, d
     var uid = generateUniqueId($(focus).parent().parent().children().find('input'), 1E8);
 
     $(selector+' div.field').prepend(
-      '<form class="hidden other-form other-add" data-remote="true">\
+      '<form class="hidden other-form other-add" data-remote="true" data-input="'+$(focus).prop('id')+'">\
         <input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="'+authenticityToken+'">\
         <input id="'+newRecordId+'" name="'+component+'['+type+']" type="text" value="">\
       </form>'
     );
 
     //Set value of the id (this needs to set by form callback)
+    $(focus).val(uid);
     $(idSelector).val(uid);
 
     //Set value of component name
@@ -425,7 +431,7 @@ function create_other(focus, name, componentId, throughTable, component, type, d
     //Add new other field
     $('.'+component+'-checkboxes').eq(0).append(
       '<div class="checkbox inline pill other">\
-        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+descriptor+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \''+descriptor+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
+        <input data-attribute="'+attribute+'" '+newOtherData+' id="'+newOtherId+'_'+(new_id+1)+'" data-throughTable="'+throughTable+'" data-component="'+component+'" data-descriptor="'+descriptor+'" onchange="create_component_description(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+descriptor+'\');create_other(this, \'Other\', \'other'+'_'+(new_id+1)+'\', \''+throughTable+'\', \''+component+'\', \''+type+'\', \''+descriptor+'\', \'<%= form_authenticity_token %>\')" type="checkbox" value="other">\
         <label data-attribute="'+attribute+'" for="'+newOtherId+'_'+(new_id+1)+'">Other<span class="colon">:</span> <input class="input-small" type="text"></label>\
       </div>'
     ); 
@@ -1283,6 +1289,124 @@ function submit_paper () {
   }
 }
 
+function postPaper (autosave, timer, url, focus, association, content) {
+   window.clearTimeout(timer);
+  $('.alert').alert('close');
+
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: $('form.paper-form').serialize(),
+    dataType: 'json',
+    success: function(data, status) {
+      console.log(status, data); //whether successful or not
+
+      if (paperId == null) {
+        //Get information and add put method for updating paper
+        paperId = data.id;
+        $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
+      }
+
+      if (paperSubmit) {
+        window.onbeforeunload = null;
+        window.location.assign('/papers/'+paperId);
+      }
+
+      //Set readonly inputs to readonly and remove destroyed objects and recount if needed
+      paperManager.cleanUp();
+      update_author_order();
+      setUrlClasses(true);
+
+      //Add new nested attributes ids to form
+      paperJSON = data;
+      add_author_ids(data);
+      add_experiment_ids(data);
+      add_experiment_nested_ids (data, 'experiment_display');
+      add_experiment_nested_ids (data, 'experiment_hardware');
+      add_experiment_nested_ids (data, 'experiment_visual');
+      add_experiment_nested_ids (data, 'experiment_aural');
+      add_experiment_nested_ids (data, 'experiment_haptic');
+      add_experiment_nested_ids (data, 'experiment_biomechanical');
+      add_experiment_nested_ids (data, 'experiment_control');
+      add_experiment_nested_ids (data, 'experiment_system_app');
+      add_experiment_nested_ids (data, 'experiment_indy_variable');
+
+      if (association != undefined) {
+        //Add elements if there are elements to add
+        add_fields_after (focus, association, content);
+      }
+      paperManager.recount();
+      handle_one_times();
+
+      if (autosave) {
+        $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
+        $(".alert").animate({top:"100px"},'slow');
+      }
+    },
+    error: function (error) {
+      console.log('error:', error);
+      paperError = error;
+
+      if (error.responseJSON.paper_url == "is not a valid URL") {
+        paperValid = paperValid && false;
+        setUrlClasses(false);
+      } else {
+        paperValid = paperValid && true;
+        setUrlClasses(true);
+
+        if (autosave) {
+          $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
+          $(".alert").animate({top:"100px"},'slow');
+        }
+      }
+
+      $('input.published').remove();
+      paperSubmit = false;
+    }
+  });
+
+  timer = window.setTimeout( function() { 
+    $('.alert').alert('close'); 
+  }, 5000);
+}
+
+function postOthers (autosave, timer, url, focus, association, content) {
+  if ($('.other-add').length > 0) {
+    $.ajax({
+      type: 'POST',
+      url: '/displays',
+      data: $('.other-add').eq(0).serialize(),
+      dataType: 'json',
+      success: function(data, status) {
+        console.log(status, data); //whether successful or not
+
+        var otherLabel = $('#'+$('.other-add').eq(0).data('input'));
+        $(otherLabel).val(data.id);
+
+        $(otherLabel).removeAttr('onchange').bind('change', function(){ 
+          console.log('why is this not working!')
+          create_component_description(otherLabel[0], $('.other-add').eq(0).find('input:text').val(), data.id, $(otherLabel).data('throughTable'), $(otherLabel).data('component'), $(otherLabel).data('descriptor'));
+        }); 
+
+        $('.other-add').eq(0).next().val(data.id);
+        $('.other-add').eq(0).remove();
+
+        postOthers(autosave, timer, url, focus, association, content);
+      },
+      error: function (error) {
+        console.log('error:', error);
+
+        if (autosave) {
+          $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
+          $(".alert").animate({top:"100px"},'slow');
+        }
+      }
+    });
+  } else {
+    postPaper(autosave, timer, url, focus, association, content);
+  }
+}
+
 function save_paper (autosave, focus, association, content) {
   var timer;
 
@@ -1299,84 +1423,15 @@ function save_paper (autosave, focus, association, content) {
   validate_all_fields ();
 
   if (paperValid) {
-    window.clearTimeout(timer);
-    $('.alert').alert('close');
+    if ($('.other-add').length > 0) {
+      $('.other-destroy').remove();
+      $('.other label input:visible').prop('readonly', true);
+      $('.other label input:visible').parent().parent().removeClass('other');
 
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: $('form.paper-form').serialize(),
-      dataType: 'json',
-      success: function(data, status) {
-        console.log(status, data); //whether successful or not
-
-        if (paperId == null) {
-          //Get information and add put method for updating paper
-          paperId = data.id;
-          $('form.paper-form').prepend('<input name="_method" type="hidden" value="put">');
-        }
-
-        if (paperSubmit) {
-          window.onbeforeunload = null;
-          window.location.assign('/papers/'+paperId);
-        }
-
-        //Set readonly inputs to readonly and remove destroyed objects and recount if needed
-        paperManager.cleanUp();
-        update_author_order();
-        setUrlClasses(true);
-
-        //Add new nested attributes ids to form
-        paperJSON = data;
-        add_author_ids(data);
-        add_experiment_ids(data);
-        add_experiment_nested_ids (data, 'experiment_display');
-        add_experiment_nested_ids (data, 'experiment_hardware');
-        add_experiment_nested_ids (data, 'experiment_visual');
-        add_experiment_nested_ids (data, 'experiment_aural');
-        add_experiment_nested_ids (data, 'experiment_haptic');
-        add_experiment_nested_ids (data, 'experiment_biomechanical');
-        add_experiment_nested_ids (data, 'experiment_control');
-        add_experiment_nested_ids (data, 'experiment_system_app');
-        add_experiment_nested_ids (data, 'experiment_indy_variable');
-
-        if (association != undefined) {
-          //Add elements if there are elements to add
-          add_fields_after (focus, association, content);
-        }
-        paperManager.recount();
-        handle_one_times();
-
-        if (autosave) {
-          $('.container-fluid.main-content').prepend('<div class="alert alert-success fade in save-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Success!</strong> Your entry has been saved.</div>');
-          $(".alert").animate({top:"100px"},'slow');
-        }
-      },
-      error: function (error) {
-        console.log('error:', error);
-        paperError = error;
-
-        if (error.responseJSON.paper_url == "is not a valid URL") {
-          paperValid = paperValid && false;
-          setUrlClasses(false);
-        } else {
-          paperValid = paperValid && true;
-          setUrlClasses(true);
-
-          if (autosave) {
-            $('.container-fluid.main-content').prepend('<div class="alert alert-error fade in save-error"><button type="button" class="close" data-dismiss="alert">×</button><strong>Error!</strong> There was an error saving, please notify an admin.</div>');
-            $(".alert").animate({top:"100px"},'slow');
-          }
-        }
-
-        $('input.published').remove();
-        paperSubmit = false;
-      }
-    });
-
-    timer = window.setTimeout( function() { 
-      $('.alert').alert('close'); 
-    }, 5000);
+      postOthers(autosave, timer, url, focus, association, content);
+    } else {
+      postPaper(autosave, timer, url, focus, association, content);
+    }
   }
 
   $(focus).button('reset');

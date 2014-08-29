@@ -67,8 +67,8 @@
         </div>
 
       <% end %>
-      <div class="checkbox inline pill hidden other">
-        <input data-attribute="display_id" data-experiment="new_experiments" id="experiments_attributes_new_experiments_display_id_other_0" onchange="create_component_description(this, 'Other', 'other_0', 'experiment_display', 'display', 'description');create_other(this, 'Other', 'other_0', 'experiment_display', 'display', 'display', 'description', '<%= form_authenticity_token %>')" type="checkbox" value="other">
+      <div class="checkbox inline pill other">
+        <input data-attribute="display_id" data-experiment="new_experiments" id="experiments_attributes_new_experiments_display_id_other_0" data-throughTable="experiment_display" data-component="display" data-descriptor="description" onchange="create_component_description(this, 'Other', 'other_0', 'experiment_display', 'display', 'description');create_other(this, 'Other', 'other_0', 'experiment_display', 'display', 'display', 'description', '<%= form_authenticity_token %>')" type="checkbox" value="other">
         <label data-attribute="display_id" for="experiments_attributes_new_experiments_display_id_other_0">Other<span class="colon">:</span> <input class="input-small" type="text"></label>
       </div>
 

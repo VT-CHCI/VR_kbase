@@ -1,5 +1,7 @@
 <div class="span12">
-  <small><p class="after-legend">Showing <%= @findings.count %> of <%= Finding.all.count %> total findings.</p></small>
+  <p><b>Showing <%= @findings.count %> of <%= Finding.all.count %> total findings.</b></p>
+  <%= render "browse/filter_label" %>
+  
   <div class="row-fluid">
     <div class="span8"><legend>Findings</legend></div>
     <div class="span4"><legend>Keywords</legend></div>
