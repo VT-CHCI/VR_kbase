@@ -1,0 +1,29 @@
+<div class="accordion-group accordion-caret">
+  <div class="accordion-heading">
+    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href=<%= "#collapse"+filter_name.gsub(/\s+/, "")%>> <%= filter_name %> <span class="badge badge-info badge-right">0</span></a>
+  </div>
+  <div id=<%= "collapse"+filter_name.gsub(/\s+/, "")%> class="accordion-body collapse in">
+    <div class="accordion-inner">
+      <% filter_category.each do |filter| %>
+        <!-- figure out what the filter id is -->
+        <% if filter_name == "Task Categories" %>
+          <% filter_id = filter.task_category %>
+        <% elsif filter_name == "Visual Displays" %>
+          <% filter_id = filter.display %>
+        <% elsif filter_name == "Metrics" %>
+          <% filter_id = filter.metric %>
+        <% else %>
+          <% filter_id = filter.component %>
+        <% end %>
+        <!-- check if the filter is being used -->
+        <% if @active_filters.index(filter_name) != nil and @active_filters[@active_filters.index(filter_name)+1].include?(filter_id) %>
+          <% checked = true %>
+        <% end %>
+        <!-- create the input checkbox -->
+        <label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" name="<%= filter_name.gsub(/\s+/, "").downcase+"[]" %>" value="<%= filter_id %>" onchange="update_filter_badges();" <%= checked ? "checked" : ""%>> <small><%= ' '+filter_id %></small>
+        </label>
+      <% end %>
+    </div>
+  </div>
+</div>

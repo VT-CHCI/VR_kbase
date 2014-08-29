@@ -1,3 +1,92 @@
 // Place all the styles related to the Browse controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+p.after-legend {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  
+  line-height: 10px;
+}
+
+label {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+#inlineCheckbox1 {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
+
+.accordion-heading {
+	background: whitesmoke;
+}
+
+.accordion-inner label {
+	margin-bottom: 0;
+}
+
+.accordion-toggle {
+	font-size: 15px !important;
+	line-height: 30px !important;
+	padding: 0px 13px !important;
+}
+
+.accordion-caret .accordion-toggle:hover {
+    text-decoration: none;
+}
+.accordion-caret .accordion-toggle:hover span,
+.accordion-caret .accordion-toggle:hover strong {
+    text-decoration: underline;
+}
+.accordion-caret .accordion-toggle:before {
+    font-size: 25px;
+    vertical-align: -3px;
+}
+.accordion-caret .accordion-toggle:not(.collapsed):before {
+    content: "▾";
+    margin-right: 0px;
+}
+.accordion-caret .accordion-toggle.collapsed:before {
+    content: "▸";
+    margin-right: 0px;
+}
+
+.badge-right {
+	float: right;
+	position: relative;
+	bottom: -5px;
+	right: 0;
+}
+
+.filter-options {
+	margin-bottom: 0px !important;
+	padding-bottom: 0px !important;
+	min-height: 100%;
+	position: relative;
+}
+
+.filter-control {
+    box-sizing:border-box;
+	position: fixed;
+	bottom: 0px;
+	left: inherit !important;
+	margin: 0px !important;
+	#width: inherit !important;
+	padding: 5px !important;
+}
+
+.filter-label {
+	color: grey;
+}
+
+.filter-label-list {
+	margin-left: 15px;
+}
