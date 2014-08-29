@@ -24,10 +24,13 @@ function update_filter_badges () {
   $('.accordion-group').each( function() { 
     var inputs = $( this ).find( ':input:checked' ); 
     var badges = $( this ).find( '.badge' ); 
-    while( badges[0].firstChild ) { 
-      badges[0].removeChild( badges[0].firstChild );
-    } 
-    badges[0].appendChild( document.createTextNode( inputs.size().toString() ) );
+
+    if ($.type(badges) !== "undefined" && badges.length > 0) { 
+      while( badges[0].firstChild ) { 
+        badges[0].removeChild( badges[0].firstChild );
+      } 
+      badges[0].appendChild( document.createTextNode( inputs.size().toString() ) );
+    }
   });
 }
 
