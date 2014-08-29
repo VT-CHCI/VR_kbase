@@ -157,7 +157,7 @@ var paperManager = {
   }, 
   recount: function () {
     this.authors.setCounts();
-    $(this.experiments).each( function(i) {
+    $(this.experiments).each( function() {
       this.recount();
       $(this.tasks).each( function() {
         this.recount();
