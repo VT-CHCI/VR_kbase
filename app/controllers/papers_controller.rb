@@ -9,7 +9,6 @@ class PapersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @papers }
-      
     end
   end
 
@@ -135,6 +134,11 @@ class PapersController < ApplicationController
             }}
           ]
         ), :status => :created, :location => @paper }
+
+        # notifies each one of our admins
+        User.where(:admin => 'true').each { |admin|
+          AdminMailer.new_paper_email(@paper, admin.email).deliver
+        }
       else
         format.html { render :action => "new" }
         format.json { render :json => @paper.errors, :status => :unprocessable_entity }
@@ -188,6 +192,12 @@ class PapersController < ApplicationController
             }}
           ]
         ), :status => :created}
+
+        # notifies each one of our admins
+        User.where(:admin => 'true').each { |admin|
+          AdminMailer.edit_paper_email(@paper, admin.email).deliver
+        }
+
       else
         format.html { render :action => "edit" }
         format.json { render :json => @paper.errors, :status => :unprocessable_entity }

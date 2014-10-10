@@ -5,8 +5,13 @@ class AuthorsController < ApplicationController
     @authors = Author.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @authors }
+      if user_signed_in? and current_user.admin
+        format.html # index.html.erb
+        format.json { render :json => @authors }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -30,8 +35,13 @@ class AuthorsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html # search_name.html.erb
-      format.json { render :json => @author }
+      if user_signed_in? and current_user.admin
+        format.html # search_name.html.erb
+        format.json { render :json => @author }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -41,14 +51,29 @@ class AuthorsController < ApplicationController
     @author = Author.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @author }
+      if user_signed_in? and current_user.admin
+        format.html # new.html.erb
+        format.json { render :json => @author }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 
   # GET /authors/1/edit
   def edit
     @author = Author.find(params[:id])
+
+    respond_to do |format|
+      if user_signed_in? and current_user.admin
+        format.html # new.html.erb
+        format.json { render :json => @author }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
+    end
   end
 
   # POST /authors
@@ -57,12 +82,17 @@ class AuthorsController < ApplicationController
     @author = Author.new(params[:author])
 
     respond_to do |format|
-      if @author.save
-        format.html { redirect_to @author, :notice => 'Author was successfully created.' }
-        format.json { render :json => @author, :status => :created, :location => @author }
+      if user_signed_in? and current_user.admin
+        if @author.save
+          format.html { redirect_to @author, :notice => 'Author was successfully created.' }
+          format.json { render :json => @author, :status => :created, :location => @author }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @author.errors, :status => :unprocessable_entity }
+        end
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @author.errors, :status => :unprocessable_entity }
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
       end
     end
   end
@@ -73,12 +103,17 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
 
     respond_to do |format|
-      if @author.update_attributes(params[:author])
-        format.html { redirect_to @author, :notice => 'Author was successfully updated.' }
-        format.json { head :no_content }
+      if user_signed_in? and current_user.admin
+        if @author.update_attributes(params[:author])
+          format.html { redirect_to @author, :notice => 'Author was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render :action => "edit" }
+          format.json { render :json => @author.errors, :status => :unprocessable_entity }
+        end
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @author.errors, :status => :unprocessable_entity }
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
       end
     end
   end
@@ -90,8 +125,13 @@ class AuthorsController < ApplicationController
     @author.destroy
 
     respond_to do |format|
-      format.html { redirect_to authors_url }
-      format.json { head :no_content }
+      if user_signed_in? and current_user.admin
+        format.html { redirect_to authors_url }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 end

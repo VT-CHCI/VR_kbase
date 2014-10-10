@@ -1,6 +1,6 @@
 <small class="filter-label">
   <% if @active_filters.count > 0 %>
-    <p class="after-legend">Filtering by:</p>
+    <p class="after-legend"> Filtering by: </p>
     <% @active_filters.each_with_index do |active_filter_category,cat_index| %>
       <% if not active_filter_category.is_a? String %>
         <p class="after-legend filter-label-list">

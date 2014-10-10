@@ -12,23 +12,24 @@ Kbase::Application.routes.draw do
   get "validate/systems"
   get "validate/index"
 
-  devise_for :users
+  #devise_for :users
+  devise_for :users, controllers: { registrations: "registrations" }
 
-  resources :indy_variables
+  #resources :indy_variables
 
-  resources :findings
+  #resources :findings
 
-  resources :softwares
+  #resources :softwares
 
-  resources :hardwares
+  #resources :hardwares
 
-  resources :displays
+  #resources :displays
 
-  resources :venues
+  #resources :venues
 
   resources :authors
 
-  resources :tasks
+  #resources :tasks
 
   resources :experiments
 
