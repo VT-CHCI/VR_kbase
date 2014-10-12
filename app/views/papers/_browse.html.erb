@@ -1,5 +1,10 @@
 <div class="span12">
   <p><b>Showing <%= @papers.count %> of <%= Paper.all.count %> total papers.</b></p>
+  <% if !@search_query.nil? && !@search_query.empty? %>
+    <small class="search-label">
+      <p class="after-legend"> Searching for "<%= @search_query %>" </p>
+    </small>
+  <% end %>
   <%= render "browse/filter_label" %>
   <div class="row-fluid">
     <div class="span8"><legend>Publications</legend></div>

@@ -5,8 +5,13 @@ class ExperimentsController < ApplicationController
     @experiments = Experiment.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @experiments }
+      if user_signed_in? and current_user.admin
+        format.html # index.html.erb
+        format.json { render :json => @experiments }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -16,8 +21,13 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @experiment }
+      if user_signed_in? and current_user.admin
+        format.html # show.html.erb
+        format.json { render :json => @experiment }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -27,14 +37,29 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @experiment }
+      if user_signed_in? and current_user.admin
+        format.html # new.html.erb
+        format.json { render :json => @experiment }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 
   # GET /experiments/1/edit
   def edit
     @experiment = Experiment.find(params[:id])
+
+    respond_to do |format|
+      if user_signed_in? and current_user.admin
+        format.html # new.html.erb
+        format.json { render :json => @experiment }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
+    end
   end
 
   # POST /experiments
@@ -43,12 +68,17 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.new(params[:experiment])
 
     respond_to do |format|
-      if @experiment.save
-        format.html { redirect_to @experiment, :notice => 'Experiment was successfully created.' }
-        format.json { render :json => @experiment, :status => :created, :location => @experiment }
+      if user_signed_in? and current_user.admin
+        if @experiment.save
+          format.html { redirect_to @experiment, :notice => 'Experiment was successfully created.' }
+          format.json { render :json => @experiment, :status => :created, :location => @experiment }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @experiment.errors, :status => :unprocessable_entity }
+        end
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @experiment.errors, :status => :unprocessable_entity }
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
       end
     end
   end
@@ -59,12 +89,17 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.find(params[:id])
 
     respond_to do |format|
-      if @experiment.update_attributes(params[:experiment])
-        format.html { redirect_to @experiment, :notice => 'Experiment was successfully updated.' }
-        format.json { head :no_content }
+      if user_signed_in? and current_user.admin
+        if @experiment.update_attributes(params[:experiment])
+          format.html { redirect_to @experiment, :notice => 'Experiment was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render :action => "edit" }
+          format.json { render :json => @experiment.errors, :status => :unprocessable_entity }
+        end
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @experiment.errors, :status => :unprocessable_entity }
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
       end
     end
   end
@@ -76,8 +111,13 @@ class ExperimentsController < ApplicationController
     @experiment.destroy
 
     respond_to do |format|
-      format.html { redirect_to experiments_url }
-      format.json { head :no_content }
+      if user_signed_in? and current_user.admin
+        format.html { redirect_to experiments_url }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to landing_url }
+        format.json { head :no_content }
+      end
     end
   end
 end

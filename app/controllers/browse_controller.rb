@@ -1,5 +1,7 @@
 class BrowseController < ApplicationController
   def index
+    @search_query = params[:search]
+
     #####################
   	# search with sunspot
     # first we search on paper
