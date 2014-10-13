@@ -29,8 +29,10 @@
           <% end %>
         </blockquote>
         <div class="paper-modify">
-          <%= link_to 'edit', edit_paper_path(@paper), :class => "edit-paper" %> |
-          <%= link_to 'delete', @paper, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+          <% if user_signed_in? and (current_user.admin or @paper.users.first == current_user) %>
+            <%= link_to 'edit', edit_paper_path(@paper), :class => "edit-paper" %> |
+            <%= link_to 'delete', @paper, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+          <% end %>
         </div>
       </div>
     </div>
