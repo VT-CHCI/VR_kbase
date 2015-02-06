@@ -24,3 +24,6 @@
 /solr/development/data/*
 /solr/test/data/*
 /solr/pids/development/sunspot-solr-development.pid
+
+# Ignore Gemfilelock
+Gemfile.lock

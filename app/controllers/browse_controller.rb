@@ -7,7 +7,7 @@ class BrowseController < ApplicationController
     # first we search on paper
     @search_paper = Paper.solr_search do 
   		fulltext params[:search]
-      paginate :page => 1, :per_page => 2000
+      paginate :page => 1, :per_page => 20000
   	end
     @search_results = @search_paper.results
 
@@ -20,6 +20,7 @@ class BrowseController < ApplicationController
     # then we do findings, because we only want findings related to search
     @search_finding = Finding.solr_search do 
       fulltext params[:search]
+      paginate :page => 1, :per_page => 20000
     end
     @search_results = @search_finding.results
     
